@@ -61,6 +61,35 @@ export const snippetSchema = z.object({
 });
 export type Snippet = z.infer<typeof snippetSchema>;
 
+/** A step of the scripted (no-AI) conversation: what the other person says, and replies that move on. */
+export const scriptNodeSchema = z.object({
+  id,
+  say: z.string().min(1),
+  sayVi: z.string().optional(),
+  /** Suggested replies; `next` null ends the conversation. */
+  replies: z
+    .array(z.object({ text: z.string().min(1), next: id.nullable() }))
+    .default([]),
+});
+
+/** A roleplay: someone at work, a goal, a persona for AI, and a script for when there is no AI. */
+export const scenarioSchema = z.object({
+  id,
+  titleVi: z.string().min(1),
+  /** Who you talk to: "Minh, tech lead". */
+  partner: z.string().min(1),
+  situationVi: z.string().min(1),
+  goalVi: z.string().min(1),
+  /** For AI: how the partner behaves (English). */
+  persona: z.string().min(1),
+  /** For AI: what the learner must get across (English), to judge the goal. */
+  goal: z.string().min(1),
+  /** The script; the first node opens the conversation. */
+  script: z.array(scriptNodeSchema).min(1),
+});
+export type Scenario = z.infer<typeof scenarioSchema>;
+export type ScriptNode = z.infer<typeof scriptNodeSchema>;
+
 export const unitSchema = z.object({
   id,
   track: id,
@@ -70,6 +99,7 @@ export const unitSchema = z.object({
   snippets: z.array(snippetSchema).min(1),
   chunks: z.array(chunkSchema).min(1),
   tasks: z.array(taskSchema).min(1),
+  scenarios: z.array(scenarioSchema).default([]),
 });
 export type Unit = z.infer<typeof unitSchema>;
 
@@ -123,6 +153,17 @@ export function contentProblems(library: Library): string[] {
       }
     }
     for (const task of unit.tasks) once('task', task.id);
+    for (const scenario of unit.scenarios) {
+      once('scenario', scenario.id);
+      const nodes = new Set(scenario.script.map((node) => node.id));
+      for (const node of scenario.script) {
+        for (const reply of node.replies) {
+          if (reply.next && !nodes.has(reply.next)) {
+            problems.push(`scenario "${scenario.id}": node "${node.id}" trỏ tới "${reply.next}" không tồn tại`);
+          }
+        }
+      }
+    }
     for (const snippet of unit.snippets) {
       once('snippet', snippet.id);
       if (!tasks.has(snippet.task)) problems.push(`snippet "${snippet.id}": không có task "${snippet.task}"`);

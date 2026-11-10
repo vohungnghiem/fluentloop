@@ -1,6 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import unitJson from '../../../content/tracks/dev/units/standup.json';
 import trackJson from '../../../content/tracks/dev/track.json';
+import ticketJson from '../../../content/tracks/dev/units/ticket.json';
+import prJson from '../../../content/tracks/dev/units/pr.json';
 import { contentProblems, trackSchema, unitSchema } from '../content/schema';
 import { nextSnippet, planSession } from './plan';
 
@@ -9,7 +11,8 @@ const units = [unit];
 
 describe('content', () => {
   it('the dev track is sound', () => {
-    expect(contentProblems({ tracks: [trackSchema.parse(trackJson)], units })).toEqual([]);
+    const all = [unit, unitSchema.parse(ticketJson), unitSchema.parse(prJson)];
+    expect(contentProblems({ tracks: [trackSchema.parse(trackJson)], units: all })).toEqual([]);
   });
 });
 

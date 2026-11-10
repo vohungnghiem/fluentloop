@@ -19,7 +19,12 @@
         "Hôm qua mình làm trang đăng nhập và đã làm xong phần kiểm tra dữ liệu của form.",
         "Hôm nay mình sẽ nhận ticket đặt lại mật khẩu. Phía mình không có gì bị vướng."
       ],
-      "chunks": ["worked-on", "wrapped-up", "pick-up", "no-blockers"],
+      "chunks": [
+        "worked-on",
+        "wrapped-up",
+        "pick-up",
+        "no-blockers"
+      ],
       "task": "task-standup-basic"
     },
     {
@@ -36,7 +41,12 @@
         "Cập nhật nhanh từ mình. API thanh toán mình gần xong rồi, nhưng đang bị chặn bởi dịch vụ xác thực.",
         "Mình vẫn đang chờ quyền truy cập server staging. Có ai bên DevOps xem giúp yêu cầu của mình được không?"
       ],
-      "chunks": ["almost-done", "blocked-by", "waiting-on", "take-a-look"],
+      "chunks": [
+        "almost-done",
+        "blocked-by",
+        "waiting-on",
+        "take-a-look"
+      ],
       "task": "task-blocked"
     },
     {
@@ -53,7 +63,12 @@
         "Hôm qua mình tìm thấy một lỗi ở luồng thanh toán. Mình đang tìm hiểu, nhưng chưa tái hiện được lỗi trên máy mình.",
         "Chiều nay mình sẽ làm cùng Nam để tìm ra chuyện gì đang xảy ra."
       ],
-      "chunks": ["look-into", "reproduce", "pair-with", "figure-out"],
+      "chunks": [
+        "look-into",
+        "reproduce",
+        "pair-with",
+        "figure-out"
+      ],
       "task": "task-bug-hunt"
     },
     {
@@ -70,7 +85,12 @@
         "Tin vui: bọn mình đã tìm ra nguyên nhân gốc khiến thanh toán chậm. Do thiếu một index trong database.",
         "Sáng nay mình đã đẩy bản sửa lên. Việc này mất nhiều thời gian hơn dự kiến, nhưng bản phát hành vẫn đúng tiến độ cho thứ Sáu."
       ],
-      "chunks": ["root-cause", "push-a-fix", "longer-than-expected", "on-track"],
+      "chunks": [
+        "root-cause",
+        "push-a-fix",
+        "longer-than-expected",
+        "on-track"
+      ],
       "task": "task-root-cause"
     },
     {
@@ -87,7 +107,12 @@
         "Báo trước một chút: bọn mình đang hơi chậm ở phần chuyển dữ liệu.",
         "Hôm nay mình sẽ liên hệ lại với khách hàng và cập nhật cho mọi người trước cuối ngày."
       ],
-      "chunks": ["heads-up", "running-behind", "follow-up", "end-of-day"],
+      "chunks": [
+        "heads-up",
+        "running-behind",
+        "follow-up",
+        "end-of-day"
+      ],
       "task": "task-behind"
     },
     {
@@ -104,34 +129,220 @@
         "Chào buổi sáng mọi người! Chiều mai mình nghỉ vì có lịch khám bác sĩ.",
         "Anh ơi, sau standup mình trao đổi nhanh về release notes được không? Mọi thứ khác phía mình đều ổn."
       ],
-      "chunks": ["out-of-office", "sync-up", "on-my-side"],
+      "chunks": [
+        "out-of-office",
+        "sync-up",
+        "on-my-side"
+      ],
       "task": "task-ooo"
     }
   ],
   "chunks": [
-    { "id": "worked-on", "en": "worked on", "vi": "đã làm (việc gì)", "example": "Yesterday I worked on the search page.", "exampleVi": "Hôm qua mình làm trang tìm kiếm.", "answer": "worked on" },
-    { "id": "wrapped-up", "en": "wrap up", "vi": "làm xong, hoàn tất", "forms": ["wrapped up"], "example": "I wrapped up the unit tests before lunch.", "exampleVi": "Mình đã làm xong unit test trước giờ trưa.", "answer": "wrapped up" },
-    { "id": "pick-up", "en": "pick up (a ticket)", "vi": "nhận (việc, ticket) để làm", "forms": ["pick up"], "example": "Today I'll pick up the next ticket.", "exampleVi": "Hôm nay mình sẽ nhận ticket tiếp theo.", "answer": "pick up" },
-    { "id": "no-blockers", "en": "no blockers", "vi": "không có gì bị vướng", "example": "Any problems? No blockers, thanks.", "exampleVi": "Có vấn đề gì không? Không vướng gì, cảm ơn.", "answer": "blockers" },
-    { "id": "almost-done", "en": "almost done with", "vi": "gần xong (việc gì)", "example": "I'm almost done with the report.", "exampleVi": "Mình gần xong bản báo cáo rồi.", "answer": "almost done" },
-    { "id": "blocked-by", "en": "blocked by", "vi": "bị chặn bởi, đang chờ (ai/cái gì) mới làm tiếp được", "example": "Sorry, I'm blocked by the API team.", "exampleVi": "Xin lỗi, mình đang bị chặn bởi đội API.", "answer": "blocked" },
-    { "id": "waiting-on", "en": "waiting on", "vi": "đang chờ (ai/cái gì)", "example": "I'm still waiting on the final design.", "exampleVi": "Mình vẫn đang chờ bản thiết kế cuối.", "answer": "waiting on" },
-    { "id": "take-a-look", "en": "take a look at", "vi": "xem giúp, xem qua", "example": "Could you take a look at my pull request?", "exampleVi": "Bạn xem giúp pull request của mình được không?", "answer": "take a look" },
-    { "id": "look-into", "en": "look into", "vi": "tìm hiểu, điều tra (một vấn đề)", "forms": ["looking into"], "example": "I'm looking into a bug in the cart.", "exampleVi": "Mình đang tìm hiểu một lỗi ở giỏ hàng.", "answer": "looking into" },
-    { "id": "reproduce", "en": "reproduce the bug", "vi": "tái hiện lỗi (làm lỗi xảy ra lại)", "example": "I couldn't reproduce the bug locally.", "exampleVi": "Mình không tái hiện được lỗi trên máy.", "answer": "reproduce" },
-    { "id": "pair-with", "en": "pair with", "vi": "làm cùng (ai), pair programming", "example": "I'll pair with Lan on this task.", "exampleVi": "Mình sẽ làm cùng Lan việc này.", "answer": "pair with" },
-    { "id": "figure-out", "en": "figure out", "vi": "tìm ra, hiểu ra", "example": "I'm trying to figure out why the test fails.", "exampleVi": "Mình đang cố tìm ra vì sao test bị lỗi.", "answer": "figure out" },
-    { "id": "root-cause", "en": "root cause", "vi": "nguyên nhân gốc", "example": "We found the root cause: a wrong config value.", "exampleVi": "Bọn mình đã tìm ra nguyên nhân gốc: một giá trị cấu hình sai.", "answer": "root cause" },
-    { "id": "push-a-fix", "en": "push a fix", "vi": "đẩy bản sửa lên", "forms": ["pushed a fix"], "example": "I pushed a fix this morning.", "exampleVi": "Sáng nay mình đã đẩy bản sửa lên.", "answer": "pushed a fix" },
-    { "id": "longer-than-expected", "en": "take longer than expected", "vi": "mất nhiều thời gian hơn dự kiến", "forms": ["took longer than expected"], "example": "The refactor took longer than expected.", "exampleVi": "Việc refactor mất nhiều thời gian hơn dự kiến.", "answer": "longer than expected" },
-    { "id": "on-track", "en": "on track", "vi": "đúng tiến độ", "example": "The release is still on track for Monday.", "exampleVi": "Bản phát hành vẫn đúng tiến độ cho thứ Hai.", "answer": "on track" },
-    { "id": "heads-up", "en": "a heads-up", "vi": "báo trước, lưu ý trước", "forms": ["heads-up"], "example": "Just a heads-up: the build is slow today.", "exampleVi": "Báo trước nhé: hôm nay build chậm.", "answer": "heads-up" },
-    { "id": "running-behind", "en": "running behind", "vi": "đang chậm (so với kế hoạch)", "forms": ["running a bit behind"], "example": "We're running behind on the migration.", "exampleVi": "Bọn mình đang chậm ở phần chuyển dữ liệu.", "answer": "running behind" },
-    { "id": "follow-up", "en": "follow up with", "vi": "liên hệ lại, hỏi tiếp (ai)", "example": "I'll follow up with the client today.", "exampleVi": "Hôm nay mình sẽ liên hệ lại với khách hàng.", "answer": "follow up" },
-    { "id": "end-of-day", "en": "by end of day", "vi": "trước cuối ngày", "example": "I'll send the update by end of day.", "exampleVi": "Mình sẽ gửi cập nhật trước cuối ngày.", "answer": "end of day" },
-    { "id": "out-of-office", "en": "out of office", "vi": "nghỉ, không có mặt ở chỗ làm", "example": "I'll be out of office on Friday.", "exampleVi": "Thứ Sáu mình nghỉ.", "answer": "out of office" },
-    { "id": "sync-up", "en": "sync up", "vi": "trao đổi nhanh cho thống nhất", "example": "Can we sync up after lunch?", "exampleVi": "Sau bữa trưa mình trao đổi nhanh được không?", "answer": "sync up" },
-    { "id": "on-my-side", "en": "on my side", "vi": "phía mình, phần của mình", "example": "Everything looks good on my side.", "exampleVi": "Phía mình mọi thứ đều ổn.", "answer": "on my side" }
+    {
+      "id": "worked-on",
+      "en": "worked on",
+      "vi": "đã làm (việc gì)",
+      "example": "Yesterday I worked on the search page.",
+      "exampleVi": "Hôm qua mình làm trang tìm kiếm.",
+      "answer": "worked on"
+    },
+    {
+      "id": "wrapped-up",
+      "en": "wrap up",
+      "vi": "làm xong, hoàn tất",
+      "forms": [
+        "wrapped up"
+      ],
+      "example": "I wrapped up the unit tests before lunch.",
+      "exampleVi": "Mình đã làm xong unit test trước giờ trưa.",
+      "answer": "wrapped up"
+    },
+    {
+      "id": "pick-up",
+      "en": "pick up (a ticket)",
+      "vi": "nhận (việc, ticket) để làm",
+      "forms": [
+        "pick up"
+      ],
+      "example": "Today I'll pick up the next ticket.",
+      "exampleVi": "Hôm nay mình sẽ nhận ticket tiếp theo.",
+      "answer": "pick up"
+    },
+    {
+      "id": "no-blockers",
+      "en": "no blockers",
+      "vi": "không có gì bị vướng",
+      "example": "Any problems? No blockers, thanks.",
+      "exampleVi": "Có vấn đề gì không? Không vướng gì, cảm ơn.",
+      "answer": "blockers"
+    },
+    {
+      "id": "almost-done",
+      "en": "almost done with",
+      "vi": "gần xong (việc gì)",
+      "example": "I'm almost done with the report.",
+      "exampleVi": "Mình gần xong bản báo cáo rồi.",
+      "answer": "almost done"
+    },
+    {
+      "id": "blocked-by",
+      "en": "blocked by",
+      "vi": "bị chặn bởi, đang chờ (ai/cái gì) mới làm tiếp được",
+      "example": "Sorry, I'm blocked by the API team.",
+      "exampleVi": "Xin lỗi, mình đang bị chặn bởi đội API.",
+      "answer": "blocked"
+    },
+    {
+      "id": "waiting-on",
+      "en": "waiting on",
+      "vi": "đang chờ (ai/cái gì)",
+      "example": "I'm still waiting on the final design.",
+      "exampleVi": "Mình vẫn đang chờ bản thiết kế cuối.",
+      "answer": "waiting on"
+    },
+    {
+      "id": "take-a-look",
+      "en": "take a look at",
+      "vi": "xem giúp, xem qua",
+      "example": "Could you take a look at my pull request?",
+      "exampleVi": "Bạn xem giúp pull request của mình được không?",
+      "answer": "take a look"
+    },
+    {
+      "id": "look-into",
+      "en": "look into",
+      "vi": "tìm hiểu, điều tra (một vấn đề)",
+      "forms": [
+        "looking into"
+      ],
+      "example": "I'm looking into a bug in the cart.",
+      "exampleVi": "Mình đang tìm hiểu một lỗi ở giỏ hàng.",
+      "answer": "looking into"
+    },
+    {
+      "id": "reproduce",
+      "en": "reproduce the bug",
+      "vi": "tái hiện lỗi (làm lỗi xảy ra lại)",
+      "example": "I couldn't reproduce the bug locally.",
+      "exampleVi": "Mình không tái hiện được lỗi trên máy.",
+      "answer": "reproduce"
+    },
+    {
+      "id": "pair-with",
+      "en": "pair with",
+      "vi": "làm cùng (ai), pair programming",
+      "example": "I'll pair with Lan on this task.",
+      "exampleVi": "Mình sẽ làm cùng Lan việc này.",
+      "answer": "pair with"
+    },
+    {
+      "id": "figure-out",
+      "en": "figure out",
+      "vi": "tìm ra, hiểu ra",
+      "example": "I'm trying to figure out why the test fails.",
+      "exampleVi": "Mình đang cố tìm ra vì sao test bị lỗi.",
+      "answer": "figure out"
+    },
+    {
+      "id": "root-cause",
+      "en": "root cause",
+      "vi": "nguyên nhân gốc",
+      "example": "We found the root cause: a wrong config value.",
+      "exampleVi": "Bọn mình đã tìm ra nguyên nhân gốc: một giá trị cấu hình sai.",
+      "answer": "root cause"
+    },
+    {
+      "id": "push-a-fix",
+      "en": "push a fix",
+      "vi": "đẩy bản sửa lên",
+      "forms": [
+        "pushed a fix"
+      ],
+      "example": "I pushed a fix this morning.",
+      "exampleVi": "Sáng nay mình đã đẩy bản sửa lên.",
+      "answer": "pushed a fix"
+    },
+    {
+      "id": "longer-than-expected",
+      "en": "take longer than expected",
+      "vi": "mất nhiều thời gian hơn dự kiến",
+      "forms": [
+        "took longer than expected"
+      ],
+      "example": "The refactor took longer than expected.",
+      "exampleVi": "Việc refactor mất nhiều thời gian hơn dự kiến.",
+      "answer": "longer than expected"
+    },
+    {
+      "id": "on-track",
+      "en": "on track",
+      "vi": "đúng tiến độ",
+      "example": "The release is still on track for Monday.",
+      "exampleVi": "Bản phát hành vẫn đúng tiến độ cho thứ Hai.",
+      "answer": "on track"
+    },
+    {
+      "id": "heads-up",
+      "en": "a heads-up",
+      "vi": "báo trước, lưu ý trước",
+      "forms": [
+        "heads-up"
+      ],
+      "example": "Just a heads-up: the build is slow today.",
+      "exampleVi": "Báo trước nhé: hôm nay build chậm.",
+      "answer": "heads-up"
+    },
+    {
+      "id": "running-behind",
+      "en": "running behind",
+      "vi": "đang chậm (so với kế hoạch)",
+      "forms": [
+        "running a bit behind"
+      ],
+      "example": "We're running behind on the migration.",
+      "exampleVi": "Bọn mình đang chậm ở phần chuyển dữ liệu.",
+      "answer": "running behind"
+    },
+    {
+      "id": "follow-up",
+      "en": "follow up with",
+      "vi": "liên hệ lại, hỏi tiếp (ai)",
+      "example": "I'll follow up with the client today.",
+      "exampleVi": "Hôm nay mình sẽ liên hệ lại với khách hàng.",
+      "answer": "follow up"
+    },
+    {
+      "id": "end-of-day",
+      "en": "by end of day",
+      "vi": "trước cuối ngày",
+      "example": "I'll send the update by end of day.",
+      "exampleVi": "Mình sẽ gửi cập nhật trước cuối ngày.",
+      "answer": "end of day"
+    },
+    {
+      "id": "out-of-office",
+      "en": "out of office",
+      "vi": "nghỉ, không có mặt ở chỗ làm",
+      "example": "I'll be out of office on Friday.",
+      "exampleVi": "Thứ Sáu mình nghỉ.",
+      "answer": "out of office"
+    },
+    {
+      "id": "sync-up",
+      "en": "sync up",
+      "vi": "trao đổi nhanh cho thống nhất",
+      "example": "Can we sync up after lunch?",
+      "exampleVi": "Sau bữa trưa mình trao đổi nhanh được không?",
+      "answer": "sync up"
+    },
+    {
+      "id": "on-my-side",
+      "en": "on my side",
+      "vi": "phía mình, phần của mình",
+      "example": "Everything looks good on my side.",
+      "exampleVi": "Phía mình mọi thứ đều ổn.",
+      "answer": "on my side"
+    }
   ],
   "tasks": [
     {
@@ -139,8 +350,21 @@
       "promptVi": "Viết standup của bạn: hôm qua làm gì, hôm nay sẽ làm gì.",
       "situation": "Daily standup, 9:30 am.",
       "required": [
-        { "label": "worked on", "variants": ["worked on", "working on"] },
-        { "label": "pick up", "variants": ["pick up", "picking up", "picked up"] }
+        {
+          "label": "worked on",
+          "variants": [
+            "worked on",
+            "working on"
+          ]
+        },
+        {
+          "label": "pick up",
+          "variants": [
+            "pick up",
+            "picking up",
+            "picked up"
+          ]
+        }
       ],
       "models": [
         "Yesterday I worked on the search page. Today I'll pick up the next bug ticket. No blockers on my side.",
@@ -153,8 +377,19 @@
       "promptVi": "Báo với team là bạn đang bị chặn và đang chờ một thứ gì đó.",
       "situation": "Daily standup. You can't continue your task.",
       "required": [
-        { "label": "blocked by", "variants": ["blocked by"] },
-        { "label": "waiting on", "variants": ["waiting on", "waiting for"] }
+        {
+          "label": "blocked by",
+          "variants": [
+            "blocked by"
+          ]
+        },
+        {
+          "label": "waiting on",
+          "variants": [
+            "waiting on",
+            "waiting for"
+          ]
+        }
       ],
       "models": [
         "I'm blocked by the design team. I'm still waiting on the final mockups.",
@@ -167,8 +402,22 @@
       "promptVi": "Kể về một lỗi (bug) bạn đang xử lý.",
       "situation": "Daily standup. You are working on a bug.",
       "required": [
-        { "label": "looking into", "variants": ["looking into", "look into", "looked into"] },
-        { "label": "figure out", "variants": ["figure out", "figured out", "figuring out"] }
+        {
+          "label": "looking into",
+          "variants": [
+            "looking into",
+            "look into",
+            "looked into"
+          ]
+        },
+        {
+          "label": "figure out",
+          "variants": [
+            "figure out",
+            "figured out",
+            "figuring out"
+          ]
+        }
       ],
       "models": [
         "I'm looking into a bug in the search page. I'm trying to figure out why it is so slow.",
@@ -181,8 +430,18 @@
       "promptVi": "Báo cáo một việc vừa xử lý xong: nguyên nhân là gì, đã sửa ra sao, kế hoạch có kịp không.",
       "situation": "Daily standup. Good news to share.",
       "required": [
-        { "label": "root cause", "variants": ["root cause"] },
-        { "label": "on track", "variants": ["on track"] }
+        {
+          "label": "root cause",
+          "variants": [
+            "root cause"
+          ]
+        },
+        {
+          "label": "on track",
+          "variants": [
+            "on track"
+          ]
+        }
       ],
       "models": [
         "We found the root cause: a wrong config value. I pushed a fix, and we are still on track for the release.",
@@ -195,8 +454,20 @@
       "promptVi": "Báo trước cho team biết một việc đang bị chậm, và hẹn khi nào cập nhật.",
       "situation": "Team channel or standup.",
       "required": [
-        { "label": "heads-up", "variants": ["heads-up", "heads up"] },
-        { "label": "by end of day", "variants": ["end of day", "end of the day"] }
+        {
+          "label": "heads-up",
+          "variants": [
+            "heads-up",
+            "heads up"
+          ]
+        },
+        {
+          "label": "by end of day",
+          "variants": [
+            "end of day",
+            "end of the day"
+          ]
+        }
       ],
       "models": [
         "Just a heads-up: the new feature is running a bit behind. I'll send an update by end of day.",
@@ -209,14 +480,102 @@
       "promptVi": "Nhắn Slack cho team: báo bạn nghỉ một buổi, và hẹn một đồng nghiệp trao đổi nhanh.",
       "situation": "Slack, #team channel.",
       "required": [
-        { "label": "out of office", "variants": ["out of office", "ooo", "out of the office"] },
-        { "label": "sync up", "variants": ["sync up", "sync-up"] }
+        {
+          "label": "out of office",
+          "variants": [
+            "out of office",
+            "ooo",
+            "out of the office"
+          ]
+        },
+        {
+          "label": "sync up",
+          "variants": [
+            "sync up",
+            "sync-up"
+          ]
+        }
       ],
       "models": [
         "Hi team, I'll be out of office on Friday morning. Lan, can we sync up today about the API changes?",
         "Morning all! I'm out of office tomorrow. Can we sync up this afternoon instead?"
       ],
       "tipVi": "Hẹn lịch thì dùng 'Can we...?' cho lịch sự."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "scenario-standup",
+      "titleVi": "Standup với tech lead",
+      "partner": "Minh, tech lead",
+      "situationVi": "Daily standup buổi sáng. Minh (tech lead) hỏi tình hình công việc của bạn.",
+      "goalVi": "Nói hôm qua làm gì, hôm nay làm gì, và có bị vướng gì không.",
+      "persona": "You are Minh, a friendly tech lead running a short daily standup. Ask what they did yesterday, what they will do today, and if anything blocks them. Ask one short follow-up question. Keep each message under 25 words.",
+      "goal": "The learner says what they did yesterday, what they will do today, and whether they have blockers.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Morning! What did you work on yesterday?",
+          "sayVi": "Chào buổi sáng! Hôm qua em làm gì?",
+          "replies": [
+            {
+              "text": "Yesterday I worked on the login page.",
+              "next": "today"
+            },
+            {
+              "text": "I wrapped up the payment API and fixed two bugs.",
+              "next": "today"
+            }
+          ]
+        },
+        {
+          "id": "today",
+          "say": "Nice. And what's the plan for today?",
+          "sayVi": "Tốt. Còn hôm nay định làm gì?",
+          "replies": [
+            {
+              "text": "Today I'll pick up the password reset ticket.",
+              "next": "blockers"
+            },
+            {
+              "text": "I'm going to write tests for the new endpoint.",
+              "next": "blockers"
+            }
+          ]
+        },
+        {
+          "id": "blockers",
+          "say": "Anything blocking you?",
+          "sayVi": "Có gì đang chặn em không?",
+          "replies": [
+            {
+              "text": "No blockers on my side.",
+              "next": "end"
+            },
+            {
+              "text": "Yes, I'm blocked by the design team. I'm still waiting on the mockups.",
+              "next": "help"
+            }
+          ]
+        },
+        {
+          "id": "help",
+          "say": "OK, I'll ping them after the standup. Thanks for the heads-up.",
+          "sayVi": "Được, sau standup anh nhắn họ. Cảm ơn đã báo.",
+          "replies": [
+            {
+              "text": "Thanks a lot!",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great, thanks. Let's sync up later if needed.",
+          "sayVi": "Tốt, cảm ơn. Cần thì mình trao đổi sau nhé.",
+          "replies": []
+        }
+      ]
     }
   ]
 }

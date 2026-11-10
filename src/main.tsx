@@ -12,6 +12,8 @@ import { CapturePage } from './features/capture/CapturePage';
 import { CaptureWritePage } from './features/capture/CaptureWritePage';
 import { ProgressPage } from './features/progress/ProgressPage';
 import { BaselinePage } from './features/progress/BaselinePage';
+import { RoleplayListPage } from './features/roleplay/RoleplayListPage';
+import { RoleplayPage } from './features/roleplay/RoleplayPage';
 import { ClockBadge } from './ui/ClockBadge';
 
 createRoot(document.getElementById('root')!).render(
@@ -28,6 +30,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/capture/:id/write" element={<CaptureWritePage />} />
         <Route path="/progress" element={<ProgressPage />} />
         <Route path="/baseline" element={<BaselinePage />} />
+        <Route path="/roleplay" element={<RoleplayListPage />} />
+        <Route path="/roleplay/:id" element={<RoleplayPage />} />
         <Route path="*" element={<TodayPage />} />
       </Routes>
       <ClockBadge />

@@ -2,5 +2,9 @@
   "id": "dev",
   "titleVi": "Phần mềm / IT",
   "color": "#3B5BDB",
-  "units": ["dev-standup"]
+  "units": [
+    "dev-standup",
+    "dev-ticket",
+    "dev-pr"
+  ]
 }

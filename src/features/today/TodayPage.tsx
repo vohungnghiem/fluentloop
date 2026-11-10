@@ -1,6 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router';
-import { BookOpen, ClipboardPaste, Layers, Mic, NotebookPen, PenLine, Play, Settings, TrendingUp } from 'lucide-react';
+import { BookOpen, ClipboardPaste, Layers, MessagesSquare, Mic, NotebookPen, PenLine, Play, Settings, TrendingUp } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { courseUnits, currentTrack } from '../../services/content';
@@ -13,10 +13,13 @@ export function TodayPage() {
   const navigate = useNavigate();
   // Re-read whenever the tables change; `now()` is the app clock (the debug page can shift it).
   const summary = useLiveQuery(() => todaySummary(now()), [], undefined);
-  const reads = useLiveQuery(() => db.reads.count(), [], 0);
+  const reads = useLiveQuery(() => db.reads.toArray(), [], []);
   if (!summary) return null;
 
-  const unit = courseUnits[0];
+  // The unit being learnt: the first with a snippet not read yet (the last one when all are read).
+  const read = new Set(reads.map((r) => r.snippetId));
+  const unit = courseUnits.find((u) => u.snippets.some((sn) => !read.has(sn.id))) ?? courseUnits[courseUnits.length - 1];
+  const readInUnit = unit.snippets.filter((sn) => read.has(sn.id)).length;
   // A week of data and no backup for a week: worth a gentle nudge.
   const WEEK = 7 * 86_400_000;
   const backedUp = lastExport();
@@ -73,7 +76,7 @@ export function TodayPage() {
               </ul>
             )}
             <p className="mt-4 text-sm text-ink-soft">
-              {vi.today.unit}: {unit.titleVi} · {Math.min(reads, unit.snippets.length)}/{unit.snippets.length}
+              {vi.today.unit}: {unit.titleVi} · {readInUnit}/{unit.snippets.length}
             </p>
           </>
         )}
@@ -92,13 +95,14 @@ export function TodayPage() {
         <StatTile value={summary.daysLearned} label={vi.today.stats.days} />
       </section>
 
-      <nav className="mt-3 grid grid-cols-3 gap-3">
+      <nav className="mt-3 grid grid-cols-4 gap-2">
         {[
+          { to: '/roleplay', icon: <MessagesSquare size={20} />, label: vi.roleplay.link },
           { to: '/capture', icon: <ClipboardPaste size={20} />, label: vi.capture.link },
           { to: '/errors', icon: <NotebookPen size={20} />, label: vi.errors.link },
           { to: '/progress', icon: <TrendingUp size={20} />, label: vi.progress.link },
         ].map((item) => (
-          <Link key={item.to} to={item.to} className="flex flex-col items-center gap-1 rounded-2xl border border-line bg-surface py-3 text-sm hover:border-primary">
+          <Link key={item.to} to={item.to} className="flex flex-col items-center gap-1 rounded-2xl border border-line bg-surface px-1 py-3 text-center text-[13px] hover:border-primary">
             <span className="text-track">{item.icon}</span>
             {item.label}
           </Link>
