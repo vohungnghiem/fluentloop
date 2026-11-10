@@ -6,5 +6,11 @@
     "dev-standup",
     "dev-ticket",
     "dev-pr"
-  ]
+  ],
+  "audience": "people who work in software (developers, testers, product people)",
+  "baseline": {
+    "writingVi": "Kể về một bug hoặc sự cố gần đây: chuyện gì xảy ra, bạn đã làm gì, kết quả ra sao.",
+    "speakingVi": "Nói về công việc của bạn: bạn làm gì, dự án hiện tại, một khó khăn gần đây."
+  },
+  "captureSample": "Hi team,\n\nThanks for the quick fix yesterday. Could you also double-check the retry logic when the token expires?\nWe should roll this out gradually to avoid surprises. Let me know if you run into any issues.\n\nBest,\nAnna"
 }

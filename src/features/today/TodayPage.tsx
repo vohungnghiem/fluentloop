@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router';
 import { BookOpen, ClipboardPaste, Layers, MessagesSquare, Mic, NotebookPen, PenLine, Play, Settings, TrendingUp } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
-import { courseUnits, currentTrack } from '../../services/content';
+import { courseUnits, currentTrack, library } from '../../services/content';
+import { TrackPicker } from '../settings/TrackPicker';
 import { db } from '../../services/db';
 import { todaySummary } from '../../services/learning';
 import { Button, Card, Chip, Lu, Note, PrimaryAction, StatTile } from '../../ui/ui';
@@ -45,6 +46,12 @@ export function TodayPage() {
         <section className="mt-8">
           <h1 className="text-2xl font-semibold">{vi.today.welcomeTitle}</h1>
           <p className="mt-2 leading-relaxed text-ink-soft">{vi.today.welcomeBody}</p>
+          {library.tracks.length > 1 && (
+            <div className="mt-4">
+              <p className="mb-2 text-sm font-medium">{vi.today.chooseTrack}</p>
+              <TrackPicker />
+            </div>
+          )}
         </section>
       )}
 

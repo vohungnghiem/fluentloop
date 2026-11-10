@@ -2,6 +2,7 @@ import { z } from 'zod';
 import type { Scenario } from '../../core/content/schema';
 import { correctionSchema, ERROR_LABELS } from '../../core/errors/labels';
 import { matchReply } from '../../core/roleplay/script';
+import { currentTrack } from '../content';
 import { getSettings, type Settings } from '../settings';
 import { askCached, type AiOutcome } from './cached';
 import { correctWithRules } from './correct';
@@ -26,7 +27,7 @@ const turnSchema = z.object({
 export type Turn = z.infer<typeof turnSchema>;
 
 const system = (scenario: Scenario) => `${scenario.persona}
-This is English practice for a Vietnamese software professional (about B1). Stay in character and keep each message under 30 words, in natural workplace English.
+This is English practice for Vietnamese ${currentTrack.audience} (about B1). Stay in character and keep each message under 30 words, in natural workplace English.
 The learner's goal: ${scenario.goal}
 After each learner message, return ONLY JSON:
 {"reply": string, "correction": {"corrected": string, "natural": string, "mistakes": [{"wrong": string, "right": string, "label": string, "vi": string}], "praiseVi": string} | null, "goalMet": boolean, "hintVi": string}

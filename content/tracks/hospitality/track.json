@@ -1,0 +1,12 @@
+{
+  "id": "hospitality",
+  "titleVi": "Khách sạn / Lễ tân",
+  "color": "#C2410C",
+  "units": ["hotel-front-desk"],
+  "audience": "people who work at a hotel front desk (receptionists)",
+  "baseline": {
+    "writingVi": "Kể về một vị khách khó tính bạn từng gặp: chuyện gì xảy ra, bạn đã xử lý thế nào.",
+    "speakingVi": "Giới thiệu khách sạn của bạn và một ngày làm việc ở quầy lễ tân."
+  },
+  "captureSample": "Dear Front Desk,\n\nWe will arrive around 11 a.m. on Friday. Would it be possible to check in early?\nAlso, could you arrange an airport transfer for two people on Sunday morning?\nThank you in advance.\n\nKind regards,\nMr. and Mrs. Tanaka"
+}

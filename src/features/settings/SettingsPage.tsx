@@ -9,6 +9,7 @@ import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
 import { Button, Card, Note } from '../../ui/ui';
 import { BackupCard } from '../backup/BackupCard';
+import { TrackPicker } from './TrackPicker';
 
 const field = 'mt-1 min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
 
@@ -35,6 +36,12 @@ export function SettingsPage() {
         <h1 className="text-xl font-semibold">{vi.settings.title}</h1>
         <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
       </header>
+
+      <Card>
+        <h2 className="font-semibold">{vi.settings.track}</h2>
+        <p className="mt-1 text-sm text-ink-soft">{vi.settings.trackBody}</p>
+        <div className="mt-3"><TrackPicker /></div>
+      </Card>
 
       <Card>
         <h2 className="flex items-center gap-2 font-semibold"><KeyRound size={18} />{vi.settings.aiTitle}</h2>

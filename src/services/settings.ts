@@ -8,6 +8,8 @@ import { useSyncExternalStore } from 'react';
 export type AiProvider = 'none' | 'gemini' | 'openai' | 'openrouter' | 'fake';
 
 export interface Settings {
+  /** The industry the learner studies (a content track id). */
+  trackId: string;
   aiProvider: AiProvider;
   geminiKey: string;
   geminiModel: string;
@@ -20,6 +22,7 @@ export interface Settings {
 }
 
 export const DEFAULT_SETTINGS: Settings = {
+  trackId: 'dev',
   aiProvider: 'none',
   geminiKey: '',
   geminiModel: 'gemini-2.5-flash',

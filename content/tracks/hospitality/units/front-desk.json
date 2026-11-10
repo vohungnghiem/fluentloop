@@ -1,0 +1,179 @@
+{
+  "id": "hotel-front-desk",
+  "track": "hospitality",
+  "title": "At the front desk",
+  "titleVi": "Tại quầy lễ tân",
+  "cefr": "A2",
+  "snippets": [
+    {
+      "id": "hotel-check-in",
+      "genre": "conversation",
+      "titleVi": "Đón khách nhận phòng",
+      "speaker": "Lễ tân nói với khách",
+      "cefr": "A2",
+      "text": [
+        "Good evening and welcome to the Riverside Hotel. Do you have a reservation with us?",
+        "May I see your passport, please? Your room is on the third floor, and breakfast is served from 6 to 10."
+      ],
+      "translationVi": [
+        "Chào buổi tối và chào mừng quý khách đến khách sạn Riverside. Quý khách đã đặt phòng chưa ạ?",
+        "Cho tôi xem hộ chiếu của quý khách được không ạ? Phòng của quý khách ở tầng ba, bữa sáng phục vụ từ 6 đến 10 giờ."
+      ],
+      "chunks": ["welcome-to", "have-a-reservation", "may-i-see", "breakfast-is-served"],
+      "task": "task-hotel-check-in"
+    },
+    {
+      "id": "hotel-early-arrival",
+      "genre": "conversation",
+      "titleVi": "Khách đến sớm, phòng chưa sẵn sàng",
+      "speaker": "Lễ tân nói với khách",
+      "cefr": "B1",
+      "text": [
+        "I'm afraid your room isn't ready yet. Check-in time is at 2 p.m.",
+        "In the meantime, you're welcome to leave your luggage with us and relax in the lobby."
+      ],
+      "translationVi": [
+        "Rất tiếc là phòng của quý khách chưa sẵn sàng. Giờ nhận phòng là 2 giờ chiều.",
+        "Trong lúc chờ, quý khách cứ để hành lý ở chỗ chúng tôi và nghỉ ngơi ở sảnh."
+      ],
+      "chunks": ["im-afraid", "isnt-ready-yet", "in-the-meantime", "youre-welcome-to", "leave-your-luggage"],
+      "task": "task-hotel-early"
+    },
+    {
+      "id": "hotel-complaint",
+      "genre": "conversation",
+      "titleVi": "Xử lý phàn nàn",
+      "speaker": "Lễ tân nói với khách",
+      "cefr": "B1",
+      "text": [
+        "I'm so sorry about the noise last night. I'll move you to a quieter room on the fifth floor.",
+        "Is there anything else I can do for you?"
+      ],
+      "translationVi": [
+        "Tôi rất xin lỗi về tiếng ồn tối qua. Tôi sẽ chuyển quý khách sang một phòng yên tĩnh hơn ở tầng năm.",
+        "Tôi có thể giúp gì thêm cho quý khách không ạ?"
+      ],
+      "chunks": ["so-sorry-about", "move-you-to", "anything-else"],
+      "task": "task-hotel-complaint"
+    },
+    {
+      "id": "hotel-check-out",
+      "genre": "conversation",
+      "titleVi": "Trả phòng và thanh toán",
+      "speaker": "Lễ tân nói với khách",
+      "cefr": "A2",
+      "text": [
+        "Here is your bill. Breakfast is included, but the minibar is charged separately.",
+        "How would you like to pay? We accept cash and all major cards."
+      ],
+      "translationVi": [
+        "Đây là hoá đơn của quý khách. Bữa sáng đã bao gồm, nhưng minibar được tính riêng.",
+        "Quý khách muốn thanh toán bằng gì ạ? Chúng tôi nhận tiền mặt và các loại thẻ phổ biến."
+      ],
+      "chunks": ["here-is-your-bill", "is-included", "charged-separately", "how-would-you-like-to-pay"],
+      "task": "task-hotel-check-out"
+    }
+  ],
+  "chunks": [
+    { "id": "welcome-to", "en": "welcome to", "vi": "chào mừng (quý khách) đến", "example": "Welcome to the Riverside Hotel.", "exampleVi": "Chào mừng quý khách đến khách sạn Riverside.", "answer": "Welcome to" },
+    { "id": "have-a-reservation", "en": "have a reservation", "vi": "đã đặt phòng/đặt chỗ", "example": "Do you have a reservation with us?", "exampleVi": "Quý khách đã đặt phòng ở đây chưa ạ?", "answer": "have a reservation" },
+    { "id": "may-i-see", "en": "may I see", "vi": "cho tôi xem … được không", "example": "May I see your ID card, please?", "exampleVi": "Cho tôi xem thẻ căn cước được không ạ?", "answer": "May I see" },
+    { "id": "breakfast-is-served", "en": "breakfast is served", "vi": "bữa sáng được phục vụ", "example": "Breakfast is served on the first floor.", "exampleVi": "Bữa sáng được phục vụ ở tầng một.", "answer": "is served" },
+    { "id": "im-afraid", "en": "I'm afraid", "vi": "rất tiếc là (báo tin không vui, lịch sự)", "example": "I'm afraid we are fully booked tonight.", "exampleVi": "Rất tiếc là tối nay chúng tôi đã kín phòng.", "answer": "I'm afraid" },
+    { "id": "isnt-ready-yet", "en": "isn't ready yet", "vi": "chưa sẵn sàng", "example": "Your room isn't ready yet.", "exampleVi": "Phòng của quý khách chưa sẵn sàng.", "answer": "isn't ready yet" },
+    { "id": "in-the-meantime", "en": "in the meantime", "vi": "trong lúc chờ", "example": "In the meantime, would you like a coffee?", "exampleVi": "Trong lúc chờ, quý khách dùng cà phê nhé?", "answer": "In the meantime" },
+    { "id": "youre-welcome-to", "en": "you're welcome to", "vi": "quý khách cứ tự nhiên (làm gì)", "example": "You're welcome to use the pool before check-in.", "exampleVi": "Quý khách cứ dùng hồ bơi trước giờ nhận phòng.", "answer": "You're welcome to" },
+    { "id": "leave-your-luggage", "en": "leave your luggage", "vi": "gửi/để lại hành lý", "example": "You can leave your luggage at the front desk.", "exampleVi": "Quý khách có thể gửi hành lý ở quầy lễ tân.", "answer": "leave your luggage" },
+    { "id": "so-sorry-about", "en": "I'm so sorry about", "vi": "tôi rất xin lỗi về", "example": "I'm so sorry about the delay.", "exampleVi": "Tôi rất xin lỗi về sự chậm trễ.", "answer": "so sorry about" },
+    { "id": "move-you-to", "en": "move you to", "vi": "chuyển quý khách sang", "example": "Let me move you to a room with a view.", "exampleVi": "Để tôi chuyển quý khách sang một phòng có view.", "answer": "move you to" },
+    { "id": "anything-else", "en": "is there anything else I can do for you", "vi": "tôi có thể giúp gì thêm không", "forms": ["Is there anything else I can do for you"], "example": "Is there anything else I can do for you today?", "exampleVi": "Hôm nay tôi có thể giúp gì thêm cho quý khách không?", "answer": "anything else" },
+    { "id": "here-is-your-bill", "en": "here is your bill", "vi": "đây là hoá đơn của quý khách", "example": "Here is your bill for the two nights.", "exampleVi": "Đây là hoá đơn cho hai đêm của quý khách.", "answer": "Here is your bill" },
+    { "id": "is-included", "en": "is included", "vi": "đã bao gồm", "example": "Wi-Fi is included in the room rate.", "exampleVi": "Wi-Fi đã bao gồm trong giá phòng.", "answer": "is included" },
+    { "id": "charged-separately", "en": "charged separately", "vi": "tính tiền riêng", "example": "Parking is charged separately.", "exampleVi": "Gửi xe được tính tiền riêng.", "answer": "charged separately" },
+    { "id": "how-would-you-like-to-pay", "en": "how would you like to pay", "vi": "quý khách muốn thanh toán bằng gì", "example": "How would you like to pay, by card or in cash?", "exampleVi": "Quý khách muốn thanh toán bằng thẻ hay tiền mặt?", "answer": "How would you like to pay" }
+  ],
+  "tasks": [
+    {
+      "id": "task-hotel-check-in",
+      "promptVi": "Chào một vị khách vừa đến, hỏi họ đã đặt phòng chưa và xin xem giấy tờ.",
+      "situation": "Front desk, 8 p.m.",
+      "required": [
+        { "label": "have a reservation", "variants": ["have a reservation", "have a booking"] },
+        { "label": "may I see", "variants": ["may i see", "could i see", "can i see"] }
+      ],
+      "models": [
+        "Good evening and welcome! Do you have a reservation with us? May I see your passport, please?",
+        "Welcome to the hotel. Do you have a reservation? May I see your ID, please?"
+      ],
+      "tipVi": "Với khách, dùng “May I…?” lịch sự hơn “Give me…”."
+    },
+    {
+      "id": "task-hotel-early",
+      "promptVi": "Khách đến lúc 10 giờ sáng nhưng phòng chưa xong. Báo tin lịch sự và đề nghị cách chờ.",
+      "situation": "Front desk, 10 a.m.",
+      "required": [
+        { "label": "I'm afraid", "variants": ["i'm afraid", "i am afraid"] },
+        { "label": "in the meantime", "variants": ["in the meantime", "meanwhile"] }
+      ],
+      "models": [
+        "I'm afraid your room isn't ready yet. In the meantime, you're welcome to leave your luggage with us.",
+        "I'm afraid check-in is at 2 p.m. In the meantime, you can have a coffee in the lobby."
+      ],
+      "tipVi": "“I'm afraid…” làm tin không vui nhẹ nhàng hơn."
+    },
+    {
+      "id": "task-hotel-complaint",
+      "promptVi": "Khách phàn nàn điều hoà không chạy. Xin lỗi, đưa giải pháp, và hỏi họ cần gì thêm.",
+      "situation": "Phone call from room 512.",
+      "required": [
+        { "label": "so sorry", "variants": ["so sorry", "very sorry"] },
+        { "label": "anything else", "variants": ["anything else"] }
+      ],
+      "models": [
+        "I'm so sorry about the air conditioning. I'll send a technician right away. Is there anything else I can do for you?",
+        "I'm very sorry about that. I can move you to another room now. Is there anything else you need?"
+      ],
+      "tipVi": "Xin lỗi trước, giải pháp sau, cuối cùng hỏi thêm."
+    },
+    {
+      "id": "task-hotel-check-out",
+      "promptVi": "Khách trả phòng. Đưa hoá đơn, giải thích một khoản tính thêm, và hỏi cách thanh toán.",
+      "situation": "Front desk, check-out.",
+      "required": [
+        { "label": "is included", "variants": ["is included", "are included"] },
+        { "label": "how would you like to pay", "variants": ["how would you like to pay"] }
+      ],
+      "models": [
+        "Here is your bill. Breakfast is included, but the laundry is charged separately. How would you like to pay?",
+        "Here's your bill. The spa is not included. How would you like to pay, by card or in cash?"
+      ],
+      "tipVi": "Giải thích khoản tính thêm rõ ràng để khách không bất ngờ."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "scenario-hotel-early",
+      "titleVi": "Khách đến sớm",
+      "partner": "Mr. Brown, a hotel guest",
+      "situationVi": "Ông Brown đến quầy lúc 10 giờ sáng, mệt sau chuyến bay dài, muốn nhận phòng ngay.",
+      "goalVi": "Báo phòng chưa sẵn sàng một cách lịch sự, đề nghị gửi hành lý, và nói khi nào phòng xong.",
+      "persona": "You are Mr. Brown, a tired but polite hotel guest who just arrived after a long flight at 10 a.m. You want your room now. Ask if you can check in, then ask where you can wait, then ask when the room will be ready.",
+      "goal": "The receptionist politely says the room isn't ready, offers to keep the luggage, and says when the room will be ready.",
+      "script": [
+        { "id": "start", "say": "Hi, I have a reservation under Brown. Can I check in now? I'm really tired.", "sayVi": "Chào, tôi có đặt phòng tên Brown. Tôi nhận phòng bây giờ được không? Tôi mệt lắm.", "replies": [
+          { "text": "Welcome, Mr. Brown. I'm afraid your room isn't ready yet.", "next": "wait" },
+          { "text": "I'm sorry, check-in time is at 2 p.m.", "next": "wait" }
+        ] },
+        { "id": "wait", "say": "Oh no. What can I do until then?", "sayVi": "Ôi. Vậy tôi làm gì trong lúc chờ?", "replies": [
+          { "text": "You're welcome to leave your luggage with us and relax in the lobby.", "next": "when" },
+          { "text": "In the meantime, you can have breakfast in our restaurant.", "next": "when" }
+        ] },
+        { "id": "when", "say": "OK. When do you think the room will be ready?", "sayVi": "Được. Anh nghĩ khi nào phòng sẵn sàng?", "replies": [
+          { "text": "I'll try to have it ready by noon and I'll call you.", "next": "end" },
+          { "text": "It should be ready by 1 p.m. I'll let you know.", "next": "end" }
+        ] },
+        { "id": "end", "say": "Thank you, that's very kind.", "sayVi": "Cảm ơn anh, anh tử tế quá.", "replies": [] }
+      ]
+    }
+  ]
+}

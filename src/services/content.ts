@@ -1,3 +1,4 @@
+import { getSettings } from './settings';
 import { trackSchema, unitSchema, type Chunk, type Library, type Snippet, type Task, type Unit } from '../core/content/schema';
 
 /** All content packs under content/tracks, parsed once at start (they are checked at build). */
@@ -10,8 +11,10 @@ export const library: Library = {
   units: Object.values(unitFiles).map((data) => unitSchema.parse(data)),
 };
 
-/** The learner's track. One for now; onboarding chooses it later. */
-export const currentTrack = library.tracks.find((track) => track.id === 'dev') ?? library.tracks[0];
+/**
+ * The learner's track, from the settings. Read once at start: changing the track reloads the app.
+ */
+export const currentTrack = library.tracks.find((track) => track.id === getSettings().trackId) ?? library.tracks[0];
 
 /** Units of the current track, in course order. */
 export const courseUnits: Unit[] = currentTrack.units.flatMap((id) => library.units.filter((unit) => unit.id === id));

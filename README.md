@@ -4,7 +4,7 @@
 
 Mỗi ngày 15 phút, học tiếng Anh **của chính công việc mình**, theo vòng lặp **Ôn → Nạp → Nói theo → Dùng → Sửa → Chốt**. Lỗi của bạn trở thành bài ôn của ngày mai.
 
-Trạng thái: **xong Sprint 05**: màn Tiến bộ, mốc ghi âm/bài viết, sao lưu/nhập file, PWA chạy offline. Trước đó: Bỏ túi (dán email/ticket hoặc dùng bookmarklet, chọn câu thành thẻ, AI dịch + tạo bài viết). Ôn → Nạp → Nói theo → Dùng (+ Sửa) → Chốt. Loa ở mọi câu, thẻ nghe rồi gõ, AI sửa bài tuỳ chọn (Gemini/OpenRouter, key trong trình duyệt), Sổ lỗi, lỗi thành thẻ ôn. Không AI, không micro vẫn học được. Trang /debug: nhảy ngày, nhảy bước, giả lập micro và AI. Nội dung: track `dev`, chủ đề Standup (6 đoạn, 23 cụm).
+Trạng thái: **xong Sprint 07** (hết lộ trình): 2 ngành (Phần mềm/IT: Standup, Ticket, Pull request; Khách sạn/Lễ tân), Hội thoại có AI hoặc kịch bản. Sprint 05: màn Tiến bộ, mốc ghi âm/bài viết, sao lưu/nhập file, PWA chạy offline. Trước đó: Bỏ túi (dán email/ticket hoặc dùng bookmarklet, chọn câu thành thẻ, AI dịch + tạo bài viết). Ôn → Nạp → Nói theo → Dùng (+ Sửa) → Chốt. Loa ở mọi câu, thẻ nghe rồi gõ, AI sửa bài tuỳ chọn (Gemini/OpenRouter, key trong trình duyệt), Sổ lỗi, lỗi thành thẻ ôn. Không AI, không micro vẫn học được. Trang /debug: nhảy ngày, nhảy bước, giả lập micro và AI. Nội dung: track `dev`, chủ đề Standup (6 đoạn, 23 cụm).
 
 ## Tài liệu
 | File | Nội dung |
@@ -26,3 +26,8 @@ npm run build
 Không server, không DB, không Docker. AI là tuỳ chọn (bạn tự nhập key Gemini/OpenRouter trong Cài đặt).
 
 Nguồn gốc: tách từ dự án Lingua Quest (`~/Desktop/LINGUA QUEST`).
+
+## Thêm một ngành mới (không sửa code)
+1. Tạo `content/tracks/<ngành>/track.json`: id, tên, màu, danh sách unit, `audience` (cho prompt AI), đề làm mốc, email mẫu cho Bỏ túi.
+2. Tạo `content/tracks/<ngành>/units/<chủ-đề>.json`: đoạn văn, cụm, nhiệm vụ viết, kịch bản hội thoại. Xem `content/tracks/hospitality` làm mẫu.
+3. `npm run content:check` để kiểm tra. Ngành mới tự hiện trong lời chào và Cài đặt.

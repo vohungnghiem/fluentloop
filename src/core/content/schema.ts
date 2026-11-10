@@ -47,7 +47,8 @@ export type Task = z.infer<typeof taskSchema>;
 
 export const snippetSchema = z.object({
   id,
-  genre: z.enum(['standup', 'slack', 'email', 'ticket', 'pr', 'docs', 'meeting']),
+  /** What kind of text: standup, slack, email, ticket, pr, conversation, phone… shown as a label. */
+  genre: z.string().min(1),
   titleVi: z.string().min(1),
   /** Who says it, shown above the text: "Linh, backend dev". */
   speaker: z.string().optional(),
@@ -110,6 +111,12 @@ export const trackSchema = z.object({
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
   /** Unit ids in learning order. */
   units: z.array(id).min(1),
+  /** Who learns this track, in English, for AI prompts: "people who work in software". */
+  audience: z.string().min(1),
+  /** The benchmark prompts (Vietnamese). */
+  baseline: z.object({ writingVi: z.string().min(1), speakingVi: z.string().min(1) }),
+  /** A short text to try "capture" with when the learner has nothing to paste. */
+  captureSample: z.string().optional(),
 });
 export type Track = z.infer<typeof trackSchema>;
 

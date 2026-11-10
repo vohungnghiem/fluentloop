@@ -2,6 +2,13 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router';
 import './styles.css';
+import { currentTrack } from './services/content';
+
+// Each industry has its own colour for labels and illustrations (lighter on the dark theme).
+document.head.insertAdjacentHTML(
+  'beforeend',
+  `<style>:root{--track:${currentTrack.color}}@media (prefers-color-scheme: dark){:root{--track:color-mix(in srgb, ${currentTrack.color} 55%, white)}}</style>`,
+);
 import { TodayPage } from './features/today/TodayPage';
 import { SessionPage } from './features/session/SessionPage';
 import { DebugPage } from './features/debug/DebugPage';

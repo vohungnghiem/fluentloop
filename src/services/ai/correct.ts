@@ -2,6 +2,7 @@ import { correctionSchema, ERROR_LABELS, type Correction } from '../../core/erro
 import { applyMistakes, ruleMistakes } from '../../core/errors/rules';
 import type { Task } from '../../core/content/schema';
 import { aiCallsToday, askCached } from './cached';
+import { currentTrack } from '../content';
 import { getSettings, aiReady, type Settings } from '../settings';
 import { AiError, askJson, type AiErrorKind } from './providers';
 
@@ -12,7 +13,7 @@ import { AiError, askJson, type AiErrorKind } from './providers';
 
 const PROMPT_VERSION = 1;
 
-const SYSTEM = `You are a kind English writing coach for Vietnamese people who work in software.
+const system = () => `You are a kind English writing coach for Vietnamese ${currentTrack.audience}.
 Correct the learner's short workplace text. Return ONLY JSON:
 {"corrected": string, "natural": string, "mistakes": [{"wrong": string, "right": string, "label": string, "vi": string}], "praiseVi": string}
 Rules:
@@ -59,7 +60,7 @@ export async function correctWriting(task: Task, text: string, now: Date, settin
     settings,
     now,
     version: `correct-${PROMPT_VERSION}`,
-    system: SYSTEM,
+    system: system(),
     user: `Task (for context): ${task.promptVi}${task.situation ? ` — ${task.situation}` : ''}\nLearner's text:\n${text.trim()}`,
     schema: correctionSchema,
     fake: () => fakeAi(task, text),

@@ -8,21 +8,13 @@ import { vi } from '../../copy/vi';
 import { helpWithCapture } from '../../services/ai/capture';
 import { now } from '../../services/clock';
 import { db } from '../../services/db';
+import { currentTrack } from '../../services/content';
 import { saveCapture } from '../../services/learning';
 import { aiReady, useSettings } from '../../services/settings';
 import { Button, Card, Note, PrimaryAction } from '../../ui/ui';
 import { SpeakButton } from '../../ui/speech';
 
 /** A sentence's choice. `aiRange` is the span AI explained: its meaning only fits that span. */
-/** A short work email to try the page with, when the learner has nothing to paste yet. */
-const SAMPLE = `Hi team,
-
-Thanks for the quick fix yesterday. Could you also double-check the retry logic when the token expires?
-We should roll this out gradually to avoid surprises. Let me know if you run into any issues.
-
-Best,
-Anna`;
-
 type Pick = { on: boolean; start: number; end: number; vi?: string; chunkVi?: string; aiRange?: [number, number] };
 
 const meaningFits = (pick: Pick) => !!pick.chunkVi && pick.aiRange?.[0] === pick.start && pick.aiRange?.[1] === pick.end;
@@ -193,8 +185,8 @@ export function CapturePage() {
             placeholder={vi.capture.placeholder}
             className="w-full resize-y rounded-xl border border-line bg-surface px-4 py-3 leading-relaxed outline-none focus:border-primary"
           />
-          {!text && (
-            <Button variant="quiet" onClick={() => { setText(SAMPLE); setSource(vi.capture.sampleSource); }}>{vi.capture.trySample}</Button>
+          {!text && currentTrack.captureSample && (
+            <Button variant="quiet" onClick={() => { setText(currentTrack.captureSample ?? ''); setSource(vi.capture.sampleSource); }}>{vi.capture.trySample}</Button>
           )}
           <label className="block">
             <span className="text-sm font-medium">{vi.capture.sourceLabel}</span>

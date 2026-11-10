@@ -9,8 +9,10 @@ import { finishReading, nextStep } from '../../services/learning';
 import { Chip, PrimaryAction } from '../../ui/ui';
 import { SpeakButton } from '../../ui/speech';
 
+/** Labels for known kinds of text; any other kind shows as written (content decides). */
 const GENRE: Record<string, string> = {
   standup: 'Standup', slack: 'Slack', email: 'Email', ticket: 'Ticket', pr: 'Pull request', docs: 'Docs', meeting: 'Họp',
+  conversation: 'Hội thoại', phone: 'Điện thoại', chat: 'Tin nhắn', notice: 'Thông báo',
 };
 
 /** Read a short text; tap a chunk for its meaning; choose which chunks to review from tomorrow. */
@@ -38,7 +40,7 @@ export function InputStep({ session }: { session: SessionRow }) {
 
       <article className="mt-5 rounded-2xl border border-line bg-surface p-5">
         <div className="mb-3 flex flex-wrap items-center gap-2 text-sm text-ink-soft">
-          <Chip tone="track">{GENRE[snippet.genre]}</Chip>
+          <Chip tone="track">{GENRE[snippet.genre] ?? snippet.genre}</Chip>
           {snippet.speaker && <span>{snippet.speaker}</span>}
           <span className="ml-auto">{snippet.cefr}</span>
         </div>

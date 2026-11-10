@@ -5,6 +5,7 @@ import { dayKey } from '../../core/date';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db } from '../../services/db';
+import { currentTrack } from '../../services/content';
 import { startRecording, type RecordError, type Recording } from '../../services/speech/record';
 import { Button, Card, Note, PrimaryAction } from '../../ui/ui';
 import { AudioPlayer } from './ProgressPage';
@@ -65,7 +66,7 @@ export function BaselinePage() {
 
       <Card>
         <h2 className="font-semibold">{vi.baseline.writingTitle}</h2>
-        <p className="mt-1">{vi.baseline.writingPrompt}</p>
+        <p className="mt-1">{currentTrack.baseline.writingVi}</p>
         <textarea
           value={text}
           onChange={(e) => { setText(e.target.value); setSavedText(false); }}
@@ -86,7 +87,7 @@ export function BaselinePage() {
 
       <Card>
         <h2 className="font-semibold">{vi.baseline.audioTitle}</h2>
-        <p className="mt-1">{vi.baseline.audioPrompt}</p>
+        <p className="mt-1">{currentTrack.baseline.speakingVi}</p>
         <div className="mt-4 flex flex-wrap items-center gap-3">
           {recording ? (
             <>

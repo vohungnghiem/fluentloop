@@ -1,12 +1,13 @@
 import { z } from 'zod';
 import { suggestBlank } from '../../core/capture/split';
 import { taskSchema, type Task } from '../../core/content/schema';
+import { currentTrack } from '../content';
 import { getSettings, type Settings } from '../settings';
 import { askCached, type AiOutcome } from './cached';
 
 /** AI help for a pasted text: meanings, the chunk worth learning in each sentence, and a task. */
 
-const SYSTEM = `You help a Vietnamese software professional learn English from their own work texts.
+const system = () => `You help Vietnamese ${currentTrack.audience} learn English from their own work texts.
 For each given sentence, return its Vietnamese meaning and the most useful reusable chunk in it (2-5 words, copied exactly from the sentence, e.g. "double-check", "roll this out", "take a look at"). Not names, not code, not plain nouns.
 Also make ONE short writing task in Vietnamese that makes them reuse 2 of those chunks in a similar real situation, with 2 natural model answers (1-3 sentences each).
 Return ONLY JSON:
@@ -41,7 +42,7 @@ export async function helpWithCapture(sentences: string[], now: Date, settings: 
     settings,
     now,
     version: 'capture-1',
-    system: SYSTEM,
+    system: system(),
     user: sentences.map((s, i) => `${i + 1}. ${s}`).join('\n'),
     schema: resultSchema,
     fake: () => fake(sentences),
