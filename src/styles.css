@@ -70,6 +70,30 @@ html {
   color: var(--ink);
   font-family: var(--font-sans);
   -webkit-text-size-adjust: 100%;
+  /* Keep the scrollbar's room on every screen, so short and long pages line up (no sideways jump). */
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+/* A thin scrollbar in the app's colours (Chrome, Edge, Safari). */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  border: 3px solid var(--paper);
+  border-radius: 999px;
+  background: var(--line);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-soft);
+}
+::-webkit-scrollbar-button {
+  display: none;
 }
 
 body {
