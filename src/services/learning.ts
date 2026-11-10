@@ -92,7 +92,9 @@ export async function recordReview(
     const session = await db.sessions.get(sessionId);
     if (!card || !session || session.reviewedIds.includes(cardId)) return;
     await db.cards.update(cardId, { fsrs: grade(card.fsrs, outcome.rating, now), updatedAt: now.toISOString() });
-    await db.reviews.add({ id: uuid(), cardId, at: now.toISOString(), day: dayKey(now), ...outcome });
+    const last = card.fsrs.lastReview ?? card.createdAt;
+    const gapDays = Math.max(0, (now.getTime() - Date.parse(last)) / 86_400_000);
+    await db.reviews.add({ id: uuid(), cardId, at: now.toISOString(), day: dayKey(now), gapDays, ...outcome });
     await db.sessions.update(sessionId, {
       reviewedIds: [...session.reviewedIds, cardId],
       stats: {
@@ -207,6 +209,8 @@ export interface TodaySummary {
   firstTime: boolean;
   /** Cards due tomorrow (within tomorrow's cap), for "see you tomorrow". */
   dueTomorrow: number;
+  /** When the first card was made: a backup reminder only makes sense after a week of data. */
+  firstCardAt?: string;
 }
 
 export async function todaySummary(now: Date): Promise<TodaySummary> {
@@ -227,6 +231,7 @@ export async function todaySummary(now: Date): Promise<TodaySummary> {
     active,
     firstTime: sessions.length === 0,
     dueTomorrow: dueQueue(cards, tomorrow, 0).length,
+    firstCardAt: cards.reduce<string | undefined>((min, c) => (!min || c.createdAt < min ? c.createdAt : min), undefined),
   };
 }
 

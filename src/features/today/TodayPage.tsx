@@ -1,12 +1,13 @@
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router';
-import { BookOpen, ClipboardPaste, Layers, Mic, NotebookPen, PenLine, Play, Settings } from 'lucide-react';
+import { BookOpen, ClipboardPaste, Layers, Mic, NotebookPen, PenLine, Play, Settings, TrendingUp } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { courseUnits, currentTrack } from '../../services/content';
 import { db } from '../../services/db';
 import { todaySummary } from '../../services/learning';
-import { Button, Card, Chip, Lu, PrimaryAction, StatTile } from '../../ui/ui';
+import { Button, Card, Chip, Lu, Note, PrimaryAction, StatTile } from '../../ui/ui';
+import { lastExport } from '../../services/backup';
 
 export function TodayPage() {
   const navigate = useNavigate();
@@ -16,6 +17,11 @@ export function TodayPage() {
   if (!summary) return null;
 
   const unit = courseUnits[0];
+  // A week of data and no backup for a week: worth a gentle nudge.
+  const WEEK = 7 * 86_400_000;
+  const backedUp = lastExport();
+  const needsBackup =
+    !!summary.firstCardAt && now().getTime() - Date.parse(summary.firstCardAt) > WEEK && (!backedUp || now().getTime() - Date.parse(backedUp) > WEEK);
   const start = () => navigate('/session');
   const active = summary.active;
 
@@ -27,8 +33,6 @@ export function TodayPage() {
           <span className="text-lg font-semibold">FluentLoop</span>
         </div>
         <nav className="flex items-center gap-1">
-          <Link to="/capture" className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm text-ink-soft hover:text-ink"><ClipboardPaste size={16} />{vi.capture.link}</Link>
-          <Link to="/errors" className="inline-flex items-center gap-1 rounded-lg px-2 py-1.5 text-sm text-ink-soft hover:text-ink"><NotebookPen size={16} />{vi.errors.link}</Link>
           <Link to="/settings" className="rounded-lg p-1.5 text-ink-soft hover:text-ink" aria-label={vi.settings.link} title={vi.settings.link}><Settings size={18} /></Link>
         </nav>
       </header>
@@ -87,6 +91,27 @@ export function TodayPage() {
         <StatTile value={summary.cards} label={vi.today.stats.cards} />
         <StatTile value={summary.daysLearned} label={vi.today.stats.days} />
       </section>
+
+      <nav className="mt-3 grid grid-cols-3 gap-3">
+        {[
+          { to: '/capture', icon: <ClipboardPaste size={20} />, label: vi.capture.link },
+          { to: '/errors', icon: <NotebookPen size={20} />, label: vi.errors.link },
+          { to: '/progress', icon: <TrendingUp size={20} />, label: vi.progress.link },
+        ].map((item) => (
+          <Link key={item.to} to={item.to} className="flex flex-col items-center gap-1 rounded-2xl border border-line bg-surface py-3 text-sm hover:border-primary">
+            <span className="text-track">{item.icon}</span>
+            {item.label}
+          </Link>
+        ))}
+      </nav>
+
+      {needsBackup && (
+        <div className="mt-4">
+          <Note tone="accent">
+            {vi.backup.reminder} <Link to="/settings" className="font-medium underline">{vi.backup.reminderAction}</Link>
+          </Note>
+        </div>
+      )}
 
       <p className="mt-6 text-center text-[13px] text-ink-soft">{vi.app.localData}</p>
       <p className="mt-2 text-center text-sm">

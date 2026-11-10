@@ -38,6 +38,8 @@ export interface ReviewRow {
   rating: RatingName;
   result: AnswerResult;
   ms: number;
+  /** Days since the card was last reviewed (or learnt): retention after a week uses it. */
+  gapDays?: number;
 }
 
 export interface AttemptRow {
@@ -119,6 +121,18 @@ export interface CaptureRow {
   updatedAt: string;
 }
 
+/** A benchmark: a minute of speaking or a short text, redone every four weeks to compare. */
+export interface BaselineRow {
+  id: string;
+  kind: 'writing' | 'audio';
+  at: string;
+  day: string;
+  text?: string;
+  audio?: Blob;
+  seconds?: number;
+  updatedAt: string;
+}
+
 export interface AiCacheRow {
   hash: string;
   result: unknown;
@@ -140,6 +154,7 @@ export const db = new Dexie('fluentloop') as Dexie & {
   aiCache: EntityTable<AiCacheRow, 'hash'>;
   aiUsage: EntityTable<AiUsageRow, 'day'>;
   captures: EntityTable<CaptureRow, 'id'>;
+  baselines: EntityTable<BaselineRow, 'id'>;
 };
 
 db.version(1).stores({
@@ -159,4 +174,8 @@ db.version(2).stores({
 
 db.version(3).stores({
   captures: 'id, at',
+});
+
+db.version(4).stores({
+  baselines: 'id, kind, at',
 });

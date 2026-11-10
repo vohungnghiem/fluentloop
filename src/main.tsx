@@ -10,6 +10,8 @@ import { SettingsPage } from './features/settings/SettingsPage';
 import { ErrorsPage } from './features/errors/ErrorsPage';
 import { CapturePage } from './features/capture/CapturePage';
 import { CaptureWritePage } from './features/capture/CaptureWritePage';
+import { ProgressPage } from './features/progress/ProgressPage';
+import { BaselinePage } from './features/progress/BaselinePage';
 import { ClockBadge } from './ui/ClockBadge';
 
 createRoot(document.getElementById('root')!).render(
@@ -24,6 +26,8 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/errors" element={<ErrorsPage />} />
         <Route path="/capture" element={<CapturePage />} />
         <Route path="/capture/:id/write" element={<CaptureWritePage />} />
+        <Route path="/progress" element={<ProgressPage />} />
+        <Route path="/baseline" element={<BaselinePage />} />
         <Route path="*" element={<TodayPage />} />
       </Routes>
       <ClockBadge />

@@ -4,7 +4,7 @@
 
 Mỗi ngày 15 phút, học tiếng Anh **của chính công việc mình**, theo vòng lặp **Ôn → Nạp → Nói theo → Dùng → Sửa → Chốt**. Lỗi của bạn trở thành bài ôn của ngày mai.
 
-Trạng thái: **xong Sprint 04**: Bỏ túi (dán email/ticket hoặc dùng bookmarklet, chọn câu thành thẻ, AI dịch + tạo bài viết). Ôn → Nạp → Nói theo → Dùng (+ Sửa) → Chốt. Loa ở mọi câu, thẻ nghe rồi gõ, AI sửa bài tuỳ chọn (Gemini/OpenRouter, key trong trình duyệt), Sổ lỗi, lỗi thành thẻ ôn. Không AI, không micro vẫn học được. Trang /debug: nhảy ngày, nhảy bước, giả lập micro và AI. Nội dung: track `dev`, chủ đề Standup (6 đoạn, 23 cụm).
+Trạng thái: **xong Sprint 05**: màn Tiến bộ, mốc ghi âm/bài viết, sao lưu/nhập file, PWA chạy offline. Trước đó: Bỏ túi (dán email/ticket hoặc dùng bookmarklet, chọn câu thành thẻ, AI dịch + tạo bài viết). Ôn → Nạp → Nói theo → Dùng (+ Sửa) → Chốt. Loa ở mọi câu, thẻ nghe rồi gõ, AI sửa bài tuỳ chọn (Gemini/OpenRouter, key trong trình duyệt), Sổ lỗi, lỗi thành thẻ ôn. Không AI, không micro vẫn học được. Trang /debug: nhảy ngày, nhảy bước, giả lập micro và AI. Nội dung: track `dev`, chủ đề Standup (6 đoạn, 23 cụm).
 
 ## Tài liệu
 | File | Nội dung |

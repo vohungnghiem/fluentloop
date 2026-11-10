@@ -8,6 +8,7 @@ import type { AiErrorKind } from '../../services/ai/providers';
 import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
 import { Button, Card, Note } from '../../ui/ui';
+import { BackupCard } from '../backup/BackupCard';
 
 const field = 'mt-1 min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
 
@@ -103,6 +104,8 @@ export function SettingsPage() {
         )}
         <p className="mt-4 text-xs text-ink-soft">{vi.settings.privacy}</p>
       </Card>
+
+      <BackupCard />
 
       <Card>
         <Link to="/mic-check" className="text-primary hover:underline">{vi.micCheck.link}</Link>
