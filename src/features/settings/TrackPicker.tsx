@@ -41,7 +41,7 @@ export function TrackPicker() {
             onClick={() => choose(track.id)}
             className={`flex min-h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-2.5 text-sm font-medium whitespace-nowrap transition sm:flex-none ${on ? 'bg-surface text-ink shadow-sm' : 'text-ink-soft hover:text-ink'}`}
           >
-            <span className="size-2 rounded-full" style={{ background: track.color }} />
+            <span className="size-2 shrink-0 rounded-full" style={{ background: track.color }} />
             {track.titleVi}
           </button>
         );
