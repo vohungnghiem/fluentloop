@@ -47,8 +47,7 @@ export function BackupCard() {
         }}
         className=""
       >
-        <h2 className="font-semibold">{vi.backup.title}</h2>
-        <p className="mt-1 text-sm text-ink-soft">{vi.backup.body}</p>
+        <p className="text-sm text-ink-soft">{vi.backup.body}</p>
         <p className="mt-2 text-sm">{last ? vi.backup.last(fmt(last)) : vi.backup.never}</p>
 
         <h3 className="mt-5 text-sm font-semibold">{vi.backup.sendTitle}</h3>

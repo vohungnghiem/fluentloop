@@ -1,13 +1,13 @@
 import { PageHeader } from '../../ui/shell';
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CircleCheck, ClipboardPaste, Eye, EyeOff, KeyRound, Mic } from 'lucide-react';
+import { ChevronDown, CircleCheck, ClipboardPaste, Eye, EyeOff, Mic } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { aiCallsToday, testConnection } from '../../services/ai/correct';
 import type { AiErrorKind } from '../../services/ai/providers';
 import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
-import { Button, Card, NavList, NavRow, Note } from '../../ui/ui';
+import { Button, Card, Choice, Field, NavList, NavRow, Note, inputClass } from '../../ui/ui';
 import { BackupCard } from '../backup/BackupCard';
 import { TrackPicker } from './TrackPicker';
 import { KeyQr } from './KeyQr';
@@ -20,7 +20,7 @@ const FIELDS = {
   compatible: { key: 'compatKey', model: 'compatModel' },
 } as const;
 
-const field = 'mt-1 min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
+const PROVIDERS = ['none', 'gemini', 'openai', 'openrouter', 'compatible'] as const;
 
 /** Settings: AI is optional and bring-your-own-key; the key stays in this browser. */
 export function SettingsPage() {
@@ -63,121 +63,147 @@ export function SettingsPage() {
     setTest(undefined);
   };
 
+  const needsModel = provider === 'compatible' && !settings.compatModel.trim();
+  const needsUrl = provider === 'compatible' && !settings.compatBaseUrl.trim();
+  const canTest = provider !== 'none' && !!settings[keyField].trim() && !needsModel && !needsUrl && test !== 'running';
+  const runTest = () => {
+    setTest('running');
+    void testConnection(settings).then(setTest);
+  };
+
   return (
     <main className="page">
       <PageHeader title={vi.settings.title} back={{ to: '/', label: vi.micCheck.back }} />
 
-      <Card>
-        <h2 className="font-semibold">{vi.settings.track}</h2>
-        <p className="mt-1 text-sm text-ink-soft">{vi.settings.trackBody}</p>
-        <div className="mt-3"><TrackPicker /></div>
-      </Card>
+      <Section title={vi.settings.track}>
+        <Card>
+          <TrackPicker />
+          <p className="mt-2 text-sm text-ink-soft">{vi.settings.trackBody}</p>
+        </Card>
+      </Section>
 
-      <Card>
-        <h2 className="flex items-center gap-2 font-semibold"><KeyRound size={18} />{vi.settings.aiTitle}</h2>
-        <p className="mt-1 text-sm text-ink-soft">{vi.settings.aiBody}</p>
-        {received && (
-          <div className="mt-3 rounded-xl border-2 border-primary bg-surface p-4">
-            <p className="font-medium">{vi.settings.received.title(vi.settings.providers[received.provider])}</p>
-            <p className="mt-1 text-sm text-ink-soft">{vi.settings.received.body(maskKey(received.key))}</p>
-            <div className="mt-3 grid grid-cols-2 gap-2">
-              <Button variant="primary" onClick={() => { keepKey(received.provider, received.key, received.baseUrl); setReceived(undefined); }}>{vi.settings.received.save}</Button>
-              <Button onClick={() => setReceived(undefined)}>{vi.settings.received.cancel}</Button>
+      <Section title={vi.settings.aiTitle}>
+        <Card className="space-y-4">
+          {received && (
+            <div className="rounded-xl border-2 border-primary p-4">
+              <p className="font-medium">{vi.settings.received.title(vi.settings.providers[received.provider])}</p>
+              <p className="mt-1 text-sm text-ink-soft">{vi.settings.received.body(maskKey(received.key))}</p>
+              <div className="mt-3 grid grid-cols-2 gap-2">
+                <Button variant="primary" onClick={() => { keepKey(received.provider, received.key, received.baseUrl); setReceived(undefined); }}>{vi.settings.received.save}</Button>
+                <Button onClick={() => setReceived(undefined)}>{vi.settings.received.cancel}</Button>
+              </div>
             </div>
-          </div>
-        )}
-        {settings.aiProvider === 'fake' && <div className="mt-3"><Note tone="accent">{vi.settings.fakeOn}</Note></div>}
-        <div className="mt-4 grid grid-cols-2 gap-2" role="radiogroup">
-          {(['none', 'gemini', 'openai', 'openrouter', 'compatible'] as const).map((option) => (
-            <Button key={option} className={option === 'compatible' ? 'col-span-2' : undefined} role="radio" aria-checked={provider === option} variant={provider === option ? 'primary' : 'secondary'} onClick={() => choose(option)}>
-              {vi.settings.providers[option]}
-            </Button>
-          ))}
-        </div>
+          )}
+          {settings.aiProvider === 'fake' && <Note tone="accent">{vi.settings.fakeOn}</Note>}
 
-        {provider !== 'none' && (
-          <div className="mt-5 space-y-4">
-            {provider === 'compatible' && (
-              <label className="block">
-                <span className="text-sm font-medium">{vi.settings.baseUrl}</span>
-                <input
-                  value={settings.compatBaseUrl}
-                  onChange={(event) => { saveSettings({ compatBaseUrl: event.target.value }); setTest(undefined); }}
-                  inputMode="url"
-                  autoComplete="off"
-                  spellCheck={false}
-                  placeholder="https://proxy.example.com/v1"
-                  className={`${field} font-mono text-sm`}
-                />
-                <span className="mt-1 block text-sm text-ink-soft">{vi.settings.baseUrlHint}</span>
-              </label>
-            )}
-            <label className="block">
-              <span className="text-sm font-medium">{vi.settings.key}</span>
-              <div className="flex gap-2">
-              <div className="relative flex-1">
-                <input
-                  type={showKey ? 'text' : 'password'}
-                  value={settings[keyField]}
-                  onChange={(event) => { saveSettings({ [keyField]: event.target.value }); setTest(undefined); setPasteNote(undefined); }}
-                  onBlur={(event) => event.target.value && event.target.value !== cleanKey(event.target.value) && keepKey(provider, event.target.value)}
-                  autoComplete="off"
-                  spellCheck={false}
-                  className={`${field} pr-11 font-mono text-sm`}
-                  placeholder={placeholder}
-                />
-                <button type="button" onClick={() => setShowKey(!showKey)} className="absolute top-1/2 right-2 mt-0.5 -translate-y-1/2 p-1.5 text-ink-soft" aria-label={vi.settings.showKey}>
-                  {showKey ? <EyeOff size={18} /> : <Eye size={18} />}
-                </button>
-              </div>
-              <Button className="mt-1 shrink-0" onClick={() => void paste()}><ClipboardPaste size={16} />{vi.settings.paste}</Button>
-              </div>
-              {pasteNote && <span className="mt-2 block"><Note tone="accent">{pasteNote}</Note></span>}
-              {keyPage && <span className="mt-1 block text-sm text-ink-soft">
-                {vi.settings.getKey}{' '}
-                <a className="text-primary hover:underline" target="_blank" rel="noreferrer" href={`https://${keyPage}`}>
-                  {keyPage}
-                </a>
-                {provider === 'openai' && <span className="mt-1 block">{vi.settings.openaiPaid}</span>}
-              </span>}
-            </label>
-            <label className="block">
-              <span className="text-sm font-medium">{vi.settings.model}</span>
-              <input value={settings[modelField]} onChange={(event) => saveSettings({ [modelField]: event.target.value })} spellCheck={false} placeholder={provider === 'compatible' ? 'gpt-4o-mini, deepseek-chat…' : undefined} className={`${field} font-mono text-sm`} />
-            </label>
-            <div className="flex flex-wrap items-center gap-3">
-              <Button
-                disabled={!settings[keyField].trim() || (provider === 'compatible' && (!settings.compatBaseUrl.trim() || !settings.compatModel.trim())) || test === 'running'}
-                onClick={() => {
-                  setTest('running');
-                  void testConnection(settings).then(setTest);
-                }}
+          <Field label={vi.settings.provider} hint={provider === 'none' ? vi.settings.aiBody : undefined}>
+            <Choice value={provider} options={PROVIDERS.map((p) => ({ value: p, label: vi.settings.providers[p] }))} onChange={choose} />
+          </Field>
+
+          {provider !== 'none' && (
+            <>
+              {provider === 'compatible' && (
+                <Field label={vi.settings.baseUrl} hint={vi.settings.baseUrlHint}>
+                  <input
+                    value={settings.compatBaseUrl}
+                    onChange={(event) => { saveSettings({ compatBaseUrl: event.target.value }); setTest(undefined); }}
+                    inputMode="url"
+                    autoComplete="off"
+                    spellCheck={false}
+                    placeholder="https://proxy.example.com/v1"
+                    className={`${inputClass} font-mono text-sm`}
+                  />
+                </Field>
+              )}
+
+              <Field
+                label={vi.settings.key}
+                hint={keyPage && (
+                  <>
+                    {vi.settings.getKey}{' '}
+                    <a className="text-primary hover:underline" target="_blank" rel="noreferrer" href={`https://${keyPage}`}>{keyPage}</a>
+                    {provider === 'openai' && <> · {vi.settings.openaiPaidShort}</>}
+                  </>
+                )}
               >
-                {test === 'running' ? vi.settings.testing : vi.settings.test}
-              </Button>
-              {test && test !== 'running' && (test.ok ? (
-                <span className="inline-flex items-center gap-1 text-good"><CircleCheck size={16} />{vi.settings.testOk}</span>
-              ) : (
-                <span className="text-accent-ink">{vi.correct.aiError[test.kind]}{provider === 'compatible' && test.kind === 'offline' && <span className="mt-1 block text-sm">{vi.settings.baseUrlCors}</span>}</span>
-              ))}
-            </div>
-            <div className="hidden sm:block"><KeyQr provider={provider} apiKey={settings[keyField].trim()} baseUrl={provider === 'compatible' ? settings.compatBaseUrl : undefined} /></div>
-            <label className="block">
-              <span className="text-sm font-medium">{vi.settings.limit}</span>
-              <input type="number" min={1} max={500} value={settings.aiDailyLimit} onChange={(event) => saveSettings({ aiDailyLimit: Math.max(1, Number(event.target.value) || 1) })} className={`${field} w-28`} />
-              <span className="mt-1 block text-sm text-ink-soft">{vi.settings.usedToday(used)}</span>
-            </label>
-            <Button variant="quiet" onClick={() => saveSettings({ [keyField]: '' })}>{vi.settings.removeKey}</Button>
-          </div>
-        )}
-        <p className="mt-4 text-xs text-ink-soft">{vi.settings.privacy}</p>
-      </Card>
+                <div className="flex gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type={showKey ? 'text' : 'password'}
+                      value={settings[keyField]}
+                      onChange={(event) => { saveSettings({ [keyField]: event.target.value }); setTest(undefined); setPasteNote(undefined); }}
+                      onBlur={(event) => event.target.value && event.target.value !== cleanKey(event.target.value) && keepKey(provider, event.target.value)}
+                      autoComplete="off"
+                      spellCheck={false}
+                      className={`${inputClass} pr-11 font-mono text-sm`}
+                      placeholder={placeholder}
+                    />
+                    <button type="button" onClick={() => setShowKey(!showKey)} className="absolute top-1/2 right-1 flex size-9 -translate-y-1/2 items-center justify-center text-ink-soft" aria-label={vi.settings.showKey}>
+                      {showKey ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                  <Button className="shrink-0" onClick={() => void paste()}><ClipboardPaste size={16} />{vi.settings.paste}</Button>
+                </div>
+              </Field>
+              {pasteNote && <Note tone="accent">{pasteNote}</Note>}
 
-      <BackupCard />
+              {provider === 'compatible' && (
+                <Field label={vi.settings.model}>
+                  <input value={settings.compatModel} onChange={(event) => saveSettings({ compatModel: event.target.value })} spellCheck={false} placeholder="gpt-4o-mini, deepseek-chat…" className={`${inputClass} font-mono text-sm`} />
+                </Field>
+              )}
 
-      <NavList>
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                <Button variant="primary" disabled={!canTest} onClick={runTest}>{test === 'running' ? vi.settings.testing : vi.settings.test}</Button>
+                {test && test !== 'running' && (test.ok ? (
+                  <span className="inline-flex items-center gap-1 text-good"><CircleCheck size={16} />{vi.settings.testOk}</span>
+                ) : (
+                  <span className="text-sm text-accent-ink">{vi.correct.aiError[test.kind]}{provider === 'compatible' && test.kind === 'offline' && <span className="mt-1 block">{vi.settings.baseUrlCors}</span>}</span>
+                ))}
+              </div>
+
+              <div className="hidden sm:block"><KeyQr provider={provider} apiKey={settings[keyField].trim()} baseUrl={provider === 'compatible' ? settings.compatBaseUrl : undefined} /></div>
+
+              <details className="group rounded-xl border border-line">
+                <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between px-3 text-sm font-medium [&::-webkit-details-marker]:hidden">
+                  {vi.settings.advanced}
+                  <ChevronDown size={16} className="text-ink-soft transition-transform group-open:rotate-180" />
+                </summary>
+                <div className="space-y-4 border-t border-line p-3">
+                  {provider !== 'compatible' && (
+                    <Field label={vi.settings.model}>
+                      <input value={settings[modelField]} onChange={(event) => saveSettings({ [modelField]: event.target.value })} spellCheck={false} className={`${inputClass} font-mono text-sm`} />
+                    </Field>
+                  )}
+                  <Field label={vi.settings.limit} hint={vi.settings.usedToday(used)}>
+                    <input type="number" min={1} max={500} value={settings.aiDailyLimit} onChange={(event) => saveSettings({ aiDailyLimit: Math.max(1, Number(event.target.value) || 1) })} className={`${inputClass} w-28`} />
+                  </Field>
+                  <Button onClick={() => { if (confirm(vi.settings.removeKeyConfirm)) saveSettings({ [keyField]: '' }); }}>{vi.settings.removeKey}</Button>
+                </div>
+              </details>
+            </>
+          )}
+          <p className="text-xs text-ink-soft">{vi.settings.privacy}</p>
+        </Card>
+      </Section>
+
+      <Section title={vi.backup.title}>
+        <BackupCard />
+      </Section>
+
+      <NavList title={vi.settings.other}>
         <NavRow to="/mic-check" icon={<Mic size={18} />} title={vi.micCheck.link} />
       </NavList>
     </main>
+  );
+}
+
+/** A titled group of the settings page, the same header as `NavList`. */
+function Section({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section>
+      <h2 className="mb-2 px-1 text-xs font-semibold tracking-wide text-ink-soft uppercase">{title}</h2>
+      {children}
+    </section>
   );
 }

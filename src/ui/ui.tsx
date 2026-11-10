@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
+import { ArrowRight, ChevronDown, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
 import { useEnter } from './useKey';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
@@ -189,4 +189,60 @@ export function CardAction({ label, onClick }: { label: string; onClick: () => v
       <ArrowRight size={20} />
     </button>
   );
+}
+
+/** A labelled form field: label, the control, one short hint under it. */
+export function Field({ label, hint, children }: { label: string; hint?: ReactNode; children: ReactNode }) {
+  return (
+    <label className="block">
+      <span className="text-sm font-medium">{label}</span>
+      <div className="mt-1">{children}</div>
+      {hint && <span className="mt-1 block text-sm text-ink-soft">{hint}</span>}
+    </label>
+  );
+}
+
+export const inputClass = 'min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
+
+/** The system list (a wheel on iPhone): for four or more choices. */
+export function SelectField<T extends string>({ value, options, onChange, dot }: { value: T; options: Array<{ value: T; label: string }>; onChange: (value: T) => void; dot?: string }) {
+  return (
+    <span className="relative flex min-h-11 w-full items-center rounded-xl border border-line bg-surface focus-within:border-primary">
+      {dot && <span className="pointer-events-none absolute left-4 size-2.5 rounded-full" style={{ background: dot }} />}
+      <select value={value} onChange={(e) => onChange(e.target.value as T)} className={cx('w-full appearance-none bg-transparent py-2.5 pr-10 font-medium outline-none', dot ? 'pl-9' : 'pl-3')}>
+        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+      </select>
+      <ChevronDown size={18} className="pointer-events-none absolute right-3 text-ink-soft" />
+    </span>
+  );
+}
+
+/** A pill switch: for two or three choices. */
+export function Segmented<T extends string>({ value, options, onChange }: { value: T; options: Array<{ value: T; label: string; dot?: string }>; onChange: (value: T) => void }) {
+  return (
+    <div className="inline-flex w-full rounded-full bg-line/60 p-1 sm:w-auto" role="radiogroup">
+      {options.map((o) => {
+        const on = o.value === value;
+        return (
+          <button
+            key={o.value}
+            type="button"
+            role="radio"
+            aria-checked={on}
+            onClick={() => !on && onChange(o.value)}
+            className={cx('flex min-h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-2.5 text-sm font-medium whitespace-nowrap transition sm:flex-none', on ? 'bg-surface text-ink shadow-sm' : 'text-ink-soft hover:text-ink')}
+          >
+            {o.dot && <span className="size-2 shrink-0 rounded-full" style={{ background: o.dot }} />}
+            {o.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+/** Choices: a pill switch up to three, the system list from four. */
+export function Choice<T extends string>(props: { value: T; options: Array<{ value: T; label: string; dot?: string }>; onChange: (value: T) => void }) {
+  if (props.options.length > 3) return <SelectField {...props} dot={props.options.find((o) => o.value === props.value)?.dot} />;
+  return <Segmented {...props} />;
 }
