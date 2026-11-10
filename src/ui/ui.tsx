@@ -1,6 +1,6 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode } from 'react';
 import { Link } from 'react-router';
-import { ArrowRight, ChevronDown, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
+import { ArrowRight, Check, ChevronDown, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
 import { useEnter } from './useKey';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
@@ -204,16 +204,97 @@ export function Field({ label, hint, children }: { label: string; hint?: ReactNo
 
 export const inputClass = 'min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
 
-/** The system list (a wheel on iPhone): for four or more choices. */
-export function SelectField<T extends string>({ value, options, onChange, dot }: { value: T; options: Array<{ value: T; label: string }>; onChange: (value: T) => void; dot?: string }) {
+const finePointer = () => typeof window !== 'undefined' && !!window.matchMedia?.('(pointer: fine)').matches;
+
+/**
+ * A list of four or more choices. With a mouse: our own popover list (arrows, Enter, Esc). On a
+ * touch screen: the system picker (a wheel on iPhone), which fingers handle better.
+ */
+export function SelectField<T extends string>({ value, options, onChange, dot }: { value: T; options: Array<{ value: T; label: string; dot?: string }>; onChange: (value: T) => void; dot?: string }) {
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(0);
+  const root = useRef<HTMLDivElement>(null);
+  const current = options.find((o) => o.value === value);
+
+  useEffect(() => {
+    if (!open) return;
+    const close = (e: PointerEvent) => !root.current?.contains(e.target as Node) && setOpen(false);
+    document.addEventListener('pointerdown', close);
+    return () => document.removeEventListener('pointerdown', close);
+  }, [open]);
+
+  const Dot = ({ color }: { color?: string }) => (color ? <span className="size-2.5 shrink-0 rounded-full" style={{ background: color }} /> : null);
+  const box = 'flex min-h-11 w-full items-center gap-2.5 rounded-xl border bg-surface px-3 text-left font-medium outline-none transition';
+
+  if (!finePointer())
+    return (
+      <span className={cx(box, 'relative border-line focus-within:border-primary')}>
+        <Dot color={dot} />
+        <select value={value} onChange={(e) => onChange(e.target.value as T)} className="absolute inset-0 w-full cursor-pointer opacity-0">
+          {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+        <span className="flex-1 truncate">{current?.label}</span>
+        <ChevronDown size={18} className="shrink-0 text-ink-soft" />
+      </span>
+    );
+
+  const pick = (o: { value: T }) => {
+    onChange(o.value);
+    setOpen(false);
+  };
   return (
-    <span className="relative flex min-h-11 w-full items-center rounded-xl border border-line bg-surface focus-within:border-primary">
-      {dot && <span className="pointer-events-none absolute left-4 size-2.5 rounded-full" style={{ background: dot }} />}
-      <select value={value} onChange={(e) => onChange(e.target.value as T)} className={cx('w-full appearance-none bg-transparent py-2.5 pr-10 font-medium outline-none', dot ? 'pl-9' : 'pl-3')}>
-        {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
-      </select>
-      <ChevronDown size={18} className="pointer-events-none absolute right-3 text-ink-soft" />
-    </span>
+    <div ref={root} className="relative">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        onClick={() => {
+          setActive(Math.max(0, options.findIndex((o) => o.value === value)));
+          setOpen(!open);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') return setOpen(false);
+          if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (!open) {
+              setActive(Math.max(0, options.findIndex((o) => o.value === value)));
+              return setOpen(true);
+            }
+            setActive((i) => (i + (e.key === 'ArrowDown' ? 1 : options.length - 1)) % options.length);
+          }
+          if (open && e.key === 'Enter') {
+            e.preventDefault();
+            pick(options[active]);
+          }
+        }}
+        className={cx(box, 'focus-visible:border-primary focus-visible:ring-3 focus-visible:ring-primary-tint', open ? 'border-primary ring-3 ring-primary-tint' : 'border-line hover:border-primary')}
+      >
+        <Dot color={dot} />
+        <span className="flex-1 truncate">{current?.label}</span>
+        <ChevronDown size={18} className={cx('shrink-0 text-ink-soft transition-transform', open && 'rotate-180')} />
+      </button>
+      {open && (
+        <ul role="listbox" className="absolute right-0 left-0 z-20 mt-1.5 rounded-xl border border-line bg-surface p-1 shadow-lg">
+          {options.map((o, i) => {
+            const on = o.value === value;
+            return (
+              <li
+                key={o.value}
+                role="option"
+                aria-selected={on}
+                onPointerEnter={() => setActive(i)}
+                onClick={() => pick(o)}
+                className={cx('flex min-h-10 cursor-pointer items-center gap-2.5 rounded-lg px-3 text-sm', i === active && 'bg-paper', on && 'font-semibold')}
+              >
+                <Dot color={o.dot} />
+                <span className="flex-1">{o.label}</span>
+                {on && <Check size={16} className="text-primary" />}
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
   );
 }
 
