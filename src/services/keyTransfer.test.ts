@@ -14,3 +14,12 @@ describe('key transfer', () => {
   });
   it('masks', () => expect(maskKey('AIzaSyA1b2C3d4E5f6G7h8')).toBe('AIzaSy…f6G7h8'.slice(0, 6) + '…' + 'G7h8'));
 });
+
+import { chatUrl } from './ai/providers';
+describe('chatUrl', () => {
+  it('accepts any way of writing the address', () => {
+    expect(chatUrl('proxy.example.com/v1/')).toBe('https://proxy.example.com/v1/chat/completions');
+    expect(chatUrl('https://x.io/v1/chat/completions')).toBe('https://x.io/v1/chat/completions');
+    expect(chatUrl('http://localhost:1234/v1')).toBe('http://localhost:1234/v1/chat/completions');
+  });
+});

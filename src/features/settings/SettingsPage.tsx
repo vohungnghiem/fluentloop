@@ -13,6 +13,13 @@ import { TrackPicker } from './TrackPicker';
 import { KeyQr } from './KeyQr';
 import { cleanKey, keyLooksRight, maskKey, takeKeyFromLink, type KeyProvider } from '../../services/keyTransfer';
 
+const FIELDS = {
+  gemini: { key: 'geminiKey', model: 'geminiModel' },
+  openai: { key: 'openaiKey', model: 'openaiModel' },
+  openrouter: { key: 'openrouterKey', model: 'openrouterModel' },
+  compatible: { key: 'compatKey', model: 'compatModel' },
+} as const;
+
 const field = 'mt-1 min-h-11 w-full rounded-xl border border-line bg-surface px-3 outline-none focus:border-primary';
 
 /** Settings: AI is optional and bring-your-own-key; the key stays in this browser. */
@@ -22,19 +29,18 @@ export function SettingsPage() {
   const [test, setTest] = useState<'running' | { ok: true } | { ok: false; kind: AiErrorKind }>();
   const used = useLiveQuery(() => aiCallsToday(now()), [], 0);
   const provider = settings.aiProvider === 'fake' ? 'none' : settings.aiProvider;
-  const keyField = provider === 'gemini' ? 'geminiKey' : provider === 'openai' ? 'openaiKey' : 'openrouterKey';
-  const modelField = provider === 'gemini' ? 'geminiModel' : provider === 'openai' ? 'openaiModel' : 'openrouterModel';
-  const keyPage = { gemini: 'aistudio.google.com/apikey', openai: 'platform.openai.com/api-keys', openrouter: 'openrouter.ai/keys', none: '' }[provider];
-  const placeholder = { gemini: 'AIza…', openai: 'sk-…', openrouter: 'sk-or-…', none: '' }[provider];
+  const keyField = provider === 'none' ? 'openrouterKey' : FIELDS[provider].key;
+  const modelField = provider === 'none' ? 'openrouterModel' : FIELDS[provider].model;
+  const keyPage = { gemini: 'aistudio.google.com/apikey', openai: 'platform.openai.com/api-keys', openrouter: 'openrouter.ai/keys', compatible: '', none: '' }[provider];
+  const placeholder = { gemini: 'AIza…', openai: 'sk-…', openrouter: 'sk-or-…', compatible: '', none: '' }[provider];
 
   // A key handed over by QR code from another device: ask before keeping it.
   const [received, setReceived] = useState(takeKeyFromLink);
   const [pasteNote, setPasteNote] = useState<string>();
-  const fieldOf = (p: KeyProvider) => (p === 'gemini' ? 'geminiKey' : p === 'openai' ? 'openaiKey' : 'openrouterKey');
   /** Save a key (cleaned) and, when it looks right, try it straight away. */
-  const keepKey = (p: KeyProvider, raw: string) => {
+  const keepKey = (p: KeyProvider, raw: string, baseUrl?: string) => {
     const key = cleanKey(raw);
-    const next = { aiProvider: p, [fieldOf(p)]: key } as const;
+    const next = { aiProvider: p, [FIELDS[p].key]: key, ...(baseUrl ? { compatBaseUrl: baseUrl } : {}) } as const;
     saveSettings(next);
     const looksRight = !!key && keyLooksRight(p, key);
     setPasteNote(key && !looksRight ? vi.settings.keyShape(vi.settings.providers[p]) : undefined);
@@ -75,15 +81,15 @@ export function SettingsPage() {
             <p className="font-medium">{vi.settings.received.title(vi.settings.providers[received.provider])}</p>
             <p className="mt-1 text-sm text-ink-soft">{vi.settings.received.body(maskKey(received.key))}</p>
             <div className="mt-3 grid grid-cols-2 gap-2">
-              <Button variant="primary" onClick={() => { keepKey(received.provider, received.key); setReceived(undefined); }}>{vi.settings.received.save}</Button>
+              <Button variant="primary" onClick={() => { keepKey(received.provider, received.key, received.baseUrl); setReceived(undefined); }}>{vi.settings.received.save}</Button>
               <Button onClick={() => setReceived(undefined)}>{vi.settings.received.cancel}</Button>
             </div>
           </div>
         )}
         {settings.aiProvider === 'fake' && <div className="mt-3"><Note tone="accent">{vi.settings.fakeOn}</Note></div>}
         <div className="mt-4 grid grid-cols-2 gap-2" role="radiogroup">
-          {(['none', 'gemini', 'openai', 'openrouter'] as const).map((option) => (
-            <Button key={option} role="radio" aria-checked={provider === option} variant={provider === option ? 'primary' : 'secondary'} onClick={() => choose(option)}>
+          {(['none', 'gemini', 'openai', 'openrouter', 'compatible'] as const).map((option) => (
+            <Button key={option} className={option === 'compatible' ? 'col-span-2' : undefined} role="radio" aria-checked={provider === option} variant={provider === option ? 'primary' : 'secondary'} onClick={() => choose(option)}>
               {vi.settings.providers[option]}
             </Button>
           ))}
@@ -91,6 +97,21 @@ export function SettingsPage() {
 
         {provider !== 'none' && (
           <div className="mt-5 space-y-4">
+            {provider === 'compatible' && (
+              <label className="block">
+                <span className="text-sm font-medium">{vi.settings.baseUrl}</span>
+                <input
+                  value={settings.compatBaseUrl}
+                  onChange={(event) => { saveSettings({ compatBaseUrl: event.target.value }); setTest(undefined); }}
+                  inputMode="url"
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder="https://proxy.example.com/v1"
+                  className={`${field} font-mono text-sm`}
+                />
+                <span className="mt-1 block text-sm text-ink-soft">{vi.settings.baseUrlHint}</span>
+              </label>
+            )}
             <label className="block">
               <span className="text-sm font-medium">{vi.settings.key}</span>
               <div className="flex gap-2">
@@ -112,21 +133,21 @@ export function SettingsPage() {
               <Button className="mt-1 shrink-0" onClick={() => void paste()}><ClipboardPaste size={16} />{vi.settings.paste}</Button>
               </div>
               {pasteNote && <span className="mt-2 block"><Note tone="accent">{pasteNote}</Note></span>}
-              <span className="mt-1 block text-sm text-ink-soft">
+              {keyPage && <span className="mt-1 block text-sm text-ink-soft">
                 {vi.settings.getKey}{' '}
                 <a className="text-primary hover:underline" target="_blank" rel="noreferrer" href={`https://${keyPage}`}>
                   {keyPage}
                 </a>
                 {provider === 'openai' && <span className="mt-1 block">{vi.settings.openaiPaid}</span>}
-              </span>
+              </span>}
             </label>
             <label className="block">
               <span className="text-sm font-medium">{vi.settings.model}</span>
-              <input value={settings[modelField]} onChange={(event) => saveSettings({ [modelField]: event.target.value })} spellCheck={false} className={`${field} font-mono text-sm`} />
+              <input value={settings[modelField]} onChange={(event) => saveSettings({ [modelField]: event.target.value })} spellCheck={false} placeholder={provider === 'compatible' ? 'gpt-4o-mini, deepseek-chat…' : undefined} className={`${field} font-mono text-sm`} />
             </label>
             <div className="flex flex-wrap items-center gap-3">
               <Button
-                disabled={!settings[keyField].trim() || test === 'running'}
+                disabled={!settings[keyField].trim() || (provider === 'compatible' && (!settings.compatBaseUrl.trim() || !settings.compatModel.trim())) || test === 'running'}
                 onClick={() => {
                   setTest('running');
                   void testConnection(settings).then(setTest);
@@ -137,10 +158,10 @@ export function SettingsPage() {
               {test && test !== 'running' && (test.ok ? (
                 <span className="inline-flex items-center gap-1 text-good"><CircleCheck size={16} />{vi.settings.testOk}</span>
               ) : (
-                <span className="text-accent-ink">{vi.correct.aiError[test.kind]}</span>
+                <span className="text-accent-ink">{vi.correct.aiError[test.kind]}{provider === 'compatible' && test.kind === 'offline' && <span className="mt-1 block text-sm">{vi.settings.baseUrlCors}</span>}</span>
               ))}
             </div>
-            <div className="hidden sm:block"><KeyQr provider={provider} apiKey={settings[keyField].trim()} /></div>
+            <div className="hidden sm:block"><KeyQr provider={provider} apiKey={settings[keyField].trim()} baseUrl={provider === 'compatible' ? settings.compatBaseUrl : undefined} /></div>
             <label className="block">
               <span className="text-sm font-medium">{vi.settings.limit}</span>
               <input type="number" min={1} max={500} value={settings.aiDailyLimit} onChange={(event) => saveSettings({ aiDailyLimit: Math.max(1, Number(event.target.value) || 1) })} className={`${field} w-28`} />

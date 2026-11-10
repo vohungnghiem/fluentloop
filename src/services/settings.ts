@@ -5,7 +5,7 @@ import { useSyncExternalStore } from 'react';
  * the provider it belongs to.
  */
 
-export type AiProvider = 'none' | 'gemini' | 'openai' | 'openrouter' | 'fake';
+export type AiProvider = 'none' | 'gemini' | 'openai' | 'compatible' | 'openrouter' | 'fake';
 
 export interface Settings {
   /** The industry the learner studies (a content track id). */
@@ -15,6 +15,10 @@ export interface Settings {
   geminiModel: string;
   openaiKey: string;
   openaiModel: string;
+  /** Any service that speaks the OpenAI format (a proxy, LM Studio…): its address up to /v1. */
+  compatBaseUrl: string;
+  compatKey: string;
+  compatModel: string;
   openrouterKey: string;
   openrouterModel: string;
   /** Calls a day before the app stops asking AI (free tiers are small). */
@@ -28,6 +32,9 @@ export const DEFAULT_SETTINGS: Settings = {
   geminiModel: 'gemini-2.5-flash',
   openaiKey: '',
   openaiModel: 'gpt-4.1-mini',
+  compatBaseUrl: '',
+  compatKey: '',
+  compatModel: '',
   openrouterKey: '',
   openrouterModel: 'google/gemini-2.5-flash',
   aiDailyLimit: 40,
@@ -73,6 +80,7 @@ export function aiReady(settings: Settings): boolean {
   if (settings.aiProvider === 'gemini') return settings.geminiKey.trim() !== '';
   if (settings.aiProvider === 'openai') return settings.openaiKey.trim() !== '';
   if (settings.aiProvider === 'openrouter') return settings.openrouterKey.trim() !== '';
+  if (settings.aiProvider === 'compatible') return settings.compatKey.trim() !== '' && settings.compatBaseUrl.trim() !== '' && settings.compatModel.trim() !== '';
   return false;
 }
 
@@ -85,6 +93,8 @@ export function providerKeyAndModel(settings: Settings): { key: string; model: s
       return { key: settings.openaiKey, model: settings.openaiModel };
     case 'openrouter':
       return { key: settings.openrouterKey, model: settings.openrouterModel };
+    case 'compatible':
+      return { key: settings.compatKey, model: settings.compatModel };
     default:
       return { key: '', model: settings.aiProvider };
   }

@@ -8,14 +8,14 @@ import { Button } from '../../ui/ui';
 const SHOW_SECONDS = 60;
 
 /** On the computer: a QR code that opens the app on the phone with this key filled in. Hides itself. */
-export function KeyQr({ provider, apiKey }: { provider: KeyProvider; apiKey: string }) {
+export function KeyQr({ provider, apiKey, baseUrl }: { provider: KeyProvider; apiKey: string; baseUrl?: string }) {
   const [left, setLeft] = useState(0);
   useEffect(() => {
     if (left <= 0) return;
     const timer = setTimeout(() => setLeft(left - 1), 1000);
     return () => clearTimeout(timer);
   }, [left]);
-  useEffect(() => setLeft(0), [provider, apiKey]);
+  useEffect(() => setLeft(0), [provider, apiKey, baseUrl]);
 
   if (left <= 0)
     return (
@@ -25,7 +25,7 @@ export function KeyQr({ provider, apiKey }: { provider: KeyProvider; apiKey: str
     );
 
   const qr = qrcode(0, 'M');
-  qr.addData(transferLink(provider, apiKey));
+  qr.addData(transferLink(provider, apiKey, baseUrl));
   qr.make();
   return (
     <div className="rounded-xl border border-line bg-surface p-4 text-center">

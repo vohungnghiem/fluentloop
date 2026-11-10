@@ -7,8 +7,8 @@ import type { AiProvider } from './settings';
  */
 
 export type KeyProvider = Exclude<AiProvider, 'none' | 'fake'>;
-const PROVIDERS: KeyProvider[] = ['gemini', 'openai', 'openrouter'];
-const PREFIX: Record<KeyProvider, RegExp> = { gemini: /^AIza[\w-]{30,}$/, openai: /^sk-[\w-]{20,}$/, openrouter: /^sk-or-[\w-]{20,}$/ };
+const PROVIDERS: KeyProvider[] = ['gemini', 'openai', 'compatible', 'openrouter'];
+const PREFIX: Record<KeyProvider, RegExp> = { gemini: /^AIza[\w-]{30,}$/, openai: /^sk-[\w-]{20,}$/, compatible: /^\S{8,}$/, openrouter: /^sk-or-[\w-]{20,}$/ };
 
 /** What was copied, minus the spaces, line breaks and quotes that come along with it. */
 export function cleanKey(raw: string): string {
@@ -21,19 +21,21 @@ export function keyLooksRight(provider: KeyProvider, key: string): boolean {
   return PREFIX[provider].test(key);
 }
 
-export function transferLink(provider: KeyProvider, key: string): string {
+/** The link the QR code holds; a proxy's address travels with its key. */
+export function transferLink(provider: KeyProvider, key: string, baseUrl?: string): string {
   const base = location.origin + import.meta.env.BASE_URL.replace(/\/$/, '');
-  return `${base}/settings#key=${provider}:${encodeURIComponent(key)}`;
+  const url = provider === 'compatible' && baseUrl?.trim() ? `&url=${encodeURIComponent(baseUrl.trim())}` : '';
+  return `${base}/settings#key=${provider}:${encodeURIComponent(key)}${url}`;
 }
 
 /** Read a key handed over in the address bar, then remove it from there. */
-export function takeKeyFromLink(): { provider: KeyProvider; key: string } | undefined {
-  const match = /^#key=(\w+):(.+)$/.exec(location.hash);
+export function takeKeyFromLink(): { provider: KeyProvider; key: string; baseUrl?: string } | undefined {
+  const match = /^#key=(\w+):([^&]+)(?:&url=(.+))?$/.exec(location.hash);
   if (!match) return undefined;
   history.replaceState(null, '', location.pathname + location.search);
   const provider = match[1] as KeyProvider;
   if (!PROVIDERS.includes(provider)) return undefined;
-  return { provider, key: cleanKey(decodeURIComponent(match[2])) };
+  return { provider, key: cleanKey(decodeURIComponent(match[2])), baseUrl: match[3] ? decodeURIComponent(match[3]) : undefined };
 }
 
 /** 'AIzaSy…x9Qk': enough to recognise, not enough to copy. */
