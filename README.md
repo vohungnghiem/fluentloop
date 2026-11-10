@@ -12,6 +12,7 @@ Trạng thái: **xong Sprint 07** (hết lộ trình): 2 ngành (Phần mềm/IT
 | [docs/PHAC-THAO.md](docs/PHAC-THAO.md) | Sản phẩm: người dùng, phương pháp học, vòng lặp, màn hình, nội dung, mở rộng ngành, gợi ý, câu hỏi mở |
 | [docs/THIET-KE.md](docs/THIET-KE.md) | Design tokens, chữ, component, hệ thống minh hoạ, giọng văn |
 | [docs/KIEN-TRUC.md](docs/KIEN-TRUC.md) | Stack, thư mục, dữ liệu, chấm bằng luật, AI, những gì mang từ Lingua Quest |
+| [docs/DEPLOY.md](docs/DEPLOY.md) | Deploy hiện tại (GitHub Pages) và cách chuyển sang repo private + Cloudflare Pages |
 | [docs/LO-TRINH.md](docs/LO-TRINH.md) | Sprint 01–07 và điều kiện "xong" |
 | [docs/mockups/](docs/mockups/) | Mockup SVG: Hôm nay, Dùng/Sửa, Ôn, Tiến bộ |
 
