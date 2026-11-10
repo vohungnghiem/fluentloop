@@ -58,7 +58,7 @@ export function CapturePage() {
   const history = useLiveQuery(() => db.captures.orderBy('at').reverse().limit(20).toArray(), []);
   const bookmarklet = useRef<HTMLAnchorElement>(null);
 
-  const bookmarkletCode = `javascript:(()=>{const t=String(getSelection()).trim();window.open('${location.origin}/capture?text='+encodeURIComponent(t)+'&src='+encodeURIComponent(location.href),'_blank')})()`;
+  const bookmarkletCode = `javascript:(()=>{const t=String(getSelection()).trim();window.open('${location.origin}${import.meta.env.BASE_URL}capture?text='+encodeURIComponent(t)+'&src='+encodeURIComponent(location.href),'_blank')})()`;
   const [copied, setCopied] = useState(false);
   // React refuses javascript: links in JSX, so the bookmarklet's href is set by hand.
   useEffect(() => {

@@ -25,7 +25,7 @@ import { ClockBadge } from './ui/ClockBadge';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <Routes>
         <Route path="/" element={<TodayPage />} />
         <Route path="/session" element={<SessionPage />} />

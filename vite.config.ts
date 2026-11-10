@@ -3,7 +3,11 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// '/' locally; '/fluentloop/' when built for GitHub Pages (set by the deploy workflow).
+const base = process.env.BASE_PATH ?? '/';
+
 export default defineConfig({
+  base,
   plugins: [
     react(),
     tailwindcss(),
@@ -16,7 +20,8 @@ export default defineConfig({
         short_name: 'FluentLoop',
         description: 'Mỗi ngày 15 phút học tiếng Anh của chính công việc mình.',
         lang: 'vi',
-        start_url: '/',
+        start_url: base,
+        scope: base,
         display: 'standalone',
         background_color: '#FAF7F2',
         theme_color: '#FAF7F2',
@@ -28,7 +33,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,svg,png,woff2}'],
-        navigateFallback: '/index.html',
+        navigateFallback: `${base}index.html`,
         maximumFileSizeToCacheInBytes: 3 * 1024 * 1024,
       },
     }),
