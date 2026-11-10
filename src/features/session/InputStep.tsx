@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Check } from 'lucide-react';
+import { SpeakButton } from '../../ui/speech';
 import { SnippetReader } from '../lesson/SnippetReader';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
@@ -37,8 +38,8 @@ export function InputStep({ session }: { session: SessionRow }) {
         {chunks.map((chunk) => {
           const on = chosen.has(chunk.id);
           return (
-            <li key={chunk.id}>
-              <label className={`flex cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 ${on ? 'border-primary bg-surface' : 'border-line bg-paper'}`}>
+            <li key={chunk.id} className="flex items-center gap-1">
+              <label className={`flex min-w-0 flex-1 cursor-pointer items-center gap-3 rounded-xl border px-4 py-3 ${on ? 'border-primary bg-surface' : 'border-line bg-paper'}`}>
                 <input
                   type="checkbox"
                   className="sr-only"
@@ -58,6 +59,7 @@ export function InputStep({ session }: { session: SessionRow }) {
                   <span className="text-ink-soft"> · {chunk.vi}</span>
                 </span>
               </label>
+              <SpeakButton text={chunk.en} size="sm" />
             </li>
           );
         })}

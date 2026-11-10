@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import { CircleCheck, Lightbulb, Send } from 'lucide-react';
+import { ArrowLeft, CircleCheck, Lightbulb, Send } from 'lucide-react';
 import type { Scenario } from '../../core/content/schema';
 import type { Correction } from '../../core/errors/labels';
 import { matchReply } from '../../core/roleplay/script';
@@ -140,14 +140,14 @@ export function RoleplayPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-4 pt-6">
-      <header className="flex items-center justify-between gap-3">
+      <header className="flex items-center gap-2">
+        <Link to="/path" className="-ml-2 flex size-11 shrink-0 items-center justify-center rounded-full text-ink-soft hover:bg-surface hover:text-ink" aria-label={vi.lesson.back} title={vi.lesson.back}><ArrowLeft size={20} /></Link>
         <div className="min-w-0">
           <h1 className="truncate text-lg font-semibold">{scenario.titleVi}</h1>
           <p className="text-sm text-ink-soft">{scenario.partner}</p>
         </div>
-        <Link to="/path" className="shrink-0 text-primary hover:underline">← {vi.lesson.back}</Link>
       </header>
-      <p className="mt-2 rounded-xl bg-primary-tint px-3 py-2 text-sm"><b>{vi.roleplay.goal}</b> {scenario.goalVi}</p>
+      <p className="mt-2 rounded-xl bg-paper px-3 py-2 text-sm ring-1 ring-line"><b>{vi.roleplay.goal}</b> {scenario.goalVi}</p>
 
       <ol className="mt-4 flex-1 space-y-3">
         {messages.map((m, i) => (

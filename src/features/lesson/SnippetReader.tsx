@@ -4,8 +4,8 @@ import { chunkSegments } from '../../core/content/highlight';
 import type { Snippet } from '../../core/content/schema';
 import { vi } from '../../copy/vi';
 import { snippetChunks } from '../../services/content';
-import { Chip } from '../../ui/ui';
-import { SpeakButton } from '../../ui/speech';
+import { Chip, linkButton } from '../../ui/ui';
+import { ChunkGloss, SpeakButton } from '../../ui/speech';
 
 /** Labels for known kinds of text; any other kind shows as written (content decides). */
 const GENRE: Record<string, string> = {
@@ -50,16 +50,12 @@ export function SnippetReader({ snippet, className = '' }: { snippet: Snippet; c
       ))}
       <div aria-live="polite">
         {open ? (
-          <div className="mt-4 rounded-xl bg-primary-tint px-4 py-3">
-            <div className="font-semibold" lang="en">{open.en}</div>
-            <div>{open.vi}</div>
-            <div className="mt-1 text-sm text-ink-soft"><span lang="en">{open.example}</span></div>
-          </div>
+          <div className="mt-4"><ChunkGloss en={open.en} meaning={open.vi} example={open.example} /></div>
         ) : (
           <p className="mt-4 text-sm text-ink-soft">{vi.input.tapHint}</p>
         )}
       </div>
-      <button type="button" onClick={() => setShowVi(!showVi)} className="mt-3 inline-flex items-center gap-1.5 text-sm text-primary hover:underline">
+      <button type="button" onClick={() => setShowVi(!showVi)} className={`mt-3 ${linkButton}`}>
         <Languages size={16} />
         {showVi ? vi.input.hideTranslation : vi.input.showTranslation}
       </button>

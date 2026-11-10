@@ -9,7 +9,7 @@ import { db } from '../../services/db';
 import { abandonSession, activeSession } from '../../services/learning';
 import { Chip, Note, PrimaryAction } from '../../ui/ui';
 import { PageHeader, PageSkeleton } from '../../ui/shell';
-import { SpeakButton } from '../../ui/speech';
+import { ChunkGloss } from '../../ui/speech';
 import { SnippetReader } from './SnippetReader';
 
 /** One lesson outside a session: read it again or ahead of time, and study it when wanted. */
@@ -61,24 +61,17 @@ export function LessonPage() {
         <h2 className="mb-2 font-semibold">{vi.lesson.chunks}</h2>
         <ul className="space-y-2">
           {snippetChunks(snippet).map((chunk) => (
-            <li key={chunk.id} className="flex items-start gap-3 rounded-xl border border-line bg-surface px-4 py-3">
-              <SpeakButton text={chunk.example} size="sm" />
-              <span className="min-w-0">
-                <span className="font-medium" lang="en">{chunk.en}</span>
-                <span className="text-ink-soft"> · {chunk.vi}</span>
-                <span className="mt-0.5 block text-sm text-ink-soft" lang="en">{chunk.example}</span>
-              </span>
-            </li>
+            <li key={chunk.id}><ChunkGloss en={chunk.en} meaning={chunk.vi} example={chunk.example} tone="card" /></li>
           ))}
         </ul>
       </section>
 
-      <nav className="flex justify-between gap-2 text-sm">
+      <nav className="grid grid-cols-2 gap-2 text-sm">
         {prev ? (
-          <Link to={`/lesson/${prev.snippet.id}`} className="inline-flex items-center gap-1 text-primary hover:underline"><ChevronLeft size={16} />{vi.lesson.prev}</Link>
+          <Link to={`/lesson/${prev.snippet.id}`} className="flex min-h-12 items-center gap-1 rounded-xl border border-line bg-surface px-3 font-medium hover:border-primary"><ChevronLeft size={16} />{vi.lesson.prev}</Link>
         ) : <span />}
         {next && (
-          <Link to={`/lesson/${next.snippet.id}`} className="inline-flex items-center gap-1 text-primary hover:underline">{vi.lesson.nextLesson}<ChevronRight size={16} /></Link>
+          <Link to={`/lesson/${next.snippet.id}`} className="col-start-2 flex min-h-12 items-center justify-end gap-1 rounded-xl border border-line bg-surface px-3 font-medium hover:border-primary">{vi.lesson.nextLesson}<ChevronRight size={16} /></Link>
         )}
       </nav>
 

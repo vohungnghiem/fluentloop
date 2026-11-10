@@ -60,7 +60,7 @@ export function PageHeader({ title, back, children }: { title: string; back?: { 
   return (
     <header className="flex min-h-10 items-center gap-2">
       {back && (
-        <Link to={back.to} className="-ml-2 rounded-lg p-2 text-ink-soft hover:text-ink" aria-label={back.label} title={back.label}>
+        <Link to={back.to} className="-ml-2 flex size-11 shrink-0 items-center justify-center rounded-full text-ink-soft hover:bg-surface hover:text-ink" aria-label={back.label} title={back.label}>
           <ArrowLeft size={20} />
         </Link>
       )}

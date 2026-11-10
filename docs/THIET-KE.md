@@ -37,7 +37,7 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 | Component | Ghi chú |
 |---|---|
 | `StepBar` | 6 chấm hoặc đoạn trên cùng phiên học, bước hiện tại có nhãn chữ |
-| `PrimaryAction` | Một nút to ở đáy, sticky trên mobile, có gợi ý phím `↵` trên desktop |
+| `PrimaryAction` / `CardAction` | Nút chính duy nhất của màn, phím `↵` trên desktop. Xem 4.1 |
 | `SentenceCard` | Câu EN to, nút loa, chạm vào cụm để xem nghĩa (popover) |
 | `MicButton` | Đủ các trạng thái: sẵn sàng / đang nghe / đã nghe / không nghe thấy / bị chặn / mất mạng |
 | `Diff` | Chữ bị bỏ: gạch ngang trên nền hổ phách. Chữ thêm vào: nền xanh. Có tóm tắt "1 chỗ sửa" |
@@ -45,6 +45,23 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 | `RatingRow` | 4 mức FSRS với chữ thân thiện: Quên · Khó · Nhớ · Dễ |
 | `StatTile` | Số to kèm nhãn nhỏ, dùng ở Hôm nay và Tiến bộ |
 | `EmptyState` | Luôn có minh hoạ, một câu và một nút |
+
+### 4.1 Quy tắc chỗ bấm (bắt buộc cho mọi màn)
+Mục tiêu: người chỉ muốn học thấy ngay một việc, người muốn khám phá có chỗ rõ ràng, không bấm nhầm trên điện thoại.
+
+| Loại | Component (`src/ui/ui.tsx`) | Dùng khi |
+|---|---|---|
+| Nút chính, **một** mỗi màn | `PrimaryAction` (dính đáy, màn tập trung không có thanh tab) hoặc `CardAction` (trong thẻ, màn có thanh tab) | Bắt đầu, Học tiếp, Tiếp |
+| Nút phụ | `Button` variant secondary | Thao tác ngang hàng trong thẻ |
+| Dòng điều hướng | `NavList` + `NavRow` (cả dòng bấm được, cao 52px, icon trái, › phải) | Đi tới màn khác |
+| Link phụ trong thẻ | class `linkButton` (có viền, cao 40px) | "Xem sổ lỗi", "Viết", "Hiện tiếng Việt" |
+| Quay lại | `PageHeader back` (mũi tên ←, 44px, bên trái) | Mọi màn con |
+| Hiếm dùng / nguy hiểm | `MoreMenu` (⋯), luôn `confirm` | Bỏ phiên, xoá |
+| Mở thêm hướng dẫn | Hiện thẳng, không giấu trong `<details>` nếu người dùng cần để làm xong việc | Các bước chuyển máy |
+
+- **Màu xanh chỉ dành cho thứ bấm được.** Nhãn (`Chip`) dùng nền trung tính; `tone="track"` chỉ thêm chấm màu ngành. Ngoại lệ: khung giải thích cụm (`ChunkGloss`) tô xanh nhạt để nối với cụm đang chọn. Nhãn, cụm từ, các bước, chữ thông tin dùng `ink` hoặc `ink-soft`.
+- Chữ xanh gạch chân chỉ dùng cho link **nằm trong câu** (ví dụ "lấy key ở đây").
+- Mọi chỗ bấm ≥ 40px, nút chính ≥ 52px. Link phụ không nằm sát nút chính.
 
 ## 5. Hệ thống minh hoạ
 

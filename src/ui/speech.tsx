@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Mic, MicOff, Square, Turtle, Volume2 } from 'lucide-react';
+import { AudioLines, Mic, MicOff, Turtle, Volume2 } from 'lucide-react';
 import { vi } from '../copy/vi';
 import { speak, stopSpeaking, ttsSupported, type Rate } from '../services/speech/tts';
 import { listen, type Listening, type MicStatus } from '../services/speech/stt';
@@ -18,19 +18,20 @@ export function SpeakButton({ text, slow = false, size = 'md', label }: { text: 
     await speak(text, rate);
     setPlaying(undefined);
   };
+  const on = (rate: Rate) => (playing === rate ? ' bg-primary-tint' : '');
   const cls =
     size === 'sm'
       ? 'inline-flex size-8 items-center justify-center rounded-full text-track hover:bg-primary-tint'
       : 'inline-flex min-h-10 items-center gap-1.5 rounded-full bg-primary-tint px-3 text-sm font-medium text-track hover:brightness-95';
   return (
     <span className="inline-flex items-center gap-1 align-middle">
-      <button type="button" className={cls} onClick={() => void play('normal')} aria-label={vi.speech.listen} title={vi.speech.listen}>
-        {playing === 'normal' ? <Square size={16} /> : <Volume2 size={size === 'sm' ? 18 : 16} />}
+      <button type="button" className={cls + on('normal')} onClick={() => void play('normal')} aria-label={vi.speech.listen} title={vi.speech.listen}>
+        {playing === 'normal' ? <AudioLines size={size === 'sm' ? 18 : 16} className="animate-pulse" /> : <Volume2 size={size === 'sm' ? 18 : 16} />}
         {size === 'md' && (label ?? vi.speech.listen)}
       </button>
       {slow && (
-        <button type="button" className={cls} onClick={() => void play('slow')} aria-label={vi.speech.listenSlow} title={vi.speech.listenSlow}>
-          {playing === 'slow' ? <Square size={16} /> : <Turtle size={size === 'sm' ? 18 : 16} />}
+        <button type="button" className={cls + on('slow')} onClick={() => void play('slow')} aria-label={vi.speech.listenSlow} title={vi.speech.listenSlow}>
+          {playing === 'slow' ? <AudioLines size={size === 'sm' ? 18 : 16} className="animate-pulse" /> : <Turtle size={size === 'sm' ? 18 : 16} />}
           {size === 'md' && vi.speech.listenSlow}
         </button>
       )}
@@ -130,4 +131,26 @@ export function useSpaceToPlay(text: string | undefined, rate: Rate = 'normal') 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [rate]);
+}
+
+/**
+ * A chunk explained: the phrase (with listen and slow), its meaning, and the example sentence
+ * (with listen). Nothing plays on its own; the learner taps a speaker.
+ */
+export function ChunkGloss({ en, meaning, example, tone = 'tint' }: { en: string; meaning: string; example?: string; tone?: 'tint' | 'card' }) {
+  return (
+    <div className={tone === 'tint' ? 'rounded-xl bg-primary-tint px-4 py-3' : 'rounded-xl border border-line bg-surface px-4 py-3'}>
+      <div className="flex items-center justify-between gap-2">
+        <span className="font-semibold" lang="en">{en}</span>
+        <SpeakButton text={en} slow size="sm" />
+      </div>
+      <div>{meaning}</div>
+      {example && (
+        <div className="mt-1 flex items-center justify-between gap-2 text-sm text-ink-soft">
+          <span lang="en">{example}</span>
+          <SpeakButton text={example} size="sm" />
+        </div>
+      )}
+    </div>
+  );
 }

@@ -1,5 +1,6 @@
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Link, useNavigate, useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
+import { PageHeader } from '../../ui/shell';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db } from '../../services/db';
@@ -13,10 +14,7 @@ export function CaptureWritePage() {
   if (capture === undefined) return null;
   return (
     <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-4 pt-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.capture.writeTitle}</h1>
-        <Link to="/capture" className="text-primary hover:underline">← {vi.capture.back}</Link>
-      </header>
+      <PageHeader title={vi.capture.writeTitle} back={{ to: '/capture', label: vi.capture.back }} />
       {capture?.task ? (
         <WritingTask
           task={capture.task}

@@ -8,7 +8,7 @@ import { isOwned } from '../../core/srs/srs';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db, type BaselineRow } from '../../services/db';
-import { Card, StatTile } from '../../ui/ui';
+import { Card, StatTile, linkButton } from '../../ui/ui';
 import { Bars, PageSkeleton } from '../../ui/shell';
 import { insights, type Insight } from '../../core/next/suggest';
 import { labelName } from '../next/NextUp';
@@ -118,7 +118,7 @@ export function ProgressPage() {
       <Card>
         <div className="flex items-baseline justify-between">
           <h2 className="font-semibold">{vi.progress.mistakesTitle}</h2>
-          <Link to="/errors" className="text-sm text-primary hover:underline">{vi.progress.mistakesLink}</Link>
+          <Link to="/errors" className={linkButton}>{vi.progress.mistakesLink}</Link>
         </div>
         <div className="mt-3">
           <Bars

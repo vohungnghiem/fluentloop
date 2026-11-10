@@ -42,6 +42,14 @@ export async function exportData(now: Date): Promise<{ json: string; fileName: s
   return { json, fileName: `fluentloop-${now.toISOString().slice(0, 10)}.json`, counts };
 }
 
+const markExported = (now: Date) => {
+  try {
+    localStorage.setItem(LAST_EXPORT, now.toISOString());
+  } catch {
+    // ignore
+  }
+};
+
 /** Save the export as a file download and remember when. */
 export async function downloadBackup(now: Date) {
   const { json, fileName } = await exportData(now);
@@ -49,11 +57,30 @@ export async function downloadBackup(now: Date) {
   const link = Object.assign(document.createElement('a'), { href: url, download: fileName });
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
+  markExported(now);
+}
+
+/** Whether this device can hand a file to another app (Zalo, Mail, Drive, AirDrop…). */
+export function shareSupported(): boolean {
   try {
-    localStorage.setItem(LAST_EXPORT, now.toISOString());
+    const probe = new File(['{}'], 'probe.json', { type: 'application/json' });
+    return typeof navigator !== 'undefined' && !!navigator.canShare?.({ files: [probe] });
   } catch {
-    // ignore
+    return false;
   }
+}
+
+/** Send the backup through the system share sheet. False if the learner closed it. */
+export async function shareBackup(now: Date): Promise<boolean> {
+  const { json, fileName } = await exportData(now);
+  const file = new File([json], fileName, { type: 'application/json' });
+  try {
+    await navigator.share({ files: [file], title: 'FluentLoop', text: 'Sao lưu FluentLoop: mở FluentLoop trên máy kia, Cài đặt → Nhập file sao lưu.' });
+  } catch {
+    return false;
+  }
+  markExported(now);
+  return true;
 }
 
 export function lastExport(): string | undefined {

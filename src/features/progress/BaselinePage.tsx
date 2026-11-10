@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { CircleCheck, Mic, Square } from 'lucide-react';
 import { dayKey } from '../../core/date';
 import { vi } from '../../copy/vi';
@@ -8,6 +8,7 @@ import { db } from '../../services/db';
 import { currentTrack } from '../../services/content';
 import { startRecording, type RecordError, type Recording } from '../../services/speech/record';
 import { Button, Card, Note, PrimaryAction } from '../../ui/ui';
+import { PageHeader } from '../../ui/shell';
 import { AudioPlayer } from './ProgressPage';
 
 const MAX_SECONDS = 120;
@@ -58,10 +59,7 @@ export function BaselinePage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col space-y-5 px-4 pt-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.baseline.title}</h1>
-        <Link to="/progress" className="text-primary hover:underline">← {vi.progress.title}</Link>
-      </header>
+      <PageHeader title={vi.baseline.title} back={{ to: '/progress', label: vi.progress.title }} />
       <p className="text-ink-soft">{vi.baseline.intro}</p>
 
       <Card>

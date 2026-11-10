@@ -1,14 +1,13 @@
 import { PageHeader } from '../../ui/shell';
 import { useState } from 'react';
-import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { CircleCheck, Eye, EyeOff, KeyRound } from 'lucide-react';
+import { CircleCheck, Eye, EyeOff, KeyRound, Mic } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { aiCallsToday, testConnection } from '../../services/ai/correct';
 import type { AiErrorKind } from '../../services/ai/providers';
 import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
-import { Button, Card, Note } from '../../ui/ui';
+import { Button, Card, NavList, NavRow, Note } from '../../ui/ui';
 import { BackupCard } from '../backup/BackupCard';
 import { TrackPicker } from './TrackPicker';
 
@@ -112,9 +111,9 @@ export function SettingsPage() {
 
       <BackupCard />
 
-      <Card>
-        <Link to="/mic-check" className="text-primary hover:underline">{vi.micCheck.link}</Link>
-      </Card>
+      <NavList>
+        <NavRow to="/mic-check" icon={<Mic size={18} />} title={vi.micCheck.link} />
+      </NavList>
     </main>
   );
 }

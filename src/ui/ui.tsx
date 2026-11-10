@@ -1,10 +1,14 @@
 import type { ButtonHTMLAttributes, ReactNode } from 'react';
-import { CornerDownLeft } from 'lucide-react';
+import { Link } from 'react-router';
+import { ArrowRight, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
 import { useEnter } from './useKey';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' };
+
+/** A small secondary link inside a card (not the main action): bordered, 40px tall. */
+export const linkButton = 'inline-flex min-h-10 items-center gap-1 rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:border-primary';
 
 export function Button({ variant = 'secondary', className, ...props }: ButtonProps) {
   return (
@@ -70,9 +74,10 @@ export function Chip({ tone = 'plain', children }: { tone?: 'plain' | 'good' | '
         tone === 'plain' && 'bg-paper text-ink-soft ring-1 ring-line',
         tone === 'good' && 'bg-good-tint text-good',
         tone === 'accent' && 'bg-accent-tint text-accent-ink',
-        tone === 'track' && 'bg-primary-tint text-track',
+        tone === 'track' && 'bg-paper text-ink ring-1 ring-line',
       )}
     >
+      {tone === 'track' && <span className="size-1.5 rounded-full bg-track" aria-hidden="true" />}
       {children}
     </span>
   );
@@ -114,5 +119,74 @@ export function Lu({ size = 72, className }: { size?: number; className?: string
       <circle cx="51" cy="36" r="5" fill="var(--paper)" />
       <path d="M30 49Q40 57 50 49" fill="none" stroke="var(--paper)" strokeWidth="3.5" strokeLinecap="round" />
     </svg>
+  );
+}
+
+/**
+ * A row that leads somewhere: the whole row is the tap target (52px), icon left, chevron right.
+ * Rows go inside a `NavList`.
+ */
+export function NavRow({ to, icon, title, detail }: { to: string; icon: ReactNode; title: string; detail?: string }) {
+  return (
+    <li>
+      <Link to={to} className="flex min-h-13 items-center gap-3 px-4 py-2.5 transition-colors hover:bg-paper active:bg-primary-tint">
+        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-paper text-ink-soft">{icon}</span>
+        <span className="min-w-0 flex-1">
+          <span className="block font-medium">{title}</span>
+          {detail && <span className="block text-sm text-ink-soft">{detail}</span>}
+        </span>
+        <ChevronRight size={18} className="shrink-0 text-ink-soft" />
+      </Link>
+    </li>
+  );
+}
+
+export function NavList({ title, children }: { title?: string; children: ReactNode }) {
+  return (
+    <section>
+      {title && <h2 className="mb-2 px-1 text-xs font-semibold tracking-wide text-ink-soft uppercase">{title}</h2>}
+      <ul className="divide-y divide-line overflow-hidden rounded-2xl border border-line bg-surface">{children}</ul>
+    </section>
+  );
+}
+
+/** A ⋯ button for rare or risky actions, kept away from the main one. */
+export function MoreMenu({ label, items }: { label: string; items: Array<{ label: string; onClick: () => void }> }) {
+  return (
+    <details className="relative">
+      <summary className="flex size-10 cursor-pointer list-none items-center justify-center rounded-full text-ink-soft hover:bg-paper [&::-webkit-details-marker]:hidden" aria-label={label} title={label}>
+        <MoreHorizontal size={20} />
+      </summary>
+      <div className="absolute right-0 z-10 mt-1 min-w-56 rounded-xl border border-line bg-surface p-1 shadow-lg">
+        {items.map((item) => (
+          <button
+            key={item.label}
+            type="button"
+            className="flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm hover:bg-paper"
+            onClick={(e) => {
+              (e.currentTarget.closest('details') as HTMLDetailsElement).open = false;
+              item.onClick();
+            }}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
+    </details>
+  );
+}
+
+/** The main action inside a card (not stuck to the bottom), still on Enter. */
+export function CardAction({ label, onClick }: { label: string; onClick: () => void }) {
+  useEnter(onClick);
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="mt-5 flex min-h-13 w-full items-center justify-center gap-2 rounded-2xl bg-primary px-5 text-lg font-semibold text-on-primary transition hover:brightness-110 active:brightness-95"
+    >
+      {label}
+      <ArrowRight size={20} />
+    </button>
   );
 }

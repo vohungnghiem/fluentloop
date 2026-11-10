@@ -12,7 +12,7 @@ import { db } from '../../services/db';
 import { currentTrack } from '../../services/content';
 import { saveCapture } from '../../services/learning';
 import { aiReady, useSettings } from '../../services/settings';
-import { Button, Card, Note, PrimaryAction } from '../../ui/ui';
+import { Button, Card, Note, PrimaryAction, linkButton } from '../../ui/ui';
 import { SpeakButton } from '../../ui/speech';
 
 /** A sentence's choice. `aiRange` is the span AI explained: its meaning only fits that span. */
@@ -162,7 +162,7 @@ export function CapturePage() {
             <ol className="mt-3 space-y-2 text-sm">
               {vi.capture.steps.map((step, i) => (
                 <li key={i} className="flex gap-3">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-primary-tint text-xs font-semibold text-track">{i + 1}</span>
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-paper text-xs font-semibold text-ink ring-1 ring-line">{i + 1}</span>
                   <span>{step}</span>
                 </li>
               ))}
@@ -254,7 +254,7 @@ export function CapturePage() {
 
       {!saved && !sentences && (
         <details className="mt-6 rounded-2xl border border-line bg-surface px-4 py-3">
-          <summary className="cursor-pointer font-medium">{vi.capture.bookmarkletTitle}</summary>
+          <summary className="flex min-h-10 cursor-pointer items-center justify-between font-medium">{vi.capture.bookmarkletTitle}<span className="text-sm font-normal text-ink-soft">▾</span></summary>
           <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm">
             {vi.capture.bookmarkletSteps.map((step, i) => <li key={i}>{step}</li>)}
           </ol>
@@ -288,7 +288,7 @@ export function CapturePage() {
                 {c.task && (c.taskDone ? (
                   <span className="text-good">{vi.capture.written}</span>
                 ) : (
-                  <Link to={`/capture/${c.id}/write`} className="text-primary hover:underline">{vi.capture.write}</Link>
+                  <Link to={`/capture/${c.id}/write`} className={linkButton}>{vi.capture.write}</Link>
                 ))}
               </li>
             ))}

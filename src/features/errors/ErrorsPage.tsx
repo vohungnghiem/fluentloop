@@ -5,6 +5,7 @@ import { TrendingDown, Repeat, Dumbbell } from 'lucide-react';
 import { daysBetween, dayKey } from '../../core/date';
 import { ERROR_LABELS, type ErrorLabel } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
+import { SpeakButton } from '../../ui/speech';
 import { now } from '../../services/clock';
 import { db, type MistakeRow } from '../../services/db';
 import { Button, Card, Chip, Lu, Note } from '../../ui/ui';
@@ -85,9 +86,10 @@ export function ErrorsPage() {
                 </div>
                 <ul className="mt-3 space-y-2 text-sm">
                   {group.rows.slice(0, 3).map((m) => (
-                    <li key={m.id}>
-                      <span lang="en"><del className="rounded bg-accent-tint px-1 text-accent-ink">{m.wrong}</del> → <ins className="rounded bg-good-tint px-1 text-good no-underline">{m.right}</ins></span>
-                      <span className="text-ink-soft"> · {m.vi}</span>
+                    <li key={m.id} className="flex items-center gap-1">
+                      <SpeakButton text={m.right} size="sm" />
+                      <span className="min-w-0"><span lang="en"><del className="rounded bg-accent-tint px-1 text-accent-ink">{m.wrong}</del> → <ins className="rounded bg-good-tint px-1 text-good no-underline">{m.right}</ins></span>
+                      <span className="text-ink-soft"> · {m.vi}</span></span>
                     </li>
                   ))}
                 </ul>

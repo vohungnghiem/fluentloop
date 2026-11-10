@@ -42,6 +42,8 @@ export function setMicSimulation(mode: MicSimulation) {
   }
 }
 
+let active: Recognition | undefined;
+
 type Recognition = {
   lang: string;
   interimResults: boolean;
@@ -125,7 +127,11 @@ export function listen(expected = '', onInterim?: (text: string) => void): Liste
     return { result: Promise.resolve({ status: 'offline', transcript: '' }), stop: () => {} };
   }
 
+  // Mobile Chrome keeps the microphone if an earlier session never ended cleanly, and every
+  // later start then hears nothing: always abort the previous one first.
+  active?.abort();
   const recognition = new Ctor();
+  active = recognition;
   recognition.lang = 'en-US';
   recognition.interimResults = true;
   // Recognition guesses the likeliest sentence, not what was said: ask for several guesses and
@@ -136,7 +142,35 @@ export function listen(expected = '', onInterim?: (text: string) => void): Liste
   let latest = '';
   let failure: MicStatus | undefined;
 
-  const result = new Promise<ListenResult>((resolve) => {
+  const result = new Promise<ListenResult>((resolveOnce) => {
+    let done = false;
+    let watchdog: ReturnType<typeof setTimeout> | undefined;
+    const resolve = (value: ListenResult) => {
+      if (done) return;
+      done = true;
+      clearTimeout(watchdog);
+      if (active === recognition) active = undefined;
+      recognition.onresult = recognition.onerror = recognition.onend = null;
+      resolveOnce(value);
+    };
+    const finish = () => {
+      const transcript = (finalText || latest).trim();
+      if (transcript) resolve({ status: 'heard', transcript });
+      else resolve({ status: failure && failure !== 'idle' ? failure : 'no-speech', transcript: '' });
+    };
+    // Android sometimes never fires onend: give up after a while so the button never sticks.
+    const arm = (ms: number) => {
+      clearTimeout(watchdog);
+      watchdog = setTimeout(() => {
+        try {
+          recognition.abort();
+        } catch {
+          // ignore
+        }
+        finish();
+      }, ms);
+    };
+    arm(12000);
     recognition.onresult = (event) => {
       let interim = '';
       finalText = '';
@@ -149,20 +183,29 @@ export function listen(expected = '', onInterim?: (text: string) => void): Liste
       }
       latest = (finalText + ' ' + interim).trim();
       onInterim?.(latest);
+      // A final sentence is enough; on phones onend can lag or never come.
+      if (finalText && !interim) arm(800);
+      else arm(2500); // iPhone Safari often never marks the sentence final
     };
     recognition.onerror = (event) => {
       failure = ERRORS[event.error] ?? 'error';
     };
-    recognition.onend = () => {
-      const transcript = (finalText || latest).trim();
-      if (transcript) resolve({ status: 'heard', transcript });
-      else resolve({ status: failure && failure !== 'idle' ? failure : 'no-speech', transcript: '' });
-    };
+    recognition.onend = finish;
+    // Start inside the tap itself: Safari on iPhone ignores a start() that comes later.
     try {
       recognition.start();
     } catch {
       resolve({ status: 'error', transcript: '' });
     }
   });
-  return { result, stop: () => recognition.stop() };
+  return {
+    result,
+    stop: () => {
+      try {
+        recognition.stop();
+      } catch {
+        // ignore
+      }
+    },
+  };
 }

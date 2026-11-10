@@ -1,5 +1,5 @@
-import { Check } from 'lucide-react';
 import { currentTrack, library } from '../../services/content';
+import { ChevronDown } from 'lucide-react';
 import { saveSettings } from '../../services/settings';
 
 /**
@@ -8,8 +8,28 @@ import { saveSettings } from '../../services/settings';
  */
 export function TrackPicker() {
   if (library.tracks.length < 2) return null;
+  const choose = (id: string) => {
+    if (id === currentTrack.id) return;
+    saveSettings({ trackId: id });
+    location.reload();
+  };
+  // Past three the pill no longer fits a phone: use the system list (a wheel on iPhone).
+  if (library.tracks.length > 3)
+    return (
+      <label className="relative flex min-h-11 w-full items-center rounded-xl border border-line bg-surface focus-within:border-primary sm:max-w-sm">
+        <span className="pointer-events-none absolute left-4 size-2.5 rounded-full" style={{ background: currentTrack.color }} />
+        <select
+          value={currentTrack.id}
+          onChange={(e) => choose(e.target.value)}
+          className="w-full appearance-none bg-transparent py-2.5 pr-10 pl-9 font-medium outline-none"
+        >
+          {library.tracks.map((track) => <option key={track.id} value={track.id}>{track.titleVi}</option>)}
+        </select>
+        <ChevronDown size={18} className="pointer-events-none absolute right-3 text-ink-soft" />
+      </label>
+    );
   return (
-    <div className="flex flex-wrap gap-2" role="radiogroup">
+    <div className="inline-flex w-full rounded-full bg-line/60 p-1 sm:w-auto" role="radiogroup">
       {library.tracks.map((track) => {
         const on = track.id === currentTrack.id;
         return (
@@ -18,16 +38,11 @@ export function TrackPicker() {
             type="button"
             role="radio"
             aria-checked={on}
-            onClick={() => {
-              if (on) return;
-              saveSettings({ trackId: track.id });
-              location.reload();
-            }}
-            className={`inline-flex min-h-11 items-center gap-2 rounded-xl border px-4 font-medium ${on ? 'border-primary bg-primary-tint' : 'border-line bg-surface hover:border-primary'}`}
+            onClick={() => choose(track.id)}
+            className={`flex min-h-10 min-w-0 flex-1 items-center justify-center gap-1.5 rounded-full px-2.5 text-sm font-medium whitespace-nowrap transition sm:flex-none ${on ? 'bg-surface text-ink shadow-sm' : 'text-ink-soft hover:text-ink'}`}
           >
-            <span className="size-3 rounded-full" style={{ background: track.color }} />
+            <span className="size-2 rounded-full" style={{ background: track.color }} />
             {track.titleVi}
-            {on && <Check size={16} />}
           </button>
         );
       })}
