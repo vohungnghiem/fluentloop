@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="800" viewBox="0 0 390 800" role="img" aria-label="Mockup: màn Hôm nay">
+  <style>
+    text { font-family: 'Be Vietnam Pro', 'Inter', 'Segoe UI', Arial, sans-serif; fill: #1E2230; }
+    .soft { fill: #5B6172; }
+    .h1 { font-size: 24px; font-weight: 700; }
+    .h2 { font-size: 18px; font-weight: 700; }
+    .b { font-size: 15px; }
+    .s { font-size: 12px; }
+    .big { font-size: 26px; font-weight: 700; }
+    .ic { fill: none; stroke: #1E2230; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect x="0.5" y="0.5" width="389" height="799" rx="36" fill="#FAF7F2" stroke="#E7E1D8"/>
+
+  <text x="24" y="66" class="s soft">THỨ BA · 10/11</text>
+  <text x="24" y="96" class="h1">Chào bạn!</text>
+  <circle cx="346" cy="84" r="18" fill="#E8EDFF"/><text x="339" y="90" class="b" style="fill:#3B5BDB;font-weight:700">N</text>
+
+  <!-- Hero session card -->
+  <rect x="16" y="120" width="358" height="250" rx="24" fill="#3B5BDB"/>
+  <g transform="translate(262 136)">
+    <path d="M38 4 C58 4 72 17 72 36 C72 55 58 68 38 68 C33 68 28 67 24 65 L10 74 L13 59 C7 53 4 45 4 36 C4 17 18 4 38 4 Z" fill="#FAF7F2"/>
+    <circle cx="27" cy="34" r="5" fill="#3B5BDB"/><circle cx="49" cy="34" r="5" fill="#3B5BDB"/>
+    <path d="M28 47 Q38 55 48 47" fill="none" stroke="#3B5BDB" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+  <text x="36" y="160" class="s" style="fill:#C9D3FF">PHIÊN HÔM NAY</text>
+  <text x="36" y="192" class="h2" style="fill:#FFFFFF;font-size:22px">Standup #3</text>
+  <text x="36" y="216" class="b" style="fill:#E8EDFF">15 phút · "blocked by", "on track"</text>
+  <!-- step chips -->
+  <g class="s">
+    <rect x="36" y="238" width="44" height="24" rx="12" fill="#5A76E6"/><text x="45" y="254" style="fill:#fff">Ôn</text>
+    <rect x="86" y="238" width="50" height="24" rx="12" fill="#5A76E6"/><text x="96" y="254" style="fill:#fff">Nạp</text>
+    <rect x="142" y="238" width="72" height="24" rx="12" fill="#5A76E6"/><text x="152" y="254" style="fill:#fff">Nói theo</text>
+    <rect x="220" y="238" width="52" height="24" rx="12" fill="#5A76E6"/><text x="230" y="254" style="fill:#fff">Dùng</text>
+    <rect x="278" y="238" width="44" height="24" rx="12" fill="#5A76E6"/><text x="288" y="254" style="fill:#fff">Sửa</text>
+  </g>
+  <rect x="36" y="290" width="318" height="56" rx="16" fill="#FAF7F2"/>
+  <text x="150" y="324" class="b" style="fill:#3B5BDB;font-weight:700;font-size:17px">Bắt đầu</text>
+  <rect x="300" y="306" width="36" height="24" rx="6" fill="none" stroke="#C9D3FF"/><text x="311" y="323" class="s" style="fill:#3B5BDB">↵</text>
+
+  <!-- Stat tiles -->
+  <g>
+    <rect x="16" y="390" width="112" height="92" rx="18" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <path d="M40 412 C46 420 50 424 46 432 C44 436 36 436 34 430 C32 424 38 420 40 412 Z" fill="#F2A93B"/>
+    <text x="58" y="432" class="big">6</text>
+    <text x="32" y="464" class="s soft">ngày liên tiếp</text>
+
+    <rect x="139" y="390" width="112" height="92" rx="18" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <rect x="156" y="414" width="16" height="20" rx="3" class="ic" style="stroke:#3B5BDB"/><rect x="161" y="410" width="16" height="20" rx="3" fill="#E8EDFF" stroke="#3B5BDB" stroke-width="2"/>
+    <text x="186" y="432" class="big">7</text>
+    <text x="155" y="464" class="s soft">thẻ đến hạn</text>
+
+    <rect x="262" y="390" width="112" height="92" rx="18" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <circle cx="287" cy="422" r="10" fill="#E3F6EC"/><path d="M282 422 L286 426 L293 418" class="ic" style="stroke:#2F9E6E"/>
+    <text x="304" y="432" class="big">42</text>
+    <text x="278" y="464" class="s soft">câu đã thuộc</text>
+  </g>
+
+  <!-- Error notebook teaser -->
+  <rect x="16" y="500" width="358" height="168" rx="18" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <text x="36" y="532" class="h2" style="font-size:16px">Sổ lỗi tuần này</text>
+  <text x="300" y="532" class="s" style="fill:#3B5BDB">Xem tất cả</text>
+  <g class="s">
+    <text x="36" y="568" class="b">Mạo từ (a / the)</text>
+    <rect x="248" y="554" width="100" height="22" rx="11" fill="#E3F6EC"/><text x="262" y="569" style="fill:#2F9E6E">↓ 3 lần ít hơn</text>
+    <text x="36" y="604" class="b">Thì quá khứ</text>
+    <rect x="248" y="590" width="100" height="22" rx="11" fill="#FFF3DC"/><text x="262" y="605" style="fill:#A86A0C">↑ 1 lần nữa</text>
+    <text x="36" y="640" class="b">-s ngôi thứ ba</text>
+    <rect x="248" y="626" width="100" height="22" rx="11" fill="#E3F6EC"/><text x="262" y="641" style="fill:#2F9E6E">↓ 1 lần ít hơn</text>
+  </g>
+
+  <!-- Tab bar -->
+  <path d="M0.5 704 H389.5 V763.5 A36 36 0 0 1 353.5 799.5 H36.5 A36 36 0 0 1 0.5 763.5 Z" fill="#FFFFFF"/>
+  <path d="M0 704 H390" stroke="#E7E1D8"/>
+  <g class="s">
+    <circle cx="51" cy="732" r="10" fill="#3B5BDB"/><text x="30" y="764" style="fill:#3B5BDB;font-weight:700">Hôm nay</text>
+    <rect x="115" y="722" width="18" height="20" rx="4" class="ic" style="stroke:#5B6172"/><text x="116" y="764" class="soft">Ôn</text>
+    <path d="M187 724 h18 l-3 18 h-12 Z" class="ic" style="stroke:#5B6172"/><text x="176" y="764" class="soft">Bỏ túi</text>
+    <path d="M254 742 v-8 M262 742 v-16 M270 742 v-11" class="ic" style="stroke:#5B6172"/><text x="242" y="764" class="soft">Tiến bộ</text>
+    <circle cx="324" cy="732" r="2" fill="#5B6172"/><circle cx="332" cy="732" r="2" fill="#5B6172"/><circle cx="340" cy="732" r="2" fill="#5B6172"/><text x="318" y="764" class="soft">Thêm</text>
+  </g>
+</svg>

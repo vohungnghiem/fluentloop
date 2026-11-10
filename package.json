@@ -1,0 +1,39 @@
+{
+  "name": "fluentloop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 3100 --strictPort",
+    "build": "npm run content:check && tsc --noEmit && vite build",
+    "preview": "vite preview --port 3100 --strictPort",
+    "test": "vitest run",
+    "content:check": "tsx scripts/content-check.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "fake-indexeddb": "^6.2.8",
+    "tailwindcss": "^4.3.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.7",
+    "vitest": "^5.1.0"
+  },
+  "dependencies": {
+    "@fontsource-variable/jetbrains-mono": "^5.3.0",
+    "@fontsource/be-vietnam-pro": "^5.3.0",
+    "dexie": "^4.4.7",
+    "dexie-react-hooks": "^4.4.0",
+    "lucide-react": "^1.71.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router": "^8.5.1",
+    "ts-fsrs": "^6.0.0",
+    "zod": "^4.6.7"
+  }
+}

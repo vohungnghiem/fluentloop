@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="390" height="800" viewBox="0 0 390 800" role="img" aria-label="Mockup: Ôn tập">
+  <style>
+    text { font-family: 'Be Vietnam Pro', 'Inter', 'Segoe UI', Arial, sans-serif; fill: #1E2230; }
+    .soft { fill: #5B6172; }
+    .b { font-size: 15px; }
+    .s { font-size: 12px; }
+    .en { font-size: 22px; font-weight: 600; }
+    .ic { fill: none; stroke: #1E2230; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  </style>
+  <rect x="0.5" y="0.5" width="389" height="799" rx="36" fill="#FAF7F2" stroke="#E7E1D8"/>
+
+  <path d="M28 54 L40 66 M40 54 L28 66" class="ic" style="stroke:#5B6172"/>
+  <text x="166" y="66" class="b" style="font-weight:700">Ôn · 3/7</text>
+  <rect x="60" y="82" width="270" height="6" rx="3" fill="#E7E1D8"/>
+  <rect x="60" y="82" width="116" height="6" rx="3" fill="#3B5BDB"/>
+
+  <!-- card stack illustration behind -->
+  <rect x="40" y="132" width="310" height="300" rx="24" fill="#E8EDFF" transform="rotate(-3 195 282)"/>
+  <rect x="24" y="126" width="342" height="316" rx="24" fill="#FFFFFF" stroke="#E7E1D8"/>
+  <rect x="44" y="148" width="98" height="22" rx="11" fill="#E8EDFF"/><text x="54" y="163" class="s" style="fill:#3B5BDB">Điền vào câu</text>
+  <circle cx="336" cy="160" r="16" fill="#E8EDFF"/><path d="M329 155 h4 l6 -5 v20 l-6 -5 h-4 Z" fill="#3B5BDB"/>
+  <text x="44" y="230" class="en">Sorry, I'm</text>
+  <rect x="166" y="206" width="104" height="34" rx="8" fill="#E3F6EC" stroke="#2F9E6E" stroke-width="2"/>
+  <text x="180" y="230" class="en" style="fill:#1F7A52">blocked</text>
+  <text x="278" y="230" class="en">by</text>
+  <text x="44" y="266" class="en">the API team.</text>
+  <text x="44" y="306" class="b soft">Xin lỗi, tôi đang bị đội API chặn</text>
+  <text x="44" y="326" class="b soft">(chưa làm tiếp được).</text>
+  <path d="M44 352 H346" stroke="#E7E1D8"/>
+  <circle cx="56" cy="384" r="12" fill="#E3F6EC"/><path d="M50 384 l4 4 l8 -8" class="ic" style="stroke:#2F9E6E"/>
+  <text x="78" y="389" class="b" style="fill:#1F7A52;font-weight:700">Đúng rồi!</text>
+  <text x="78" y="414" class="s soft">Gặp trong: Standup #1, Ticket #2</text>
+
+  <text x="24" y="484" class="b soft">Bạn nhớ câu này thế nào?</text>
+  <g>
+    <rect x="16" y="500" width="84" height="76" rx="16" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <text x="38" y="532" class="b" style="font-weight:700">Quên</text><text x="44" y="556" class="s soft">&lt;1 ph</text>
+    <rect x="108" y="500" width="84" height="76" rx="16" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <text x="136" y="532" class="b" style="font-weight:700">Khó</text><text x="138" y="556" class="s soft">2 ngày</text>
+    <rect x="200" y="500" width="84" height="76" rx="16" fill="#3B5BDB"/>
+    <text x="224" y="532" class="b" style="font-weight:700;fill:#fff">Nhớ</text><text x="226" y="556" class="s" style="fill:#E8EDFF">5 ngày</text>
+    <rect x="292" y="500" width="82" height="76" rx="16" fill="#FFFFFF" stroke="#E7E1D8"/>
+    <text x="322" y="532" class="b" style="font-weight:700">Dễ</text><text x="314" y="556" class="s soft">12 ngày</text>
+  </g>
+  <text x="96" y="604" class="s soft">Phím 1 · 2 · 3 · 4   ·   Space: nghe lại</text>
+
+  <!-- Next card types hint -->
+  <rect x="16" y="636" width="358" height="72" rx="18" fill="#FFF3DC"/>
+  <text x="36" y="664" class="s" style="fill:#A86A0C;font-weight:700">LẦN SAU KHÓ HƠN</text>
+  <text x="36" y="688" class="b">Câu này sẽ chuyển sang "nghe rồi gõ".</text>
+</svg>

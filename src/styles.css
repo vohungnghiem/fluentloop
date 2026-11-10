@@ -1,0 +1,93 @@
+@import 'tailwindcss';
+@import '@fontsource/be-vietnam-pro/vietnamese-400.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-500.css';
+@import '@fontsource/be-vietnam-pro/vietnamese-600.css';
+@import '@fontsource/be-vietnam-pro/latin-400.css';
+@import '@fontsource/be-vietnam-pro/latin-500.css';
+@import '@fontsource/be-vietnam-pro/latin-600.css';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* Design tokens: docs/THIET-KE.md section 2. */
+:root {
+  --paper: #faf7f2;
+  --surface: #ffffff;
+  --ink: #1e2230;
+  --ink-soft: #5b6172;
+  --line: #e7e1d8;
+  --primary: #3b5bdb;
+  --primary-tint: #e8edff;
+  --accent: #f2a93b;
+  --accent-ink: #8a5a0f;
+  --accent-tint: #fff3dc;
+  --good: #2f9e6e;
+  --good-tint: #e3f6ec;
+  --track: #3b5bdb;
+  --on-primary: #ffffff;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #16181d;
+    --surface: #1f2229;
+    --ink: #ecedef;
+    --ink-soft: #a3a8b4;
+    --line: #2e323b;
+    --primary: #7c93f0;
+    --primary-tint: #26305a;
+    --accent: #f5ba5c;
+    --accent-ink: #f5ba5c;
+    --accent-tint: #3d3220;
+    --good: #4cc38a;
+    --good-tint: #1e3a2d;
+    --track: #7c93f0;
+    --on-primary: #16181d;
+    color-scheme: dark;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-tint: var(--primary-tint);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-tint: var(--accent-tint);
+  --color-good: var(--good);
+  --color-good-tint: var(--good-tint);
+  --color-track: var(--track);
+  --color-on-primary: var(--on-primary);
+  --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--paper);
+}
+
+:focus-visible {
+  outline: 3px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
