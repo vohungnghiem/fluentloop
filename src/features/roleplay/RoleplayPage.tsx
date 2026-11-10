@@ -9,7 +9,7 @@ import { vi } from '../../copy/vi';
 import { roleplayTurn, type Line } from '../../services/ai/roleplay';
 import { now } from '../../services/clock';
 import { courseUnits } from '../../services/content';
-import { recordAttempt, saveMistakes } from '../../services/learning';
+import { recordAttempt, recordRoleplay, saveMistakes } from '../../services/learning';
 import { aiReady, useSettings } from '../../services/settings';
 import { speak } from '../../services/speech/tts';
 import { sttSupported } from '../../services/speech/stt';
@@ -45,6 +45,11 @@ export function RoleplayPage() {
   const [done, setDone] = useState<'goal' | 'end' | 'limit'>();
   const [saved, setSaved] = useState(false);
   const [showVi, setShowVi] = useState<number>();
+  // Played to the end with at least one turn: the path ticks it and suggestions move on.
+  const spoke = messages.some((m) => m.who === 'learner');
+  useEffect(() => {
+    if (done && spoke) void recordRoleplay(id, done !== 'limit', now());
+  }, [done, spoke, id]);
   const bottom = useRef<HTMLDivElement>(null);
   const input = useRef<HTMLTextAreaElement>(null);
 
@@ -62,7 +67,7 @@ export function RoleplayPage() {
     bottom.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
   }, [messages]);
 
-  if (!found || !opening) return <main className="p-6"><Link to="/roleplay" className="text-primary">{vi.roleplay.back}</Link></main>;
+  if (!found || !opening) return <main className="p-6"><Link to="/path" className="text-primary">{vi.lesson.back}</Link></main>;
   const { scenario, unitId } = found;
 
   const send = async (text: string) => {
@@ -140,7 +145,7 @@ export function RoleplayPage() {
           <h1 className="truncate text-lg font-semibold">{scenario.titleVi}</h1>
           <p className="text-sm text-ink-soft">{scenario.partner}</p>
         </div>
-        <Link to="/roleplay" className="shrink-0 text-primary hover:underline">← {vi.roleplay.back}</Link>
+        <Link to="/path" className="shrink-0 text-primary hover:underline">← {vi.lesson.back}</Link>
       </header>
       <p className="mt-2 rounded-xl bg-primary-tint px-3 py-2 text-sm"><b>{vi.roleplay.goal}</b> {scenario.goalVi}</p>
 

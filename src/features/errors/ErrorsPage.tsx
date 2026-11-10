@@ -1,12 +1,15 @@
+import { PageHeader } from '../../ui/shell';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Link } from 'react-router';
-import { TrendingDown, Repeat } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
+import { TrendingDown, Repeat, Dumbbell } from 'lucide-react';
 import { daysBetween, dayKey } from '../../core/date';
 import { ERROR_LABELS, type ErrorLabel } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db, type MistakeRow } from '../../services/db';
-import { Card, Chip, Lu } from '../../ui/ui';
+import { Button, Card, Chip, Lu, Note } from '../../ui/ui';
+import { Bars, PageSkeleton } from '../../ui/shell';
+import { activeSession } from '../../services/learning';
 
 const WEEKS = 4;
 
@@ -24,18 +27,16 @@ function byLabel(mistakes: MistakeRow[], today: string) {
 }
 
 export function ErrorsPage() {
+  const navigate = useNavigate();
   const mistakes = useLiveQuery(() => db.mistakes.orderBy('day').reverse().toArray(), []);
-  if (!mistakes) return null;
+  const busy = useLiveQuery(async () => !!(await activeSession()), [], false);
+  if (!mistakes) return <PageSkeleton />;
   const today = dayKey(now());
   const groups = byLabel(mistakes, today);
-  const max = Math.max(1, ...groups.flatMap((g) => g.weeks));
 
   return (
-    <main className="mx-auto max-w-[640px] space-y-5 px-4 py-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.errors.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.errors.title} />
 
       {groups.length === 0 ? (
         <Card className="flex flex-col items-center py-10 text-center">
@@ -46,31 +47,41 @@ export function ErrorsPage() {
       ) : (
         <>
           <p className="text-ink-soft">{vi.errors.intro(mistakes.length)}</p>
+          {busy && <Note tone="plain">{vi.drill.busy} <Link to="/session" className="font-medium text-primary underline">{vi.today.resume}</Link></Note>}
           {groups.map((group) => {
             const [prev, last] = [group.weeks[WEEKS - 2], group.weeks[WEEKS - 1]];
             const falling = prev > 0 && last < prev;
+            const cards = new Set(group.rows.flatMap((m) => (m.cardId ? [m.cardId] : []))).size;
             return (
-              <Card key={group.label}>
+              <Card key={group.label} className="rise">
                 <div className="flex items-center justify-between gap-3">
                   <h2 className="font-semibold">{ERROR_LABELS[group.label as ErrorLabel] ?? group.label}</h2>
                   <span className="text-sm text-ink-soft">{vi.errors.times(group.rows.length)}</span>
                 </div>
-                <div className="mt-3 flex items-end gap-2" aria-label={vi.errors.chart}>
-                  {group.weeks.map((count, i) => (
-                    <div key={i} className="flex flex-1 flex-col items-center gap-1">
-                      <div className="flex h-12 w-full items-end">
-                        <div className={`w-full rounded-t ${i === WEEKS - 1 ? 'bg-accent' : 'bg-line'}`} style={{ height: `${(count / max) * 100}%`, minHeight: count ? 4 : 0 }} />
-                      </div>
-                      <span className="text-[11px] text-ink-soft">{i === WEEKS - 1 ? vi.errors.thisWeek : vi.errors.weeksAgo(WEEKS - 1 - i)} · {count}</span>
-                    </div>
-                  ))}
-                </div>
                 <div className="mt-3">
-                  {falling ? (
-                    <Chip tone="good"><TrendingDown size={14} />{vi.errors.falling}</Chip>
-                  ) : last > 1 ? (
-                    <Chip tone="accent"><Repeat size={14} />{vi.errors.repeating}</Chip>
-                  ) : null}
+                  <Bars
+                    values={group.weeks}
+                    labels={group.weeks.map((count, i) => `${i === WEEKS - 1 ? vi.errors.thisWeek : vi.errors.weeksAgoShort(WEEKS - 1 - i)} · ${count}`)}
+                    highlight={(i) => i === WEEKS - 1}
+                    tone="accent"
+                    height="h-12"
+                    label={vi.errors.chart}
+                  />
+                </div>
+                <div className="mt-3 flex flex-wrap items-center justify-between gap-2">
+                  <span>
+                    {falling ? (
+                      <Chip tone="good"><TrendingDown size={14} />{vi.errors.falling}</Chip>
+                    ) : last > 1 ? (
+                      <Chip tone="accent"><Repeat size={14} />{vi.errors.repeating}</Chip>
+                    ) : null}
+                  </span>
+                  {cards > 0 && (
+                    <Button onClick={() => navigate(`/session?focus=${encodeURIComponent(group.label)}`)} disabled={busy} title={busy ? vi.drill.busy : undefined}>
+                      <Dumbbell size={16} />
+                      {vi.drill.button(cards)}
+                    </Button>
+                  )}
                 </div>
                 <ul className="mt-3 space-y-2 text-sm">
                   {group.rows.slice(0, 3).map((m) => (

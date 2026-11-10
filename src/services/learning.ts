@@ -1,4 +1,4 @@
-import { dayKey, startOfNextDay } from '../core/date';
+import { dayKey, daysBetween, startOfNextDay } from '../core/date';
 import { planSession, type StepKind } from '../core/session/plan';
 import { dueQueue, grade, isOwned, newState, type RatingName } from '../core/srs/srs';
 import type { AnswerResult } from '../core/check/text';
@@ -6,6 +6,8 @@ import { courseUnits } from './content';
 import type { Mistake } from '../core/errors/labels';
 import type { Task } from '../core/content/schema';
 import { errorCards } from '../core/errors/cards';
+import { courseState } from '../core/course/course';
+import { prioritize, repeatingLabels, suggestNext } from '../core/next/suggest';
 import { db, type AttemptRow, type CardRow, type SessionRow } from './db';
 
 /** What the screens call. Every function takes `now` so it behaves the same in tests and in the app. */
@@ -25,23 +27,58 @@ export async function todayQueue(now: Date): Promise<CardRow[]> {
 /** The session in progress, whatever day it was started on. */
 export const activeSession = () => db.sessions.where('status').equals('active').first();
 
-/** Resume the session in progress, or plan a new one. */
-export function startSession(now: Date): Promise<SessionRow> {
-  // One transaction, so two calls at once (React strict mode) still make a single session.
-  return db.transaction('rw', db.sessions, db.reads, db.cards, db.reviews, () => planAndStart(now));
+/** Cards per drill of one mistake label. */
+const DRILL_CARDS = 8;
+/** Cards per extra review, outside the daily loop. */
+const EXTRA_REVIEW = 10;
+
+/**
+ * Resume the session in progress, or plan a new one. With `focus` (a mistake label), the new
+ * session is a short drill of that label's cards instead of the daily loop.
+ */
+export interface SessionChoice {
+  /** A mistake label: a short drill of its cards. */
+  focus?: string;
+  /** A lesson chosen on the path, instead of the next one in order. */
+  snippetId?: string;
+  /** Review only: the cards still due today. */
+  review?: boolean;
 }
 
-async function planAndStart(now: Date): Promise<SessionRow> {
+export function startSession(now: Date, choice: SessionChoice = {}): Promise<SessionRow> {
+  // One transaction, so two calls at once (React strict mode) still make a single session.
+  return db.transaction('rw', db.sessions, db.reads, db.cards, db.reviews, db.mistakes, () => planAndStart(now, choice));
+}
+
+async function planAndStart(now: Date, { focus, snippetId, review }: SessionChoice): Promise<SessionRow> {
   const active = await activeSession();
   if (active) return active;
   const reads = await db.reads.orderBy('lastReadAt').toArray();
-  const queue = await todayQueue(now);
+  const repeating = repeatingLabels(await db.mistakes.toArray(), dayKey(now));
+  // Cards of mistakes coming back this week are reviewed first: that is where the work pays most.
+  const queue = prioritize(await todayQueue(now), new Set(repeating.flatMap((group) => group.cardIds)));
   const plan = planSession({
     units: courseUnits,
     readSnippets: reads.map((read) => read.snippetId),
     dueCards: queue.map((card) => ({ id: card.id, chunkId: card.chunkId })),
     minutes: MINUTES,
+    snippetId,
   });
+  if (review && queue.length > 0) {
+    plan.steps = ['review', 'wrap'];
+    plan.reviewCardIds = queue.slice(0, EXTRA_REVIEW).map((card) => card.id);
+    plan.review = true;
+  }
+  if (focus) {
+    const ids = (await db.mistakes.where('label').equals(focus).toArray()).flatMap((m) => (m.cardId ? [m.cardId] : []));
+    const cards = (await db.cards.bulkGet([...new Set(ids)])).flatMap((card) => (card ? [card] : []));
+    cards.sort((a, b) => a.fsrs.due.localeCompare(b.fsrs.due));
+    if (cards.length > 0) {
+      plan.steps = ['review', 'wrap'];
+      plan.reviewCardIds = cards.slice(0, DRILL_CARDS).map((card) => card.id);
+      plan.focus = focus;
+    }
+  }
   const session: SessionRow = {
     id: uuid(),
     day: dayKey(now),
@@ -276,4 +313,52 @@ export async function saveCapture(text: string, source: string | undefined, pick
     await db.captures.add({ id, at: stamp, text, source, cardIds, task, updatedAt: stamp });
   });
   return id;
+}
+
+/** Error-card ids of a mistake label, for the "practise this" button. */
+export async function drillCards(label: string): Promise<number> {
+  const rows = await db.mistakes.where('label').equals(label).toArray();
+  return new Set(rows.flatMap((m) => (m.cardId ? [m.cardId] : []))).size;
+}
+
+const BASELINE_EVERY_DAYS = 28;
+
+/** Where the learner is in the course, and what to do next: Today, the path and the wrap-up show it. */
+export async function nextSuggestions(now: Date, max = 3) {
+  const [summary, reads, mistakes, captures, lastBaseline, captureCards, played] = await Promise.all([
+    todaySummary(now),
+    db.reads.toArray(),
+    db.mistakes.toArray(),
+    db.captures.orderBy('at').reverse().toArray(),
+    db.baselines.orderBy('at').last(),
+    db.cards.where('source').equals('capture').count(),
+    db.roleplays.toArray(),
+  ]);
+  const course = courseState(courseUnits, reads.map((r) => r.snippetId));
+  const done = new Set(played.map((p) => p.scenarioId));
+  // The first roleplay not played yet, of a unit with at least one lesson read.
+  const scenario = course.units.filter((u) => u.read > 0).flatMap((u) => u.unit.scenarios).find((sc) => !done.has(sc.id));
+  const today = dayKey(now);
+  const suggestions = suggestNext(
+    {
+      active: summary.active ? { step: summary.active.stepIndex + 1, total: summary.active.plan.steps.length } : undefined,
+      doneToday: summary.doneToday,
+      dueToday: summary.dueToday,
+      repeating: repeatingLabels(mistakes, today),
+      roleplay: scenario ? { scenarioId: scenario.id, title: scenario.titleVi } : undefined,
+      captureTaskId: captures.find((c) => c.task && !c.taskDone)?.id,
+      baselineDue: !!lastBaseline && daysBetween(lastBaseline.day, today) >= BASELINE_EVERY_DAYS,
+      // A learner on day one has enough to take in: capture is suggested from the second day.
+      captureCards: summary.daysLearned >= 2 ? captureCards : 1,
+    },
+    max,
+  );
+  return { suggestions, course, summary, played: done };
+}
+
+/** The roleplay was played to the end. */
+export async function recordRoleplay(scenarioId: string, goalMet: boolean, now: Date) {
+  const stamp = now.toISOString();
+  const old = await db.roleplays.get(scenarioId);
+  await db.roleplays.put({ scenarioId, at: stamp, goalMet: goalMet || !!old?.goalMet, updatedAt: stamp });
 }

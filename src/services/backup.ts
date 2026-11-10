@@ -7,7 +7,7 @@ import { db } from './db';
  * as base64, so one file moves a learner to a new phone.
  */
 
-const TABLES = ['cards', 'reviews', 'attempts', 'sessions', 'reads', 'mistakes', 'captures', 'baselines', 'aiUsage'] as const;
+const TABLES = ['cards', 'reviews', 'attempts', 'sessions', 'reads', 'mistakes', 'captures', 'baselines', 'aiUsage', 'roleplays'] as const;
 type TableName = (typeof TABLES)[number];
 const LAST_EXPORT = 'fluentloop.lastExport';
 

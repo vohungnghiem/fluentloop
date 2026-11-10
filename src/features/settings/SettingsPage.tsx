@@ -1,3 +1,4 @@
+import { PageHeader } from '../../ui/shell';
 import { useState } from 'react';
 import { Link } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
@@ -31,11 +32,8 @@ export function SettingsPage() {
   };
 
   return (
-    <main className="mx-auto max-w-[560px] space-y-5 px-4 py-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.settings.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.settings.title} back={{ to: '/', label: vi.micCheck.back }} />
 
       <Card>
         <h2 className="font-semibold">{vi.settings.track}</h2>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { useNavigate } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 import { X } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
@@ -16,12 +16,16 @@ import { WrapStep } from './WrapStep';
 /** A session: full screen, one step at a time, saved after every step. */
 export function SessionPage() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const focus = params.get('focus') ?? undefined;
+  const snippetId = params.get('lesson') ?? undefined;
+  const review = params.has('review');
   const [sessionId, setSessionId] = useState<string>();
   useEffect(() => {
-    void startSession(now()).then((session) => setSessionId(session.id));
-  }, []);
+    void startSession(now(), { focus, snippetId, review }).then((session) => setSessionId(session.id));
+  }, [focus, snippetId, review]);
   const session = useLiveQuery(() => (sessionId ? db.sessions.get(sessionId) : undefined), [sessionId]);
-  if (!session) return null;
+  if (!session) return <main className="mx-auto max-w-[640px] px-4 pt-4" aria-busy="true"><div className="skeleton h-10" /><div className="skeleton mt-6 h-64" /></main>;
 
   const step = session.plan.steps[session.stepIndex];
   return (

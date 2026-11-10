@@ -1,21 +1,35 @@
+import { useEffect, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useNavigate } from 'react-router';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import type { SessionRow } from '../../services/db';
-import { finishSession, todaySummary } from '../../services/learning';
+import { finishSession, nextSuggestions, todaySummary } from '../../services/learning';
 import { Lu, PrimaryAction, StatTile } from '../../ui/ui';
+import { labelName, MoreSuggestions } from '../next/NextUp';
 
-/** The end of the day's loop: what was done, what comes tomorrow, and a clear stop. */
+/**
+ * The end of the loop: what was done, what comes tomorrow, and where to go from here. Reaching
+ * this step finishes the session, so the suggestions see today as done.
+ */
 export function WrapStep({ session, onDone }: { session: SessionRow; onDone: () => void }) {
+  const navigate = useNavigate();
+  const [finished, setFinished] = useState(session.status === 'done');
+  useEffect(() => {
+    if (session.status === 'active') void finishSession(session.id, now()).then(() => setFinished(true));
+  }, [session.id, session.status]);
   const summary = useLiveQuery(() => todaySummary(now()), []);
+  const next = useLiveQuery(() => (finished ? nextSuggestions(now(), 2) : undefined), [finished]);
   const { stats } = session;
-  const done = () => void finishSession(session.id, now()).then(onDone);
+  const drill = session.plan.focus ?? (session.plan.review ? 'review' : undefined);
+  // "Another snippet" right after the daily loop is the main button's job, not a suggestion.
+  const extras = next?.suggestions.filter((s) => s.kind !== 'more' && !(s.kind === 'drill' && s.label === drill)) ?? [];
 
   return (
-    <section className="flex flex-1 flex-col items-center pt-12 text-center">
-      <Lu size={96} />
-      <h1 className="mt-4 text-2xl font-semibold">{vi.wrap.title}</h1>
-      <div className="mt-6 grid w-full grid-cols-3 gap-3">
+    <section className="flex flex-1 flex-col items-center pt-10 text-center">
+      <Lu size={88} className="rise" />
+      <h1 className="mt-4 text-2xl font-semibold">{session.plan.review ? vi.wrap.reviewDone : drill ? vi.drill.done(labelName(drill)) : vi.wrap.title}</h1>
+      <div className="rise mt-6 grid w-full grid-cols-3 gap-3">
         <StatTile value={stats.newCards} label={vi.wrap.newCards} />
         <StatTile value={stats.reviewed} label={vi.wrap.reviewed} />
         <StatTile value={stats.errorCards ?? 0} label={vi.wrap.errorCards} />
@@ -24,10 +38,16 @@ export function WrapStep({ session, onDone }: { session: SessionRow; onDone: () 
       {stats.shadowed && stats.heardRatio !== undefined ? (
         <p className="mt-1 text-ink-soft">{vi.wrap.shadowed(stats.shadowed, Math.round(stats.heardRatio * 100))}</p>
       ) : null}
-      {summary && <p className="mt-2 text-lg">{vi.wrap.tomorrow(summary.dueTomorrow)}</p>}
+      {summary && !drill && <p className="mt-2 text-lg">{vi.wrap.tomorrow(summary.dueTomorrow)}</p>}
+      {next?.course.next && !drill && (
+        <p className="mt-1 text-ink-soft">{vi.tomorrowLesson(next.course.next.snippet.titleVi)}</p>
+      )}
+      <div className="mt-8 w-full text-left">
+        <MoreSuggestions items={extras} onPick={(to) => navigate(to, { replace: true })} />
+      </div>
       <div className="flex-1" />
       <div className="w-full">
-        <PrimaryAction label={vi.wrap.done} onClick={done} />
+        <PrimaryAction label={drill ? vi.drill.finish : vi.wrap.done} onClick={onDone} />
       </div>
     </section>
   );

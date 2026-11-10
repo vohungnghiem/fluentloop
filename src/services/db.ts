@@ -133,6 +133,14 @@ export interface BaselineRow {
   updatedAt: string;
 }
 
+/** A roleplay played to the end, so the path can tick it and suggestions move on. */
+export interface RoleplayRow {
+  scenarioId: string;
+  at: string;
+  goalMet: boolean;
+  updatedAt: string;
+}
+
 export interface AiCacheRow {
   hash: string;
   result: unknown;
@@ -155,6 +163,7 @@ export const db = new Dexie('fluentloop') as Dexie & {
   aiUsage: EntityTable<AiUsageRow, 'day'>;
   captures: EntityTable<CaptureRow, 'id'>;
   baselines: EntityTable<BaselineRow, 'id'>;
+  roleplays: EntityTable<RoleplayRow, 'scenarioId'>;
 };
 
 db.version(1).stores({
@@ -178,4 +187,8 @@ db.version(3).stores({
 
 db.version(4).stores({
   baselines: 'id, kind, at',
+});
+
+db.version(5).stores({
+  roleplays: 'scenarioId, at',
 });

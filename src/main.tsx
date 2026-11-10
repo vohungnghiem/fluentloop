@@ -22,24 +22,32 @@ import { BaselinePage } from './features/progress/BaselinePage';
 import { RoleplayListPage } from './features/roleplay/RoleplayListPage';
 import { RoleplayPage } from './features/roleplay/RoleplayPage';
 import { ClockBadge } from './ui/ClockBadge';
+import { AppShell } from './ui/shell';
+import { PathPage } from './features/lesson/PathPage';
+import { LessonPage } from './features/lesson/LessonPage';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <Routes>
-        <Route path="/" element={<TodayPage />} />
+        {/* Browsing screens share the tab bar; focused flows (a session, a conversation, a task) do not. */}
+        <Route element={<AppShell />}>
+          <Route path="/" element={<TodayPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/mic-check" element={<MicCheckPage />} />
+          <Route path="/errors" element={<ErrorsPage />} />
+          <Route path="/capture" element={<CapturePage />} />
+          <Route path="/progress" element={<ProgressPage />} />
+          <Route path="/roleplay" element={<RoleplayListPage />} />
+          <Route path="/path" element={<PathPage />} />
+          <Route path="/lesson/:id" element={<LessonPage />} />
+          <Route path="*" element={<TodayPage />} />
+        </Route>
         <Route path="/session" element={<SessionPage />} />
         <Route path="/debug" element={<DebugPage />} />
-        <Route path="/mic-check" element={<MicCheckPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-        <Route path="/errors" element={<ErrorsPage />} />
-        <Route path="/capture" element={<CapturePage />} />
         <Route path="/capture/:id/write" element={<CaptureWritePage />} />
-        <Route path="/progress" element={<ProgressPage />} />
         <Route path="/baseline" element={<BaselinePage />} />
-        <Route path="/roleplay" element={<RoleplayListPage />} />
         <Route path="/roleplay/:id" element={<RoleplayPage />} />
-        <Route path="*" element={<TodayPage />} />
       </Routes>
       <ClockBadge />
     </BrowserRouter>

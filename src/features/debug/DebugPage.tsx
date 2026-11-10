@@ -6,6 +6,9 @@ import { courseUnits, findChunk } from '../../services/content';
 import { dayOffset, now, setDayOffset } from '../../services/clock';
 import { jumpToStep, makeAllDue, seedHistory, skipToWrap, snapshot, startWithSnippet, wipeAll } from '../../services/debug';
 import { Button, Card, Chip } from '../../ui/ui';
+import { vi } from '../../copy/vi';
+import { abandonSession } from '../../services/learning';
+import { RotateCcw, Square, Trash2, Clock } from 'lucide-react';
 import { saveSettings, useSettings } from '../../services/settings';
 import { db } from '../../services/db';
 import { micSimulation, setMicSimulation, type MicSimulation } from '../../services/speech/stt';
@@ -51,6 +54,13 @@ export function DebugPage() {
   };
 
   const active = data?.sessions.find((s) => s.status === 'active');
+  const wipe = () => {
+    if (confirm('Xoá toàn bộ dữ liệu học trong trình duyệt này?')) {
+      setDayOffset(0);
+      setOffset(0);
+      void run('xoá dữ liệu', wipeAll, '/')();
+    }
+  };
   const snippets = courseUnits.flatMap((u) => u.snippets);
 
   return (
@@ -60,6 +70,28 @@ export function DebugPage() {
         <Link to="/" className="text-primary hover:underline">← Về Hôm nay</Link>
       </header>
       {busy && <p className="text-ink-soft">Đang chạy: {busy}…</p>}
+
+      <Card className="border-primary">
+        <h2 className="font-semibold">Thao tác nhanh</h2>
+        <p className="mt-1 text-ink-soft">
+          {active
+            ? <>Đang có phiên dở ở bước <b>{active.stepIndex + 1}/{active.plan.steps.length}</b> ({active.plan.steps.map((st) => vi.session.steps[st]).join(' → ')}){active.plan.focus ? <>, luyện lỗi <code>{active.plan.focus}</code></> : null}. Trang Hôm nay sẽ luôn mời “Học tiếp” phiên này cho tới khi bạn học xong hoặc bỏ nó.</>
+            : 'Không có phiên đang dở.'}
+          {offset !== 0 && <> Đồng hồ đang lệch {offset > 0 ? '+' : ''}{offset} ngày.</>}
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Button variant="primary" onClick={run('học lại phiên mới', async () => { if (active) await abandonSession(active.id, now()); }, '/session')}>
+            <RotateCcw size={16} />{active ? 'Bỏ phiên dở, học phiên mới' : 'Bắt đầu phiên mới'}
+          </Button>
+          {active && (
+            <Button onClick={run('bỏ phiên dở', () => abandonSession(active.id, now()), '/')}>
+              <Square size={16} />Bỏ phiên dở, về Hôm nay
+            </Button>
+          )}
+          {offset !== 0 && <Button onClick={() => shift(0)}><Clock size={16} />Về giờ thật</Button>}
+          <Button className="!border-red-500 text-red-600" onClick={wipe}><Trash2 size={16} />Xoá hết, học lại từ đầu</Button>
+        </div>
+      </Card>
 
       <Card>
         <h2 className="font-semibold">Đồng hồ</h2>
@@ -115,9 +147,9 @@ export function DebugPage() {
             </div>
           </>
         ) : (
-          <p className="mt-1 text-ink-soft">Không có phiên đang dở.</p>
+          <p className="mt-1 text-ink-soft">Không có phiên đang dở. Bấm một đoạn bên dưới để học lại đúng đoạn đó.</p>
         )}
-        <p className="mt-4 text-sm text-ink-soft">Bắt đầu phiên mới với đoạn (bỏ phiên đang dở):</p>
+        <p className="mt-4 text-sm text-ink-soft">Học lại một đoạn cụ thể (tự bỏ phiên đang dở):</p>
         <div className="mt-2 flex flex-wrap gap-2">
           {snippets.map((s) => (
             <Button key={s.id} onClick={run('bắt đầu đoạn', () => startWithSnippet(s.id), '/session')}>
@@ -134,18 +166,6 @@ export function DebugPage() {
           <Button onClick={run('tạo lịch sử 3 ngày', () => seedHistory(3))}>Giả lập đã học 3 ngày</Button>
           <Button onClick={run('tạo lịch sử 6 ngày', () => seedHistory(6))}>Giả lập đã học 6 ngày</Button>
           <Button onClick={run('cho thẻ đến hạn', makeAllDue)}>Cho mọi thẻ đến hạn ngay</Button>
-          <Button
-            className="!border-red-500 text-red-600"
-            onClick={() => {
-              if (confirm('Xoá toàn bộ dữ liệu học trong trình duyệt này?')) {
-                setDayOffset(0);
-                setOffset(0);
-                void run('xoá dữ liệu', wipeAll)();
-              }
-            }}
-          >
-            Xoá hết, làm người mới
-          </Button>
         </div>
         <p className="mt-2 text-sm text-ink-soft">
           “Giả lập” xoá dữ liệu cũ rồi chạy đúng logic thật cho từng ngày trước hôm nay (ôn, đọc, viết).

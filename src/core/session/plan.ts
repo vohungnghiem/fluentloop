@@ -13,6 +13,10 @@ export interface SessionPlan {
   snippetId: string;
   /** Cards to review in the warm-up, in order. */
   reviewCardIds: string[];
+  /** A drill: only reviews of the cards of this mistake label, no new snippet. */
+  focus?: string;
+  /** Extra review outside the daily loop. */
+  review?: boolean;
 }
 
 /** Review cards per session by length: a 15-minute session spends at most ~3 minutes on them. */
@@ -25,32 +29,32 @@ export interface PlanInput {
   /** Today's review queue (already capped for the day), most urgent first. */
   dueCards: ReadonlyArray<{ id: string; chunkId?: string }>;
   minutes: number;
+  /** A lesson the learner chose; otherwise the next one in order. */
+  snippetId?: string;
 }
 
 /**
- * The next snippet: the first unread one in course order. Among the next few unread, one that
- * reuses chunks due today wins (interleaving). When everything is read, the one read longest ago.
+ * The next snippet: the first unread one in course order, so the learner always knows what comes
+ * next. When everything is read, the one read longest ago.
  */
-export function nextSnippet(input: Pick<PlanInput, 'units' | 'readSnippets' | 'dueCards'>): {
+export function nextSnippet(input: Pick<PlanInput, 'units' | 'readSnippets'>): {
   unit: Unit;
   snippet: Snippet;
 } {
   const all = input.units.flatMap((unit) => unit.snippets.map((snippet) => ({ unit, snippet })));
   if (all.length === 0) throw new Error('Không có nội dung để học');
   const read = new Set(input.readSnippets);
-  const unread = all.filter((entry) => !read.has(entry.snippet.id));
-  if (unread.length === 0) {
-    const oldest = input.readSnippets.find((id) => all.some((entry) => entry.snippet.id === id));
-    return all.find((entry) => entry.snippet.id === oldest) ?? all[0];
-  }
-  const due = new Set(input.dueCards.flatMap((card) => (card.chunkId ? [card.chunkId] : [])));
-  const window = unread.slice(0, 3);
-  const score = (snippet: Snippet) => snippet.chunks.filter((chunk) => due.has(chunk)).length;
-  return window.reduce((best, entry) => (score(entry.snippet) > score(best.snippet) ? entry : best));
+  const unread = all.find((entry) => !read.has(entry.snippet.id));
+  if (unread) return unread;
+  const oldest = input.readSnippets.find((id) => all.some((entry) => entry.snippet.id === id));
+  return all.find((entry) => entry.snippet.id === oldest) ?? all[0];
 }
 
 export function planSession(input: PlanInput): SessionPlan {
-  const { unit, snippet } = nextSnippet(input);
+  const chosen = input.snippetId
+    ? input.units.flatMap((unit) => unit.snippets.map((snippet) => ({ unit, snippet }))).find((e) => e.snippet.id === input.snippetId)
+    : undefined;
+  const { unit, snippet } = chosen ?? nextSnippet(input);
   const perSession = REVIEWS_PER_SESSION[input.minutes] ?? REVIEWS_PER_SESSION[15];
   const reviewCardIds = input.dueCards.slice(0, perSession).map((card) => card.id);
   return {

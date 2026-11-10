@@ -1,3 +1,4 @@
+import { PageHeader } from '../../ui/shell';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate, useSearchParams } from 'react-router';
@@ -137,11 +138,8 @@ export function CapturePage() {
   };
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col px-4 pt-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.capture.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.capture.title} />
 
       {saved ? (
         <section className="mt-6 space-y-4">

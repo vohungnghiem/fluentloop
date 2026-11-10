@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { db } from './db';
-import { finishReading, finishSession, nextStep, recordAttempt, recordReview, startSession, todaySummary } from './learning';
+import { finishReading, finishSession, nextStep, nextSuggestions, recordAttempt, recordReview, startSession, todaySummary } from './learning';
 
 const day1 = new Date('2026-11-10T20:00:00');
 const day2 = new Date('2026-11-11T08:00:00');
@@ -113,5 +113,40 @@ describe('capture', async () => {
     if (!outcome.ok) return;
     outcome.data.items.forEach((item, i) => expect(sentences[i].toLowerCase()).toContain(item.chunk.toLowerCase()));
     expect(outcome.data.task?.id).toMatch(/^capture-/);
+  });
+});
+
+describe('mistakes that come back lead the reviews', () => {
+  const fsrsDue = (due: string) => ({ due, stability: 1, difficulty: 5, scheduledDays: 1, learningSteps: 0, reps: 1, lapses: 0, state: 2, lastReview: '2026-11-09T08:00:00.000Z' });
+  async function seed() {
+    const stamp = day1.toISOString();
+    const card = (id: string, source: 'content' | 'error', due: string) => ({ id, source, unitId: 'u', kind: source === 'error' ? ('fix' as const) : ('cloze' as const), wrongSentence: 'a', rightSentence: 'b', fsrs: fsrsDue(due), createdAt: stamp, updatedAt: stamp });
+    await db.cards.bulkAdd([card('chunk:worked-on', 'content', '2026-11-08T00:00:00.000Z'), card('error:1', 'error', '2026-11-10T00:00:00.000Z'), card('error:2', 'error', '2026-11-20T00:00:00.000Z')]);
+    const mistake = (id: string, cardId: string) => ({ id, attemptId: 'a', taskId: 't', at: stamp, day: '2026-11-10', wrong: 'a', right: 'the', label: 'article', vi: '', source: 'rules' as const, cardId, updatedAt: stamp });
+    await db.mistakes.bulkAdd([mistake('m1', 'error:1'), mistake('m2', 'error:2')]);
+  }
+
+  it('puts the repeating label\'s due cards first in the daily session', async () => {
+    await seed();
+    const session = await startSession(day1);
+    expect(session.plan.reviewCardIds[0]).toBe('error:1');
+    expect(session.plan.focus).toBeUndefined();
+  });
+
+  it('a drill reviews only that label, due or not, and has no new snippet', async () => {
+    await seed();
+    const session = await startSession(day1, { focus: 'article' });
+    expect(session.plan).toMatchObject({ steps: ['review', 'wrap'], reviewCardIds: ['error:1', 'error:2'], focus: 'article' });
+  });
+
+  it('suggests the drill once today is done', async () => {
+    await seed();
+    const session = await startSession(day1);
+    await nextStep(session.id, day1);
+    await finishReading(session.id, session.plan.snippetId, session.plan.unitId, ['worked-on'], day1);
+    await recordAttempt(session.id, { taskId: 't', snippetId: session.plan.snippetId, text: 'x', usedRequired: [], missingRequired: [] }, day1);
+    await finishSession(session.id, day1);
+    const { suggestions } = await nextSuggestions(day1);
+    expect(suggestions[0]).toMatchObject({ kind: 'drill', label: 'article', cards: 2 });
   });
 });

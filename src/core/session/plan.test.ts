@@ -31,17 +31,18 @@ describe('planSession', () => {
     expect(plan.snippetId).toBe('standup-blocked');
   });
 
-  it('prefers a near snippet that reuses chunks due today', () => {
-    const { snippet } = nextSnippet({
-      units,
-      readSnippets: ['standup-first'],
-      dueCards: [{ id: 'x', chunkId: 'figure-out' }],
-    });
-    expect(snippet.id).toBe('standup-bug-hunt');
+  it('always takes the next lesson in order', () => {
+    const { snippet } = nextSnippet({ units, readSnippets: ['standup-first'] });
+    expect(snippet.id).toBe('standup-blocked');
+  });
+
+  it('a chosen lesson wins over the order', () => {
+    const plan = planSession({ units, readSnippets: [], dueCards: [], minutes: 15, snippetId: 'standup-ooo' });
+    expect(plan.snippetId).toBe('standup-ooo');
   });
 
   it('when all is read, starts again from the one read longest ago', () => {
     const readSnippets = unit.snippets.map((s) => s.id).reverse();
-    expect(nextSnippet({ units, readSnippets, dueCards: [] }).snippet.id).toBe('standup-ooo');
+    expect(nextSnippet({ units, readSnippets }).snippet.id).toBe('standup-ooo');
   });
 });

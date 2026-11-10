@@ -41,7 +41,7 @@ export function PrimaryAction({
 }) {
   useEnter(disabled ? undefined : onClick);
   return (
-    <div className="sticky bottom-0 -mx-4 mt-8 border-t border-line bg-paper/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur">
+    <div className="sticky bottom-[var(--nav-offset,0px)] -mx-4 mt-8 border-t border-line bg-paper/95 px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur">
       {children}
       <button
         type="button"
@@ -59,7 +59,7 @@ export function PrimaryAction({
 }
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <div className={cx('rounded-2xl border border-line bg-surface p-5', className)}>{children}</div>;
+  return <div className={cx('rounded-2xl border border-line bg-surface p-5 shadow-[0_1px_2px_rgb(0_0_0/0.04)]', className)}>{children}</div>;
 }
 
 export function Chip({ tone = 'plain', children }: { tone?: 'plain' | 'good' | 'accent' | 'track'; children: ReactNode }) {

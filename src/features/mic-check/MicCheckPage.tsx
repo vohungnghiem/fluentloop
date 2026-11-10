@@ -1,5 +1,5 @@
+import { PageHeader } from '../../ui/shell';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
 import { CircleCheck } from 'lucide-react';
 import { matchSpoken, type ShadowResult } from '../../core/check/shadow';
 import { vi } from '../../copy/vi';
@@ -22,11 +22,8 @@ export function MicCheckPage() {
   const sim = micSimulation();
 
   return (
-    <main className="mx-auto max-w-[560px] space-y-5 px-4 py-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.micCheck.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.micCheck.title} back={{ to: '/', label: vi.micCheck.back }} />
       {sim !== 'real' && <Note tone="accent">Debug: micro đang được giả lập ({sim}).</Note>}
 
       <Card>

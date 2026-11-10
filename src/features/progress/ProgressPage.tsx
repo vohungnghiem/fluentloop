@@ -1,3 +1,4 @@
+import { PageHeader } from '../../ui/shell';
 import { useEffect, useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router';
@@ -8,6 +9,10 @@ import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db, type BaselineRow } from '../../services/db';
 import { Card, StatTile } from '../../ui/ui';
+import { Bars, PageSkeleton } from '../../ui/shell';
+import { insights, type Insight } from '../../core/next/suggest';
+import { labelName } from '../next/NextUp';
+import { ArrowRight, Lightbulb } from 'lucide-react';
 
 const REDO_AFTER_DAYS = 28;
 
@@ -36,7 +41,16 @@ export function ProgressPage() {
       weeksAgo,
       count: data.mistakes.filter((m) => Math.floor(daysBetween(m.day, today) / 7) === weeksAgo).length,
     }));
+    const labelWeeks = [...new Set(data.mistakes.map((m) => m.label))].map((label) => ({
+      label,
+      weeks: [3, 2, 1, 0].map((ago) => data.mistakes.filter((m) => m.label === label && Math.floor(daysBetween(m.day, today) / 7) === ago).length),
+    }));
     return {
+      insights: insights({
+        labelWeeks,
+        minutesThisWeek: days14.slice(-7).reduce((a, d) => a + d.minutes, 0),
+        minutesLastWeek: days14.slice(0, 7).reduce((a, d) => a + d.minutes, 0),
+      }),
       streak: streak(done.map((s) => s.day), today),
       totalMinutes: [...minutesByDay.values()].reduce((a, b) => a + b, 0),
       weekMinutes: days14.slice(-7).reduce((a, d) => a + d.minutes, 0),
@@ -46,18 +60,13 @@ export function ProgressPage() {
       weekMistakes,
     };
   }, [data, today]);
-  if (!data || !view) return null;
-  const maxMinutes = Math.max(10, ...view.days14.map((d) => d.minutes));
-  const maxMistakes = Math.max(1, ...view.weekMistakes.map((w) => w.count));
+  if (!data || !view) return <PageSkeleton />;
   const lastBaseline = data.baselines.at(-1);
   const sinceBaseline = lastBaseline ? daysBetween(lastBaseline.day, today) : 0;
 
   return (
-    <main className="mx-auto max-w-[640px] space-y-5 px-4 py-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.progress.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.progress.title} />
 
       <section className="grid grid-cols-2 gap-3">
         <StatTile value={view.streak.days} label={vi.progress.streak} />
@@ -74,18 +83,35 @@ export function ProgressPage() {
         {view.retention.tried === 0 && <p>{vi.progress.retentionNone}</p>}
       </div>
 
+      {view.insights.length > 0 && (
+        <Card className="rise">
+          <h2 className="flex items-center gap-2 font-semibold"><Lightbulb size={18} className="text-accent" />{vi.insights.title}</h2>
+          <ul className="mt-3 space-y-2">
+            {view.insights.map((insight, i) => (
+              <li key={i}>
+                <Link to={insightPath(insight)} className="group flex items-center gap-2 rounded-xl px-1 py-1 hover:bg-paper">
+                  <span className="flex-1">{insightText(insight)}</span>
+                  <ArrowRight size={16} className="shrink-0 text-ink-soft group-hover:text-primary" />
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      )}
+
       <Card>
         <h2 className="font-semibold">{vi.progress.chartTitle}</h2>
-        <div className="mt-4 flex h-28 items-end gap-1" role="img" aria-label={view.days14.map((d) => `${d.day}: ${d.minutes}`).join(', ')}>
-          {view.days14.map((d) => (
-            <div key={d.day} className="flex h-full flex-1 flex-col justify-end" title={`${d.day}: ${d.minutes}`}>
-              <div className={`rounded-t ${d.day === today ? 'bg-primary' : 'bg-primary/40'}`} style={{ height: `${(d.minutes / maxMinutes) * 100}%`, minHeight: d.minutes ? 3 : 0 }} />
-            </div>
-          ))}
-        </div>
-        <div className="mt-1 flex justify-between text-[11px] text-ink-soft">
-          <span>{view.days14[0].day.slice(5)}</span>
-          <span>{today.slice(5)}</span>
+        <div className="mt-4">
+          <Bars
+            values={view.days14.map((d) => d.minutes)}
+            highlight={(i) => view.days14[i].day === today}
+            height="h-28"
+            label={vi.progress.chartTitle}
+          />
+          <div className="mt-1 flex justify-between text-[11px] text-ink-soft">
+            <span>{view.days14[0].day.slice(5)}</span>
+            <span>{today.slice(5)}</span>
+          </div>
         </div>
       </Card>
 
@@ -94,15 +120,15 @@ export function ProgressPage() {
           <h2 className="font-semibold">{vi.progress.mistakesTitle}</h2>
           <Link to="/errors" className="text-sm text-primary hover:underline">{vi.progress.mistakesLink}</Link>
         </div>
-        <div className="mt-3 flex items-end gap-3">
-          {view.weekMistakes.map((w) => (
-            <div key={w.weeksAgo} className="flex flex-1 flex-col items-center gap-1">
-              <div className="flex h-16 w-full items-end">
-                <div className={`w-full rounded-t ${w.weeksAgo === 0 ? 'bg-accent' : 'bg-line'}`} style={{ height: `${(w.count / maxMistakes) * 100}%`, minHeight: w.count ? 3 : 0 }} />
-              </div>
-              <span className="text-[11px] text-ink-soft">{vi.progress.weekLabel(w.weeksAgo)} · {w.count}</span>
-            </div>
-          ))}
+        <div className="mt-3">
+          <Bars
+            values={view.weekMistakes.map((w) => w.count)}
+            labels={view.weekMistakes.map((w) => `${w.weeksAgo === 0 ? vi.errors.thisWeek : vi.errors.weeksAgoShort(w.weeksAgo)} · ${w.count}`)}
+            highlight={(i) => view.weekMistakes[i].weeksAgo === 0}
+            tone="accent"
+            height="h-16"
+            label={vi.progress.mistakesTitle}
+          />
         </div>
       </Card>
 
@@ -149,3 +175,19 @@ export function AudioPlayer({ blob }: { blob: Blob }) {
   useEffect(() => () => URL.revokeObjectURL(url), [url]);
   return <audio controls src={url} className="mt-1 w-full" />;
 }
+
+function insightText(insight: Insight): string {
+  switch (insight.kind) {
+    case 'mistakeFalling':
+      return vi.insights.mistakeFalling(labelName(insight.label), insight.weeks);
+    case 'mistakeRising':
+      return vi.insights.mistakeRising(labelName(insight.label));
+    case 'minutesUp':
+      return vi.insights.minutesUp(insight.delta);
+    case 'minutesDown':
+      return vi.insights.minutesDown(insight.delta);
+  }
+}
+
+/** Where to act on an observation: a rising mistake goes to the error book, where it can be drilled. */
+const insightPath = (insight: Insight) => (insight.kind === 'mistakeFalling' || insight.kind === 'mistakeRising' ? '/errors' : '/');

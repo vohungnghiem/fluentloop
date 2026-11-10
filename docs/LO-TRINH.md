@@ -11,6 +11,8 @@ Mỗi sprint chỉ bắt đầu khi bạn nói **"bắt đầu Sprint NN"**. M�
 | **05: Tiến bộ + PWA** | Màn Tiến bộ, mốc ghi âm/bài viết, xuất/nhập, cài lên điện thoại, offline | Học trên điện thoại khi không có mạng (trừ AI) |
 | **06: Hội thoại** | Roleplay có AI và kịch bản rẽ nhánh khi không có AI. Chủ đề 2–3 (Ticket, PR) | Một buổi standup giả và một code review giả |
 | **07: Track thứ hai (thử mở rộng)** | Một ngành khác nhỏ (ví dụ khách sạn), chỉ thêm dữ liệu. Đo xem có phải sửa code không | Thêm ngành **không sửa code**. Nếu phải sửa thì sửa kiến trúc ngay lúc này |
+| **08: Một vòng liền mạch** | Thanh điều hướng dưới, header và biểu đồ dùng chung. Gợi ý "tiếp theo" (`core/next`) cho Hôm nay và Chốt. Phiên luyện theo nhóm lỗi, thẻ lỗi lặp lại được ôn trước. Lộ trình bài, nhận xét ở Tiến bộ | Từ màn nào cũng tới màn khác bằng 1 chạm, và màn nào cũng có "tiếp theo" |
+| **09: Bài học nhìn thấy được** | Màn Lộ trình (chủ đề → bài → hội thoại) và trang bài (xem trước, đọc lại, học bài này). Hôm nay và Chốt ghi đúng tên bài tiếp theo. Bài đi đúng thứ tự, bỏ nhảy cóc. Ôn thêm ngoài phiên. Ghi hội thoại đã nói. Bỏ nút Debug | Người học luôn biết mình ở đâu, bài tiếp theo là gì, và mở lại được bài cũ |
 
 Sau Sprint 07: quyết định có mở cho người khác không, và cách nào (KIEN-TRUC mục 9, PHAC-THAO mục 9.3).
 

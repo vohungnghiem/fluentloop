@@ -1,3 +1,4 @@
+import { PageHeader } from '../../ui/shell';
 import { Link } from 'react-router';
 import { MessagesSquare } from 'lucide-react';
 import { vi } from '../../copy/vi';
@@ -9,11 +10,8 @@ import { Card, Note } from '../../ui/ui';
 export function RoleplayListPage() {
   const settings = useSettings();
   return (
-    <main className="mx-auto max-w-[640px] space-y-5 px-4 py-6">
-      <header className="flex items-center justify-between">
-        <h1 className="text-xl font-semibold">{vi.roleplay.title}</h1>
-        <Link to="/" className="text-primary hover:underline">← {vi.micCheck.back}</Link>
-      </header>
+    <main className="page">
+      <PageHeader title={vi.roleplay.title} back={{ to: '/path', label: vi.lesson.back }} />
       <p className="text-ink-soft">{vi.roleplay.intro}</p>
       <Note tone="plain">{aiReady(settings) ? vi.roleplay.withAi : vi.roleplay.withoutAi}</Note>
       {courseUnits.flatMap((unit) =>
