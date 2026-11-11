@@ -1,3 +1,5 @@
+import { StepHeader } from '../../ui/ui';
+import { STEP_LOOK } from '../../ui/tones';
 import { useState } from 'react';
 import { Check } from 'lucide-react';
 import { SpeakButton } from '../../ui/speech';
@@ -27,8 +29,7 @@ export function InputStep({ session }: { session: SessionRow }) {
 
   return (
     <section className="flex flex-1 flex-col pt-8">
-      <h1 className="text-lg font-semibold">{vi.input.title}</h1>
-      <p className="mt-1 text-sm text-ink-soft">{vi.input.instruction}</p>
+      <StepHeader {...STEP_LOOK.input} title={vi.input.title} detail={vi.input.instruction} />
 
       <SnippetReader snippet={snippet} className="mt-5" />
 

@@ -5,8 +5,9 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 ![Logo](assets/logo.svg)
 
 ## 1. Cảm giác
-- Giống một cuốn sổ tay gọn gàng, không giống bảng điều khiển hay game.
-- Nền màu giấy ấm, chữ mực đậm, một màu chính, một màu nhấn.
+- Giống một cuốn sổ tay gọn gàng, ấm áp và **có sức sống**, không giống bảng điều khiển hay game.
+- Nền màu giấy ấm, chữ mực đậm, một màu chính cho thứ bấm được, và **mỗi bước học một màu nhận diện** (mục 2.1).
+- Có phản hồi khi hoàn thành (tick nảy nhẹ, thanh bước đổi màu). Không dùng pháo hoa, điểm hay XP.
 - Chuyển động ít và ngắn (150–250ms), tắt được, tôn trọng `prefers-reduced-motion`.
 
 ## 2. Design tokens (CSS variables)
@@ -28,7 +29,36 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 - **Màu theo track:** mỗi ngành có một `--track` riêng (dev: chàm `#3B5BDB`, sau này điều dưỡng: xanh ngọc, khách sạn: cam đất...), dùng cho minh hoạ và nhãn. Màu nút chính không đổi.
 - Không dùng đỏ cho lỗi. Màu đỏ chỉ dành cho thao tác nguy hiểm (xoá dữ liệu).
 
+### 2.1 Màu theo bước và theo mục (`src/ui/tones.ts`)
+Mỗi tông là một class `.tone-<tên>` đặt `--tone` và `--tone-tint`. Bên trong dùng `bg-tone`, `text-tone`, `bg-tone-tint`. Không đặt mã màu trực tiếp trong component.
+
+| Tông | Sáng / Tối | Bước | Mục |
+|---|---|---|---|
+| `review` tím | `#7048E8` / `#B197FC` | Ôn | Hội thoại |
+| `input` xanh ngọc | `#0B7285` / `#3BC9DB` | Nạp | Lộ trình |
+| `shadow` cam | `#D9480F` / `#FF922B` | Nói theo | Bỏ túi |
+| `produce` chàm | `#3B5BDB` / `#7C93F0` | Dùng | Hôm nay |
+| `wrap` xanh lá | `#2B8A3E` / `#69DB7C` | Chốt | Tiến bộ |
+| `fix` hổ phách | `#B35C00` / `#FFC078` | Sửa câu | Sổ lỗi |
+
+- Màu tông dùng cho: đoạn trên thanh bước, `ToneIcon` (ô vuông có icon ở đầu bước, đầu trang, dòng điều hướng, gợi ý), tab đang chọn, số trong `StatTile`.
+- **Không** dùng màu tông cho nút. Nút chính luôn là `--primary`.
+- Chuyển động: `.pop` khi vào bước, `.burst` một lần ở màn Chốt. Cả hai tắt theo `prefers-reduced-motion`.
+
 ## 3. Chữ
+
+### 3.1 Bốn vai trò chữ (bắt buộc cho mọi màn)
+| Vai trò | Kiểu | Dùng cho |
+|---|---|---|
+| Nhãn (`Eyebrow`) | 12px, in hoa, đậm, màu tông | Đây là gì: "Đang học dở", "Đề bài", "Tiếp theo · bài 1/6" |
+| Tiêu đề | 20–24px, đậm, `ink` | Tên bài, tên bước |
+| Nội dung | 16px, `ink` | Điều người học cần đọc |
+| Chú thích | 13–14px, `ink-soft` | Chỉ thông tin phụ, **tối đa một dòng** liền nhau |
+
+- Danh sách cụm tiếng Anh luôn hiện dạng nhãn (`ChunkChips`) có tiêu đề ("Cụm sẽ học", "Cần dùng"), không viết thành một dòng chữ nối bằng dấu chấm.
+- Tiến độ các bước dùng `StepTrail` (biểu tượng màu: đã xong có dấu tick, đang làm có nền), không viết thành câu kiểu "Bước 2/4".
+- Lời giải thích: một câu ngắn. Không nhắc lại điều màn hình đã thể hiện. Không hiện số 0.
+
 - **Be Vietnam Pro** (variable) cho giao diện. Dấu tiếng Việt đẹp, đọc tốt cả tiếng Anh.
 - **JetBrains Mono** cho đoạn code, tên lệnh, thông báo lỗi trong snippet ngành dev.
 - Cỡ chữ: câu học 20–22px, chữ thường 16px, chú thích 13px. Câu tiếng Anh đang học luôn là chữ to nhất trên màn hình.
@@ -36,14 +66,18 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 ## 4. Thành phần chính
 | Component | Ghi chú |
 |---|---|
-| `StepBar` | 6 chấm hoặc đoạn trên cùng phiên học, bước hiện tại có nhãn chữ |
+| `StepHeader` | Đầu mỗi bước: `ToneIcon` (pop), tiêu đề lớn, một dòng hướng dẫn, số thứ tự bên phải |
+| `AiBadge` | Trạng thái AI (bật · tên nhà cung cấp / chưa có key / tắt), bấm là tới Cài đặt mục AI, ← quay về đúng chỗ. Đặt ở mọi màn có dùng AI: Hôm nay, phiên học (dạng gọn), Bỏ túi, Hội thoại |
+| `ToneIcon` | Ô vuông màu tông kèm icon, 3 cỡ. `PageHeader look`, `NavRow look` dùng nó |
+| `StepBar` | Đoạn trên cùng phiên học, màu theo bước. **Bấm được** để quay lại bước đã qua, bước chưa tới bị khoá |
 | `PrimaryAction` / `CardAction` | Nút chính duy nhất của màn, phím `↵` trên desktop. Xem 4.1 |
 | `SentenceCard` | Câu EN to, nút loa, chạm vào cụm để xem nghĩa (popover) |
 | `MicButton` | Đủ các trạng thái: sẵn sàng / đang nghe / đã nghe / không nghe thấy / bị chặn / mất mạng |
 | `Diff` | Chữ bị bỏ: gạch ngang trên nền hổ phách. Chữ thêm vào: nền xanh. Có tóm tắt "1 chỗ sửa" |
-| `ExplainNote` | Giải thích tiếng Việt ngắn, có nhãn lỗi (chip) |
+| `FeedbackPanel` | **Một khung duy nhất** cho nhận xét: đủ ý → cụm → lỗi (diff + chọn thành thẻ) → nâng cấp → khen. Thay cho các khung rời |
+| `HintBox` | Gợi ý 3 bậc, mở dần |
 | `RatingRow` | 4 mức FSRS với chữ thân thiện: Quên · Khó · Nhớ · Dễ |
-| `StatTile` | Số to kèm nhãn nhỏ, dùng ở Hôm nay và Tiến bộ |
+| `StatTile` | Số to kèm nhãn nhỏ, có thể theo tông. Ở Chốt chỉ hiện ô có số lớn hơn 0 |
 | `EmptyState` | Luôn có minh hoạ, một câu và một nút |
 
 ### 4.1 Quy tắc chỗ bấm (bắt buộc cho mọi màn)

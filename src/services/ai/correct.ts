@@ -1,6 +1,7 @@
 import { correctionSchema, ERROR_LABELS, type Correction } from '../../core/errors/labels';
 import { applyMistakes, ruleMistakes } from '../../core/errors/rules';
 import type { Task } from '../../core/content/schema';
+import { pointsByRules } from '../../core/check/feedback';
 import { aiCallsToday, askCached } from './cached';
 import { currentTrack } from '../content';
 import { getSettings, aiReady, type Settings } from '../settings';
@@ -11,20 +12,32 @@ import { AiError, askJson, type AiErrorKind } from './providers';
  * it fails) the rules. Results are cached: the same answer is never sent twice.
  */
 
-const PROMPT_VERSION = 1;
+const PROMPT_VERSION = 2;
 
-const system = () => `You are a kind English writing coach for Vietnamese ${currentTrack.audience}.
-Correct the learner's short workplace text. Return ONLY JSON:
-{"corrected": string, "natural": string, "mistakes": [{"wrong": string, "right": string, "label": string, "vi": string}], "praiseVi": string}
+const system = () => `You are an English writing coach for Vietnamese ${currentTrack.audience}. The learner is LEARNING:
+never wave an answer through. Judge it against the task, fix it, and teach one step further.
+Return ONLY JSON:
+{"corrected": string, "mistakes": [{"wrong": string, "right": string, "label": string, "vi": string}],
+ "coverage": [{"ok": boolean, "noteVi": string}], "upgrades": [{"en": string, "vi": string}], "praiseVi": string}
 Rules:
-- "corrected": the learner's text with only real errors fixed; keep their words and meaning.
-- "natural": how a friendly native colleague would say it; "" if "corrected" is already natural.
+- "coverage": one item per task point, in the same order. "ok" only if the idea is clearly there.
+  If not, "noteVi" says in Vietnamese what to add (at most 15 words). Unfinished text = points missing.
+- "corrected": the learner's text with only real errors fixed (grammar, spelling, capitals, punctuation); keep their words.
 - "mistakes": each real error; "wrong" and "right" are short exact pieces (2-6 words) from the text and from "corrected".
 - "label": one of ${Object.keys(ERROR_LABELS).join(', ')}.
-- "vi": why, in simple Vietnamese, at most 20 words. No English grammar jargon.
-- Do not flag style choices as mistakes; use label "naturalness" only for clearly unnatural phrasing.
-- "praiseVi": one specific compliment in Vietnamese (what they did well), at most 15 words.
+- "vi": why, in simple Vietnamese, at most 20 words. No grammar jargon.
+- "upgrades": 1-2 ways a friendly native colleague would say the learner's own idea better (more natural, more varied,
+  using the task's chunks). Give them EVEN IF there are no mistakes. "vi": what is better about it, at most 15 words.
+- "praiseVi": one specific thing done well, in Vietnamese, at most 15 words; "" if the answer is incomplete or weak.
 - If there are no errors, "mistakes" is [] and "corrected" equals the text.`;
+
+const taskBrief = (task: Task) =>
+  [
+    `Task: ${task.promptVi}${task.situation ? ` — ${task.situation}` : ''}`,
+    task.points.length ? `Task points:\n${task.points.map((p, i) => `${i + 1}. ${p.vi}`).join('\n')}` : 'Task points: (none)',
+    task.required.length ? `Chunks to use: ${task.required.map((r) => r.label).join(', ')}` : '',
+    `Example answer: ${task.models[0]}`,
+  ].filter(Boolean).join('\n');
 
 export interface CorrectionResult {
   correction: Correction;
@@ -40,13 +53,14 @@ export function correctWithRules(text: string): Correction {
   return { corrected: applyMistakes(text, mistakes), mistakes };
 }
 
-/** Debug: a believable AI answer without a network (rules + the task's model as the natural version). */
+/** Debug: a believable AI answer without a network (rules, the points by rules, the model as the upgrade). */
 function fakeAi(task: Task, text: string): Correction {
   const rules = correctWithRules(text);
   return {
     ...rules,
-    natural: task.models[0],
-    praiseVi: rules.mistakes.length === 0 ? 'Câu rõ ý, dùng cụm đúng chỗ.' : 'Ý rõ ràng, chỉ cần sửa vài chỗ nhỏ.',
+    coverage: pointsByRules(task, text).map((p) => ({ ok: p.status !== 'missing', noteVi: p.status === 'missing' ? `Thêm ý: ${p.vi.toLowerCase()}.` : undefined })),
+    upgrades: [{ en: task.models[0], vi: '(AI giả lập) Gọn và tự nhiên hơn.' }],
+    praiseVi: 'Câu rõ ý, dùng cụm đúng chỗ.',
   };
 }
 
@@ -61,14 +75,14 @@ export async function correctWriting(task: Task, text: string, now: Date, settin
     now,
     version: `correct-${PROMPT_VERSION}`,
     system: system(),
-    user: `Task (for context): ${task.promptVi}${task.situation ? ` — ${task.situation}` : ''}\nLearner's text:\n${text.trim()}`,
+    user: `${taskBrief(task)}\nLearner's text:\n${text.trim()}`,
     schema: correctionSchema,
     fake: () => fakeAi(task, text),
   });
   if (!outcome.ok) {
     return { correction: correctWithRules(text), source: 'rules', aiError: outcome.kind === 'off' ? undefined : outcome.kind };
   }
-  const correction = { ...outcome.data, natural: outcome.data.natural?.trim() || undefined };
+  const correction = outcome.data;
   return { correction, source: 'ai', cached: outcome.cached };
 }
 

@@ -51,6 +51,10 @@ export interface AttemptRow {
   missingRequired: string[];
   /** The learner's own verdict against the model answer. */
   selfCheck?: 'same' | 'different';
+  /** Earlier versions, oldest first: the learner checked them and wrote again. */
+  revisions?: string[];
+  /** Task points still missing in the final version. */
+  missingPoints?: string[];
   source: 'rules' | 'ai';
   at: string;
   updatedAt: string;
@@ -74,6 +78,8 @@ export interface SessionRow {
   day: string;
   plan: SessionPlan;
   stepIndex: number;
+  /** The furthest step reached: the step bar goes back to any step up to it. */
+  reachedIndex?: number;
   /** Reviews done inside this session, so a resumed warm-up starts where it stopped. */
   reviewedIds: string[];
   status: 'active' | 'done';
@@ -152,6 +158,14 @@ export interface AiUsageRow {
   count: number;
 }
 
+/** What the learner is typing, saved as they type so leaving or reloading loses nothing. Not backed up. */
+export interface DraftRow {
+  /** Where it was typed: `write:<session or source>:<task>`, `capture`, `roleplay:<id>`… */
+  key: string;
+  value: unknown;
+  updatedAt: string;
+}
+
 export const db = new Dexie('fluentloop') as Dexie & {
   cards: EntityTable<CardRow, 'id'>;
   reviews: EntityTable<ReviewRow, 'id'>;
@@ -164,6 +178,7 @@ export const db = new Dexie('fluentloop') as Dexie & {
   captures: EntityTable<CaptureRow, 'id'>;
   baselines: EntityTable<BaselineRow, 'id'>;
   roleplays: EntityTable<RoleplayRow, 'scenarioId'>;
+  drafts: EntityTable<DraftRow, 'key'>;
 };
 
 db.version(1).stores({
@@ -191,4 +206,8 @@ db.version(4).stores({
 
 db.version(5).stores({
   roleplays: 'scenarioId, at',
+});
+
+db.version(6).stores({
+  drafts: 'key, updatedAt',
 });

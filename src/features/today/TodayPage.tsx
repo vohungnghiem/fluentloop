@@ -1,12 +1,15 @@
+import { AiBadge } from '../../ui/AiBadge';
+import type { StepKind } from '../../core/session/plan';
+import { SECTION_LOOK, STEP_LOOK } from '../../ui/tones';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router';
-import { BookOpen, MessagesSquare, Mic, Route, Settings } from 'lucide-react';
+import { Mic, Settings } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { currentTrack, findSnippet, library, snippetChunks } from '../../services/content';
 import { TrackPicker } from '../settings/TrackPicker';
 import { abandonSession, nextSuggestions } from '../../services/learning';
-import { Card, CardAction, Chip, Lu, MoreMenu, NavList, NavRow, Note, linkButton } from '../../ui/ui';
+import { Card, CardAction, ChunkChips, Eyebrow, StepTrail, Chip, Lu, MoreMenu, NavList, NavRow, Note, linkButton } from '../../ui/ui';
 import { PageSkeleton } from '../../ui/shell';
 import { lastExport } from '../../services/backup';
 import { MoreSuggestions, suggestionPath, suggestionText } from '../next/NextUp';
@@ -46,10 +49,13 @@ export function TodayPage() {
       <header className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Lu size={32} />
-          <span className="text-lg font-semibold">FluentLoop</span>
+          <span className="hidden text-lg font-semibold min-[400px]:inline">FluentLoop</span>
           <Chip tone="track">{currentTrack.titleVi}</Chip>
         </div>
-        <Link to="/settings" className="flex size-11 items-center justify-center rounded-full text-ink-soft hover:bg-surface hover:text-ink" aria-label={vi.settings.link} title={vi.settings.link}><Settings size={20} /></Link>
+        <div className="flex items-center gap-1">
+          <AiBadge />
+          <Link to="/settings" className="flex size-11 items-center justify-center rounded-full text-ink-soft hover:bg-surface hover:text-ink" aria-label={vi.settings.link} title={vi.settings.link}><Settings size={20} /></Link>
+        </div>
       </header>
 
       {summary.firstTime && (
@@ -68,11 +74,12 @@ export function TodayPage() {
 
       {main ? (
         <Card className="rise">
-          <div className="flex items-start justify-between gap-2">
-            <p className="text-sm text-ink-soft">
-              {active ? suggestionText(main).title : vi.next.title}
-              {lesson && !active && <> · {lessonPlace(lesson.snippet.id).split(' · ').pop()}</>}
-            </p>
+          <div className="flex items-start gap-2">
+            <div className="min-w-0 flex-1">
+              <Eyebrow tone="produce" right={active ? undefined : vi.today.minutes}>
+                {active ? vi.today.resumeEyebrow : lesson ? `${vi.next.title} · ${lessonPlace(lesson.snippet.id).split(' · ').pop()}` : vi.next.title}
+              </Eyebrow>
+            </div>
             {active && (
               <div className="-mt-2 -mr-2">
                 <MoreMenu label={vi.today.options} items={[{ label: vi.today.abandon, onClick: () => confirm(vi.today.abandonConfirm) && void abandonSession(active.id, now()) }]} />
@@ -81,18 +88,40 @@ export function TodayPage() {
           </div>
           {lesson ? (
             <>
-              <h2 className="mt-1 text-xl font-semibold">{lesson.snippet.titleVi}</h2>
-              <p className="text-sm text-ink-soft">{lesson.unit.titleVi}</p>
-              <p className="mt-3 text-ink" lang="en">{snippetChunks(lesson.snippet).map((c) => c.en).join(' · ')}</p>
+              <h2 className="mt-2 text-2xl leading-tight font-semibold">{lesson.snippet.titleVi}</h2>
+              <p className="mt-0.5 text-sm text-ink-soft">{lesson.unit.titleVi}</p>
+              <div className="mt-4">
+                <ChunkChips label={vi.today.chunksLabel} chunks={snippetChunks(lesson.snippet).map((c) => c.en)} />
+              </div>
             </>
           ) : (
-            <h2 className="mt-1 text-xl font-semibold">{suggestionText(main).title}</h2>
+            <>
+              <h2 className="mt-2 text-2xl leading-tight font-semibold">{suggestionText(main).title}</h2>
+              <p className="mt-1 text-ink">{suggestionText(main).body}</p>
+            </>
           )}
-          <p className="mt-3 text-sm text-ink-soft">
-            {active
-              ? suggestionText(main).body
-              : [summary.dueToday > 0 && vi.today.plan.review(Math.min(summary.dueToday, 10)), vi.today.plan.input, vi.today.plan.shadow, vi.today.plan.produce].filter(Boolean).join(' · ') + ` (${vi.today.sessionMinutes})`}
-          </p>
+          {/* The session as a row of steps, in the colours the step bar will use: done, here, ahead. */}
+          {(active || lesson) && (
+            <div className="mt-4">
+              {active ? (
+                <StepTrail
+                  steps={active.plan.steps.filter((st) => st !== 'wrap').map((st) => ({ ...STEP_LOOK[st], label: vi.session.steps[st] }))}
+                  current={active.stepIndex}
+                />
+              ) : (
+                <StepTrail
+                  steps={(
+                    [
+                      ...(summary.dueToday > 0 ? [['review', vi.today.plan.review(Math.min(summary.dueToday, 10))]] : []),
+                      ['input', vi.today.plan.input],
+                      ['shadow', vi.today.plan.shadow],
+                      ['produce', vi.today.plan.produce],
+                    ] as Array<[StepKind, string]>
+                  ).map(([st, label]) => ({ ...STEP_LOOK[st], label }))}
+                />
+              )}
+            </div>
+          )}
           <CardAction label={suggestionText(main).action} onClick={() => navigate(suggestionPath(main))} />
         </Card>
       ) : (
@@ -115,7 +144,7 @@ export function TodayPage() {
       <MoreSuggestions items={rest} />
 
       {summary.cards > 0 && <p className="text-center text-sm text-ink-soft">
-        {[`${summary.dueToday} ${vi.today.stats.due}`, `${summary.cards} ${vi.today.stats.cards}`, `${summary.daysLearned} ${vi.today.stats.days}`].join(' · ')}
+        {([[summary.dueToday, vi.today.stats.due], [summary.cards, vi.today.stats.cards], [summary.daysLearned, vi.today.stats.days]] as const).filter(([n]) => n > 0).map(([n, label]) => `${n} ${label}`).join(' · ')}
       </p>}
 
       {needsBackup && (
@@ -126,10 +155,10 @@ export function TodayPage() {
 
       <div className="mt-4">
         <NavList title={vi.today.explore}>
-          <NavRow to="/path" icon={<Route size={18} />} title={vi.path.title} detail={vi.path.course(course.read, course.total)} />
-          {lesson && <NavRow to={`/lesson/${lesson.snippet.id}`} icon={<BookOpen size={18} />} title={vi.today.preview} detail={lesson.snippet.titleVi} />}
-          <NavRow to="/roleplay" icon={<MessagesSquare size={18} />} title={vi.roleplay.title} />
-          <NavRow to="/mic-check" icon={<Mic size={18} />} title={vi.micCheck.link} />
+          <NavRow to="/path" look={SECTION_LOOK.path} title={vi.path.title} detail={vi.path.course(course.read, course.total)} />
+          {lesson && <NavRow to={`/lesson/${lesson.snippet.id}`} look={STEP_LOOK.input} title={vi.today.preview} detail={lesson.snippet.titleVi} />}
+          <NavRow to="/roleplay" look={SECTION_LOOK.roleplay} title={vi.roleplay.title} />
+          <NavRow to="/mic-check" look={{ tone: 'shadow', icon: Mic }} title={vi.micCheck.link} />
         </NavList>
       </div>
 

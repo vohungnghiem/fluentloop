@@ -23,6 +23,19 @@
   --good-tint: #e3f6ec;
   --track: #3b5bdb;
   --on-primary: #ffffff;
+  /* One colour per step and per section (docs/THIET-KE.md 2.1): fill/icon and a soft tint. */
+  --tone-review: #7048e8;
+  --tone-review-tint: #f0ebff;
+  --tone-input: #0b7285;
+  --tone-input-tint: #e0f5f7;
+  --tone-shadow: #d9480f;
+  --tone-shadow-tint: #ffeee3;
+  --tone-produce: #3b5bdb;
+  --tone-produce-tint: #e8edff;
+  --tone-wrap: #2b8a3e;
+  --tone-wrap-tint: #e3f6e8;
+  --tone-fix: #b35c00;
+  --tone-fix-tint: #fff1d6;
   color-scheme: light;
 }
 
@@ -42,6 +55,18 @@
     --good-tint: #1e3a2d;
     --track: #7c93f0;
     --on-primary: #16181d;
+    --tone-review: #b197fc;
+    --tone-review-tint: #2c2550;
+    --tone-input: #3bc9db;
+    --tone-input-tint: #143a40;
+    --tone-shadow: #ff922b;
+    --tone-shadow-tint: #40291a;
+    --tone-produce: #7c93f0;
+    --tone-produce-tint: #26305a;
+    --tone-wrap: #69db7c;
+    --tone-wrap-tint: #1c3a24;
+    --tone-fix: #ffc078;
+    --tone-fix-tint: #3d3220;
     color-scheme: dark;
   }
 }
@@ -61,6 +86,8 @@
   --color-good-tint: var(--good-tint);
   --color-track: var(--track);
   --color-on-primary: var(--on-primary);
+  --color-tone: var(--tone, var(--primary));
+  --color-tone-tint: var(--tone-tint, var(--primary-tint));
   --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, monospace;
 }
@@ -166,5 +193,48 @@ body {
 @keyframes grow {
   from {
     transform: scaleY(0);
+  }
+}
+
+/* A tone class sets the colour of everything "toned" inside it (bg-tone, text-tone…). */
+.tone-review { --tone: var(--tone-review); --tone-tint: var(--tone-review-tint); }
+.tone-input { --tone: var(--tone-input); --tone-tint: var(--tone-input-tint); }
+.tone-shadow { --tone: var(--tone-shadow); --tone-tint: var(--tone-shadow-tint); }
+.tone-produce { --tone: var(--tone-produce); --tone-tint: var(--tone-produce-tint); }
+.tone-wrap { --tone: var(--tone-wrap); --tone-tint: var(--tone-wrap-tint); }
+.tone-fix { --tone: var(--tone-fix); --tone-tint: var(--tone-fix-tint); }
+
+/* Something just done or just arrived: a short pop. */
+.pop {
+  animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+/* The end of a session: a few dots burst out once around the mascot. */
+.burst {
+  position: relative;
+}
+.burst i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  opacity: 0;
+  animation: burst 0.9s ease-out 0.15s both;
+}
+@keyframes burst {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) rotate(var(--a)) translateY(-70px);
   }
 }

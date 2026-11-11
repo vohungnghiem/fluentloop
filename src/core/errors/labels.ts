@@ -33,6 +33,10 @@ export const mistakeSchema = z.object({
 });
 export type Mistake = z.infer<typeof mistakeSchema>;
 
+/** A better way to say what the learner meant, and why (Vietnamese). */
+export const upgradeSchema = z.object({ en: z.string().min(1), vi: z.string() });
+export type Upgrade = z.infer<typeof upgradeSchema>;
+
 /** What a correction returns, from AI (validated) or rules. */
 export const correctionSchema = z.object({
   /** The learner's text with only the errors fixed (keeps their wording). */
@@ -40,7 +44,11 @@ export const correctionSchema = z.object({
   /** How a native colleague would say it, optional. */
   natural: z.string().optional().catch(undefined),
   mistakes: z.array(mistakeSchema).max(12),
-  /** One line of specific praise in Vietnamese. */
+  /** One line of specific praise in Vietnamese, only when earned. */
   praiseVi: z.string().optional().catch(undefined),
+  /** Per task point, in order: is the idea there, and if not what to add. */
+  coverage: z.array(z.object({ ok: z.boolean(), noteVi: z.string().optional().catch(undefined) })).optional().catch(undefined),
+  /** 1–2 better ways to say it, also when the text has no mistakes. */
+  upgrades: z.array(upgradeSchema).max(3).optional().catch(undefined),
 });
 export type Correction = z.infer<typeof correctionSchema>;

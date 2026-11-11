@@ -1,90 +1,84 @@
 # FLUENTLOOP – PHÁC THẢO SẢN PHẨM
 
-**Phiên bản:** 0.1 (bản nháp)
-**Ngày:** 2026-11-10
-**Nguồn gốc:** tách từ Lingua Quest. Bỏ lớp game (3D, đảo, NPC, quest), giữ phần học: FSRS, giọng nói, AI dạng BYOK.
-**Nhân sự:** 1 người (solo)
-**Nền tảng:** web (PWA), ưu tiên mobile, desktop dùng tốt bằng bàn phím
+**Phiên bản:** 0.2 (2026-11-11). Viết lại cho đúng mục đích: **app học**, không phải game.
+**Nhân sự:** 1 người · **Nền tảng:** web (PWA), ưu tiên mobile, desktop dùng tốt bằng bàn phím
 
-> **Một câu:** mỗi ngày 15 phút, học tiếng Anh **của chính công việc mình**, theo một vòng lặp cố định gồm *nạp → nói theo → dùng → sửa → ôn*. Lỗi của chính mình trở thành bài ôn của ngày mai.
+> **Một câu:** mỗi ngày 15 phút học tiếng Anh **của chính công việc mình**. App là **người kèm học**: dạy, gợi ý khi bí, chỉ ra cách nói hay hơn, rồi biến lỗi và câu hay của bạn thành bài ôn ngày mai.
 
 ![Màn hình Hôm nay](mockups/01-today.svg)
 
 ---
 
-## 1. Vì sao đổi hướng
+## 1. Mục đích và điều KHÔNG làm
 
-| Lingua Quest (game) | FluentLoop |
-|---|---|
-| Phải xây thế giới 3D, NPC, cốt truyện, sự cố | Nội dung là **đoạn văn ngắn + nhiệm vụ**, viết bằng JSON/Markdown |
-| Mỗi sự cố mới tốn vài ngày thiết kế | Thêm một bài mất khoảng 15 phút (AI soạn nháp, người duyệt) |
-| Tiếng Anh là phương tiện chơi, nên khó đo đã học được gì | Mỗi ngày có đầu ra đo được: câu đã viết, lỗi đã sửa, thẻ đã nhớ |
-| Nặng GPU, khó chạy trên điện thoại | Trang web nhẹ, chạy offline (PWA) |
-| Nhiều phần phải giữ đồng bộ | **Một app, không server**, chạy bằng `npm install && npm run dev` |
+**Mục đích duy nhất:** người học **viết và nói được** câu tiếng Anh dùng trong công việc, ngày càng tự nhiên hơn, và **thấy được** mình tiến bộ.
 
-Giữ lại từ Lingua Quest:
-- **Ôn ngắt quãng FSRS** (`ts-fsrs`).
-- **Giọng nói:** nhận dạng (STT) và đọc (TTS) bằng Web Speech API.
-- **AI dạng BYOK** (Gemini/OpenRouter) gọi thẳng từ trình duyệt, ưu tiên luật.
-- Nguyên tắc **"không có dấu X đỏ"** và **"luôn biết bước tiếp theo"**.
+Hệ quả cho mọi quyết định:
+- Người dùng **đang học, chưa biết**. App không được "chấm đúng rồi cho qua". Câu đúng vẫn phải có thứ để học thêm (mục 4).
+- Mỗi màn hỏi một câu: "màn này giúp người học nói/viết được gì?" Không trả lời được thì bỏ.
+- Đã bỏ hẳn: thế giới 3D, NPC, cốt truyện, quest, XP, tim, bảng xếp hạng. Những thứ này không đưa trở lại.
+- Tạo động lực bằng **tiến bộ thật** (lỗi giảm, câu đã thuộc, bài viết lần sau tốt hơn lần trước), không bằng điểm ảo.
 
 ---
 
 ## 2. Người dùng
 
-### 2.1 Trước mắt: chính bạn, ngành phần mềm/IT
-> **Giả định cần xác nhận:** bạn làm phần mềm/IT, đọc tài liệu được nhưng viết và nói chưa tự nhiên. Nếu sai thì chỉ cần đổi gói nội dung (mục 7), kiến trúc giữ nguyên.
-
-Tình huống cần tiếng Anh: daily standup, viết ticket/bug report, mô tả và review PR, đọc docs và thông báo lỗi, chat Slack/email với đồng nghiệp hoặc khách nước ngoài, họp kỹ thuật, demo, phỏng vấn.
-
-### 2.2 Sau này: người làm ngành khác
-Điều dưỡng, khách sạn và nhà hàng, bán hàng và chăm sóc khách hàng, kế toán, xuất nhập khẩu, hướng dẫn viên, học sinh ôn thi. Những người này có ba điểm khác dev:
-- **Không tự lấy được API key**, nên app phải dùng tốt khi **không có AI** (mục 9.3).
-- Cần giao diện tiếng Việt rõ ràng, không dùng thuật ngữ kỹ thuật.
-- Học chủ yếu trên điện thoại, mỗi lần vài phút.
-
-Vì vậy, ngay từ bản đầu: **giao diện và luồng không được giả định người dùng là dev.** Chỉ nội dung mới mang màu ngành.
+- **Trước mắt:** chính chủ dự án, làm phần mềm/IT. Đọc được tài liệu, nhưng viết và nói chưa tự nhiên. Gói nội dung `dev`.
+- **Sau này:** người ngành khác (khách sạn, điều dưỡng, bán hàng...). Họ không tự tạo được API key và học chủ yếu trên điện thoại. Vì vậy **giao diện và luồng không giả định người dùng là dev**, chỉ nội dung mang màu ngành, và **app phải dùng tốt khi không có AI**.
 
 ---
 
-## 3. Phương pháp học (các cách "hiện đại" có bằng chứng)
+## 3. Phương pháp học
 
-| Nguyên lý | Áp dụng trong app |
+| Nguyên lý | Áp dụng |
 |---|---|
-| **Comprehensible input (i+1)**: nạp nội dung hiểu được khoảng 95%, hơi khó hơn một chút | Đoạn văn ngắn đúng thể loại ngành (ticket, email, standup), mức CEFR khớp với người học, chạm vào là xem nghĩa |
-| **Học cụm, không học từ rời (lexical chunks)** | Đơn vị ghi nhớ là **câu và cụm** (*"Could you take a look at…"*), không phải từ đơn |
-| **Retrieval practice**: tự nhớ lại tốt hơn đọc lại | Mọi bài ôn đều bắt **nhớ ra** (điền vào câu, nghe rồi gõ, nói lại), không phải "xem rồi bấm biết" |
-| **Spaced repetition (FSRS)** | Lịch ôn tự động. Giới hạn số thẻ mỗi ngày để không dồn thành núi |
-| **Interleaving**: trộn bài cũ vào bài mới | Đoạn văn mới cố ý chứa 1–2 cụm cũ sắp đến hạn ôn |
-| **Pushed output**: buộc phải nói/viết | Mỗi phiên có một nhiệm vụ viết hoặc nói thật, dùng lại cụm vừa học |
-| **Feedback ngay, tập trung vào lỗi của mình** | Sửa dạng diff, gợi ý cách nói tự nhiên hơn, giải thích ngắn bằng tiếng Việt. **Lỗi biến thành thẻ ôn** |
-| **Shadowing**: nghe rồi nói đè theo | Câu chính được đọc chậm rồi đọc thường, người học nói theo, app so khớp từng từ |
-| **Micro-learning, ngày "làm xong được"** | Phiên 5/15/30 phút, có điểm kết thúc rõ ràng ("Xong hôm nay"), không có vòng lặp vô tận |
-| **Học trên nội dung của chính mình** | "Bỏ túi": dán email/ticket/đoạn docs thật, app rút ra câu để học |
-| **Lỗi đặc trưng người Việt** | Thẻ lỗi có nhãn: mạo từ, -s/-ed, thì, âm cuối, /θ/ /ð/, /ʃ/–/s/... Theo dõi lỗi nào còn lặp lại |
-
-Không làm: gamification nặng (điểm, bảng xếp hạng, tim), học ngữ pháp theo chương, thẻ "biết/không biết" kiểu thụ động.
+| Input hiểu được (i+1) | Đoạn văn ngắn đúng thể loại ngành, chạm vào cụm để xem nghĩa |
+| Học cụm, không học từ rời | Đơn vị ghi nhớ là câu và cụm (*"Could you take a look at…"*) |
+| Tự nhớ lại (retrieval) | Bài ôn luôn bắt **nhớ ra**: điền vào câu, nghe rồi gõ, nói lại |
+| Ôn ngắt quãng (FSRS) | Lịch ôn tự động, có trần thẻ mỗi ngày |
+| Buộc phải nói/viết (pushed output) | Mỗi phiên có một nhiệm vụ viết/nói thật, dùng lại cụm vừa học |
+| **Giàn giáo (scaffolding)** | Bí thì có gợi ý theo bậc, từ câu hỏi gợi ý tới phần đầu câu rồi câu mẫu. Gợi ý xong vẫn để người học tự viết |
+| **Viết lại (revise)** | Sau nhận xét, người học **sửa chính câu của mình**, không chỉ đọc bản sửa |
+| Phản hồi tập trung vào lỗi của mình | Diff, giải thích tiếng Việt ngắn, lỗi thành thẻ ôn |
+| **Nâng cấp câu đúng** | Câu đúng vẫn được gợi ý 1–2 cách nói tự nhiên/đa dạng hơn. Chọn cách nào thì cách đó thành thẻ |
+| Shadowing | Nghe rồi nói theo câu chính, app so khớp từng từ |
+| Học trên nội dung của mình | "Bỏ túi": dán email/ticket thật |
+| Ngày làm xong được | Phiên có điểm kết thúc rõ ràng |
 
 ---
 
-## 4. Vòng lặp mỗi ngày (trái tim của app)
+## 4. Vòng lặp một phiên
 
-Một **phiên** khoảng 15 phút (chỉnh được 5/15/30), có 6 bước cố định. Thanh tiến độ trên cùng luôn cho biết đang ở bước nào và còn mấy bước.
+| # | Bước | Người học làm gì | Có AI | Không AI |
+|---|---|---|---|---|
+| 1 | **Ôn** | Thẻ đến hạn | Chấm câu tự do | So khớp, cho lệch nhỏ |
+| 2 | **Nạp** | Đọc/nghe đoạn ngắn, chọn cụm muốn học | Giải thích theo ngữ cảnh | Nghĩa viết sẵn |
+| 3 | **Nói theo** | Nói theo 2–3 câu chính | – | Web Speech, so từng từ |
+| 4 | **Dùng** | Viết/nói theo nhiệm vụ thật (vòng con bên dưới) | Người kèm học | Câu mẫu + kiểm cụm + tự chấm |
+| 5 | **Chốt** | Xem hôm nay học được gì, mai ôn gì | – | – |
 
-| # | Bước | Thời lượng | Người học làm gì | Có AI | Không có AI |
-|---|---|---|---|---|---|
-| 1 | **Ôn** (Warm-up) | ≤3' | Thẻ đến hạn: điền vào câu, nghe rồi gõ, nói lại | Chấm câu nói/viết tự do | So khớp chữ, cho phép lệch nhỏ (edit distance) |
-| 2 | **Nạp** (Input) | 3–4' | Đọc hoặc nghe một đoạn ngắn (ticket, email, đoạn standup). Chạm vào cụm để xem nghĩa, lưu câu hay | Giải thích theo ngữ cảnh | Nghĩa viết sẵn trong gói nội dung |
-| 3 | **Nói theo** (Shadow) | 2–3' | 2–3 câu chính: nghe, nói theo, xem từ nào máy chưa nghe ra | – | Web Speech, so khớp từng từ |
-| 4 | **Dùng** (Produce) | 4–5' | Nhiệm vụ thật, ví dụ *"Viết 2 câu standup về việc hôm qua, dùng 'blocked by'"*. Gõ hoặc nói | Sửa lỗi, gợi ý tự nhiên hơn | So với câu mẫu, kiểm tra có dùng cụm bắt buộc, rồi tự chấm |
-| 5 | **Sửa** (Feedback) | 1–2' | Xem diff, đọc giải thích tiếng Việt, chọn lỗi nào thành thẻ ôn | Gắn nhãn lỗi | Gắn nhãn bằng luật đơn giản và tự chọn |
-| 6 | **Chốt** | 30" | "Hôm nay: 4 câu mới, 2 lỗi thành thẻ. Mai ôn 7 thẻ." Nút **Xong hôm nay** | – | – |
+### 4.1 Vòng con của bước Dùng: viết → nhận xét → viết lại
+1. **Viết.** Nút **"Gợi ý"** có 3 bậc, bấm bậc nào mở bậc đó:
+   - Bậc 1: câu hỏi gợi ý bằng tiếng Việt ("Hôm nay bạn định làm gì?").
+   - Bậc 2: phần đầu câu ("Today I'll pick up…").
+   - Bậc 3: một câu mẫu đầy đủ.
 
-Quy tắc UX của vòng lặp:
-- **Mỗi màn hình chỉ có một nút chính.** Nút đó luôn ở cùng một chỗ: góc dưới trên mobile, phím `Enter` trên desktop.
-- **Bỏ qua được nhưng không mất gì:** bước bị bỏ được ghi lại, và mai sẽ hỏi lại nhẹ nhàng.
-- **Dừng giữa chừng rồi quay lại** thì tiếp tục đúng chỗ (lưu sau mỗi bước).
-- Ôn **có trần**, mặc định tối đa 20 thẻ mỗi ngày. Thẻ thừa dời sang mai, không bao giờ hiện "bạn nợ 143 thẻ".
+   Không có AI thì gợi ý lấy từ dữ liệu bài (`task.hints`).
+2. **Kiểm tra.** Chỉ hiện **một khung nhận xét**, theo thứ tự:
+   1. **Đủ ý chưa:** so với yêu cầu đề, ví dụ "Thiếu phần hôm nay làm gì".
+   2. **Cụm bắt buộc** đã dùng chưa.
+   3. **Lỗi:** diff kèm lý do. Tích chọn lỗi nào thì lỗi đó thành thẻ.
+   4. **Nâng cấp:** 1–2 cách nói khác hay hơn, mỗi cách có ghi chú ngắn. Có cả khi câu đã đúng.
+   5. **Một lời khen cụ thể**, chỉ khi thật sự có điều đáng khen.
+
+   Nếu luật và AI cho kết quả ngược nhau thì gộp lại trước khi hiện, không bao giờ hiện hai câu trái nhau.
+3. **Viết lại.** Người học sửa trên chính câu của mình. Mỗi lần kiểm tra lưu thành một **phiên bản**. "Tiếp" chỉ là nút chính khi đã đủ ý, nhưng luôn có nút "Bỏ qua" (ghi lại là đã bỏ).
+
+### 4.2 Quy tắc UX của vòng lặp
+- Mỗi màn **một nút chính**, cùng một chỗ (đáy màn trên mobile, `Enter` trên desktop).
+- **Thanh bước bấm được:** quay lại bước đã qua để xem hoặc làm lại. Bước chưa tới thì khoá, có chú thích vì sao.
+- **Không mất gì:** câu đang gõ tự lưu nháp. Thoát hoặc tải lại trang thì quay về đúng chỗ, đúng chữ đang gõ.
+- Ôn có trần (mặc định 20 thẻ mỗi ngày), không bao giờ hiện "bạn nợ 143 thẻ".
 
 ![Bước Dùng và Sửa](mockups/02-produce-feedback.svg)
 
@@ -92,151 +86,80 @@ Quy tắc UX của vòng lặp:
 
 ## 5. Màn hình
 
-| Màn hình | Mục đích | Ghi chú |
-|---|---|---|
-| **Chào mừng / Onboarding** (3 bước) | Chọn ngành → tự đánh giá và bài kiểm tra nhanh 2 phút → chọn số phút mỗi ngày | **Không** hỏi key AI ở đây. Gợi ý ghi âm 1 phút làm mốc so sánh (tùy chọn) |
-| **Hôm nay** (trang chủ) | Một thẻ lớn "Phiên hôm nay · 15 phút · Bắt đầu" + 3 con số nhỏ | Nếu đã xong thì hiện "Xong rồi! Muốn học thêm: Ôn thêm · Hội thoại · Bỏ túi" |
-| **Phiên học** | 6 bước ở mục 4, toàn màn hình, ít thứ gây phân tâm | Phím tắt: `Enter` tiếp, `Space` nghe lại, `M` micro, `1–4` chấm thẻ |
-| **Ôn** | Ôn riêng ngoài phiên | Dạng thẻ thay đổi theo mức nhớ (mục 6) |
-| **Hội thoại** (Roleplay) | Nói chuyện với nhân vật: tech lead, PM, khách hàng, người phỏng vấn | Cần AI. Không có AI thì dùng kịch bản rẽ nhánh viết sẵn |
-| **Bỏ túi** (Capture) | Dán đoạn văn thật, app tách câu, chọn câu muốn học | Có AI: giải thích và tạo nhiệm vụ. Không có AI: tạo thẻ điền vào câu |
-| **Sổ lỗi** | Các lỗi của tôi, nhóm theo nhãn, biểu đồ lỗi nào giảm hoặc còn lặp | Đây là màn tạo động lực mạnh nhất: thấy mình hết sai |
-| **Tiến bộ** | Phút học, chuỗi ngày (có ngày nghỉ), số câu "đã sở hữu", tỉ lệ nhớ, danh sách CEFR can-do | So bản ghi âm/bài viết mốc mỗi 4 tuần |
-| **Cài đặt** | AI (BYOK, tùy chọn), giọng đọc, tốc độ, số phút, giao diện sáng/tối, **xuất/nhập dữ liệu** | Dữ liệu nằm trong trình duyệt nên phải có sao lưu |
-
-![Ôn tập](mockups/03-review.svg) ![Tiến bộ](mockups/04-progress.svg)
-
----
-
-## 6. Thẻ ôn: tăng dần độ khó theo mức nhớ
-
-Một câu hoặc cụm đi qua nhiều **dạng thẻ** khi FSRS cho biết nó đã chắc hơn:
-
-1. **Nhận ra:** nghe câu, chọn nghĩa đúng (chỉ dùng cho thẻ rất mới).
-2. **Điền vào câu:** *"Sorry, I'm ___ by the API team."* → `blocked`
-3. **Nghe rồi gõ** (dictation): nghe TTS, gõ lại cả câu, app hiện diff.
-4. **Dịch ngược:** từ câu tiếng Việt, nói hoặc gõ ra câu tiếng Anh.
-5. **Dùng trong tình huống:** *"Báo với PM là bạn đang bị chặn bởi đội API."* Có AI thì chấm tự do, không có AI thì so với mẫu.
-
-**Thẻ lỗi** là câu sai của chính mình: hiện câu sai, người học sửa lại. Thẻ lỗi có nhãn, nên Sổ lỗi đếm được số lần lặp lại.
+| Màn | Mục đích |
+|---|---|
+| **Hôm nay** | Một thẻ lớn "Bài tiếp theo · Bắt đầu" + 3 con số nhỏ |
+| **Phiên học** | Các bước ở mục 4, toàn màn hình |
+| **Lộ trình / Trang bài** | Chủ đề → bài. Xem trước, đọc lại, học lại, **xem các bài viết cũ của bài này** |
+| **Ôn** | Ôn riêng ngoài phiên |
+| **Hội thoại** | Đóng vai: tech lead, PM, khách hàng. Không có AI thì dùng kịch bản rẽ nhánh |
+| **Bỏ túi** | Dán văn bản thật, chọn câu muốn học |
+| **Sổ lỗi** | Lỗi theo nhãn, lỗi nào còn lặp, luyện riêng nhóm lỗi |
+| **Bài viết của tôi** | Mọi bài đã viết, theo từng phiên bản, kèm nhận xét. Thấy được lần sau tốt hơn lần trước |
+| **Tiến bộ** | Chuỗi ngày, câu đã thuộc, lỗi giảm theo tuần, so với bài mốc |
+| **Cài đặt** | AI (BYOK), giọng đọc, số phút, sáng/tối, xuất/nhập |
 
 ---
 
-## 7. Nội dung và mở rộng ngành
+## 6. Thẻ ôn
 
-### 7.1 Cấu trúc
-```
-Track (ngành)        core · dev · nurse · hospitality · sales ...
- └ Unit (chủ đề)     "Daily standup", "Bug report", "Code review" ...
-    ├ Snippet        đoạn văn ngắn: thể loại, CEFR, text, câu chính, cụm, câu hỏi
-    ├ Chunk          cụm: EN, nghĩa VN, ví dụ, nhãn
-    ├ Task           nhiệm vụ Produce: đề, cụm bắt buộc, câu mẫu, tiêu chí
-    └ Scenario       hội thoại: vai, mục tiêu, tính cách, tiêu chí đạt
-```
-- **Track `core`** là giao tiếp chung (chào hỏi, làm rõ, đồng ý/phản đối lịch sự, hẹn giờ, số liệu), **dùng chung cho mọi ngành**. Người học luôn có `core` cộng với một ngành.
-- Thêm ngành mới = thêm một thư mục `content/tracks/<ngành>/`. **Không sửa code.**
-- Nội dung có schema (zod), kiểm tra lúc build. Một lệnh `npm run content:check` báo lỗi gói nội dung.
-
-### 7.2 Track `dev`: 8 chủ đề đề xuất (A2 → B2)
-1. Standup và cập nhật tiến độ
-2. Ticket và bug report
-3. Pull request và code review
-4. Đọc docs và thông báo lỗi
-5. Họp kỹ thuật: làm rõ, đồng ý/phản đối lịch sự
-6. Slack/email với đồng nghiệp và khách hàng
-7. Demo và giải thích hệ thống
-8. Phỏng vấn: nói về bản thân, dự án, kinh nghiệm
-
-Mỗi chủ đề có khoảng 6–10 snippet, 15–25 cụm, 3–5 task và 1–2 scenario. Bản đầu chỉ cần **chủ đề 1–3** là đủ dùng 3–4 tuần.
-
-### 7.3 Soạn nội dung
-- AI soạn nháp theo khuôn (prompt nằm trong repo). **Người duyệt trước khi đưa vào gói.** Nội dung được commit, không sinh lúc chạy, nên app chạy được không cần AI.
-- Không chép nguyên văn tài liệu có bản quyền. Đoạn trích từ docs mở (ví dụ MDN, CC-BY-SA) phải ghi nguồn.
-- Ngành khác sau này: nên nhờ **một người trong ngành** duyệt (điều dưỡng, lễ tân...). AI hay bịa sai thuật ngữ chuyên môn.
+Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền vào câu → nghe rồi gõ → dịch ngược → dùng trong tình huống. Ngoài thẻ nội dung, có thêm:
+- **Thẻ lỗi:** câu sai của chính mình, người học sửa lại.
+- **Thẻ nâng cấp:** câu của mình, người học viết lại theo cách hay hơn đã chọn.
 
 ---
 
-## 8. UX: nguyên tắc
+## 7. Nội dung
 
-1. **Luôn có "tiếp theo".** Không có màn hình nào bỏ người học đứng giữa chừng. Kiểm thử bằng người lần đầu dùng, không dùng script đã biết đường.
-2. **Một việc mỗi màn hình**, một nút chính, chữ lớn, nhiều khoảng trắng.
-3. **Không có X đỏ.** Lỗi hiện màu hổ phách kèm "cách nói đúng". Câu đúng thì khen cụ thể ("Dùng 'blocked by' rất tự nhiên").
-4. **Ngày làm xong được.** Có điểm kết thúc, có lời chúc, không kéo dài thêm.
-5. **Chuỗi ngày nhân từ:** mỗi tuần có 1–2 ngày nghỉ không làm mất chuỗi.
-6. **Nhanh:** mở app vào phiên học ngay trong 1 chạm. Mọi thứ trừ AI đều chạy tức thì và offline.
-7. **Bàn phím trước trên desktop**, ngón cái trước trên mobile (nút chính ở vùng ngón cái chạm tới).
-8. **Tôn trọng dữ liệu:** dữ liệu ở trong máy, có xuất/nhập, không cần tài khoản.
-9. **Tiếp cận được:** tương phản AA, có chế độ tối, chữ phóng to được, mọi âm thanh đều có chữ kèm theo.
-10. Giao diện tiếng Việt, nội dung học tiếng Anh. Chữ giao diện gom vào một file để sau này dịch.
+- Cấu trúc: Track (ngành) → Unit (chủ đề) → Snippet, Chunk, Task, Scenario. Thêm ngành = thêm thư mục `content/tracks/<ngành>/`, **không sửa code**.
+- Task phải có: đề, **các ý cần có** (để chấm đủ ý), cụm bắt buộc, câu mẫu, **gợi ý 3 bậc**.
+- Hiện có: `dev` (standup, ticket, PR...) và `hospitality` (thử mở rộng).
+- AI soạn nháp, người duyệt rồi mới commit. App chạy không cần AI.
 
-Chi tiết hình ảnh và design system xem [THIET-KE.md](THIET-KE.md).
+---
+
+## 8. Nguyên tắc UX
+
+1. **Luôn có "tiếp theo".** Kiểm thử như người lần đầu dùng.
+2. **Một việc mỗi màn**, một nút chính. Thông tin phụ thu gọn, chỉ mở khi cần.
+3. **Không có X đỏ**, nhưng **cũng không khen suông**. Lỗi màu hổ phách, kèm cách nói đúng.
+4. **Đi lại nhanh:** thanh bước, breadcrumb, nút quay lại đều bấm được.
+5. **Ngày làm xong được**, chuỗi ngày có ngày nghỉ.
+6. **Có sức sống:** mỗi bước một màu nhận diện. Có phản hồi khi hoàn thành (hiệu ứng nhẹ, tắt được). Xem [THIET-KE.md](THIET-KE.md).
+7. **Dữ liệu là của người học:** lưu trong máy, tự lưu liên tục, xem lại được, xuất/nhập được.
+8. Giao diện tiếng Việt, nội dung tiếng Anh. Chữ giao diện gom ở `src/copy/vi.ts`.
 
 ---
 
 ## 9. AI và khi không có AI
 
-### 9.1 AI dùng ở đâu
-| Chỗ dùng | Bắt buộc? |
+| Chỗ dùng | Không có AI thì |
 |---|---|
-| Sửa câu ở bước Dùng (diff, tự nhiên hơn, giải thích, nhãn lỗi) | Không. Có phương án dự phòng |
-| Hội thoại với nhân vật | Không. Có kịch bản rẽ nhánh viết sẵn |
-| Bỏ túi: giải thích và tạo nhiệm vụ từ đoạn văn của mình | Không. Vẫn tạo được thẻ điền vào câu |
-| Soạn nháp nội dung (lúc phát triển, không phải lúc chạy) | – |
+| Người kèm học ở bước Dùng (đủ ý, lỗi, nâng cấp, gợi ý) | Luật + câu mẫu + gợi ý viết sẵn + tự chấm |
+| Hội thoại | Kịch bản rẽ nhánh |
+| Bỏ túi | Thẻ điền vào câu |
 
-### 9.2 Nguyên tắc
-- Ưu tiên luật, AI đi sau. Nhận kết quả dạng **JSON có schema**. Kết quả sai schema thì bỏ và dùng phương án dự phòng.
-- **Lưu đệm** kết quả AI (cùng câu thì không gọi lại) và hiển thị số lượt đã dùng hôm nay, vì hạn mức miễn phí rất nhỏ.
-- Key chỉ nằm trong trình duyệt, chỉ gửi tới nhà cung cấp.
-
-### 9.3 Khi mở cho người khác
-Người ngoài ngành IT sẽ không tự tạo key. Có hai lựa chọn, **quyết định sau**:
-- (a) App tự đủ dùng không cần AI: nội dung viết sẵn nhiều hơn, kịch bản hội thoại rẽ nhánh.
-- (b) Thêm **một proxy nhỏ** giữ key chung, có giới hạn lượt cho mỗi người. Đây là lúc đầu tiên cần server, và nó kéo theo tài khoản, chi phí và chống lạm dụng.
-
-Khuyến nghị: thiết kế để **(a) luôn đúng**, còn (b) chỉ là phần thêm.
+- Luật chạy trước, AI bổ sung. Kết quả AI là JSON có schema, sai schema thì dùng luật.
+- Prompt AI phải biết **mục tiêu bài** (đề, ý cần có, cụm bắt buộc), không chỉ biết câu người học viết.
+- Lưu đệm kết quả, đếm lượt mỗi ngày. Key chỉ nằm trong trình duyệt.
+- Mở cho người khác: thiết kế để chạy tốt không có AI. Proxy giữ key chung để quyết định sau.
 
 ---
 
 ## 10. Đo tiến bộ thật
-
-- **Mốc ngày 1** (tùy chọn, nên làm): ghi âm 1–2 phút nói về công việc, và viết 100–150 từ về một bug gần đây. Lưu trong máy.
-- **Mỗi 4 tuần:** làm lại cùng đề rồi đặt cạnh nhau. Có AI thì so số lỗi và độ dài câu. Không có AI thì tự nghe lại và tự nhận xét.
-- Số liệu hằng ngày: phút học, tỉ lệ nhớ khi ôn, số câu đã sở hữu (thẻ có độ ổn định trên 21 ngày), **nhãn lỗi giảm dần theo tuần**.
-- Không dùng "XP" làm thước đo học.
+- Bài mốc ngày 1 (ghi âm + bài viết), làm lại sau mỗi 4 tuần, đặt cạnh nhau.
+- Theo dõi: câu đã thuộc (độ ổn định trên 21 ngày), tỉ lệ nhớ, **nhãn lỗi giảm theo tuần**, **số lần viết lại để đạt yêu cầu giảm dần**.
 
 ---
 
-## 11. Gợi ý thêm (ngoài phạm vi bản đầu, nên cân nhắc)
-
-1. **Học trong lúc làm việc (cho dev):** một git hook `commit-msg` hoặc hook của Claude Code, chấm câu tiếng Anh bạn vừa viết rồi đẩy lỗi vào file `inbox.json`. App nhập file đó vào Sổ lỗi. Không cần server.
-2. **Bookmarklet "Bỏ túi":** bôi đen câu trên bất kỳ trang nào, bấm một cái là mở FluentLoop kèm câu đó. Nhẹ hơn nhiều so với làm extension.
-3. **Thử thách tuần:** một việc thật, ví dụ *"Viết mô tả cho một PR thật của bạn"*, *"Nói standup 60 giây, ghi âm lại"*. Làm xong được một huy hiệu nhỏ. Đây là gamification nhẹ, gắn với kết quả thật.
-4. **Cặp âm tối thiểu cho người Việt** (ship/sheep, file/fire, three/tree, âm cuối -s/-t/-d): một bài tập nghe-chọn 2 phút. Rẻ, hiệu quả, không cần AI.
-5. **Chế độ rảnh tay:** đang đi đường thì chỉ nghe TTS câu rồi nói lại. Hợp với người ngành khác học trên điện thoại.
-6. **Gói nội dung chia sẻ được:** xuất một track thành file `.zip`/JSON để người khác nhập. Đây là cách mở rộng cho người khác **trước khi** phải có server.
-7. **Đừng làm sớm:** tài khoản, đồng bộ, bảng xếp hạng, app native.
-
----
-
-## 12. Rủi ro
+## 11. Rủi ro
 
 | Rủi ro | Giảm thiểu |
 |---|---|
-| Mất dữ liệu (xoá cache trình duyệt) | Xuất/nhập JSON, nhắc sao lưu mỗi tuần, xin `navigator.storage.persist()` |
-| Hạn mức AI miễn phí hết giữa phiên | Ưu tiên luật, có phương án dự phòng, lưu đệm, đếm lượt |
-| Web Speech không ổn định (iOS, Firefox) | Gõ phím luôn dùng được. Mục tiêu chính: Chrome desktop và Android |
-| "Chấm phát âm" bằng STT chỉ là gần đúng | Gọi là "máy nghe được", không gọi là "điểm phát âm" |
-| Nội dung ít, nhanh chán | Ưu tiên Bỏ túi (nội dung vô hạn từ công việc thật) và soạn nội dung có AI hỗ trợ |
-| Không có game nên dễ bỏ | Phiên ngắn, ngày làm xong được, Sổ lỗi thấy rõ tiến bộ, thử thách tuần |
+| Mất dữ liệu | Tự lưu nháp, xuất/nhập, `navigator.storage.persist()`, nhắc sao lưu |
+| AI khen suông | Prompt chấm theo yêu cầu bài, gộp với luật, luôn có phần "nâng cấp" |
+| Hết lượt AI | Luật + gợi ý viết sẵn, lưu đệm |
+| Web Speech không ổn định | Gõ phím luôn dùng được |
+| Nhàm chán | Màu theo bước, thấy rõ tiến bộ (bài viết cũ so với mới), nội dung từ Bỏ túi |
 
----
-
-## 13. Câu hỏi mở (cần bạn trả lời trước Sprint 01)
-
-1. Xác nhận ngành: phần mềm/IT? Vai trò cụ thể (dev, tester, PM...)?
-2. Mục tiêu ưu tiên: **nói** (họp, standup), **viết** (ticket, PR, chat), hay **đọc/nghe**? (Ảnh hưởng tỉ lệ thời gian giữa các bước.)
-3. Trình độ tự đánh giá (A2/B1/B2)?
-4. Thường học trên **điện thoại** hay **máy tính**?
-5. Có muốn mang dữ liệu đã học từ Lingua Quest sang không? (Hiện chỉ có khoảng 8 từ nên khuyến nghị: không cần.)
-
-Xem tiếp: [KIEN-TRUC.md](KIEN-TRUC.md) · [THIET-KE.md](THIET-KE.md) · [LO-TRINH.md](LO-TRINH.md)
+Xem tiếp: [LO-TRINH.md](LO-TRINH.md) · [KIEN-TRUC.md](KIEN-TRUC.md) · [THIET-KE.md](THIET-KE.md)

@@ -1,6 +1,6 @@
-# FLUENTLOOP – KIẾN TRÚC KỸ THUẬT (đề xuất)
+# FLUENTLOOP – KIẾN TRÚC KỸ THUẬT
 
-> Đây là đề xuất. Chưa có dòng code nào. Chỉ dựng project khi bạn nói "bắt đầu Sprint 01".
+> Mô tả code hiện có (sau Sprint 09). Phần "sắp làm" ghi rõ theo sprint.
 
 ## 1. Nguyên tắc
 - **Một app, không server, không DB riêng, không Docker.** `npm install && npm run dev` là chạy.
@@ -17,18 +17,18 @@
 | Style | Tailwind v4 + CSS variables (design tokens) | Đổi theme sáng/tối và đổi màu theo track dễ |
 | Router | React Router (hoặc wouter) | Chỉ có khoảng 8 màn hình |
 | Lưu trữ | **IndexedDB qua Dexie** | Thẻ và lịch sử sẽ lớn hơn giới hạn của localStorage. Truy vấn theo hạn ôn |
-| SRS | `ts-fsrs` | Đã dùng ở Lingua Quest |
+| SRS | `ts-fsrs` | Thuật toán ôn hiện đại, có sẵn |
 | Schema | `zod` | Kiểm tra nội dung, kết quả AI, file nhập |
 | Giọng nói | Web Speech API (STT + TTS) | Miễn phí, không server |
-| AI | Gemini / OpenRouter, BYOK, gọi từ trình duyệt | Đã kiểm tra CORS ở Lingua Quest |
+| AI | Gemini / OpenRouter / OpenAI / tương thích OpenAI, BYOK, gọi từ trình duyệt | Không cần server |
 | PWA | `vite-plugin-pwa` | Cài lên điện thoại, chạy offline |
 | Icon | `lucide-react` | Một bộ icon đồng bộ (mục Thiết kế) |
 | Font | `@fontsource-variable/be-vietnam-pro`, `@fontsource-variable/jetbrains-mono` | Tự host qua npm, dấu tiếng Việt đẹp |
-| Test | Vitest + Testing Library, Playwright cho e2e | Giống Lingua Quest |
+| Test | Vitest + Testing Library, Playwright cho e2e | |
 
 Không dùng monorepo. Một package duy nhất, chia thư mục cho rõ.
 
-## 3. Cấu trúc thư mục (dự kiến)
+## 3. Cấu trúc thư mục
 ```
 fluentloop/
 ├─ content/
@@ -56,24 +56,23 @@ fluentloop/
 └─ docs/
 ```
 
-## 4. Mô hình dữ liệu (IndexedDB)
+## 4. Mô hình dữ liệu (IndexedDB, `src/services/db.ts`)
 
-Mọi bản ghi có `id` (UUID) và `updatedAt`, để sau này đồng bộ được mà không phải đổi dữ liệu.
+Mọi bản ghi có `id` và `updatedAt`, để sau này đồng bộ được.
 
-| Bảng | Trường chính |
+| Bảng | Nội dung |
 |---|---|
-| `profile` | trackId, cefr, phútMỗiNgày, ngàyBắtĐầu, mốc (ghi âm/bài viết) |
-| `settings` | ai {provider, key, mode}, giọng, tốc độ, theme, trầnThẻ |
-| `cards` | sentence, cloze/chunk, vi, nguồn (`content` / `capture` / `error`), refId, dạngThẻ, fsrs{…}, nhãn[] |
-| `reviews` | cardId, thờiGian, rating, dạngThẻ, đúngSai, msPhảnHồi |
-| `attempts` | taskId, text/âmThanh?, feedback{corrected, natural, giảiThích[], nhãn[]}, nguồn (ai/rules) |
-| `sessions` | ngày, bướcĐãXong[], phút, snippetId, trạngThái (dở/xong) |
-| `unitProgress` | unitId, snippetĐãHọc[], taskĐãLàm[] |
-| `captures` | text gốc, nguồn, câuĐãChọn[] |
-| `aiCache` | hash(prompt), kếtQuả, thờiGian |
-| `recordings` | blob âm thanh (mốc, shadowing nếu chọn lưu) |
+| `cards` / `reviews` | Thẻ ôn (nội dung, lỗi, bỏ túi) + FSRS, lịch sử ôn |
+| `sessions` | Kế hoạch phiên, bước hiện tại, thống kê |
+| `attempts` | Bài viết cho task: text, cụm đã dùng/thiếu, tự chấm, nguồn |
+| `mistakes` | Lỗi đã chọn thành thẻ, có nhãn |
+| `reads`, `captures`, `baselines`, `roleplays` | Bài đã đọc, bỏ túi, bài mốc, hội thoại |
+| `aiCache`, `aiUsage` | Lưu đệm kết quả AI, đếm lượt mỗi ngày |
 
-Xuất/nhập: một file JSON (bỏ blob âm thanh, hoặc tuỳ chọn gói kèm thành `.zip`).
+**Sắp làm:**
+- Sprint 10 (xong): `attempts` có `revisions` (các lần viết trước) và `missingPoints`. Lỗi của mọi lần viết đều vào `mistakes`. Câu nâng cấp được chọn thành thẻ sửa câu, nhãn `naturalness`.
+- Sprint 11 (xong): bảng `drafts` (`src/ui/useDraft.ts`) lưu chữ đang gõ sau 300ms và khi rời trang. Áp dụng cho bước Dùng (cả gợi ý, các lần viết, nhận xét), Bỏ túi, Hội thoại, bài mốc. Không đưa vào sao lưu. `sessions.reachedIndex` là bước xa nhất đã tới, thanh bước quay lại được tới đó (`goToStep`).
+- Sprint 13: màn lịch sử đọc từ `attempts`, xuất/nhập gồm cả phần này.
 
 ## 5. Lập phiên (session planner)
 Đầu vào: thời điểm `now`, thẻ đến hạn, tiến độ unit, mức CEFR, số phút.
@@ -93,28 +92,12 @@ Hàm thuần, có test: cùng dữ liệu và cùng `now` thì cho cùng phiên.
 - Câu ngoài khả năng của luật thì **so với câu mẫu và cho người học tự chấm** ("Giống ý / Khác ý").
 
 ## 7. AI
-- Tách theo nhà cung cấp, giống Lingua Quest (`gemini.ts`, `openrouter.ts`, `http.ts`, `types.ts`).
-- Mỗi việc một prompt và một schema kết quả: `correctWriting`, `roleplayTurn`, `explainInContext`, `taskFromCapture`.
+- `services/ai/providers.ts` gom các nhà cung cấp. Mỗi việc một prompt và một schema: `correct.ts`, `roleplay.ts`, `capture.ts`.
+- `correct.ts` là **người kèm học**: đầu vào gồm đề, ý cần có (`task.points`), cụm và câu mẫu; đầu ra gồm `coverage`, `mistakes`, `upgrades`, `praiseVi`. `hint.ts` cho gợi ý 3 bậc (AI hoặc `task.hints`). Luật và AI được gộp ở `core/check/feedback.ts` (`buildFeedback`) trước khi tới UI.
 - Chế độ: `off` / `khi luật bó tay` (mặc định) / `luôn dùng`.
 - Lưu đệm theo hash. Đếm lượt mỗi ngày. Lỗi mạng hoặc hết lượt thì dùng phương án dự phòng kèm một thông báo rõ ràng.
 
-## 8. Mang gì từ Lingua Quest sang
-Đường dẫn tính từ `~/Desktop/LINGUA QUEST`. **Chép sang rồi rút gọn**, không import chéo hai dự án.
-
-| Nguồn | Dùng cho |
-|---|---|
-| `packages/game-core/src/memory.ts` | Bọc FSRS, schema thẻ (bỏ phần Robo) |
-| `packages/game-core/src/rules.ts` (`editDistance`, chuẩn hoá) | `core/check` |
-| `apps/web/src/lib/ai/*`, `lib/ai-settings.ts`, `components/play/ai-settings-panel.tsx` | `services/ai`, màn Cài đặt |
-| `apps/web/src/lib/speech/*`, `hooks/use-mic.ts`, `hooks/use-speech.ts` | `services/speech`, nút micro |
-| `apps/web/src/app/voice-check` + `components/voice-check` | Trang kiểm tra micro và giọng |
-| `apps/web/src/lib/practice-stats.ts` | Ý tưởng cho số liệu tiến bộ |
-| `components/ui/modal.tsx`, `icons.tsx` | Tham khảo (sẽ thay icon bằng Lucide) |
-| docs/SPRINT-05.md mục trạng thái micro | Bảng trạng thái của nút micro (đang nghe, bị chặn, mất mạng...) |
-
-Không mang: three.js, R3F, diorama, characters, incident/dialogue engine, Next.js.
-
-## 9. Khi mở cho nhiều người (sau này)
+## 8. Khi mở cho nhiều người (sau này)
 | Giai đoạn | Thay đổi | Server? |
 |---|---|---|
 | 1. Cá nhân | Như trên | Không |

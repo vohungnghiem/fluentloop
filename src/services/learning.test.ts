@@ -1,7 +1,7 @@
 import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { db } from './db';
-import { finishReading, finishSession, nextStep, nextSuggestions, recordAttempt, recordReview, startSession, todaySummary } from './learning';
+import { finishReading, finishSession, goToStep, nextStep, nextSuggestions, recordAttempt, recordReview, startSession, todaySummary } from './learning';
 
 const day1 = new Date('2026-11-10T20:00:00');
 const day2 = new Date('2026-11-11T08:00:00');
@@ -34,6 +34,20 @@ describe('a first day and the day after', () => {
     await nextStep(a.id, day1);
     const resumed = await startSession(day1);
     expect(resumed.stepIndex).toBe(1);
+  });
+
+  it('the step bar goes back to a reached step and forward again, never past the furthest one', async () => {
+    const session = await startSession(day1);
+    await nextStep(session.id, day1);
+    await nextStep(session.id, day1);
+    await goToStep(session.id, 3, day1);
+    expect((await db.sessions.get(session.id))!.stepIndex).toBe(2);
+    await goToStep(session.id, 0, day1);
+    expect(await db.sessions.get(session.id)).toMatchObject({ stepIndex: 0, reachedIndex: 2 });
+    await nextStep(session.id, day1);
+    expect(await db.sessions.get(session.id)).toMatchObject({ stepIndex: 1, reachedIndex: 2 });
+    await goToStep(session.id, 2, day1);
+    expect((await db.sessions.get(session.id))!.stepIndex).toBe(2);
   });
 
   it('cards learnt today are not due today but are due tomorrow, with a warm-up first', async () => {

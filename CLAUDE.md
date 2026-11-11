@@ -14,6 +14,5 @@ Bắt đầu bằng việc đọc `docs/PHAC-THAO.md`, sau đó tới `docs/LO-T
 - Kiểm thử như **người lần đầu dùng**: luôn có "tiếp theo" rõ ràng. Báo đúng những gì chưa kiểm được (micro thật, iOS, AI thật).
 
 ## Bối cảnh
-- Tách từ Lingua Quest (`~/Desktop/LINGUA QUEST`, game 3D học tiếng Anh). Người dùng bỏ hướng game vì quá phức tạp.
-- Code tái sử dụng được liệt kê ở `docs/KIEN-TRUC.md` mục 8. Chép sang rồi rút gọn, không import chéo.
-- Câu hỏi mở cần người dùng trả lời trước Sprint 01: `docs/PHAC-THAO.md` mục 13.
+- App **chỉ để học**, không phải game. Người dùng đang học, chưa biết: AI phải kèm học (gợi ý khi bí, chấm đủ ý, nâng cấp câu đúng), không "đúng rồi cho qua". Xem `docs/PHAC-THAO.md` mục 1 và 4.1.
+- Ra đời từ một dự án game cũ đã bỏ, thư mục nguồn của dự án đó không còn. Tài liệu không dựa vào nó nữa.

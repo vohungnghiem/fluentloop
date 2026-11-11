@@ -1,5 +1,6 @@
 import { PageHeader } from '../../ui/shell';
-import { useState, type ReactNode } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
+import { useLocation } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { ChevronDown, CircleCheck, ClipboardPaste, Eye, EyeOff, Mic } from 'lucide-react';
 import { vi } from '../../copy/vi';
@@ -25,6 +26,15 @@ const PROVIDERS = ['none', 'gemini', 'openai', 'openrouter', 'compatible'] as co
 /** Settings: AI is optional and bring-your-own-key; the key stays in this browser. */
 export function SettingsPage() {
   const settings = useSettings();
+  // Opened from an AI badge: straight to the AI part, and back to where the learner was.
+  const location = useLocation();
+  const from = (location.state as { from?: string } | null)?.from;
+  useEffect(() => {
+    if (location.hash !== '#ai') return;
+    // After the app's own scroll-to-top on a new screen.
+    const timer = setTimeout(() => document.getElementById('ai')?.scrollIntoView({ block: 'start' }), 50);
+    return () => clearTimeout(timer);
+  }, [location.hash]);
   const [showKey, setShowKey] = useState(false);
   const [test, setTest] = useState<'running' | { ok: true } | { ok: false; kind: AiErrorKind }>();
   const used = useLiveQuery(() => aiCallsToday(now()), [], 0);
@@ -73,7 +83,7 @@ export function SettingsPage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.settings.title} back={{ to: '/', label: vi.micCheck.back }} />
+      <PageHeader title={vi.settings.title} back={{ to: from ?? '/', label: vi.micCheck.back }} />
 
       <Section title={vi.settings.track}>
         <Card>
@@ -82,7 +92,7 @@ export function SettingsPage() {
         </Card>
       </Section>
 
-      <Section title={vi.settings.aiTitle}>
+      <Section title={vi.settings.aiTitle} id="ai">
         <Card className="space-y-4">
           {received && (
             <div className="rounded-xl border-2 border-primary p-4">
@@ -192,16 +202,16 @@ export function SettingsPage() {
       </Section>
 
       <NavList title={vi.settings.other}>
-        <NavRow to="/mic-check" icon={<Mic size={18} />} title={vi.micCheck.link} />
+        <NavRow to="/mic-check" look={{ tone: 'shadow', icon: Mic }} title={vi.micCheck.link} />
       </NavList>
     </main>
   );
 }
 
 /** A titled group of the settings page, the same header as `NavList`. */
-function Section({ title, children }: { title: string; children: ReactNode }) {
+function Section({ title, id, children }: { title: string; id?: string; children: ReactNode }) {
   return (
-    <section>
+    <section id={id} className="scroll-mt-4">
       <h2 className="mb-2 px-1 text-xs font-semibold tracking-wide text-ink-soft uppercase">{title}</h2>
       {children}
     </section>

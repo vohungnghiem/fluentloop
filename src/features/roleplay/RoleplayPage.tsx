@@ -1,4 +1,6 @@
+import { AiBadge } from '../../ui/AiBadge';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDraftText } from '../../ui/useDraft';
 import { Link, useParams } from 'react-router';
 import { ArrowLeft, CircleCheck, Lightbulb, Send } from 'lucide-react';
 import type { Scenario } from '../../core/content/schema';
@@ -38,7 +40,7 @@ export function RoleplayPage() {
   const opening = found?.scenario.script[0];
   const [messages, setMessages] = useState<Message[]>(() => (opening ? [{ who: 'partner', text: opening.say, vi: opening.sayVi }] : []));
   const [nodeId, setNodeId] = useState(opening?.id ?? '');
-  const [draft, setDraft] = useState('');
+  const [draft, setDraft] = useDraftText(`roleplay:${id}`);
   const [thinking, setThinking] = useState(false);
   const [notice, setNotice] = useState<string>();
   const [hint, setHint] = useState<string>();
@@ -146,6 +148,7 @@ export function RoleplayPage() {
           <h1 className="truncate text-lg font-semibold">{scenario.titleVi}</h1>
           <p className="text-sm text-ink-soft">{scenario.partner}</p>
         </div>
+        <div className="ml-auto"><AiBadge /></div>
       </header>
       <p className="mt-2 rounded-xl bg-paper px-3 py-2 text-sm ring-1 ring-line"><b>{vi.roleplay.goal}</b> {scenario.goalVi}</p>
 

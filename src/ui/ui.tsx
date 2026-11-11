@@ -2,6 +2,8 @@ import { useEffect, useRef, useState, type ButtonHTMLAttributes, type ReactNode 
 import { Link } from 'react-router';
 import { ArrowRight, Check, ChevronDown, ChevronRight, CornerDownLeft, MoreHorizontal } from 'lucide-react';
 import { useEnter } from './useKey';
+import { toneClass, type Tone } from './tones';
+import type { LucideIcon } from 'lucide-react';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
@@ -70,7 +72,7 @@ export function Chip({ tone = 'plain', children }: { tone?: 'plain' | 'good' | '
   return (
     <span
       className={cx(
-        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm font-medium',
+        'inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-sm font-medium whitespace-nowrap',
         tone === 'plain' && 'bg-paper text-ink-soft ring-1 ring-line',
         tone === 'good' && 'bg-good-tint text-good',
         tone === 'accent' && 'bg-accent-tint text-accent-ink',
@@ -101,10 +103,87 @@ export function Note({ tone, icon, children }: { tone: 'good' | 'accent' | 'plai
   );
 }
 
-export function StatTile({ value, label }: { value: number | string; label: string }) {
+/** A rounded square in a tone with its icon: what step or section this is, at a glance. */
+export function ToneIcon({ tone, icon: Icon, size = 'md', className }: { tone: Tone; icon: LucideIcon; size?: 'sm' | 'md' | 'lg'; className?: string }) {
+  const box = { sm: 'size-8 rounded-lg', md: 'size-11 rounded-xl', lg: 'size-16 rounded-2xl' }[size];
   return (
-    <div className="rounded-2xl border border-line bg-surface px-3 py-4 text-center">
-      <div className="text-3xl font-semibold tabular-nums">{value}</div>
+    <span className={cx(toneClass(tone), 'flex shrink-0 items-center justify-center bg-tone-tint text-tone', box, className)} aria-hidden="true">
+      <Icon size={{ sm: 18, md: 22, lg: 32 }[size]} strokeWidth={2.2} />
+    </span>
+  );
+}
+
+/**
+ * Text roles (docs/THIET-KE.md 3): an eyebrow says what kind of thing this is (small, caps, toned),
+ * a title names it, body text is ink, and only side notes are soft. Never several lines of soft grey.
+ */
+export function Eyebrow({ tone, children, right }: { tone?: Tone; children: ReactNode; right?: ReactNode }) {
+  return (
+    <div className={cx('flex items-center justify-between gap-2', tone && toneClass(tone))}>
+      <span className={cx('text-xs font-semibold tracking-wide uppercase', tone ? 'text-tone' : 'text-ink-soft')}>{children}</span>
+      {right && <span className="text-xs font-medium text-ink-soft">{right}</span>}
+    </div>
+  );
+}
+
+/** English chunks as chips under a label: what will be learnt, readable at a glance. */
+export function ChunkChips({ label, chunks }: { label: string; chunks: readonly string[] }) {
+  return (
+    <div>
+      <div className="text-xs font-medium text-ink-soft">{label}</div>
+      <ul className="mt-1.5 flex flex-wrap gap-1.5">
+        {chunks.map((chunk) => (
+          <li key={chunk} className="rounded-lg bg-paper px-2.5 py-1 text-sm font-medium text-ink ring-1 ring-line" lang="en">{chunk}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/** The steps of a session as a row of toned icons: done ones ticked, the current one ringed. */
+export function StepTrail({ steps, current }: { steps: ReadonlyArray<{ tone: Tone; icon: LucideIcon; label: string }>; current?: number }) {
+  return (
+    <ol className="flex flex-wrap items-center gap-x-2 gap-y-2">
+      {steps.map((step, i) => {
+        const done = current !== undefined && i < current;
+        const here = i === current;
+        return (
+          <li key={step.label} className="flex items-center gap-1">
+            <span className={cx('flex items-center gap-1.5 rounded-full py-0.5 pr-2.5 pl-0.5 text-sm', toneClass(step.tone), here ? 'bg-tone-tint font-semibold text-ink' : done ? 'text-ink-soft' : 'text-ink')}>
+              {done ? (
+                <span className="flex size-8 items-center justify-center rounded-lg bg-tone text-on-primary"><Check size={16} strokeWidth={3} /></span>
+              ) : (
+                <ToneIcon tone={step.tone} icon={step.icon} size="sm" className={here ? 'bg-surface' : ''} />
+              )}
+              {step.label}
+            </span>
+          </li>
+        );
+      })}
+    </ol>
+  );
+}
+
+/** The top of a session step: its coloured icon (pops in), a big title, one line of what to do. */
+export function StepHeader({ tone, icon, title, detail, right }: { tone: Tone; icon: LucideIcon; title: string; detail?: ReactNode; right?: ReactNode }) {
+  return (
+    <header className="flex items-start gap-3">
+      <ToneIcon tone={tone} icon={icon} className="pop" />
+      <div className="min-w-0 flex-1">
+        <div className="flex items-baseline justify-between gap-2">
+          <h1 className="text-xl leading-tight font-semibold">{title}</h1>
+          {right && <span className="shrink-0 text-sm text-ink-soft">{right}</span>}
+        </div>
+        {detail && <p className="mt-1 text-sm text-ink-soft">{detail}</p>}
+      </div>
+    </header>
+  );
+}
+
+export function StatTile({ value, label, tone }: { value: number | string; label: string; tone?: Tone }) {
+  return (
+    <div className={cx('rounded-2xl border border-line bg-surface px-3 py-4 text-center', tone && toneClass(tone))}>
+      <div className={cx('text-3xl font-semibold tabular-nums', tone && 'text-tone')}>{value}</div>
       <div className="mt-1 text-[13px] leading-tight text-ink-soft">{label}</div>
     </div>
   );
@@ -126,11 +205,11 @@ export function Lu({ size = 72, className }: { size?: number; className?: string
  * A row that leads somewhere: the whole row is the tap target (52px), icon left, chevron right.
  * Rows go inside a `NavList`.
  */
-export function NavRow({ to, icon, title, detail }: { to: string; icon: ReactNode; title: string; detail?: string }) {
+export function NavRow({ to, icon, look, title, detail }: { to: string; icon?: ReactNode; look?: { tone: Tone; icon: LucideIcon }; title: string; detail?: string }) {
   return (
     <li>
       <Link to={to} className="flex min-h-13 items-center gap-3 px-4 py-2.5 transition-colors hover:bg-paper active:bg-primary-tint">
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-paper text-ink-soft">{icon}</span>
+        {look ? <ToneIcon {...look} size="sm" /> : <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-paper text-ink-soft">{icon}</span>}
         <span className="min-w-0 flex-1">
           <span className="block font-medium">{title}</span>
           {detail && <span className="block text-sm text-ink-soft">{detail}</span>}

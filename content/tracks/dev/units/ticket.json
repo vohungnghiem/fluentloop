@@ -87,32 +87,191 @@
         "Bản sửa đã được merge và triển khai lên production.",
         "Bạn kiểm tra lại giúp phía bạn, nếu ổn thì đóng ticket nhé. Nếu lỗi quay lại thì cứ mở lại ticket."
       ],
-      "chunks": ["deployed-to-production", "verify", "close-the-ticket", "feel-free-to", "comes-back"],
+      "chunks": [
+        "deployed-to-production",
+        "verify",
+        "close-the-ticket",
+        "feel-free-to",
+        "comes-back"
+      ],
       "task": "task-fixed"
     }
   ],
   "chunks": [
-    { "id": "steps-to-reproduce", "en": "steps to reproduce", "vi": "các bước tái hiện lỗi", "example": "Please add the steps to reproduce to the ticket.", "exampleVi": "Hãy thêm các bước tái hiện lỗi vào ticket.", "answer": "steps to reproduce" },
-    { "id": "expected-result", "en": "expected result", "vi": "kết quả mong đợi", "example": "Expected result: the user sees a success message.", "exampleVi": "Kết quả mong đợi: người dùng thấy thông báo thành công.", "answer": "Expected result" },
-    { "id": "actual-result", "en": "actual result", "vi": "kết quả thực tế", "example": "Actual result: nothing happens when I click Save.", "exampleVi": "Kết quả thực tế: bấm Save thì không có gì xảy ra.", "answer": "Actual result" },
-    { "id": "times-out", "en": "time out", "vi": "hết thời gian chờ (timeout)", "forms": ["times out"], "example": "The request times out after thirty seconds.", "exampleVi": "Request bị timeout sau ba mươi giây.", "answer": "times out" },
-    { "id": "intermittently", "en": "intermittently", "vi": "lúc có lúc không, thỉnh thoảng", "example": "The test fails intermittently on CI.", "exampleVi": "Test thỉnh thoảng lại fail trên CI.", "answer": "intermittently" },
-    { "id": "track-down", "en": "track down", "vi": "lần ra, truy ra (nguyên nhân)", "example": "It took me two days to track down the bug.", "exampleVi": "Mình mất hai ngày mới lần ra bug.", "answer": "track down" },
-    { "id": "related-to", "en": "related to", "vi": "liên quan đến", "example": "I think the error is related to the new config.", "exampleVi": "Mình nghĩ lỗi liên quan đến cấu hình mới.", "answer": "related to" },
-    { "id": "narrow-down", "en": "narrow down", "vi": "khoanh vùng, thu hẹp", "forms": ["narrow it down"], "example": "Let's narrow down the problem first.", "exampleVi": "Hãy khoanh vùng vấn đề trước đã.", "answer": "narrow down" },
-    { "id": "blocker-for", "en": "a blocker for", "vi": "vấn đề chặn (việc gì)", "example": "This bug is a blocker for the demo.", "exampleVi": "Bug này đang chặn buổi demo.", "answer": "blocker" },
-    { "id": "raise-priority", "en": "raise the priority", "vi": "nâng độ ưu tiên", "forms": ["raised the priority"], "example": "Can we raise the priority of this ticket?", "exampleVi": "Mình nâng độ ưu tiên của ticket này được không?", "answer": "raise the priority" },
-    { "id": "workaround", "en": "as a workaround", "vi": "cách tạm thời (trong lúc chưa sửa)", "example": "As a workaround, restart the service.", "exampleVi": "Cách tạm thời là khởi động lại dịch vụ.", "answer": "workaround" },
-    { "id": "keep-you-posted", "en": "keep you posted", "vi": "cập nhật tiếp cho bạn", "example": "I'm still checking. I'll keep you posted.", "exampleVi": "Mình vẫn đang kiểm tra. Mình sẽ cập nhật tiếp cho bạn.", "answer": "keep you posted" },
-    { "id": "on-staging", "en": "on staging", "vi": "trên môi trường staging", "example": "It works on staging but not on production.", "exampleVi": "Trên staging thì chạy, trên production thì không.", "answer": "on staging" },
-    { "id": "could-you-share", "en": "could you share", "vi": "bạn gửi giúp… được không", "example": "Could you share the error message?", "exampleVi": "Bạn gửi giúp thông báo lỗi được không?", "answer": "Could you share" },
-    { "id": "exact-steps", "en": "the exact steps", "vi": "các bước chính xác", "example": "I need the exact steps to reproduce it.", "exampleVi": "Mình cần các bước chính xác để tái hiện.", "answer": "exact steps" },
-    { "id": "are-you-using", "en": "which … are you using", "vi": "bạn đang dùng … nào", "forms": ["are you using"], "example": "Which version of the app are you using?", "exampleVi": "Bạn đang dùng phiên bản app nào?", "answer": "are you using" },
-    { "id": "deployed-to-production", "en": "deploy to production", "vi": "triển khai lên production", "forms": ["deployed to production"], "example": "We deployed to production last night.", "exampleVi": "Tối qua bọn mình đã triển khai lên production.", "answer": "deployed to production" },
-    { "id": "verify", "en": "verify", "vi": "kiểm tra lại, xác nhận", "example": "Could you verify the fix on your side?", "exampleVi": "Bạn kiểm tra lại bản sửa ở phía bạn giúp nhé?", "answer": "verify" },
-    { "id": "close-the-ticket", "en": "close the ticket", "vi": "đóng ticket", "example": "I'll close the ticket if there are no more issues.", "exampleVi": "Nếu không còn vấn đề gì mình sẽ đóng ticket.", "answer": "close the ticket" },
-    { "id": "feel-free-to", "en": "feel free to", "vi": "cứ thoải mái (làm gì), đừng ngại", "example": "Feel free to ask me if anything is unclear.", "exampleVi": "Có gì chưa rõ cứ hỏi mình nhé.", "answer": "Feel free to" },
-    { "id": "comes-back", "en": "come back", "vi": "quay lại, xuất hiện lại", "forms": ["comes back"], "example": "Let me know if the error comes back.", "exampleVi": "Nếu lỗi xuất hiện lại thì báo mình nhé.", "answer": "comes back" }
+    {
+      "id": "steps-to-reproduce",
+      "en": "steps to reproduce",
+      "vi": "các bước tái hiện lỗi",
+      "example": "Please add the steps to reproduce to the ticket.",
+      "exampleVi": "Hãy thêm các bước tái hiện lỗi vào ticket.",
+      "answer": "steps to reproduce"
+    },
+    {
+      "id": "expected-result",
+      "en": "expected result",
+      "vi": "kết quả mong đợi",
+      "example": "Expected result: the user sees a success message.",
+      "exampleVi": "Kết quả mong đợi: người dùng thấy thông báo thành công.",
+      "answer": "Expected result"
+    },
+    {
+      "id": "actual-result",
+      "en": "actual result",
+      "vi": "kết quả thực tế",
+      "example": "Actual result: nothing happens when I click Save.",
+      "exampleVi": "Kết quả thực tế: bấm Save thì không có gì xảy ra.",
+      "answer": "Actual result"
+    },
+    {
+      "id": "times-out",
+      "en": "time out",
+      "vi": "hết thời gian chờ (timeout)",
+      "forms": ["times out"],
+      "example": "The request times out after thirty seconds.",
+      "exampleVi": "Request bị timeout sau ba mươi giây.",
+      "answer": "times out"
+    },
+    {
+      "id": "intermittently",
+      "en": "intermittently",
+      "vi": "lúc có lúc không, thỉnh thoảng",
+      "example": "The test fails intermittently on CI.",
+      "exampleVi": "Test thỉnh thoảng lại fail trên CI.",
+      "answer": "intermittently"
+    },
+    {
+      "id": "track-down",
+      "en": "track down",
+      "vi": "lần ra, truy ra (nguyên nhân)",
+      "example": "It took me two days to track down the bug.",
+      "exampleVi": "Mình mất hai ngày mới lần ra bug.",
+      "answer": "track down"
+    },
+    {
+      "id": "related-to",
+      "en": "related to",
+      "vi": "liên quan đến",
+      "example": "I think the error is related to the new config.",
+      "exampleVi": "Mình nghĩ lỗi liên quan đến cấu hình mới.",
+      "answer": "related to"
+    },
+    {
+      "id": "narrow-down",
+      "en": "narrow down",
+      "vi": "khoanh vùng, thu hẹp",
+      "forms": ["narrow it down"],
+      "example": "Let's narrow down the problem first.",
+      "exampleVi": "Hãy khoanh vùng vấn đề trước đã.",
+      "answer": "narrow down"
+    },
+    {
+      "id": "blocker-for",
+      "en": "a blocker for",
+      "vi": "vấn đề chặn (việc gì)",
+      "example": "This bug is a blocker for the demo.",
+      "exampleVi": "Bug này đang chặn buổi demo.",
+      "answer": "blocker"
+    },
+    {
+      "id": "raise-priority",
+      "en": "raise the priority",
+      "vi": "nâng độ ưu tiên",
+      "forms": ["raised the priority"],
+      "example": "Can we raise the priority of this ticket?",
+      "exampleVi": "Mình nâng độ ưu tiên của ticket này được không?",
+      "answer": "raise the priority"
+    },
+    {
+      "id": "workaround",
+      "en": "as a workaround",
+      "vi": "cách tạm thời (trong lúc chưa sửa)",
+      "example": "As a workaround, restart the service.",
+      "exampleVi": "Cách tạm thời là khởi động lại dịch vụ.",
+      "answer": "workaround"
+    },
+    {
+      "id": "keep-you-posted",
+      "en": "keep you posted",
+      "vi": "cập nhật tiếp cho bạn",
+      "example": "I'm still checking. I'll keep you posted.",
+      "exampleVi": "Mình vẫn đang kiểm tra. Mình sẽ cập nhật tiếp cho bạn.",
+      "answer": "keep you posted"
+    },
+    {
+      "id": "on-staging",
+      "en": "on staging",
+      "vi": "trên môi trường staging",
+      "example": "It works on staging but not on production.",
+      "exampleVi": "Trên staging thì chạy, trên production thì không.",
+      "answer": "on staging"
+    },
+    {
+      "id": "could-you-share",
+      "en": "could you share",
+      "vi": "bạn gửi giúp… được không",
+      "example": "Could you share the error message?",
+      "exampleVi": "Bạn gửi giúp thông báo lỗi được không?",
+      "answer": "Could you share"
+    },
+    {
+      "id": "exact-steps",
+      "en": "the exact steps",
+      "vi": "các bước chính xác",
+      "example": "I need the exact steps to reproduce it.",
+      "exampleVi": "Mình cần các bước chính xác để tái hiện.",
+      "answer": "exact steps"
+    },
+    {
+      "id": "are-you-using",
+      "en": "which … are you using",
+      "vi": "bạn đang dùng … nào",
+      "forms": ["are you using"],
+      "example": "Which version of the app are you using?",
+      "exampleVi": "Bạn đang dùng phiên bản app nào?",
+      "answer": "are you using"
+    },
+    {
+      "id": "deployed-to-production",
+      "en": "deploy to production",
+      "vi": "triển khai lên production",
+      "forms": ["deployed to production"],
+      "example": "We deployed to production last night.",
+      "exampleVi": "Tối qua bọn mình đã triển khai lên production.",
+      "answer": "deployed to production"
+    },
+    {
+      "id": "verify",
+      "en": "verify",
+      "vi": "kiểm tra lại, xác nhận",
+      "example": "Could you verify the fix on your side?",
+      "exampleVi": "Bạn kiểm tra lại bản sửa ở phía bạn giúp nhé?",
+      "answer": "verify"
+    },
+    {
+      "id": "close-the-ticket",
+      "en": "close the ticket",
+      "vi": "đóng ticket",
+      "example": "I'll close the ticket if there are no more issues.",
+      "exampleVi": "Nếu không còn vấn đề gì mình sẽ đóng ticket.",
+      "answer": "close the ticket"
+    },
+    {
+      "id": "feel-free-to",
+      "en": "feel free to",
+      "vi": "cứ thoải mái (làm gì), đừng ngại",
+      "example": "Feel free to ask me if anything is unclear.",
+      "exampleVi": "Có gì chưa rõ cứ hỏi mình nhé.",
+      "answer": "Feel free to"
+    },
+    {
+      "id": "comes-back",
+      "en": "come back",
+      "vi": "quay lại, xuất hiện lại",
+      "forms": ["comes back"],
+      "example": "Let me know if the error comes back.",
+      "exampleVi": "Nếu lỗi xuất hiện lại thì báo mình nhé.",
+      "answer": "comes back"
+    }
   ],
   "tasks": [
     {
@@ -120,70 +279,193 @@
       "promptVi": "Viết một bug report ngắn cho một lỗi bạn từng gặp: các bước, kết quả mong đợi, kết quả thực tế.",
       "situation": "Creating a ticket in JIRA.",
       "required": [
-        { "label": "expected result", "variants": ["expected result", "expected"] },
-        { "label": "actual result", "variants": ["actual result", "actual"] }
+        {
+          "label": "expected result",
+          "variants": ["expected result", "expected"]
+        },
+        {
+          "label": "actual result",
+          "variants": ["actual result", "actual"]
+        }
       ],
       "models": [
         "Steps to reproduce: open the cart and remove the last item. Expected result: the cart is empty. Actual result: the item is still there after refresh.",
         "Steps to reproduce: upload a file larger than 10 MB. Expected result: an error message. Actual result: the upload times out with no message."
       ],
-      "tipVi": "Mỗi phần một dòng, bắt đầu bằng nhãn và dấu hai chấm."
+      "tipVi": "Mỗi phần một dòng, bắt đầu bằng nhãn và dấu hai chấm.",
+      "points": [
+        {
+          "vi": "Các bước tái hiện",
+          "variants": ["steps"]
+        },
+        {
+          "vi": "Kết quả mong đợi",
+          "variants": ["expected"]
+        },
+        {
+          "vi": "Kết quả thực tế",
+          "variants": ["actual"]
+        }
+      ],
+      "hints": [
+        "Làm những bước nào thì thấy lỗi? Đáng lẽ phải ra gì, và thực tế ra gì?",
+        "Steps to reproduce: … Expected result: … Actual result: …"
+      ]
     },
     {
       "id": "task-hard-bug",
       "promptVi": "Kể cho team về một bug khó tìm và bạn đang làm gì để tìm ra nó.",
       "situation": "Slack, team channel.",
       "required": [
-        { "label": "track down", "variants": ["track down", "tracking down", "tracked down", "track it down"] },
-        { "label": "narrow down", "variants": ["narrow down", "narrow it down", "narrowed down", "narrowing down", "narrowed it down"] }
+        {
+          "label": "track down",
+          "variants": ["track down", "tracking down", "tracked down", "track it down"]
+        },
+        {
+          "label": "narrow down",
+          "variants": [
+            "narrow down",
+            "narrow it down",
+            "narrowed down",
+            "narrowing down",
+            "narrowed it down"
+          ]
+        }
       ],
       "models": [
         "This bug is hard to track down because it only happens on mobile. I'm adding logs to narrow it down.",
         "I'm still trying to track down the memory leak. I've narrowed it down to the image upload module."
       ],
-      "tipVi": "“narrow it down”: đại từ “it” đứng giữa narrow và down."
+      "tipVi": "“narrow it down”: đại từ “it” đứng giữa narrow và down.",
+      "points": [
+        {
+          "vi": "Vì sao lỗi khó tìm",
+          "variants": ["hard", "only happens"]
+        },
+        {
+          "vi": "Bạn đang làm gì để tìm",
+          "variants": ["adding", "checking", "trying", "narrow"]
+        }
+      ],
+      "hints": [
+        "Lỗi chỉ xảy ra khi nào? Bạn đang thử cách gì để khoanh vùng?",
+        "This bug is hard to track down because … I'm … to narrow it down."
+      ]
     },
     {
       "id": "task-urgent-bug",
       "promptVi": "Báo cho PM về một lỗi gấp: mức độ, cách tạm thời, và hứa cập nhật tiếp.",
       "situation": "Email to the product manager.",
       "required": [
-        { "label": "workaround", "variants": ["workaround", "work around"] },
-        { "label": "keep you posted", "variants": ["keep you posted", "keep you updated"] }
+        {
+          "label": "workaround",
+          "variants": ["workaround", "work around"]
+        },
+        {
+          "label": "keep you posted",
+          "variants": ["keep you posted", "keep you updated"]
+        }
       ],
       "models": [
         "Payments fail for some users, so this is a blocker for the release. As a workaround, they can pay by bank transfer. I'll keep you posted.",
         "Login is broken on Safari. As a workaround, users can use Chrome. We're working on a fix and I'll keep you posted."
       ],
-      "tipVi": "Báo xấu thì nói thẳng vấn đề trước, cách tạm thời sau."
+      "tipVi": "Báo xấu thì nói thẳng vấn đề trước, cách tạm thời sau.",
+      "points": [
+        {
+          "vi": "Mức độ nghiêm trọng",
+          "variants": ["blocker", "critical", "urgent"]
+        },
+        {
+          "vi": "Cách tạm thời",
+          "variants": ["workaround"]
+        },
+        {
+          "vi": "Hứa cập nhật",
+          "variants": ["keep you posted", "update"]
+        }
+      ],
+      "hints": [
+        "Lỗi ảnh hưởng ai, nặng cỡ nào? Người dùng tạm làm gì được? Khi nào bạn báo tiếp?",
+        "… fail for some users, so this is a blocker. As a workaround, …"
+      ]
     },
     {
       "id": "task-ask-info",
       "promptVi": "Bạn chưa tái hiện được lỗi. Lịch sự nhờ người báo lỗi gửi thêm thông tin.",
       "situation": "Comment on a ticket.",
       "required": [
-        { "label": "could you share", "variants": ["could you share", "can you share", "could you send", "could you please share"] },
-        { "label": "exact steps", "variants": ["exact steps", "the steps"] }
+        {
+          "label": "could you share",
+          "variants": [
+            "could you share",
+            "can you share",
+            "could you send",
+            "could you please share"
+          ]
+        },
+        {
+          "label": "exact steps",
+          "variants": ["exact steps", "the steps"]
+        }
       ],
       "models": [
         "I couldn't reproduce this on staging. Could you share the exact steps and the error message?",
         "Thanks for reporting! Could you share the exact steps and which device you are using?"
       ],
-      "tipVi": "“Could you…?” lịch sự hơn “Send me…”."
+      "tipVi": "“Could you…?” lịch sự hơn “Send me…”.",
+      "points": [
+        {
+          "vi": "Chưa tái hiện được",
+          "variants": ["reproduce"]
+        },
+        {
+          "vi": "Nhờ gửi thêm thông tin cụ thể",
+          "variants": ["could you share", "could you send", "steps"]
+        }
+      ],
+      "hints": [
+        "Bạn đã thử ở đâu mà không thấy lỗi? Bạn cần họ gửi những gì?",
+        "I couldn't reproduce this on … Could you share …"
+      ]
     },
     {
       "id": "task-fixed",
       "promptVi": "Báo người báo lỗi rằng lỗi đã được sửa và lên production, nhờ họ kiểm tra lại.",
       "situation": "Comment on a ticket.",
       "required": [
-        { "label": "verify", "variants": ["verify", "verified"] },
-        { "label": "feel free to", "variants": ["feel free to"] }
+        {
+          "label": "verify",
+          "variants": ["verify", "verified"]
+        },
+        {
+          "label": "feel free to",
+          "variants": ["feel free to"]
+        }
       ],
       "models": [
         "The fix is now on production. Could you verify it on your side? Feel free to reopen the ticket if you still see the issue.",
         "We deployed the fix this morning. Please verify and close the ticket. Feel free to ping me if it comes back."
       ],
-      "tipVi": "“Feel free to + động từ nguyên mẫu”: feel free to reopen."
+      "tipVi": "“Feel free to + động từ nguyên mẫu”: feel free to reopen.",
+      "points": [
+        {
+          "vi": "Lỗi đã sửa và lên production",
+          "variants": ["production", "fix"]
+        },
+        {
+          "vi": "Nhờ kiểm tra lại",
+          "variants": ["verify", "check"]
+        },
+        {
+          "vi": "Còn lỗi thì báo lại",
+          "variants": ["reopen", "let me know", "feel free"]
+        }
+      ],
+      "hints": [
+        "Bản sửa đã ở đâu? Bạn muốn họ làm gì tiếp, và nếu vẫn lỗi thì sao?",
+        "The fix is now on production. Could you …"
+      ]
     }
   ],
   "scenarios": [
@@ -196,19 +478,57 @@
       "persona": "You are Linda, a friendly but busy product manager. The release is tomorrow. Ask short, practical questions: how bad is it, how many users, is there a workaround, when will it be fixed. Do not use technical jargon.",
       "goal": "The learner explains the payment bug, mentions a workaround, and says when they will give an update.",
       "script": [
-        { "id": "start", "say": "Hi! I heard there's a problem with payments. How bad is it?", "sayVi": "Chào bạn! Nghe nói thanh toán có vấn đề. Nặng không?", "replies": [
-          { "text": "Some users can't pay by card. It's a blocker for the release.", "next": "users" },
-          { "text": "It's not too bad. Only a few users are affected.", "next": "users" }
-        ] },
-        { "id": "users", "say": "I see. Is there a workaround for now?", "sayVi": "Mình hiểu rồi. Giờ có cách tạm thời nào không?", "replies": [
-          { "text": "Yes, as a workaround they can pay by bank transfer.", "next": "eta" },
-          { "text": "Not yet, but we're looking into it.", "next": "eta" }
-        ] },
-        { "id": "eta", "say": "OK. When do you think it will be fixed?", "sayVi": "Được. Bạn nghĩ khi nào sửa xong?", "replies": [
-          { "text": "We're narrowing it down. I'll keep you posted by end of day.", "next": "end" },
-          { "text": "Probably tomorrow morning. I'll keep you posted.", "next": "end" }
-        ] },
-        { "id": "end", "say": "Great, thanks for the heads-up. Talk later!", "sayVi": "Tốt, cảm ơn đã báo trước. Nói chuyện sau nhé!", "replies": [] }
+        {
+          "id": "start",
+          "say": "Hi! I heard there's a problem with payments. How bad is it?",
+          "sayVi": "Chào bạn! Nghe nói thanh toán có vấn đề. Nặng không?",
+          "replies": [
+            {
+              "text": "Some users can't pay by card. It's a blocker for the release.",
+              "next": "users"
+            },
+            {
+              "text": "It's not too bad. Only a few users are affected.",
+              "next": "users"
+            }
+          ]
+        },
+        {
+          "id": "users",
+          "say": "I see. Is there a workaround for now?",
+          "sayVi": "Mình hiểu rồi. Giờ có cách tạm thời nào không?",
+          "replies": [
+            {
+              "text": "Yes, as a workaround they can pay by bank transfer.",
+              "next": "eta"
+            },
+            {
+              "text": "Not yet, but we're looking into it.",
+              "next": "eta"
+            }
+          ]
+        },
+        {
+          "id": "eta",
+          "say": "OK. When do you think it will be fixed?",
+          "sayVi": "Được. Bạn nghĩ khi nào sửa xong?",
+          "replies": [
+            {
+              "text": "We're narrowing it down. I'll keep you posted by end of day.",
+              "next": "end"
+            },
+            {
+              "text": "Probably tomorrow morning. I'll keep you posted.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great, thanks for the heads-up. Talk later!",
+          "sayVi": "Tốt, cảm ơn đã báo trước. Nói chuyện sau nhé!",
+          "replies": []
+        }
       ]
     }
   ]

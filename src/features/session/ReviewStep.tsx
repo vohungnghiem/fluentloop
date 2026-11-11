@@ -1,3 +1,5 @@
+import { StepHeader } from '../../ui/ui';
+import { STEP_LOOK } from '../../ui/tones';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { CircleCheck, Lightbulb, RotateCcw, Turtle } from 'lucide-react';
 import { checkAnswer, checkSentence, displayDiff, type AnswerResult } from '../../core/check/text';
@@ -128,10 +130,7 @@ export function ReviewStep({ session }: { session: SessionRow }) {
 
   return (
     <section className="flex flex-1 flex-col pt-8">
-      <div className="flex items-baseline justify-between">
-        <h1 className="text-lg font-semibold">{dictation ? vi.review.dictationTitle : vi.review.title}</h1>
-        <span className="text-sm text-ink-soft">{vi.review.progress(position, total)}</span>
-      </div>
+      <StepHeader {...STEP_LOOK.review} title={dictation ? vi.review.dictationTitle : vi.review.title} right={vi.review.progress(position, total)} />
 
       {dictation ? (
         <div className="mt-6 flex flex-wrap items-center gap-2">

@@ -1,16 +1,19 @@
 import type { ReactNode } from 'react';
 import { Link, NavLink, Outlet } from 'react-router';
-import { ArrowLeft, ClipboardPaste, House, NotebookPen, Route, TrendingUp } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import { SECTION_LOOK, toneClass, type Tone } from './tones';
+import { ToneIcon } from './ui';
+import type { LucideIcon } from 'lucide-react';
 import { vi } from '../copy/vi';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
-const TABS = [
-  { to: '/', icon: House, label: vi.nav.today, end: true },
-  { to: '/path', icon: Route, label: vi.path.link },
-  { to: '/capture', icon: ClipboardPaste, label: vi.capture.link },
-  { to: '/errors', icon: NotebookPen, label: vi.errors.link },
-  { to: '/progress', icon: TrendingUp, label: vi.progress.link },
+const TABS: Array<{ to: string; icon: LucideIcon; tone: Tone; label: string; end?: boolean }> = [
+  { to: '/', ...SECTION_LOOK.today, label: vi.nav.today, end: true },
+  { to: '/path', ...SECTION_LOOK.path, label: vi.path.link },
+  { to: '/capture', ...SECTION_LOOK.capture, label: vi.capture.link },
+  { to: '/errors', ...SECTION_LOOK.errors, label: vi.errors.link },
+  { to: '/progress', ...SECTION_LOOK.progress, label: vi.progress.link },
 ];
 
 /**
@@ -26,21 +29,21 @@ export function AppShell() {
         className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur sm:inset-x-auto sm:bottom-4 sm:left-1/2 sm:w-[520px] sm:-translate-x-1/2 sm:rounded-2xl sm:border sm:pb-0 sm:shadow-lg"
       >
         <ul className="mx-auto grid h-16 max-w-[640px] grid-cols-5">
-          {TABS.map(({ to, icon: Icon, label, end }) => (
-            <li key={to}>
+          {TABS.map(({ to, icon: Icon, tone, label, end }) => (
+            <li key={to} className={toneClass(tone)}>
               <NavLink
                 to={to}
                 end={end}
                 className={({ isActive }) =>
                   cx(
                     'group flex h-full flex-col items-center justify-center gap-0.5 text-[11px] font-medium transition-colors',
-                    isActive ? 'text-primary' : 'text-ink-soft hover:text-ink',
+                    isActive ? 'text-ink' : 'text-ink-soft hover:text-ink',
                   )
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <span className={cx('flex h-7 w-12 items-center justify-center rounded-full transition-colors', isActive && 'bg-primary-tint')}>
+                    <span className={cx('flex h-7 w-12 items-center justify-center rounded-full transition-colors', isActive && 'bg-tone-tint text-tone')}>
                       <Icon size={20} strokeWidth={isActive ? 2.4 : 2} />
                     </span>
                     {label}
@@ -56,7 +59,7 @@ export function AppShell() {
 }
 
 /** The top of a screen: a title, an optional way back (sub-screens) and actions on the right. */
-export function PageHeader({ title, back, children }: { title: string; back?: { to: string; label: string }; children?: ReactNode }) {
+export function PageHeader({ title, back, look, children }: { title: string; back?: { to: string; label: string }; look?: { tone: Tone; icon: LucideIcon }; children?: ReactNode }) {
   return (
     <header className="flex min-h-10 items-center gap-2">
       {back && (
@@ -64,6 +67,7 @@ export function PageHeader({ title, back, children }: { title: string; back?: { 
           <ArrowLeft size={20} />
         </Link>
       )}
+      {look && <ToneIcon tone={look.tone} icon={look.icon} size="sm" />}
       <h1 className="flex-1 text-xl font-semibold">{title}</h1>
       {children}
     </header>

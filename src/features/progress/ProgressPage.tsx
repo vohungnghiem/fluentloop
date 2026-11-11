@@ -1,4 +1,5 @@
 import { PageHeader } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 import { useEffect, useMemo } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link } from 'react-router';
@@ -66,7 +67,7 @@ export function ProgressPage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.progress.title} />
+      <PageHeader title={vi.progress.title} look={SECTION_LOOK.progress} />
 
       <section className="grid grid-cols-2 gap-3">
         <StatTile value={view.streak.days} label={vi.progress.streak} />

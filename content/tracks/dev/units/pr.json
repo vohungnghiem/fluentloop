@@ -92,27 +92,180 @@
     }
   ],
   "chunks": [
-    { "id": "this-pr-adds", "en": "this PR adds", "vi": "PR này thêm…", "example": "This PR adds a dark mode toggle.", "exampleVi": "PR này thêm nút bật chế độ tối.", "answer": "This PR adds" },
-    { "id": "refactor", "en": "refactor", "vi": "viết lại code cho gọn/rõ (không đổi chức năng)", "forms": ["refactors"], "example": "I want to refactor this class before adding features.", "exampleVi": "Mình muốn refactor class này trước khi thêm tính năng.", "answer": "refactor" },
-    { "id": "easier-to-test", "en": "easier to test", "vi": "dễ test hơn", "example": "Small functions are easier to test.", "exampleVi": "Hàm nhỏ thì dễ test hơn.", "answer": "easier to test" },
-    { "id": "breaking-changes", "en": "breaking changes", "vi": "thay đổi làm hỏng tương thích", "example": "This version has no breaking changes.", "exampleVi": "Phiên bản này không có thay đổi làm hỏng tương thích.", "answer": "breaking changes" },
-    { "id": "review-my-pr", "en": "review my PR", "vi": "review PR của mình", "example": "Could you review my PR today?", "exampleVi": "Hôm nay bạn review PR của mình được không?", "answer": "review my PR" },
-    { "id": "when-you-get-a-chance", "en": "when you get a chance", "vi": "khi nào bạn rảnh", "example": "Please take a look when you get a chance.", "exampleVi": "Khi nào rảnh bạn xem giúp nhé.", "answer": "when you get a chance" },
-    { "id": "no-rush", "en": "no rush", "vi": "không gấp đâu", "example": "No rush, tomorrow is fine.", "exampleVi": "Không gấp đâu, mai cũng được.", "answer": "No rush" },
-    { "id": "would-be-great", "en": "it would be great to", "vi": "nếu … thì tốt quá", "forms": ["would be great to"], "example": "It would be great to finish this today.", "exampleVi": "Nếu xong việc này hôm nay thì tốt quá.", "answer": "would be great" },
-    { "id": "nit", "en": "nit", "vi": "góp ý rất nhỏ (không bắt buộc sửa)", "example": "Nit: missing space after the comma.", "exampleVi": "Góp ý nhỏ: thiếu dấu cách sau dấu phẩy.", "answer": "Nit" },
-    { "id": "a-bit-unclear", "en": "a bit unclear", "vi": "hơi khó hiểu", "example": "The function name is a bit unclear to me.", "exampleVi": "Tên hàm hơi khó hiểu với mình.", "answer": "a bit unclear" },
-    { "id": "what-do-you-think", "en": "what do you think about", "vi": "bạn thấy … thế nào", "example": "What do you think about using a map here?", "exampleVi": "Bạn thấy dùng map ở đây thế nào?", "answer": "What do you think about" },
-    { "id": "id-suggest", "en": "I'd suggest", "vi": "mình đề xuất", "example": "I'd suggest adding a comment here.", "exampleVi": "Mình đề xuất thêm một comment ở đây.", "answer": "I'd suggest" },
-    { "id": "extract-into", "en": "extract … into", "vi": "tách (code) ra thành…", "forms": ["extracting this logic into"], "example": "Let's extract this into a separate file.", "exampleVi": "Mình tách cái này ra một file riêng nhé.", "answer": "extract" },
-    { "id": "address-comments", "en": "address the comments", "vi": "sửa theo góp ý", "forms": ["addressed your comments"], "example": "I'll address the comments this afternoon.", "exampleVi": "Chiều nay mình sẽ sửa theo các góp ý.", "answer": "address the comments" },
-    { "id": "push-changes", "en": "push the changes", "vi": "đẩy thay đổi lên", "forms": ["pushed the changes"], "example": "I've pushed the changes, please take another look.", "exampleVi": "Mình đã đẩy thay đổi lên, bạn xem lại giúp nhé.", "answer": "pushed the changes" },
-    { "id": "as-is", "en": "as is", "vi": "để nguyên như vậy", "example": "Let's keep it as is for now.", "exampleVi": "Tạm thời cứ để nguyên vậy.", "answer": "as is" },
-    { "id": "out-of-scope", "en": "out of scope", "vi": "ngoài phạm vi", "example": "That change is out of scope for this sprint.", "exampleVi": "Thay đổi đó nằm ngoài phạm vi sprint này.", "answer": "out of scope" },
-    { "id": "looks-good-to-me", "en": "looks good to me", "vi": "mình thấy ổn (LGTM)", "example": "Looks good to me, feel free to merge.", "exampleVi": "Mình thấy ổn, cứ merge đi.", "answer": "Looks good to me" },
-    { "id": "minor-thing", "en": "one minor thing", "vi": "một điểm nhỏ", "example": "Just one minor thing: please update the README.", "exampleVi": "Chỉ một điểm nhỏ: cập nhật README giúp nhé.", "answer": "minor thing" },
-    { "id": "add-a-test", "en": "add a test for", "vi": "thêm test cho", "example": "Can you add a test for this edge case?", "exampleVi": "Bạn thêm test cho trường hợp biên này được không?", "answer": "add a test" },
-    { "id": "not-blocked", "en": "so you're not blocked", "vi": "để bạn không bị chặn", "forms": ["so you're not blocked"], "example": "I'll approve now so you're not blocked.", "exampleVi": "Mình duyệt luôn để bạn không bị chặn.", "answer": "not blocked" }
+    {
+      "id": "this-pr-adds",
+      "en": "this PR adds",
+      "vi": "PR này thêm…",
+      "example": "This PR adds a dark mode toggle.",
+      "exampleVi": "PR này thêm nút bật chế độ tối.",
+      "answer": "This PR adds"
+    },
+    {
+      "id": "refactor",
+      "en": "refactor",
+      "vi": "viết lại code cho gọn/rõ (không đổi chức năng)",
+      "forms": ["refactors"],
+      "example": "I want to refactor this class before adding features.",
+      "exampleVi": "Mình muốn refactor class này trước khi thêm tính năng.",
+      "answer": "refactor"
+    },
+    {
+      "id": "easier-to-test",
+      "en": "easier to test",
+      "vi": "dễ test hơn",
+      "example": "Small functions are easier to test.",
+      "exampleVi": "Hàm nhỏ thì dễ test hơn.",
+      "answer": "easier to test"
+    },
+    {
+      "id": "breaking-changes",
+      "en": "breaking changes",
+      "vi": "thay đổi làm hỏng tương thích",
+      "example": "This version has no breaking changes.",
+      "exampleVi": "Phiên bản này không có thay đổi làm hỏng tương thích.",
+      "answer": "breaking changes"
+    },
+    {
+      "id": "review-my-pr",
+      "en": "review my PR",
+      "vi": "review PR của mình",
+      "example": "Could you review my PR today?",
+      "exampleVi": "Hôm nay bạn review PR của mình được không?",
+      "answer": "review my PR"
+    },
+    {
+      "id": "when-you-get-a-chance",
+      "en": "when you get a chance",
+      "vi": "khi nào bạn rảnh",
+      "example": "Please take a look when you get a chance.",
+      "exampleVi": "Khi nào rảnh bạn xem giúp nhé.",
+      "answer": "when you get a chance"
+    },
+    {
+      "id": "no-rush",
+      "en": "no rush",
+      "vi": "không gấp đâu",
+      "example": "No rush, tomorrow is fine.",
+      "exampleVi": "Không gấp đâu, mai cũng được.",
+      "answer": "No rush"
+    },
+    {
+      "id": "would-be-great",
+      "en": "it would be great to",
+      "vi": "nếu … thì tốt quá",
+      "forms": ["would be great to"],
+      "example": "It would be great to finish this today.",
+      "exampleVi": "Nếu xong việc này hôm nay thì tốt quá.",
+      "answer": "would be great"
+    },
+    {
+      "id": "nit",
+      "en": "nit",
+      "vi": "góp ý rất nhỏ (không bắt buộc sửa)",
+      "example": "Nit: missing space after the comma.",
+      "exampleVi": "Góp ý nhỏ: thiếu dấu cách sau dấu phẩy.",
+      "answer": "Nit"
+    },
+    {
+      "id": "a-bit-unclear",
+      "en": "a bit unclear",
+      "vi": "hơi khó hiểu",
+      "example": "The function name is a bit unclear to me.",
+      "exampleVi": "Tên hàm hơi khó hiểu với mình.",
+      "answer": "a bit unclear"
+    },
+    {
+      "id": "what-do-you-think",
+      "en": "what do you think about",
+      "vi": "bạn thấy … thế nào",
+      "example": "What do you think about using a map here?",
+      "exampleVi": "Bạn thấy dùng map ở đây thế nào?",
+      "answer": "What do you think about"
+    },
+    {
+      "id": "id-suggest",
+      "en": "I'd suggest",
+      "vi": "mình đề xuất",
+      "example": "I'd suggest adding a comment here.",
+      "exampleVi": "Mình đề xuất thêm một comment ở đây.",
+      "answer": "I'd suggest"
+    },
+    {
+      "id": "extract-into",
+      "en": "extract … into",
+      "vi": "tách (code) ra thành…",
+      "forms": ["extracting this logic into"],
+      "example": "Let's extract this into a separate file.",
+      "exampleVi": "Mình tách cái này ra một file riêng nhé.",
+      "answer": "extract"
+    },
+    {
+      "id": "address-comments",
+      "en": "address the comments",
+      "vi": "sửa theo góp ý",
+      "forms": ["addressed your comments"],
+      "example": "I'll address the comments this afternoon.",
+      "exampleVi": "Chiều nay mình sẽ sửa theo các góp ý.",
+      "answer": "address the comments"
+    },
+    {
+      "id": "push-changes",
+      "en": "push the changes",
+      "vi": "đẩy thay đổi lên",
+      "forms": ["pushed the changes"],
+      "example": "I've pushed the changes, please take another look.",
+      "exampleVi": "Mình đã đẩy thay đổi lên, bạn xem lại giúp nhé.",
+      "answer": "pushed the changes"
+    },
+    {
+      "id": "as-is",
+      "en": "as is",
+      "vi": "để nguyên như vậy",
+      "example": "Let's keep it as is for now.",
+      "exampleVi": "Tạm thời cứ để nguyên vậy.",
+      "answer": "as is"
+    },
+    {
+      "id": "out-of-scope",
+      "en": "out of scope",
+      "vi": "ngoài phạm vi",
+      "example": "That change is out of scope for this sprint.",
+      "exampleVi": "Thay đổi đó nằm ngoài phạm vi sprint này.",
+      "answer": "out of scope"
+    },
+    {
+      "id": "looks-good-to-me",
+      "en": "looks good to me",
+      "vi": "mình thấy ổn (LGTM)",
+      "example": "Looks good to me, feel free to merge.",
+      "exampleVi": "Mình thấy ổn, cứ merge đi.",
+      "answer": "Looks good to me"
+    },
+    {
+      "id": "minor-thing",
+      "en": "one minor thing",
+      "vi": "một điểm nhỏ",
+      "example": "Just one minor thing: please update the README.",
+      "exampleVi": "Chỉ một điểm nhỏ: cập nhật README giúp nhé.",
+      "answer": "minor thing"
+    },
+    {
+      "id": "add-a-test",
+      "en": "add a test for",
+      "vi": "thêm test cho",
+      "example": "Can you add a test for this edge case?",
+      "exampleVi": "Bạn thêm test cho trường hợp biên này được không?",
+      "answer": "add a test"
+    },
+    {
+      "id": "not-blocked",
+      "en": "so you're not blocked",
+      "vi": "để bạn không bị chặn",
+      "forms": ["so you're not blocked"],
+      "example": "I'll approve now so you're not blocked.",
+      "exampleVi": "Mình duyệt luôn để bạn không bị chặn.",
+      "answer": "not blocked"
+    }
   ],
   "tasks": [
     {
@@ -120,70 +273,177 @@
       "promptVi": "Viết mô tả ngắn cho một pull request bạn từng làm (hoặc tưởng tượng).",
       "situation": "GitHub, new pull request.",
       "required": [
-        { "label": "this PR", "variants": ["this pr", "this pull request"] },
-        { "label": "breaking changes", "variants": ["breaking change", "breaking changes"] }
+        {
+          "label": "this PR",
+          "variants": ["this pr", "this pull request"]
+        },
+        {
+          "label": "breaking changes",
+          "variants": ["breaking change", "breaking changes"]
+        }
       ],
       "models": [
         "This PR adds a search box to the orders page. It also refactors the filter logic. No breaking changes.",
         "This PR fixes the date format in emails and adds unit tests for it. There are no breaking changes."
       ],
-      "tipVi": "Câu đầu nói PR làm gì; dùng thì hiện tại: adds, fixes, refactors."
+      "tipVi": "Câu đầu nói PR làm gì; dùng thì hiện tại: adds, fixes, refactors.",
+      "points": [
+        {
+          "vi": "PR làm gì",
+          "variants": ["this pr", "adds", "fixes"]
+        },
+        {
+          "vi": "Có thay đổi phá vỡ không",
+          "variants": ["breaking"]
+        }
+      ],
+      "hints": [
+        "PR này thêm hoặc sửa cái gì? Có ảnh hưởng tới phần khác không?",
+        "This PR adds … No breaking changes."
+      ]
     },
     {
       "id": "task-ask-review",
       "promptVi": "Nhắn đồng nghiệp nhờ review PR của bạn, lịch sự và không tạo áp lực.",
       "situation": "Slack, direct message.",
       "required": [
-        { "label": "when you get a chance", "variants": ["when you get a chance", "when you have a chance", "when you have time"] },
-        { "label": "no rush", "variants": ["no rush"] }
+        {
+          "label": "when you get a chance",
+          "variants": ["when you get a chance", "when you have a chance", "when you have time"]
+        },
+        {
+          "label": "no rush",
+          "variants": ["no rush"]
+        }
       ],
       "models": [
         "Hi Minh, could you review my PR when you get a chance? No rush, it's a small fix.",
         "Hey Lan, when you get a chance, could you take a look at PR 52? No rush, but it would be great to merge it this week."
       ],
-      "tipVi": "“No rush” đứng riêng hoặc đầu câu, sau đó là dấu phẩy."
+      "tipVi": "“No rush” đứng riêng hoặc đầu câu, sau đó là dấu phẩy.",
+      "points": [
+        {
+          "vi": "Nhờ review PR",
+          "variants": ["review"]
+        },
+        {
+          "vi": "Không tạo áp lực",
+          "variants": ["no rush", "when you get a chance", "whenever"]
+        }
+      ],
+      "hints": [
+        "Bạn nhờ ai xem PR nào? Nói sao để họ thấy không gấp?",
+        "Hi …, could you review my PR when you get a chance? …"
+      ]
     },
     {
       "id": "task-review-comment",
       "promptVi": "Viết một góp ý review lịch sự: chỉ ra chỗ chưa rõ và đề xuất cách sửa.",
       "situation": "Code review comment.",
       "required": [
-        { "label": "I'd suggest", "variants": ["i'd suggest", "i would suggest", "i suggest"] },
-        { "label": "what do you think", "variants": ["what do you think"] }
+        {
+          "label": "I'd suggest",
+          "variants": ["i'd suggest", "i would suggest", "i suggest"]
+        },
+        {
+          "label": "what do you think",
+          "variants": ["what do you think"]
+        }
       ],
       "models": [
         "This function is a bit long. I'd suggest splitting it into two. What do you think?",
         "Nit: the name data is a bit unclear. What do you think about userList? I'd suggest renaming it."
       ],
-      "tipVi": "“I'd suggest + V-ing”: I'd suggest renaming…"
+      "tipVi": "“I'd suggest + V-ing”: I'd suggest renaming…",
+      "points": [
+        {
+          "vi": "Chỉ ra chỗ chưa rõ"
+        },
+        {
+          "vi": "Đề xuất cách sửa",
+          "variants": ["suggest", "maybe", "could we"]
+        },
+        {
+          "vi": "Hỏi ý kiến",
+          "variants": ["what do you think", "thoughts"]
+        }
+      ],
+      "hints": [
+        "Đoạn code nào làm bạn khó hiểu? Bạn sẽ sửa thế nào? Hỏi lại họ ra sao cho nhẹ nhàng?",
+        "This … is a bit … I'd suggest … What do you think?"
+      ]
     },
     {
       "id": "task-reply-review",
       "promptVi": "Trả lời người review: cảm ơn, nói bạn đã sửa gì, và giải thích một chỗ bạn để nguyên.",
       "situation": "Reply on a pull request.",
       "required": [
-        { "label": "addressed", "variants": ["addressed", "address"] },
-        { "label": "out of scope", "variants": ["out of scope"] }
+        {
+          "label": "addressed",
+          "variants": ["addressed", "address"]
+        },
+        {
+          "label": "out of scope",
+          "variants": ["out of scope"]
+        }
       ],
       "models": [
         "Thanks for the review! I've addressed your comments. The logging change is out of scope, so I'll do it in another PR.",
         "Thanks! I addressed most comments and pushed the changes. I kept the old API as is because it's out of scope here."
       ],
-      "tipVi": "“Thanks for the review!” mở đầu rất tự nhiên."
+      "tipVi": "“Thanks for the review!” mở đầu rất tự nhiên.",
+      "points": [
+        {
+          "vi": "Cảm ơn",
+          "variants": ["thanks", "thank you"]
+        },
+        {
+          "vi": "Đã sửa gì",
+          "variants": ["addressed", "fixed", "updated"]
+        },
+        {
+          "vi": "Giải thích chỗ để nguyên",
+          "variants": ["out of scope", "because", "another pr"]
+        }
+      ],
+      "hints": [
+        "Bạn đã sửa theo góp ý nào? Chỗ nào bạn để lại, vì sao?",
+        "Thanks for the review! I've addressed … The … is out of scope, so …"
+      ]
     },
     {
       "id": "task-approve",
       "promptVi": "Duyệt PR của đồng nghiệp nhưng nhờ thêm một sửa nhỏ.",
       "situation": "Code review, approving.",
       "required": [
-        { "label": "looks good", "variants": ["looks good", "lgtm"] },
-        { "label": "minor", "variants": ["minor"] }
+        {
+          "label": "looks good",
+          "variants": ["looks good", "lgtm"]
+        },
+        {
+          "label": "minor",
+          "variants": ["minor"]
+        }
       ],
       "models": [
         "Looks good to me! One minor thing: please fix the typo in the README.",
         "LGTM. Just a minor thing: can you add a test for the empty list? Approving so you're not blocked."
       ],
-      "tipVi": "Khen trước, góp ý nhỏ sau."
+      "tipVi": "Khen trước, góp ý nhỏ sau.",
+      "points": [
+        {
+          "vi": "Đồng ý duyệt",
+          "variants": ["looks good", "lgtm", "approve"]
+        },
+        {
+          "vi": "Nhờ một sửa nhỏ",
+          "variants": ["minor", "small", "please"]
+        }
+      ],
+      "hints": [
+        "Bạn thấy PR ổn chứ? Còn chỗ nhỏ nào cần sửa?",
+        "Looks good to me! One minor thing: …"
+      ]
     }
   ],
   "scenarios": [
@@ -196,19 +456,57 @@
       "persona": "You are Minh, a calm senior tech lead reviewing the learner's pull request. You care about readability and tests. Ask about one design choice, suggest one change, and accept reasonable answers.",
       "goal": "The learner thanks the reviewer, explains one design decision, and agrees on a concrete change.",
       "script": [
-        { "id": "start", "say": "Hey, I left a few comments on your PR. Why did you put all the logic in one function?", "sayVi": "Này, anh để vài góp ý trên PR của em. Sao em để hết logic trong một hàm vậy?", "replies": [
-          { "text": "Thanks for the review! I wanted to keep the change small for now.", "next": "suggest" },
-          { "text": "Good point. I wasn't sure where to put it.", "next": "suggest" }
-        ] },
-        { "id": "suggest", "say": "Makes sense. I'd suggest extracting the validation into a helper. What do you think?", "sayVi": "Hợp lý. Anh đề xuất tách phần validate ra một hàm helper. Em thấy sao?", "replies": [
-          { "text": "Sounds good. I'll extract it and add a test.", "next": "test" },
-          { "text": "I agree, but can I do it in another PR? It's a bit out of scope.", "next": "test" }
-        ] },
-        { "id": "test", "say": "Sure. Can you also add a test for the empty input?", "sayVi": "Được. Em thêm test cho trường hợp input rỗng nữa nhé?", "replies": [
-          { "text": "Yes, I'll push the changes this afternoon.", "next": "end" },
-          { "text": "No problem. I'll let you know when it's ready.", "next": "end" }
-        ] },
-        { "id": "end", "say": "Great. Ping me when it's ready and I'll approve it.", "sayVi": "Tốt. Xong thì báo anh, anh duyệt cho.", "replies": [] }
+        {
+          "id": "start",
+          "say": "Hey, I left a few comments on your PR. Why did you put all the logic in one function?",
+          "sayVi": "Này, anh để vài góp ý trên PR của em. Sao em để hết logic trong một hàm vậy?",
+          "replies": [
+            {
+              "text": "Thanks for the review! I wanted to keep the change small for now.",
+              "next": "suggest"
+            },
+            {
+              "text": "Good point. I wasn't sure where to put it.",
+              "next": "suggest"
+            }
+          ]
+        },
+        {
+          "id": "suggest",
+          "say": "Makes sense. I'd suggest extracting the validation into a helper. What do you think?",
+          "sayVi": "Hợp lý. Anh đề xuất tách phần validate ra một hàm helper. Em thấy sao?",
+          "replies": [
+            {
+              "text": "Sounds good. I'll extract it and add a test.",
+              "next": "test"
+            },
+            {
+              "text": "I agree, but can I do it in another PR? It's a bit out of scope.",
+              "next": "test"
+            }
+          ]
+        },
+        {
+          "id": "test",
+          "say": "Sure. Can you also add a test for the empty input?",
+          "sayVi": "Được. Em thêm test cho trường hợp input rỗng nữa nhé?",
+          "replies": [
+            {
+              "text": "Yes, I'll push the changes this afternoon.",
+              "next": "end"
+            },
+            {
+              "text": "No problem. I'll let you know when it's ready.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great. Ping me when it's ready and I'll approve it.",
+          "sayVi": "Tốt. Xong thì báo anh, anh duyệt cho.",
+          "replies": []
+        }
       ]
     }
   ]

@@ -52,6 +52,8 @@ describe('containsPhrase / checkTask', () => {
         { label: 'waiting on', variants: ['waiting on', 'waiting for'] },
       ],
       models: ['I am blocked by the API team.', 'I am waiting on access.'],
+      points: [],
+      hints: [],
     };
     const result = checkTask(task, "I'm waiting for access to staging.");
     expect(result.required).toEqual([

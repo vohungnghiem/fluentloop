@@ -1,4 +1,6 @@
+import { AiBadge } from '../../ui/AiBadge';
 import { PageHeader } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 import { Link } from 'react-router';
 import { MessagesSquare } from 'lucide-react';
 import { vi } from '../../copy/vi';
@@ -11,7 +13,7 @@ export function RoleplayListPage() {
   const settings = useSettings();
   return (
     <main className="page">
-      <PageHeader title={vi.roleplay.title} back={{ to: '/path', label: vi.lesson.back }} />
+      <PageHeader title={vi.roleplay.title} look={SECTION_LOOK.roleplay} back={{ to: '/path', label: vi.lesson.back }}><AiBadge /></PageHeader>
       <p className="text-ink-soft">{vi.roleplay.intro}</p>
       <Note tone="plain">{aiReady(settings) ? vi.roleplay.withAi : vi.roleplay.withoutAi}</Note>
       {courseUnits.flatMap((unit) =>

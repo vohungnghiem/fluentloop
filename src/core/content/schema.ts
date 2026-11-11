@@ -33,6 +33,13 @@ export const requiredChunkSchema = z.object({
 });
 export type RequiredChunk = z.infer<typeof requiredChunkSchema>;
 
+/** One idea the answer must contain. `variants` let rules spot it; without them only AI can judge it. */
+export const taskPointSchema = z.object({
+  vi: z.string().min(1),
+  variants: z.array(z.string().min(1)).default([]),
+});
+export type TaskPoint = z.infer<typeof taskPointSchema>;
+
 export const taskSchema = z.object({
   id,
   promptVi: z.string().min(1),
@@ -42,6 +49,10 @@ export const taskSchema = z.object({
   /** Natural answers to compare with. The first is shown first. */
   models: z.array(z.string().min(1)).min(1),
   tipVi: z.string().optional(),
+  /** The ideas a complete answer has: "đủ ý" is checked against them. */
+  points: z.array(taskPointSchema).default([]),
+  /** Hints when stuck: [a guiding question in Vietnamese, the start of a sentence]. Level 3 is a model. */
+  hints: z.array(z.string().min(1)).max(2).default([]),
 });
 export type Task = z.infer<typeof taskSchema>;
 

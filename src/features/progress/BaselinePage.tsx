@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useDraftText } from '../../ui/useDraft';
 import { useNavigate } from 'react-router';
 import { CircleCheck, Mic, Square } from 'lucide-react';
 import { dayKey } from '../../core/date';
@@ -9,6 +10,7 @@ import { currentTrack } from '../../services/content';
 import { startRecording, type RecordError, type Recording } from '../../services/speech/record';
 import { Button, Card, Note, PrimaryAction } from '../../ui/ui';
 import { PageHeader } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 import { AudioPlayer } from './ProgressPage';
 
 const MAX_SECONDS = 120;
@@ -16,7 +18,7 @@ const MAX_SECONDS = 120;
 /** The benchmark: a short text and a minute of speech, both optional, kept on this device. */
 export function BaselinePage() {
   const navigate = useNavigate();
-  const [text, setText] = useState('');
+  const [text, setText] = useDraftText('baseline');
   const [savedText, setSavedText] = useState(false);
   const [recording, setRecording] = useState<Recording>();
   const [seconds, setSeconds] = useState(0);
@@ -59,7 +61,7 @@ export function BaselinePage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col space-y-5 px-4 pt-6">
-      <PageHeader title={vi.baseline.title} back={{ to: '/progress', label: vi.progress.title }} />
+      <PageHeader title={vi.baseline.title} look={SECTION_LOOK.progress} back={{ to: '/progress', label: vi.progress.title }} />
       <p className="text-ink-soft">{vi.baseline.intro}</p>
 
       <Card>

@@ -1,5 +1,8 @@
+import { AiBadge } from '../../ui/AiBadge';
 import { PageHeader } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useDraftText } from '../../ui/useDraft';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { Check, CircleCheck, PenLine, Sparkles } from 'lucide-react';
@@ -49,7 +52,7 @@ export function CapturePage() {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const settings = useSettings();
-  const [text, setText] = useState(params.get('text') ?? '');
+  const [text, setText] = useDraftText('capture', params.get('text') ?? '');
   const [source, setSource] = useState(params.get('src') ?? '');
   const [sentences, setSentences] = useState<string[]>();
   const [picks, setPicks] = useState<Pick[]>([]);
@@ -139,7 +142,7 @@ export function CapturePage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.capture.title} />
+      <PageHeader title={vi.capture.title} look={SECTION_LOOK.capture}><AiBadge /></PageHeader>
 
       {saved ? (
         <section className="mt-6 space-y-4">

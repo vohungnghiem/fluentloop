@@ -1,4 +1,5 @@
 import { PageHeader } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router';
 import { TrendingDown, Repeat, Dumbbell } from 'lucide-react';
@@ -37,7 +38,7 @@ export function ErrorsPage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.errors.title} />
+      <PageHeader title={vi.errors.title} look={SECTION_LOOK.errors} />
 
       {groups.length === 0 ? (
         <Card className="flex flex-col items-center py-10 text-center">

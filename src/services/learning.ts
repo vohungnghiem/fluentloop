@@ -101,11 +101,24 @@ export async function nextStep(sessionId: string, now: Date, skipped?: StepKind)
     const session = await db.sessions.get(sessionId);
     if (!session) return;
     const stats = skipped ? { ...session.stats, skipped: [...session.stats.skipped, skipped] } : session.stats;
+    const stepIndex = Math.min(session.stepIndex + 1, session.plan.steps.length - 1);
     await db.sessions.update(sessionId, {
-      stepIndex: Math.min(session.stepIndex + 1, session.plan.steps.length - 1),
+      stepIndex,
+      reachedIndex: Math.max(reachedStep(session), stepIndex),
       stats,
       updatedAt: now.toISOString(),
     });
+  });
+}
+
+export const reachedStep = (session: SessionRow) => Math.max(session.reachedIndex ?? 0, session.stepIndex);
+
+/** Back to a step already reached (to read again, redo), or forward again up to the furthest one. */
+export async function goToStep(sessionId: string, index: number, now: Date) {
+  await db.transaction('rw', db.sessions, async () => {
+    const session = await db.sessions.get(sessionId);
+    if (!session || index < 0 || index > reachedStep(session) || index === session.stepIndex) return;
+    await db.sessions.update(sessionId, { stepIndex: index, reachedIndex: reachedStep(session), updatedAt: now.toISOString() });
   });
 }
 

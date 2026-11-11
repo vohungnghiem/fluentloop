@@ -9,6 +9,7 @@ import { nextSuggestions } from '../../services/learning';
 import { currentTrack } from '../../services/content';
 import { Card, Chip, Note } from '../../ui/ui';
 import { Meter, PageHeader, PageSkeleton } from '../../ui/shell';
+import { SECTION_LOOK } from '../../ui/tones';
 
 /** The whole course: where the learner is, what comes next, and every lesson to open again. */
 export function PathPage() {
@@ -18,7 +19,7 @@ export function PathPage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.path.title}>
+      <PageHeader title={vi.path.title} look={SECTION_LOOK.path}>
         <Chip tone="track">{currentTrack.titleVi}</Chip>
       </PageHeader>
       <div>

@@ -3,6 +3,8 @@ import { ArrowRight, Layers, ClipboardPaste, Flag, MessagesSquare, PenLine, Play
 import type { Suggestion } from '../../core/next/suggest';
 import { ERROR_LABELS, type ErrorLabel } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
+import type { Tone } from '../../ui/tones';
+import { ToneIcon } from '../../ui/ui';
 
 /** Where a suggestion leads. */
 export function suggestionPath(s: Suggestion): string {
@@ -57,6 +59,11 @@ const ICONS = {
   capture: ClipboardPaste,
 } as const;
 
+/** Each kind in the tone of where it leads. */
+const TONES: Record<Suggestion['kind'], Tone> = {
+  resume: 'produce', session: 'produce', more: 'input', drill: 'fix', roleplay: 'review', captureTask: 'shadow', baseline: 'wrap', review: 'review', capture: 'shadow',
+};
+
 /** The extra suggestions under the main one: one tap each, never more than two. */
 export function MoreSuggestions({ items, onPick }: { items: Suggestion[]; onPick?: (to: string) => void }) {
   if (items.length === 0) return null;
@@ -78,9 +85,7 @@ export function MoreSuggestions({ items, onPick }: { items: Suggestion[]; onPick
                 onClick={onPick ? (e) => (e.preventDefault(), onPick(to)) : undefined}
                 className="group flex items-center gap-3 rounded-2xl border border-line bg-surface p-3 transition-colors hover:border-primary"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-tint text-track">
-                  <Icon size={20} />
-                </span>
+                <ToneIcon tone={TONES[s.kind]} icon={Icon} />
                 <span className="min-w-0 flex-1">
                   <span className="block font-medium">{text.title}</span>
                   <span className="block text-sm text-ink-soft">{text.body}</span>

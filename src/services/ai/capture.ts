@@ -12,8 +12,10 @@ For each given sentence, return its Vietnamese meaning and the most useful reusa
 Also make ONE short writing task in Vietnamese that makes them reuse 2 of those chunks in a similar real situation, with 2 natural model answers (1-3 sentences each).
 Return ONLY JSON:
 {"items":[{"sentence":string,"vi":string,"chunk":string,"chunkVi":string}],
- "task":{"promptVi":string,"situation":string,"required":[{"label":string,"variants":[string]}],"models":[string,string]}}
-"variants" are accepted forms of the chunk (e.g. "roll out","rolled out","rolling out").`;
+ "task":{"promptVi":string,"situation":string,"required":[{"label":string,"variants":[string]}],"models":[string,string],
+  "points":[{"vi":string}],"hints":[string,string]}}
+"variants" are accepted forms of the chunk (e.g. "roll out","rolled out","rolling out").
+"points": the 2-3 ideas a complete answer has, in short Vietnamese. "hints": [a guiding question in Vietnamese, the first English words of an answer ending with "…"].`;
 
 const itemSchema = z.object({ sentence: z.string(), vi: z.string(), chunk: z.string(), chunkVi: z.string() });
 const resultSchema = z.object({
@@ -41,7 +43,7 @@ export async function helpWithCapture(sentences: string[], now: Date, settings: 
   const outcome = await askCached({
     settings,
     now,
-    version: 'capture-1',
+    version: 'capture-2',
     system: system(),
     user: sentences.map((s, i) => `${i + 1}. ${s}`).join('\n'),
     schema: resultSchema,

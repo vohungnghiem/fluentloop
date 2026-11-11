@@ -1,3 +1,5 @@
+import { StepHeader } from '../../ui/ui';
+import { STEP_LOOK } from '../../ui/tones';
 import { useMemo, useState } from 'react';
 import { CircleCheck } from 'lucide-react';
 import { matchSpoken, type ShadowResult } from '../../core/check/shadow';
@@ -54,11 +56,7 @@ export function ShadowStep({ session }: { session: SessionRow }) {
 
   return (
     <section className="flex flex-1 flex-col pt-8">
-      <div className="flex items-baseline justify-between">
-        <h1 className="text-lg font-semibold">{vi.shadow.title}</h1>
-        <span className="text-sm text-ink-soft">{vi.shadow.progress(index + 1, lines.length)}</span>
-      </div>
-      <p className="mt-1 text-sm text-ink-soft">{vi.shadow.instruction}</p>
+      <StepHeader {...STEP_LOOK.shadow} title={vi.shadow.title} detail={vi.shadow.instruction} right={vi.shadow.progress(index + 1, lines.length)} />
 
       <p className="mt-6 text-[22px] leading-relaxed font-medium" lang="en">
         {result

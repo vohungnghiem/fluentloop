@@ -24,6 +24,8 @@ const sentencesOf = (text: string) => text.match(/[^.!?]+[.!?]*/g)?.map((s) => s
 export function ruleMistakes(text: string): Mistake[] {
   const found: Mistake[] = [];
   for (const sentence of sentencesOf(text)) {
+    const capitals = capitalMistake(sentence);
+    if (capitals) found.push(capitals);
     // "Yesterday I work on…" → worked
     if (PAST_MARKERS.test(sentence)) {
       const match = sentence.match(/\b(I|we|they|you|he|she|it)\s+([a-z]+)\b/i);
@@ -68,10 +70,30 @@ export function ruleMistakes(text: string): Mistake[] {
   return found;
 }
 
+/** "yesterday i worked" → "Yesterday I worked": the smallest run of words that changes. */
+function capitalMistake(sentence: string): Mistake | undefined {
+  const fixed = sentence.replace(/^[a-z]/, (c) => c.toUpperCase()).replace(/\bi\b(?=$|[\s'’,.!?])/g, 'I');
+  if (fixed === sentence) return undefined;
+  const a = sentence.split(' ');
+  const b = fixed.split(' ');
+  const changed = a.flatMap((word, i) => (word !== b[i] ? [i] : []));
+  const from = changed[0];
+  // Two words of context at least, so the piece can be found again in the text.
+  const to = Math.max(changed.at(-1)!, Math.min(from + 1, a.length - 1));
+  return {
+    wrong: a.slice(from, to + 1).join(' '),
+    right: b.slice(from, to + 1).join(' '),
+    label: 'punctuation',
+    vi: 'Đầu câu viết hoa, và “I” (tôi) luôn viết hoa.',
+  };
+}
+
 /** Apply rule fixes to the text (first occurrence of each, whole words, case kept for the rest). */
 export function applyMistakes(text: string, mistakes: readonly Mistake[]): string {
   return mistakes.reduce((result, m) => {
     const escaped = m.wrong.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return result.replace(new RegExp(`\\b${escaped}\\b`, 'i'), m.right);
+    // Exact case first: a capitals fix must not land on a piece that is already right.
+    const exact = new RegExp(`\\b${escaped}(?=\\W|$)`);
+    return exact.test(result) ? result.replace(exact, m.right) : result.replace(new RegExp(`\\b${escaped}(?=\\W|$)`, 'i'), m.right);
   }, text);
 }

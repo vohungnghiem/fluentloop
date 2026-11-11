@@ -1,3 +1,5 @@
+import { StepHeader } from '../../ui/ui';
+import { SECTION_LOOK } from '../../ui/tones';
 import { useRef, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { CircleCheck, Lightbulb, RotateCcw } from 'lucide-react';
@@ -48,11 +50,7 @@ export function FixReview({
 
   return (
     <section className="flex flex-1 flex-col pt-8">
-      <div className="flex items-baseline justify-between">
-        <h1 className="text-lg font-semibold">{vi.fix.title}</h1>
-        <span className="text-sm text-ink-soft">{vi.review.progress(position, total)}</span>
-      </div>
-      <p className="mt-1 text-sm text-ink-soft">{vi.fix.instruction}</p>
+      <StepHeader tone="fix" icon={SECTION_LOOK.fix.icon} title={vi.fix.title} detail={vi.fix.instruction} right={vi.review.progress(position, total)} />
       <p className="mt-5 rounded-xl bg-accent-tint px-4 py-3 text-[21px] leading-relaxed" lang="en">{card.wrongSentence}</p>
       {mistakes.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-2">
