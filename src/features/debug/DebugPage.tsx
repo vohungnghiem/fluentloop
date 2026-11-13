@@ -11,6 +11,8 @@ import { abandonSession } from '../../services/learning';
 import { RotateCcw, Square, Trash2, Clock } from 'lucide-react';
 import { saveSettings, useSettings } from '../../services/settings';
 import { db } from '../../services/db';
+import { fakeMode, forgetToken, setFakeMode } from '../../services/sync/auth';
+import { stopSync, syncNow, useSync } from '../../services/sync/sync';
 import { micSimulation, setMicSimulation, type MicSimulation } from '../../services/speech/stt';
 
 const MIC_MODES: Array<[MicSimulation, string]> = [
@@ -34,6 +36,8 @@ export function DebugPage() {
   const [busy, setBusy] = useState('');
   const [mic, setMic] = useState(micSimulation());
   const settings = useSettings();
+  const sync = useSync();
+  const [fake, setFake] = useState(fakeMode());
   // `offset` in deps: moving the clock must recompute what is due.
   const data = useLiveQuery(() => snapshot(), [offset]);
   const at = now();
@@ -117,6 +121,20 @@ export function DebugPage() {
               {label}
             </Button>
           ))}
+        </div>
+      </Card>
+
+      <Card>
+        <h2 className="font-semibold">Đồng bộ (Drive giả)</h2>
+        <p className="mt-1 text-sm text-ink-soft">
+          Đăng nhập không qua Google, "Drive" nằm trong localStorage của trình duyệt này. Thử như máy mới: xoá dữ liệu máy này rồi tải lại, bài học sẽ được kéo về từ Drive giả.
+          Đang: <b>{fake ? 'Drive giả' : 'Google thật'}</b>, {sync.on ? `bật, ${sync.status}` : 'tắt'}.
+        </p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Button variant={fake ? 'primary' : 'secondary'} onClick={() => { stopSync(); setFakeMode(!fake); setFake(!fake); }}>{fake ? 'Tắt Drive giả' : 'Bật Drive giả'}</Button>
+          <Button disabled={!sync.on} onClick={() => { forgetToken(); void syncNow(); }}>Hết hạn đăng nhập</Button>
+          <Button disabled={!sync.on} onClick={run('xoá máy này, giữ Drive', async () => { await wipeAll(); location.reload(); })}>Xoá dữ liệu máy này, giữ Drive</Button>
+          <Button disabled={!fake} onClick={() => { localStorage.removeItem('fluentloop.fakeDrive'); }}>Xoá Drive giả</Button>
         </div>
       </Card>
 

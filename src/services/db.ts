@@ -158,11 +158,13 @@ export interface AiUsageRow {
   count: number;
 }
 
-/** What the learner is typing, saved as they type so leaving or reloading loses nothing. Not backed up. */
+/** What the learner is typing, saved as they type so leaving or reloading loses nothing. Synced, not backed up. */
 export interface DraftRow {
   /** Where it was typed: `write:<session or source>:<task>`, `capture`, `roleplay:<id>`… */
   key: string;
   value: unknown;
+  /** Cleared: kept as a marker for a while so the other devices clear it too. */
+  deleted?: boolean;
   updatedAt: string;
 }
 

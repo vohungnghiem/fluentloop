@@ -126,7 +126,7 @@ Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền
 4. **Đi lại nhanh:** thanh bước, breadcrumb, nút quay lại đều bấm được.
 5. **Ngày làm xong được**, chuỗi ngày có ngày nghỉ.
 6. **Có sức sống:** mỗi bước một màu nhận diện. Có phản hồi khi hoàn thành (hiệu ứng nhẹ, tắt được). Xem [THIET-KE.md](THIET-KE.md).
-7. **Dữ liệu là của người học:** lưu trong máy, tự lưu liên tục, xem lại được, xuất/nhập được.
+7. **Dữ liệu là của người học:** lưu trong máy, tự lưu liên tục, xem lại được, xuất/nhập được. Học trên nhiều máy thì đồng bộ qua gist bí mật trên GitHub (hoặc Google Drive) của chính người học, không qua server của app.
 8. Giao diện tiếng Việt, nội dung tiếng Anh. Chữ giao diện gom ở `src/copy/vi.ts`.
 
 ---
@@ -156,7 +156,7 @@ Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền
 
 | Rủi ro | Giảm thiểu |
 |---|---|
-| Mất dữ liệu | Tự lưu nháp, xuất/nhập, `navigator.storage.persist()`, nhắc sao lưu |
+| Mất dữ liệu | Tự lưu nháp, đồng bộ nhiều máy, xuất/nhập (gộp, không ghi đè), `navigator.storage.persist()`, nhắc sao lưu khi chưa bật đồng bộ |
 | AI khen suông | Prompt chấm theo yêu cầu bài, gộp với luật, luôn có phần "nâng cấp" |
 | Hết lượt AI | Luật + gợi ý viết sẵn, lưu đệm |
 | Web Speech không ổn định | Gõ phím luôn dùng được |

@@ -79,6 +79,16 @@ export function WritingTask({
     setSelfCheck(saved.selfCheck);
   }, [draft.ready, draft.saved]);
   useEffect(() => {
+    // Newer work on this task from another device: show that instead.
+    const saved = draft.saved;
+    if (draft.remote === 0 || !saved) return;
+    setText(saved.text);
+    setHints(saved.hints);
+    setHistory(saved.history.map(restore));
+    setCurrent(saved.current ? restore(saved.current) : undefined);
+    setSelfCheck(saved.selfCheck);
+  }, [draft.remote]);
+  useEffect(() => {
     if (!restored.current) return;
     const checkedNow = current && current !== 'loading' ? store(current) : undefined;
     const empty = text === '' && hints.length === 0 && history.length === 0 && !checkedNow;

@@ -4,6 +4,7 @@ import { vi } from '../../copy/vi';
 import { downloadBackup, lastExport, readBackup, shareBackup, shareSupported } from '../../services/backup';
 import { now } from '../../services/clock';
 import { Button, Card, Note } from '../../ui/ui';
+import { useSync } from '../../services/sync/sync';
 
 const fmt = (iso: string) => new Date(iso).toLocaleDateString('vi-VN');
 
@@ -14,6 +15,7 @@ export function BackupCard() {
   const [dragging, setDragging] = useState(false);
   const file = useRef<HTMLInputElement>(null);
   const canShare = shareSupported();
+  const sync = useSync();
 
   const onFile = async (picked: File | undefined) => {
     if (!picked) return;
@@ -47,13 +49,13 @@ export function BackupCard() {
         }}
         className=""
       >
-        <p className="text-sm text-ink-soft">{vi.backup.body}</p>
+        <p className="text-sm text-ink-soft">{sync.on ? vi.backup.bodySynced : vi.backup.body}</p>
         <p className="mt-2 text-sm">{last ? vi.backup.last(fmt(last)) : vi.backup.never}</p>
 
         <h3 className="mt-5 text-sm font-semibold">{vi.backup.sendTitle}</h3>
         <div className="mt-2 grid gap-2 sm:grid-cols-2">
-          {canShare && <Button variant="primary" className="w-full" onClick={() => void onShare()}><Share2 size={16} />{vi.backup.share}</Button>}
-          <Button variant={canShare ? 'secondary' : 'primary'} className="w-full" onClick={() => void downloadBackup(now()).then(() => setLast(lastExport()))}><Download size={16} />{vi.backup.export}</Button>
+          {canShare && <Button variant={sync.on ? 'secondary' : 'primary'} className="w-full" onClick={() => void onShare()}><Share2 size={16} />{vi.backup.share}</Button>}
+          <Button variant={canShare || sync.on ? 'secondary' : 'primary'} className="w-full" onClick={() => void downloadBackup(now()).then(() => setLast(lastExport()))}><Download size={16} />{vi.backup.export}</Button>
         </div>
         <p className="mt-2 text-sm text-ink-soft">{canShare ? vi.backup.sendHintShare : vi.backup.sendHintFile}</p>
 

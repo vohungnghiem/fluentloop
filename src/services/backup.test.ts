@@ -29,6 +29,22 @@ describe('backup', () => {
     expect((await db.cards.get('chunk:worked-on'))?.fsrs.due).toBeTruthy();
   });
 
+  it('import merges: what this device learnt since the backup stays', async () => {
+    const session = await startSession(day1);
+    await finishReading(session.id, session.plan.snippetId, session.plan.unitId, ['worked-on'], day1);
+    const { json } = await exportData(day1);
+    const later = new Date('2026-11-11T20:00:00');
+    await db.cards.update('chunk:worked-on', { fsrs: { ...(await db.cards.get('chunk:worked-on'))!.fsrs, due: 'later' }, updatedAt: later.toISOString() });
+    await db.reads.put({ snippetId: 'other', lastReadAt: later.toISOString(), updatedAt: later.toISOString() });
+
+    const preview = readBackup(json);
+    if (!preview.ok) throw new Error('bad file');
+    await preview.apply();
+    expect((await db.cards.get('chunk:worked-on'))?.fsrs.due).toBe('later');
+    expect(await db.reads.get('other')).toBeTruthy();
+    expect(await db.sessions.count()).toBe(1);
+  });
+
   it('refuses a file that is not a FluentLoop backup', () => {
     expect(readBackup('{"hello":1}').ok).toBe(false);
     expect(readBackup('not json').ok).toBe(false);

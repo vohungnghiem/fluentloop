@@ -10,6 +10,7 @@ import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
 import { Button, Card, Choice, Field, NavList, NavRow, Note, inputClass } from '../../ui/ui';
 import { BackupCard } from '../backup/BackupCard';
+import { SyncCard } from '../sync/SyncCard';
 import { TrackPicker } from './TrackPicker';
 import { KeyQr } from './KeyQr';
 import { cleanKey, keyLooksRight, maskKey, takeKeyFromLink, type KeyProvider } from '../../services/keyTransfer';
@@ -26,13 +27,14 @@ const PROVIDERS = ['none', 'gemini', 'openai', 'openrouter', 'compatible'] as co
 /** Settings: AI is optional and bring-your-own-key; the key stays in this browser. */
 export function SettingsPage() {
   const settings = useSettings();
-  // Opened from an AI badge: straight to the AI part, and back to where the learner was.
+  // Opened from a badge (AI, sync): straight to that part, and back to where the learner was.
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
   useEffect(() => {
-    if (location.hash !== '#ai') return;
+    const id = location.hash.slice(1);
+    if (id !== 'ai' && id !== 'sync') return;
     // After the app's own scroll-to-top on a new screen.
-    const timer = setTimeout(() => document.getElementById('ai')?.scrollIntoView({ block: 'start' }), 50);
+    const timer = setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }), 50);
     return () => clearTimeout(timer);
   }, [location.hash]);
   const [showKey, setShowKey] = useState(false);
@@ -195,6 +197,10 @@ export function SettingsPage() {
           )}
           <p className="text-xs text-ink-soft">{vi.settings.privacy}</p>
         </Card>
+      </Section>
+
+      <Section title={vi.sync.title} id="sync">
+        <SyncCard />
       </Section>
 
       <Section title={vi.backup.title}>

@@ -4,6 +4,10 @@ import { BrowserRouter, Route, Routes, useLocation } from 'react-router';
 import { useEffect } from 'react';
 import './styles.css';
 import { currentTrack } from './services/content';
+import { startSync } from './services/sync/sync';
+
+// Before the router: a return from Google's sign-in page puts the address back first.
+startSync();
 
 // Each industry has its own colour for labels and illustrations (lighter on the dark theme).
 document.head.insertAdjacentHTML(

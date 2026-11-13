@@ -1,21 +1,24 @@
 import { AiBadge } from '../../ui/AiBadge';
+import { SyncBadge } from '../../ui/SyncBadge';
+import { startSignIn, useSync } from '../../services/sync/sync';
 import type { StepKind } from '../../core/session/plan';
 import { SECTION_LOOK, STEP_LOOK } from '../../ui/tones';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useNavigate } from 'react-router';
-import { Mic, Settings } from 'lucide-react';
+import { CloudAlert, LogIn, Mic, Settings } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { currentTrack, findSnippet, library, snippetChunks } from '../../services/content';
 import { TrackPicker } from '../settings/TrackPicker';
 import { abandonSession, nextSuggestions } from '../../services/learning';
-import { Card, CardAction, ChunkChips, Eyebrow, StepTrail, Chip, Lu, MoreMenu, NavList, NavRow, Note, linkButton } from '../../ui/ui';
+import { Button, Card, CardAction, ChunkChips, Eyebrow, StepTrail, Chip, Lu, MoreMenu, NavList, NavRow, Note, linkButton } from '../../ui/ui';
 import { PageSkeleton } from '../../ui/shell';
 import { lastExport } from '../../services/backup';
 import { MoreSuggestions, suggestionPath, suggestionText } from '../next/NextUp';
 
 export function TodayPage() {
   const navigate = useNavigate();
+  const sync = useSync();
   // Re-read whenever the tables change; `now()` is the app clock.
   const data = useLiveQuery(() => nextSuggestions(now()), [], undefined);
   if (!data) return <PageSkeleton />;
@@ -24,7 +27,9 @@ export function TodayPage() {
   // A week of data and no backup for a week: worth a gentle nudge.
   const WEEK = 7 * 86_400_000;
   const backedUp = lastExport();
+  // Sync on: Drive already holds a copy.
   const needsBackup =
+    !sync.on &&
     !!summary.firstCardAt && now().getTime() - Date.parse(summary.firstCardAt) > WEEK && (!backedUp || now().getTime() - Date.parse(backedUp) > WEEK);
   const active = summary.active;
   const loopFirst = suggestions[0]?.kind === 'session' || suggestions[0]?.kind === 'resume';
@@ -53,10 +58,20 @@ export function TodayPage() {
           <Chip tone="track">{currentTrack.titleVi}</Chip>
         </div>
         <div className="flex items-center gap-1">
+          <SyncBadge />
           <AiBadge />
           <Link to="/settings" className="flex size-11 items-center justify-center rounded-full text-ink-soft hover:bg-surface hover:text-ink" aria-label={vi.settings.link} title={vi.settings.link}><Settings size={20} /></Link>
         </div>
       </header>
+
+      {sync.on && sync.status === 'needsLogin' && (
+        <Note tone="accent" icon={<CloudAlert size={18} />}>
+          <p>{vi.sync.todayNote}</p>
+          {sync.method === 'google'
+            ? <Button variant="primary" className="mt-2" onClick={startSignIn}><LogIn size={16} />{vi.sync.signInAgain}</Button>
+            : <Link to="/settings#sync" className={`${linkButton} mt-2`}><LogIn size={16} />{vi.sync.fix}</Link>}
+        </Note>
+      )}
 
       {summary.firstTime && (
         <section className="rise">
@@ -66,6 +81,12 @@ export function TodayPage() {
             <div className="mt-4">
               <p className="mb-2 text-sm font-medium">{vi.today.chooseTrack}</p>
               <TrackPicker />
+            </div>
+          )}
+          {!sync.on && (
+            <div className="mt-4 rounded-xl p-4 ring-1 ring-line">
+              <p className="text-sm font-medium">{vi.sync.newDevice}</p>
+              <Link to="/settings#sync" className={`${linkButton} mt-2`}><LogIn size={16} />{vi.sync.signIn}</Link>
             </div>
           )}
         </section>
@@ -162,7 +183,7 @@ export function TodayPage() {
         </NavList>
       </div>
 
-      <p className="text-center text-[13px] text-ink-soft">{vi.app.localData}</p>
+      <p className="text-center text-[13px] text-ink-soft">{sync.on ? vi.app.syncedData : vi.app.localData}</p>
     </main>
   );
 }

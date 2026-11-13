@@ -67,6 +67,7 @@ Mỗi tông là một class `.tone-<tên>` đặt `--tone` và `--tone-tint`. B�
 | Component | Ghi chú |
 |---|---|
 | `StepHeader` | Đầu mỗi bước: `ToneIcon` (pop), tiêu đề lớn, một dòng hướng dẫn, số thứ tự bên phải |
+| `SyncBadge` | Chỉ hiện khi đã bật đồng bộ, đặt cạnh `AiBadge` ở Hôm nay: đã đồng bộ / đang đồng bộ / offline / lỗi (bấm là tới Cài đặt mục Đồng bộ). Hết phiên đăng nhập thì thành nút hổ phách "Đồng bộ", bấm là đăng nhập lại ngay |
 | `AiBadge` | Trạng thái AI (bật · tên nhà cung cấp / chưa có key / tắt), bấm là tới Cài đặt mục AI, ← quay về đúng chỗ. Đặt ở mọi màn có dùng AI: Hôm nay, phiên học (dạng gọn), Bỏ túi, Hội thoại |
 | `ToneIcon` | Ô vuông màu tông kèm icon, 3 cỡ. `PageHeader look`, `NavRow look` dùng nó |
 | `StepBar` | Đoạn trên cùng phiên học, màu theo bước. **Bấm được** để quay lại bước đã qua, bước chưa tới bị khoá |

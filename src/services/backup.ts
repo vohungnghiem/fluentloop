@@ -1,5 +1,8 @@
 import { z } from 'zod';
 import { db } from './db';
+import { mergeTables } from '../core/sync/merge';
+import { applyLocal, readLocal } from './sync/sync';
+import { now } from './clock';
 
 /**
  * Backup: everything learnt, in one JSON file. The AI key is not in it (it stays in the
@@ -93,7 +96,7 @@ export function lastExport(): string | undefined {
 
 export type ImportPreview = { ok: true; exportedAt: string; counts: Record<string, number>; apply: () => Promise<void> } | { ok: false };
 
-/** Read a backup file. Nothing changes until `apply`, which replaces all learning data. */
+/** Read a backup file. Nothing changes until `apply`, which merges it in: rows changed last win, nothing is lost. */
 export function readBackup(json: string): ImportPreview {
   let parsed;
   try {
@@ -111,12 +114,9 @@ export function readBackup(json: string): ImportPreview {
         (tables[name] ?? []).map(async (row) => (typeof row.audio === 'string' ? { ...row, audio: await dataUrlToBlob(row.audio) } : row)),
       );
     }
-    await db.transaction('rw', TABLES.map((name) => db.table(name)), async () => {
-      for (const name of TABLES) {
-        await db.table(name).clear();
-        await db.table(name).bulkPut(restored[name] ?? []);
-      }
-    });
+    const local = await readLocal(TABLES);
+    const merged = mergeTables(local.tables, restored as Record<string, Record<string, unknown>[]>, TABLES, now());
+    await applyLocal(merged.toLocal, merged.deleteLocal);
   };
   return { ok: true, exportedAt, counts, apply };
 }

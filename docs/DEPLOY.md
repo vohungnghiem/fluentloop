@@ -5,6 +5,25 @@
 - Mỗi lần push lên `main`: workflow `.github/workflows/pages.yml` chạy `npm test` rồi `npm run build:pages` (build với `BASE_PATH=/fluentloop/`) và deploy.
 - GitHub Pages miễn phí chỉ chạy với repo **public**. Đổi repo sang private khi đang ở gói Free thì link sẽ ngừng hoạt động.
 
+## Đồng bộ nhiều máy
+Mặc định dùng **token GitHub**, không cần cài gì thêm: trong app vào Cài đặt → Học trên nhiều máy → Mở trang tạo token → dán vào → Kết nối. Điện thoại quét mã QR từ máy tính.
+
+### Đăng nhập Google (đã làm 2026-11-13, project `fluentloop-514604`)
+Tất cả nằm ở **một trang**: https://console.cloud.google.com/auth/overview?project=fluentloop-514604 (Google Auth Platform). Menu bên trái:
+
+| Mục | Đã đặt |
+|---|---|
+| **Audience** | Testing, External, Test users: `vohungnghiem@gmail.com` |
+| **Data Access** | `.../auth/drive.appdata`, `.../auth/userinfo.email` |
+| **Clients** | Web application. JavaScript origins: `http://localhost:3100`, `https://vohungnghiem.github.io`. Redirect URIs: `http://localhost:3100/`, `https://vohungnghiem.github.io/fluentloop/` |
+
+Ngoài ra chỉ cần bật Google Drive API một lần (đã bật): https://console.cloud.google.com/apis/library/drive.googleapis.com?project=fluentloop-514604
+
+Client ID (công khai) nằm ở `.env.local` (máy, không commit) và biến repo `VITE_GOOGLE_CLIENT_ID` (cho GitHub Pages). Đổi `.env.local` thì khởi động lại `npm run dev`.
+
+Khi đăng nhập: Google báo "app chưa được xác minh" là bình thường (Testing), bấm Tiếp tục. Ở màn cấp quyền phải **tích ô Google Drive**.
+Lỗi hay gặp: `redirect_uri_mismatch` là sai **Redirect URIs** ở mục Clients. `access_denied` là thiếu email trong **Test users**.
+
 ## Để dành: chuyển sang repo private + Cloudflare Pages (miễn phí)
 Làm theo đúng thứ tự, để app không bị gián đoạn.
 
