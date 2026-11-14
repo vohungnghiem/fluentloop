@@ -5,7 +5,7 @@ import { z } from 'zod';
  * chunks and tasks a session is made of. Adding a track means adding files, never code.
  */
 
-export const cefrSchema = z.enum(['A2', 'B1', 'B2', 'C1']);
+export const cefrSchema = z.enum(['A1', 'A2', 'B1', 'B2', 'C1']);
 export type Cefr = z.infer<typeof cefrSchema>;
 
 const id = z.string().regex(/^[a-z0-9-]+$/, 'id chỉ gồm a-z, 0-9 và dấu -');
@@ -82,6 +82,8 @@ export const scriptNodeSchema = z.object({
   replies: z
     .array(z.object({ text: z.string().min(1), next: id.nullable() }))
     .default([]),
+  /** Any answer of a few words moves on to this node (open questions: an interview). */
+  any: id.optional(),
 });
 
 /** A roleplay: someone at work, a goal, a persona for AI, and a script for when there is no AI. */
@@ -102,6 +104,24 @@ export const scenarioSchema = z.object({
 export type Scenario = z.infer<typeof scenarioSchema>;
 export type ScriptNode = z.infer<typeof scriptNodeSchema>;
 
+/** The sentence pattern a foundation unit is built on: shown before the text, in Vietnamese. */
+export const patternSchema = z.object({
+  titleVi: z.string().min(1),
+  /** The shape of the sentence, one per line: "I + work + at/for …". */
+  forms: z.array(z.string().min(1)).min(1),
+  examples: z.array(z.object({ en: z.string().min(1), vi: z.string().min(1) })).min(1),
+  noteVi: z.string().optional(),
+});
+export type Pattern = z.infer<typeof patternSchema>;
+
+/** A sound to watch when speaking: the word (or short phrase) and what to do with the mouth. */
+export const soundSchema = z.object({
+  en: z.string().min(1),
+  /** How to say it, in Vietnamese: "đuôi -ed đọc /t/: worked = /wɜːkt/". */
+  tipVi: z.string().min(1),
+});
+export type Sound = z.infer<typeof soundSchema>;
+
 export const unitSchema = z.object({
   id,
   track: id,
@@ -112,6 +132,10 @@ export const unitSchema = z.object({
   chunks: z.array(chunkSchema).min(1),
   tasks: z.array(taskSchema).min(1),
   scenarios: z.array(scenarioSchema).default([]),
+  pattern: patternSchema.optional(),
+  sounds: z.array(soundSchema).default([]),
+  /** The second-model check the content process asks for (content/prompts/review.md). */
+  review: z.object({ by: z.string().min(1), on: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), note: z.string().optional() }).optional(),
 });
 export type Unit = z.infer<typeof unitSchema>;
 
@@ -122,6 +146,8 @@ export const trackSchema = z.object({
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
   /** Unit ids in learning order. */
   units: z.array(id).min(1),
+  /** A foundation pack (core): for every industry, learnt first by learners below B1. */
+  foundation: z.boolean().default(false),
   /** Who learns this track, in English, for AI prompts: "people who work in software". */
   audience: z.string().min(1),
   /** The benchmark prompts (Vietnamese). */
@@ -175,9 +201,9 @@ export function contentProblems(library: Library): string[] {
       once('scenario', scenario.id);
       const nodes = new Set(scenario.script.map((node) => node.id));
       for (const node of scenario.script) {
-        for (const reply of node.replies) {
-          if (reply.next && !nodes.has(reply.next)) {
-            problems.push(`scenario "${scenario.id}": node "${node.id}" trỏ tới "${reply.next}" không tồn tại`);
+        for (const next of [...node.replies.map((reply) => reply.next), node.any]) {
+          if (next && !nodes.has(next)) {
+            problems.push(`scenario "${scenario.id}": node "${node.id}" trỏ tới "${next}" không tồn tại`);
           }
         }
       }
@@ -200,4 +226,58 @@ export function contentProblems(library: Library): string[] {
     }
   }
   return problems;
+}
+
+/** Longest sentence (in words) a unit of a low level may use: A2 learners need short sentences. */
+export const MAX_WORDS: Partial<Record<Cefr, number>> = { A1: 10, A2: 14 };
+
+/** Sentences of a text, for counting words: split after . ! ? (a list line counts as one). */
+export const sentences = (text: string) =>
+  text.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+const wordCount = (sentence: string) => sentence.split(/\s+/).filter((w) => /[a-z0-9]/i.test(w)).length;
+
+/**
+ * What the level asks of a unit (docs/PHAC-THAO.md 7): at A1–A2 every sentence a learner reads or
+ * copies is short, every task has its ideas and both hints (nobody gets stuck with nothing), and a
+ * foundation unit says which sentence pattern it teaches. Empty when the unit fits its level.
+ */
+export function levelProblems(library: Library): string[] {
+  const problems: string[] = [];
+  const foundation = new Set(library.tracks.filter((track) => track.foundation).map((track) => track.id));
+  for (const unit of library.units) {
+    if (foundation.has(unit.track) && !unit.pattern) problems.push(`unit "${unit.id}": gói Nền cần có "pattern"`);
+    const max = MAX_WORDS[unit.cefr];
+    if (!max) continue;
+    const texts: Array<[string, string]> = [
+      ...unit.snippets.flatMap((s) => s.text.map((t): [string, string] => [`snippet "${s.id}"`, t])),
+      ...unit.chunks.map((c): [string, string] => [`chunk "${c.id}"`, c.example]),
+      ...unit.tasks.flatMap((t) => t.models.map((m): [string, string] => [`task "${t.id}"`, m])),
+      ...unit.scenarios.flatMap((sc) => sc.script.flatMap((node) => [node.say, ...node.replies.map((r) => r.text)].map((t): [string, string] => [`scenario "${sc.id}"`, t]))),
+      ...(unit.pattern?.examples.map((e): [string, string] => ['pattern', e.en]) ?? []),
+    ];
+    for (const [where, text] of texts) {
+      for (const sentence of sentences(text)) {
+        if (wordCount(sentence) > max) problems.push(`unit "${unit.id}" ${where}: câu ${wordCount(sentence)} từ, mức ${unit.cefr} tối đa ${max}: "${sentence}"`);
+      }
+    }
+    for (const task of unit.tasks) {
+      if (task.points.length === 0) problems.push(`unit "${unit.id}" task "${task.id}": mức ${unit.cefr} cần "points"`);
+      if (task.hints.length < 2) problems.push(`unit "${unit.id}" task "${task.id}": mức ${unit.cefr} cần đủ 2 "hints"`);
+    }
+  }
+  return problems;
+}
+
+/** Things to do that do not block a build: a foundation unit not cross-checked yet, a sound not in any text. */
+export function contentWarnings(library: Library): string[] {
+  const warnings: string[] = [];
+  const foundation = new Set(library.tracks.filter((track) => track.foundation).map((track) => track.id));
+  for (const unit of library.units) {
+    if (foundation.has(unit.track) && !unit.review) warnings.push(`unit "${unit.id}": chưa kiểm chéo bằng model thứ hai (npm run content:review -- ${unit.id})`);
+    const text = lower(unit.snippets.flatMap((s) => s.text).join(' '));
+    for (const sound of unit.sounds) {
+      if (!text.includes(lower(sound.en))) warnings.push(`unit "${unit.id}": âm "${sound.en}" không có trong bài đọc nào`);
+    }
+  }
+  return warnings;
 }

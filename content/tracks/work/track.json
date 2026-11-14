@@ -1,0 +1,18 @@
+{
+  "id": "work",
+  "titleVi": "Công việc chung (mọi ngành)",
+  "color": "#7C3AED",
+  "units": [
+    "work-meeting",
+    "work-email",
+    "work-call",
+    "work-problem",
+    "work-client"
+  ],
+  "audience": "office workers in any field",
+  "baseline": {
+    "writingVi": "Viết email cho quản lý: kể một vấn đề trong tuần, bạn đã làm gì, và bạn cần giúp gì.",
+    "speakingVi": "Nói về một cuộc họp gần đây: họp về việc gì, bạn đã nói gì, và mọi người quyết định ra sao."
+  },
+  "captureSample": "Hi team,\n\nQuick reminder: our client demo is on Thursday at 10.\nCould you please send me your slides by Wednesday?\nLet me know if you have any questions.\n\nThanks,\nTom"
+}

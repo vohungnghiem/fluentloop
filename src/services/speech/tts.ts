@@ -52,3 +52,6 @@ export function speak(text: string, rate: Rate = 'normal'): Promise<void> {
 }
 
 export const stopSpeaking = () => synth()?.cancel();
+
+/** Whether something is being read aloud right now. */
+export const speaking = () => !!synth()?.speaking;

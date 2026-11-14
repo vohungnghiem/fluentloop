@@ -6,6 +6,7 @@ import { vi } from '../../copy/vi';
 import { snippetChunks } from '../../services/content';
 import { Chip, linkButton } from '../../ui/ui';
 import { ChunkGloss, SpeakButton } from '../../ui/speech';
+import { useSupport } from '../../ui/useSupport';
 
 /** Labels for known kinds of text; any other kind shows as written (content decides). */
 const GENRE: Record<string, string> = {
@@ -17,7 +18,10 @@ const GENRE: Record<string, string> = {
 export function SnippetReader({ snippet, className = '' }: { snippet: Snippet; className?: string }) {
   const chunks = snippetChunks(snippet);
   const [openChunk, setOpenChunk] = useState<string>();
-  const [showVi, setShowVi] = useState(false);
+  // Open from the start for a learner below B1, until they close it.
+  const support = useSupport();
+  const [chosenVi, setShowVi] = useState<boolean>();
+  const showVi = chosenVi ?? !!support;
   const open = chunks.find((chunk) => chunk.id === openChunk);
   return (
     <article className={`rounded-2xl border border-line bg-surface p-5 ${className}`}>

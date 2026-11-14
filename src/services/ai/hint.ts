@@ -4,6 +4,8 @@ import { pointsByRules } from '../../core/check/feedback';
 import { currentTrack } from '../content';
 import { getSettings, type Settings } from '../settings';
 import { askCached } from './cached';
+import { learnerLevel } from '../plan';
+import { levelBrief } from './level';
 
 /**
  * Help when stuck, three levels: 1 a question that points at the next idea, 2 the start of a
@@ -21,7 +23,7 @@ export interface Hint {
   source: 'ai' | 'task';
 }
 
-const PROMPT_VERSION = 1;
+const PROMPT_VERSION = 2;
 const hintSchema = z.object({ hint: z.string().min(1) });
 
 /** The task's own hint: written in the content, or made from its points and model. */
@@ -38,7 +40,8 @@ export function taskHint(task: Task, text: string, level: HintLevel): Hint {
   return { level, text: question, lang: 'vi', source: 'task' };
 }
 
-const system = (level: 1 | 2) => `You help a Vietnamese ${currentTrack.audience} learner who is stuck writing a short workplace text in English.
+const system = (level: 1 | 2, learner: Awaited<ReturnType<typeof learnerLevel>>) => `You help a Vietnamese ${currentTrack.audience} learner who is stuck writing a short text in English.
+${levelBrief(learner)}
 Look at what they wrote so far and the task points. Find the NEXT idea they still need.
 ${level === 1
   ? 'Return ONLY JSON {"hint": string}: one short guiding question in Vietnamese (at most 20 words) about that idea. No English answer.'
@@ -52,7 +55,7 @@ export async function hintFor(task: Task, text: string, level: HintLevel, now: D
     settings,
     now,
     version: `hint-${PROMPT_VERSION}`,
-    system: system(level),
+    system: system(level, await learnerLevel()),
     user: `Task: ${task.promptVi}\nTask points:\n${task.points.map((p, i) => `${i + 1}. ${p.vi}`).join('\n')}\nExample: ${task.models[0]}\nWritten so far:\n${text.trim()}`,
     schema: hintSchema,
     fake: () => ({ hint: fallback.text }),

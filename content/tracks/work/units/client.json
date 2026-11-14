@@ -1,0 +1,401 @@
+{
+  "id": "work-client",
+  "track": "work",
+  "title": "Working with clients",
+  "titleVi": "Làm việc với khách hàng",
+  "cefr": "B1",
+  "pattern": {
+    "titleVi": "Với khách: hỏi nhu cầu, xin lỗi đúng cách, hứa vừa sức",
+    "forms": [
+      "What would you like to + V?",
+      "I'm sorry to hear that. Let me + V.",
+      "We can + V by …, but …",
+      "I'll get back to you + khi nào."
+    ],
+    "examples": [
+      {
+        "en": "What would you like to improve first?",
+        "vi": "Anh/chị muốn cải thiện phần nào trước?"
+      },
+      {
+        "en": "I'm sorry to hear that. Let me check.",
+        "vi": "Rất tiếc về chuyện đó. Để em kiểm tra."
+      },
+      {
+        "en": "I'll get back to you tomorrow.",
+        "vi": "Mai em sẽ phản hồi lại anh/chị."
+      }
+    ],
+    "noteVi": "Với khách, đừng hứa điều chưa chắc. Chưa biết câu trả lời thì nói I'll check and get back to you, và hẹn thời gian cụ thể."
+  },
+  "sounds": [
+    {
+      "en": "would you",
+      "tipVi": "Nói nhanh nghe như “wu-dju”: /d/ nối với /j/ thành /dʒ/."
+    },
+    {
+      "en": "deliver",
+      "tipVi": "/dɪˈlɪvə/: nhấn “LI”, cuối có /v/ chạm môi."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "work-client-needs",
+      "genre": "meeting",
+      "titleVi": "Hỏi khách cần gì",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Thanks for meeting us today. What would you like to achieve with the new app?",
+        "And who are your main users?"
+      ],
+      "translationVi": [
+        "Cảm ơn anh chị đã gặp bọn em hôm nay. Anh chị muốn đạt được gì với app mới?",
+        "Và người dùng chính của anh chị là ai?"
+      ],
+      "chunks": [
+        "work-thanks-for-meeting",
+        "work-would-you-like",
+        "work-main-users"
+      ],
+      "task": "work-task-client-needs"
+    },
+    {
+      "id": "work-client-complaint",
+      "genre": "phone",
+      "titleVi": "Khách phàn nàn",
+      "speaker": "Nam, backend dev",
+      "cefr": "B1",
+      "text": [
+        "I'm sorry to hear that. Let me check what happened.",
+        "I'll get back to you by the end of the day."
+      ],
+      "translationVi": [
+        "Rất tiếc về chuyện đó. Để em kiểm tra xem đã có chuyện gì.",
+        "Trước cuối ngày em sẽ phản hồi lại anh chị."
+      ],
+      "chunks": [
+        "work-sorry-to-hear",
+        "work-let-me-check",
+        "work-get-back-to-you"
+      ],
+      "task": "work-task-client-complaint"
+    },
+    {
+      "id": "work-client-deadline",
+      "genre": "email",
+      "titleVi": "Nói rõ điều làm được",
+      "speaker": "Tom, project manager",
+      "cefr": "B1",
+      "text": [
+        "We can deliver the first version by May 10, but without the chat feature.",
+        "If you need chat too, we'll need two more weeks."
+      ],
+      "translationVi": [
+        "Bọn tôi có thể giao bản đầu tiên trước ngày 10 tháng 5, nhưng chưa có tính năng chat.",
+        "Nếu anh chị cần cả chat, bọn tôi cần thêm hai tuần."
+      ],
+      "chunks": [
+        "work-we-can-deliver",
+        "work-without",
+        "work-if-you-need"
+      ],
+      "task": "work-task-client-deadline"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "work-thanks-for-meeting",
+      "en": "Thanks for meeting",
+      "vi": "cảm ơn đã gặp",
+      "example": "Thanks for meeting me so early.",
+      "exampleVi": "Cảm ơn đã gặp mình sớm vậy.",
+      "answer": "Thanks for meeting"
+    },
+    {
+      "id": "work-would-you-like",
+      "en": "What would you like to",
+      "vi": "bạn muốn … gì",
+      "example": "What would you like to change?",
+      "exampleVi": "Bạn muốn thay đổi gì?",
+      "answer": "What would you like to"
+    },
+    {
+      "id": "work-main-users",
+      "en": "main users",
+      "vi": "người dùng chính",
+      "example": "Our main users are students.",
+      "exampleVi": "Người dùng chính của bọn mình là sinh viên.",
+      "answer": "main users"
+    },
+    {
+      "id": "work-sorry-to-hear",
+      "en": "I'm sorry to hear that",
+      "vi": "rất tiếc về chuyện đó",
+      "example": "I'm sorry to hear that you lost the data.",
+      "exampleVi": "Rất tiếc vì bạn bị mất dữ liệu.",
+      "answer": "I'm sorry to hear that"
+    },
+    {
+      "id": "work-let-me-check",
+      "en": "Let me check",
+      "vi": "để tôi kiểm tra",
+      "example": "Let me check with my team.",
+      "exampleVi": "Để mình hỏi lại nhóm.",
+      "answer": "Let me check"
+    },
+    {
+      "id": "work-get-back-to-you",
+      "en": "get back to you",
+      "vi": "phản hồi lại bạn",
+      "example": "I'll get back to you tomorrow morning.",
+      "exampleVi": "Sáng mai mình phản hồi lại bạn.",
+      "answer": "get back to you"
+    },
+    {
+      "id": "work-we-can-deliver",
+      "en": "We can deliver",
+      "vi": "chúng tôi có thể giao",
+      "example": "We can deliver it next Monday.",
+      "exampleVi": "Thứ Hai tới bọn mình giao được.",
+      "answer": "We can deliver"
+    },
+    {
+      "id": "work-without",
+      "en": "but without",
+      "vi": "nhưng chưa có",
+      "example": "It works, but without the search.",
+      "exampleVi": "Nó chạy được, nhưng chưa có phần tìm kiếm.",
+      "answer": "but without"
+    },
+    {
+      "id": "work-if-you-need",
+      "en": "If you need",
+      "vi": "nếu bạn cần",
+      "example": "If you need help, just call me.",
+      "exampleVi": "Nếu cần giúp thì cứ gọi mình.",
+      "answer": "If you need"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "work-task-client-needs",
+      "promptVi": "Gặp khách hàng mới. Cảm ơn họ, rồi hỏi hai câu để hiểu họ cần gì.",
+      "situation": "First meeting with a client.",
+      "required": [
+        {
+          "label": "What would you like",
+          "variants": [
+            "what would you like",
+            "what do you want"
+          ]
+        }
+      ],
+      "models": [
+        "Thanks for meeting us today. What would you like to change in your website? And when do you need it?"
+      ],
+      "tipVi": "Với khách, dùng would you like thay cho do you want: lịch sự hơn.",
+      "points": [
+        {
+          "vi": "Cảm ơn",
+          "variants": [
+            "thanks",
+            "thank you"
+          ]
+        },
+        {
+          "vi": "Câu hỏi 1 về nhu cầu",
+          "variants": [
+            "would you like",
+            "what do you need",
+            "what is"
+          ]
+        },
+        {
+          "vi": "Câu hỏi 2",
+          "variants": [
+            "who",
+            "when",
+            "how many",
+            "and"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn mở đầu thế nào? Bạn muốn biết điều gì về mục tiêu, người dùng hay thời gian?",
+        "Thanks for meeting us today. What would you like to …? And …?"
+      ]
+    },
+    {
+      "id": "work-task-client-complaint",
+      "promptVi": "Khách gọi phàn nàn app bị lỗi. Nói lời tiếc, hứa kiểm tra, và hẹn khi nào trả lời.",
+      "situation": "Phone call from an unhappy client.",
+      "required": [
+        {
+          "label": "sorry to hear",
+          "variants": [
+            "sorry to hear"
+          ]
+        },
+        {
+          "label": "get back to you",
+          "variants": [
+            "get back to you"
+          ]
+        }
+      ],
+      "models": [
+        "I'm sorry to hear that. Let me check with our team. I'll get back to you before 5 pm today."
+      ],
+      "tipVi": "Chưa biết nguyên nhân thì đừng đoán. Hứa kiểm tra và hẹn giờ cụ thể.",
+      "points": [
+        {
+          "vi": "Nói lời tiếc",
+          "variants": [
+            "sorry"
+          ]
+        },
+        {
+          "vi": "Hứa kiểm tra",
+          "variants": [
+            "let me check",
+            "i will check",
+            "look into"
+          ]
+        },
+        {
+          "vi": "Hẹn khi nào trả lời",
+          "variants": [
+            "get back to you",
+            "by",
+            "before",
+            "tomorrow",
+            "today"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn nói gì để khách thấy bạn hiểu? Bạn sẽ làm gì, và khi nào báo lại?",
+        "I'm sorry to hear that. Let me … I'll get back to you …"
+      ]
+    },
+    {
+      "id": "work-task-client-deadline",
+      "promptVi": "Khách muốn đủ tính năng trong 2 tuần, nhưng không kịp. Nói rõ điều làm được, điều chưa, và cách khác.",
+      "situation": "Email to a client.",
+      "required": [
+        {
+          "label": "We can",
+          "variants": [
+            "we can",
+            "we could"
+          ]
+        },
+        {
+          "label": "If you need",
+          "variants": [
+            "if you need",
+            "if you want"
+          ]
+        }
+      ],
+      "models": [
+        "We can deliver the main screens in two weeks, but without the reports. If you need the reports too, we'll need one more week."
+      ],
+      "tipVi": "Nói điều làm được trước (We can…), rồi mới tới điều chưa được (but without…). Đưa lựa chọn bằng If you need…",
+      "points": [
+        {
+          "vi": "Điều làm được",
+          "variants": [
+            "we can"
+          ]
+        },
+        {
+          "vi": "Điều chưa làm được",
+          "variants": [
+            "without",
+            "but",
+            "not"
+          ]
+        },
+        {
+          "vi": "Lựa chọn khác",
+          "variants": [
+            "if you need",
+            "if you want",
+            "more",
+            "another"
+          ]
+        }
+      ],
+      "hints": [
+        "Trong 2 tuần làm được phần nào? Phần nào chưa? Nếu khách muốn đủ thì cần gì?",
+        "We can deliver … by …, but without … If you need …, we'll need …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "work-scenario-client",
+      "titleVi": "Khách hàng không hài lòng",
+      "partner": "Sarah, client",
+      "situationVi": "Sarah (khách hàng) gọi vì báo cáo hôm nay bị sai số liệu.",
+      "goalVi": "Nói lời tiếc, hỏi thêm thông tin, hứa kiểm tra và hẹn giờ phản hồi.",
+      "persona": "You are Sarah, an unhappy but polite client. The report today shows wrong numbers. Explain the problem when asked, and accept a clear promise with a time. Short sentences.",
+      "goal": "The learner says sorry, asks for details, promises to check, and gives a time to get back.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hi, the report you sent today has the wrong numbers.",
+          "sayVi": "Chào bạn, báo cáo bạn gửi hôm nay sai số liệu.",
+          "replies": [
+            {
+              "text": "I'm sorry to hear that. Which numbers are wrong?",
+              "next": "detail"
+            },
+            {
+              "text": "Oh, I'm sorry. Can you tell me more?",
+              "next": "detail"
+            }
+          ]
+        },
+        {
+          "id": "detail",
+          "say": "The sales for March are too low.",
+          "sayVi": "Doanh số tháng Ba thấp quá.",
+          "replies": [
+            {
+              "text": "Let me check what happened.",
+              "next": "when"
+            },
+            {
+              "text": "Thanks. Let me check with my team.",
+              "next": "when"
+            }
+          ]
+        },
+        {
+          "id": "when",
+          "say": "OK. When can you send the right report?",
+          "sayVi": "Được. Khi nào bạn gửi được báo cáo đúng?",
+          "replies": [
+            {
+              "text": "I'll get back to you by the end of the day.",
+              "next": "end"
+            },
+            {
+              "text": "We can send it tomorrow morning.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Good, thank you.",
+          "sayVi": "Tốt, cảm ơn bạn.",
+          "replies": []
+        }
+      ]
+    }
+  ]
+}

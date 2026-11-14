@@ -1,0 +1,578 @@
+{
+  "questions": [
+    {
+      "id": "about-you",
+      "en": "Tell me about yourself.",
+      "vi": "Hãy giới thiệu về bản thân bạn.",
+      "tipVi": "Họ muốn nghe về công việc, không phải gia đình hay sở thích. Nói khoảng 1 phút, kết thúc bằng lý do bạn hợp với vị trí này.",
+      "shape": [
+        "Bây giờ: bạn là ai, làm gì",
+        "Trước đây: kinh nghiệm chính, một kết quả",
+        "Sắp tới: vì sao bạn ứng tuyển vị trí này"
+      ],
+      "points": [
+        {
+          "vi": "Công việc hiện tại",
+          "variants": [
+            "i am a",
+            "i am an",
+            "i work",
+            "i have worked"
+          ]
+        },
+        {
+          "vi": "Kinh nghiệm hoặc kết quả",
+          "variants": [
+            "years",
+            "experience",
+            "i have built",
+            "i have worked on",
+            "i built"
+          ]
+        },
+        {
+          "vi": "Vì sao hợp với vị trí này",
+          "variants": [
+            "this role",
+            "this position",
+            "this job",
+            "your company",
+            "here"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn đang làm nghề gì, mấy năm rồi? Bạn làm được gì đáng kể? Vì sao bạn muốn công việc này?",
+        "I'm a … with … years of experience. Recently, I …"
+      ],
+      "model": "I'm a software tester with four years of experience. I work at a company that makes banking apps. I test web and mobile apps, and I also write automated tests. Last year, I helped my team cut bugs in production by half. Now I want to work in an international team, so this role is a great fit for me."
+    },
+    {
+      "id": "why-us",
+      "en": "Why do you want to work here?",
+      "vi": "Vì sao bạn muốn làm ở công ty chúng tôi?",
+      "tipVi": "Cho thấy bạn đã tìm hiểu về công ty. Nói một điều cụ thể về họ, rồi nối với điều bạn muốn và điều bạn làm được.",
+      "shape": [
+        "Một điều cụ thể bạn thích ở công ty",
+        "Điều đó hợp với mong muốn của bạn thế nào",
+        "Bạn có thể đóng góp gì"
+      ],
+      "points": [
+        {
+          "vi": "Điều cụ thể về công ty",
+          "variants": [
+            "your company",
+            "your product",
+            "your team",
+            "you are",
+            "you make",
+            "you build"
+          ]
+        },
+        {
+          "vi": "Hợp với mong muốn của bạn",
+          "variants": [
+            "i want",
+            "i would like",
+            "i am interested",
+            "i enjoy"
+          ]
+        },
+        {
+          "vi": "Bạn đóng góp được gì",
+          "variants": [
+            "i can",
+            "i could",
+            "help",
+            "bring"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn biết gì về sản phẩm hay cách làm việc của công ty? Điều đó liên quan gì tới bạn?",
+        "I really like that your company … I want to …"
+      ],
+      "model": "I really like your product. I use your app every week, and it's very easy to use. I also read that your team works in English with clients from many countries. I want to grow in that kind of team. I think my testing experience can help you keep the app stable."
+    },
+    {
+      "id": "project",
+      "en": "Tell me about a project you're proud of.",
+      "vi": "Kể về một dự án bạn tự hào.",
+      "tipVi": "Kể theo STAR: Bối cảnh, Nhiệm vụ, Việc bạn làm, Kết quả. Nói “I” cho phần việc của bạn, có con số nếu được.",
+      "shape": [
+        "Situation: dự án gì, cho ai",
+        "Task: bạn phụ trách phần nào",
+        "Action: bạn đã làm gì (2–3 việc)",
+        "Result: kết quả, tốt nhất có con số"
+      ],
+      "points": [
+        {
+          "vi": "Bối cảnh: dự án gì",
+          "variants": [
+            "project",
+            "app",
+            "website",
+            "system"
+          ]
+        },
+        {
+          "vi": "Phần việc của bạn",
+          "variants": [
+            "i was",
+            "my job",
+            "my role",
+            "i was responsible"
+          ]
+        },
+        {
+          "vi": "Bạn đã làm gì",
+          "variants": [
+            "i built",
+            "i made",
+            "i wrote",
+            "i tested",
+            "i designed",
+            "i set up",
+            "i worked"
+          ]
+        },
+        {
+          "vi": "Kết quả",
+          "variants": [
+            "result",
+            "percent",
+            "faster",
+            "users",
+            "fewer",
+            "saved",
+            "as a result"
+          ]
+        }
+      ],
+      "hints": [
+        "Dự án đó làm gì, cho ai? Bạn phụ trách phần nào? Bạn đã làm gì, và kết quả ra sao?",
+        "Last year, I worked on … My job was to …"
+      ],
+      "model": "Last year, I worked on a food delivery app with about fifty thousand users. My job was to build the payment screen. I worked closely with the designer, and I wrote tests for every payment case. As a result, we launched on time, and payment errors went down by thirty percent."
+    },
+    {
+      "id": "strengths",
+      "en": "What are your strengths?",
+      "vi": "Điểm mạnh của bạn là gì?",
+      "tipVi": "Chọn 1–2 điểm mạnh liên quan tới công việc, và kể một ví dụ ngắn để chứng minh. Đừng chỉ liệt kê tính từ.",
+      "shape": [
+        "Điểm mạnh",
+        "Một ví dụ cụ thể",
+        "Điều đó giúp gì cho công việc mới"
+      ],
+      "points": [
+        {
+          "vi": "Điểm mạnh",
+          "variants": [
+            "my strength",
+            "i am good at",
+            "i am very",
+            "strong"
+          ]
+        },
+        {
+          "vi": "Ví dụ chứng minh",
+          "variants": [
+            "for example",
+            "for instance",
+            "once",
+            "last year",
+            "last month"
+          ]
+        },
+        {
+          "vi": "Giúp gì cho công việc",
+          "variants": [
+            "help",
+            "useful",
+            "this role",
+            "your team"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn làm tốt nhất việc gì? Có lần nào điều đó giúp nhóm của bạn không?",
+        "One of my strengths is … For example, …"
+      ],
+      "model": "One of my strengths is that I'm very careful. For example, last month I found a serious bug just before a release. It could charge users twice. Because I found it early, we fixed it in one day. I think this is useful for a team that cares about quality."
+    },
+    {
+      "id": "weakness",
+      "en": "What is your biggest weakness?",
+      "vi": "Điểm yếu lớn nhất của bạn là gì?",
+      "tipVi": "Nói một điểm yếu thật nhưng không quá nặng cho vị trí này, và quan trọng nhất là bạn đang làm gì để cải thiện. Tiếng Anh chưa tốt là câu trả lời hợp lý.",
+      "shape": [
+        "Điểm yếu (thật, không quá nặng)",
+        "Bạn đang làm gì để cải thiện",
+        "Đã tiến bộ thế nào"
+      ],
+      "points": [
+        {
+          "vi": "Điểm yếu",
+          "variants": [
+            "my weakness",
+            "weakness",
+            "i am not",
+            "not very good",
+            "i find it hard"
+          ]
+        },
+        {
+          "vi": "Đang cải thiện thế nào",
+          "variants": [
+            "i am working on",
+            "i practice",
+            "i am learning",
+            "every day",
+            "i take"
+          ]
+        },
+        {
+          "vi": "Tiến bộ đến giờ",
+          "variants": [
+            "now i",
+            "better",
+            "improved",
+            "more confident"
+          ]
+        }
+      ],
+      "hints": [
+        "Điều gì bạn còn làm chưa tốt? Bạn đang làm gì mỗi ngày để tốt hơn?",
+        "My biggest weakness is … To improve, I …"
+      ],
+      "model": "My biggest weakness is my spoken English. I can read documents well, but I'm slower when I speak. To improve, I practice speaking every day, and I join an English club once a week. Now I feel more confident in meetings than three months ago."
+    },
+    {
+      "id": "problem",
+      "en": "Tell me about a difficult problem you solved.",
+      "vi": "Kể về một vấn đề khó bạn đã giải quyết.",
+      "tipVi": "Lại là STAR. Họ muốn thấy cách bạn suy nghĩ: bạn tìm nguyên nhân thế nào, hỏi ai, thử những gì. Kết thúc bằng điều bạn học được.",
+      "shape": [
+        "Vấn đề là gì, vì sao khó",
+        "Bạn tìm nguyên nhân thế nào",
+        "Bạn sửa ra sao",
+        "Kết quả và điều học được"
+      ],
+      "points": [
+        {
+          "vi": "Vấn đề",
+          "variants": [
+            "problem",
+            "issue",
+            "bug",
+            "slow",
+            "crashed",
+            "went down"
+          ]
+        },
+        {
+          "vi": "Cách tìm nguyên nhân",
+          "variants": [
+            "i checked",
+            "i looked",
+            "i found",
+            "logs",
+            "i asked"
+          ]
+        },
+        {
+          "vi": "Cách sửa",
+          "variants": [
+            "i fixed",
+            "i changed",
+            "we fixed",
+            "i added",
+            "i moved"
+          ]
+        },
+        {
+          "vi": "Kết quả hoặc điều học được",
+          "variants": [
+            "as a result",
+            "now",
+            "i learned",
+            "since then"
+          ]
+        }
+      ],
+      "hints": [
+        "Vấn đề gì xảy ra? Bạn đã làm gì để tìm ra nguyên nhân? Bạn sửa thế nào và học được gì?",
+        "Once, our app … I checked … and found …"
+      ],
+      "model": "Once, our app became very slow every Monday morning. Nobody knew why. I checked the logs and found a report that ran at the same time. It used most of the database. I moved the report to the night, and the app became fast again. I learned to always check the logs first."
+    },
+    {
+      "id": "team",
+      "en": "Tell me about a time you disagreed with a teammate.",
+      "vi": "Kể về một lần bạn bất đồng ý kiến với đồng nghiệp.",
+      "tipVi": "Họ muốn thấy bạn bất đồng một cách tôn trọng và cùng tìm ra cách tốt nhất. Đừng chê đồng nghiệp; nói về việc, không nói về người.",
+      "shape": [
+        "Hai bên nghĩ khác nhau về việc gì",
+        "Bạn đã nói chuyện thế nào",
+        "Hai bên quyết định ra sao",
+        "Kết quả"
+      ],
+      "points": [
+        {
+          "vi": "Bất đồng về việc gì",
+          "variants": [
+            "disagreed",
+            "different idea",
+            "thought",
+            "wanted"
+          ]
+        },
+        {
+          "vi": "Bạn đã nói chuyện thế nào",
+          "variants": [
+            "talked",
+            "listened",
+            "asked",
+            "explained",
+            "meeting"
+          ]
+        },
+        {
+          "vi": "Cách giải quyết và kết quả",
+          "variants": [
+            "decided",
+            "agreed",
+            "in the end",
+            "together",
+            "result"
+          ]
+        }
+      ],
+      "hints": [
+        "Hai bạn nghĩ khác nhau về chuyện gì? Bạn đã làm gì để hai bên hiểu nhau? Cuối cùng thế nào?",
+        "In my last project, my teammate and I disagreed about …"
+      ],
+      "model": "In my last project, a teammate wanted to release a new feature quickly. I thought we needed one more week of testing. We talked about it with our team lead, and I showed the open bugs. In the end, we agreed to release a smaller version first. It worked well, and we stayed good friends."
+    },
+    {
+      "id": "why-leave",
+      "en": "Why are you leaving your current job?",
+      "vi": "Vì sao bạn muốn rời công việc hiện tại?",
+      "tipVi": "Luôn nói tích cực: bạn muốn học thêm, thử thách mới, làm với nhóm quốc tế. Không chê công ty cũ hay sếp cũ.",
+      "shape": [
+        "Điều tốt bạn có được ở công việc hiện tại",
+        "Điều bạn muốn có thêm",
+        "Vì sao vị trí này cho bạn điều đó"
+      ],
+      "points": [
+        {
+          "vi": "Điều tốt ở công việc cũ",
+          "variants": [
+            "i learned",
+            "i enjoyed",
+            "good",
+            "great"
+          ]
+        },
+        {
+          "vi": "Điều bạn muốn có thêm",
+          "variants": [
+            "i want",
+            "i would like",
+            "i am looking for",
+            "new challenge",
+            "grow"
+          ]
+        },
+        {
+          "vi": "Vì sao là vị trí này",
+          "variants": [
+            "this role",
+            "this position",
+            "your company",
+            "here"
+          ]
+        }
+      ],
+      "hints": [
+        "Công việc hiện tại cho bạn điều gì tốt? Bạn muốn gì mà ở đó chưa có?",
+        "I've learned a lot in my current job, but now I want …"
+      ],
+      "model": "I've learned a lot in my current job, and I like my team. But our projects are all for the local market. Now I want to work with international clients and use English every day. This role gives me that chance."
+    },
+    {
+      "id": "five-years",
+      "en": "Where do you see yourself in five years?",
+      "vi": "Bạn thấy mình ở đâu sau 5 năm nữa?",
+      "tipVi": "Nói về kỹ năng bạn muốn có và vai trò bạn muốn làm, gắn với công ty. Đừng nói muốn mở công ty riêng hay chuyển nghề.",
+      "shape": [
+        "Kỹ năng bạn muốn giỏi hơn",
+        "Vai trò bạn muốn đảm nhận",
+        "Gắn với công ty này"
+      ],
+      "points": [
+        {
+          "vi": "Kỹ năng muốn có",
+          "variants": [
+            "skills",
+            "better",
+            "expert",
+            "learn",
+            "improve"
+          ]
+        },
+        {
+          "vi": "Vai trò mong muốn",
+          "variants": [
+            "lead",
+            "senior",
+            "manage",
+            "mentor",
+            "role"
+          ]
+        },
+        {
+          "vi": "Gắn với công ty",
+          "variants": [
+            "here",
+            "this company",
+            "your company",
+            "your team"
+          ]
+        }
+      ],
+      "hints": [
+        "Sau 5 năm bạn muốn giỏi việc gì? Bạn muốn giữ vai trò nào trong nhóm?",
+        "In five years, I hope to …"
+      ],
+      "model": "In five years, I hope to be a senior tester. I want to be really good at test automation. I'd also like to help new team members, like a mentor. I hope I can grow here with your team."
+    },
+    {
+      "id": "questions",
+      "en": "Do you have any questions for us?",
+      "vi": "Bạn có câu hỏi nào cho chúng tôi không?",
+      "tipVi": "Luôn có 2 câu hỏi chuẩn bị sẵn. Hỏi về công việc, nhóm và cách làm việc. Chưa nên hỏi lương ở vòng đầu.",
+      "shape": [
+        "Cảm ơn",
+        "Câu hỏi 1: về công việc hằng ngày hoặc nhóm",
+        "Câu hỏi 2: về cách làm việc hoặc bước tiếp theo"
+      ],
+      "points": [
+        {
+          "vi": "Câu hỏi về công việc hoặc nhóm",
+          "variants": [
+            "what does",
+            "what is",
+            "how many",
+            "who will",
+            "team",
+            "a typical day"
+          ]
+        },
+        {
+          "vi": "Câu hỏi về cách làm việc hoặc bước tiếp theo",
+          "variants": [
+            "how do you",
+            "next step",
+            "next steps",
+            "how does",
+            "when"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn muốn biết gì về một ngày làm việc, về nhóm, hay về vòng tiếp theo?",
+        "Yes, thank you. What does a typical day look like …?"
+      ],
+      "model": "Yes, thank you. What does a typical day look like for this role? And how does the team work with clients, by chat or by video calls? Also, what are the next steps after this interview?"
+    }
+  ],
+  "scenario": {
+    "id": "interview-mock",
+    "titleVi": "Phỏng vấn thử",
+    "partner": "Sarah, hiring manager",
+    "situationVi": "Buổi phỏng vấn bằng tiếng Anh khoảng 20 phút cho vị trí bạn muốn.",
+    "goalVi": "Trả lời đủ các câu hỏi, mỗi câu vài câu rõ ý, và hỏi lại nhà tuyển dụng ở cuối.",
+    "persona": "You are Sarah, a friendly hiring manager in a 20-minute job interview in English. Ask one question at a time, mostly from this list: about yourself, why this company, a project they are proud of, strengths, weakness, a difficult problem, a disagreement with a teammate, why they are leaving, five years from now, and finally if they have questions. Ask one short follow-up question when an answer is too short or vague. Use the candidate's background below if there is one.",
+    "goal": "The learner answers at least eight interview questions with a few clear sentences each, and asks the interviewer a question at the end.",
+    "script": [
+      {
+        "id": "start",
+        "say": "Hi, thanks for coming today. Let's start. Can you tell me about yourself?",
+        "sayVi": "Chào bạn, cảm ơn bạn đã đến. Mình bắt đầu nhé. Bạn giới thiệu về bản thân được không?",
+        "replies": [],
+        "any": "q2"
+      },
+      {
+        "id": "q2",
+        "say": "Thank you. Why do you want to work here?",
+        "sayVi": "Cảm ơn bạn. Vì sao bạn muốn làm ở đây?",
+        "replies": [],
+        "any": "q3"
+      },
+      {
+        "id": "q3",
+        "say": "Great. Tell me about a project you're proud of.",
+        "sayVi": "Tốt. Kể về một dự án bạn tự hào nhé.",
+        "replies": [],
+        "any": "q4"
+      },
+      {
+        "id": "q4",
+        "say": "Interesting. What are your strengths?",
+        "sayVi": "Thú vị đấy. Điểm mạnh của bạn là gì?",
+        "replies": [],
+        "any": "q5"
+      },
+      {
+        "id": "q5",
+        "say": "And what is your biggest weakness?",
+        "sayVi": "Còn điểm yếu lớn nhất của bạn?",
+        "replies": [],
+        "any": "q6"
+      },
+      {
+        "id": "q6",
+        "say": "Tell me about a difficult problem you solved.",
+        "sayVi": "Kể về một vấn đề khó bạn đã giải quyết.",
+        "replies": [],
+        "any": "q7"
+      },
+      {
+        "id": "q7",
+        "say": "Have you ever disagreed with a teammate? What happened?",
+        "sayVi": "Bạn có bao giờ bất đồng với đồng nghiệp chưa? Chuyện gì đã xảy ra?",
+        "replies": [],
+        "any": "q8"
+      },
+      {
+        "id": "q8",
+        "say": "Why are you leaving your current job?",
+        "sayVi": "Vì sao bạn muốn rời công việc hiện tại?",
+        "replies": [],
+        "any": "q9"
+      },
+      {
+        "id": "q9",
+        "say": "Where do you see yourself in five years?",
+        "sayVi": "Bạn thấy mình ở đâu sau 5 năm nữa?",
+        "replies": [],
+        "any": "q10"
+      },
+      {
+        "id": "q10",
+        "say": "Thank you. Do you have any questions for us?",
+        "sayVi": "Cảm ơn bạn. Bạn có câu hỏi nào cho chúng tôi không?",
+        "replies": [],
+        "any": "end"
+      },
+      {
+        "id": "end",
+        "say": "Good questions. That's all from me. Thank you, and we'll be in touch soon.",
+        "sayVi": "Câu hỏi hay. Phần của tôi đến đây là hết. Cảm ơn bạn, chúng tôi sẽ liên lạc sớm.",
+        "replies": []
+      }
+    ]
+  }
+}

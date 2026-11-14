@@ -6,16 +6,19 @@ import { aiCallsToday, askCached } from './cached';
 import { currentTrack } from '../content';
 import { getSettings, aiReady, type Settings } from '../settings';
 import { AiError, askJson, type AiErrorKind } from './providers';
+import { learnerLevel } from '../plan';
+import { levelBrief } from './level';
 
 /**
  * Correcting a written answer. AI when it is set up and has calls left today; otherwise (or when
  * it fails) the rules. Results are cached: the same answer is never sent twice.
  */
 
-const PROMPT_VERSION = 2;
+const PROMPT_VERSION = 3;
 
-const system = () => `You are an English writing coach for Vietnamese ${currentTrack.audience}. The learner is LEARNING:
+const system = (level: Awaited<ReturnType<typeof learnerLevel>>) => `You are an English writing coach for Vietnamese ${currentTrack.audience}. The learner is LEARNING:
 never wave an answer through. Judge it against the task, fix it, and teach one step further.
+${levelBrief(level)}
 Return ONLY JSON:
 {"corrected": string, "mistakes": [{"wrong": string, "right": string, "label": string, "vi": string}],
  "coverage": [{"ok": boolean, "noteVi": string}], "upgrades": [{"en": string, "vi": string}], "praiseVi": string}
@@ -26,7 +29,7 @@ Rules:
 - "mistakes": each real error; "wrong" and "right" are short exact pieces (2-6 words) from the text and from "corrected".
 - "label": one of ${Object.keys(ERROR_LABELS).join(', ')}.
 - "vi": why, in simple Vietnamese, at most 20 words. No grammar jargon.
-- "upgrades": 1-2 ways a friendly native colleague would say the learner's own idea better (more natural, more varied,
+- "upgrades": ${level.support ? '1 way' : '1-2 ways'} a friendly native colleague would say the learner's own idea better (more natural, more varied,
   using the task's chunks). Give them EVEN IF there are no mistakes. "vi": what is better about it, at most 15 words.
 - "praiseVi": one specific thing done well, in Vietnamese, at most 15 words; "" if the answer is incomplete or weak.
 - If there are no errors, "mistakes" is [] and "corrected" equals the text.`;
@@ -74,7 +77,7 @@ export async function correctWriting(task: Task, text: string, now: Date, settin
     settings,
     now,
     version: `correct-${PROMPT_VERSION}`,
-    system: system(),
+    system: system(await learnerLevel()),
     user: `${taskBrief(task)}\nLearner's text:\n${text.trim()}`,
     schema: correctionSchema,
     fake: () => fakeAi(task, text),

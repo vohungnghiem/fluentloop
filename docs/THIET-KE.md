@@ -25,6 +25,8 @@ Mục tiêu: **sạch, ấm, dễ đọc**. Không cần đồ hoạ xuất sắ
 | `--accent-tint` | `#FFF3DC` | `#3D3220` | Nền đoạn bị sửa |
 | `--good` | `#2F9E6E` | `#4CC38A` | Đúng, chữ được thêm vào trong diff |
 | `--good-tint` | `#E3F6EC` | `#1E3A2D` | Nền đúng |
+| `--danger` | `#C92A2A` | `#FF8787` | **Chỉ** cho thao tác xoá không hoàn tác được (`Button variant="danger"`) |
+| `--danger-tint` | `#FFF0F0` | `#3D1F22` | Nền khung xác nhận xoá |
 
 - **Màu theo track:** mỗi ngành có một `--track` riêng (dev: chàm `#3B5BDB`, sau này điều dưỡng: xanh ngọc, khách sạn: cam đất...), dùng cho minh hoạ và nhãn. Màu nút chính không đổi.
 - Không dùng đỏ cho lỗi. Màu đỏ chỉ dành cho thao tác nguy hiểm (xoá dữ liệu).
@@ -77,9 +79,15 @@ Mỗi tông là một class `.tone-<tên>` đặt `--tone` và `--tone-tint`. B�
 | `Diff` | Chữ bị bỏ: gạch ngang trên nền hổ phách. Chữ thêm vào: nền xanh. Có tóm tắt "1 chỗ sửa" |
 | `FeedbackPanel` | **Một khung duy nhất** cho nhận xét: đủ ý → cụm → lỗi (diff + chọn thành thẻ) → nâng cấp → khen. Thay cho các khung rời |
 | `HintBox` | Gợi ý 3 bậc, mở dần |
+| `PatternCard` | Khung mẫu câu của bài (gói Nền): công thức, 3–4 câu ví dụ có loa, một ghi chú. Hiện thẳng ở bước Nạp và trang bài, không thu gọn, vì người học cần nó để viết |
+| `SoundTips` | Âm cần chú ý trong câu đang nói theo: từ, cách đặt miệng, loa chậm. Câu không có âm nào thì không hiện |
+| Luyện nói | Trang `/roleplay` mở đầu bằng `NavList` hai dòng (Nói liền, Sau buổi nói), rồi tới danh sách hội thoại. Màn tập trung (Nói liền, Hội thoại, Sau buổi nói) không có thanh tab. Đang ghi âm thì nút chính là "Dừng", có đồng hồ, thanh độ to và phụ đề chạy |
 | `RatingRow` | 4 mức FSRS với chữ thân thiện: Quên · Khó · Nhớ · Dễ |
 | `StatTile` | Số to kèm nhãn nhỏ, có thể theo tông. Ở Chốt chỉ hiện ô có số lớn hơn 0 |
 | `EmptyState` | Luôn có minh hoạ, một câu và một nút |
+| `OptionButton` | Một lựa chọn dạng dòng lớn (52px): đáp án trắc nghiệm, chọn số phút, chọn ngành (`dot` là màu ngành). `selected` thì viền xanh và có dấu tick, `keyHint` hiện phím tắt trên màn rộng |
+| `Section` | Một phần của màn dài (Cài đặt): icon theo tông, tiêu đề, một dòng mô tả, trạng thái bên phải (`Chip` "Đang bật"). Nội dung (thường là `Card`) nằm dưới |
+| `LuBurst` | Lu kèm chấm màu bung ra một lần: chỉ dùng ở chỗ kết thúc (Chốt phiên, xong màn Bắt đầu) |
 
 ### 4.1 Quy tắc chỗ bấm (bắt buộc cho mọi màn)
 Mục tiêu: người chỉ muốn học thấy ngay một việc, người muốn khám phá có chỗ rõ ràng, không bấm nhầm trên điện thoại.
@@ -91,7 +99,9 @@ Mục tiêu: người chỉ muốn học thấy ngay một việc, người mu�
 | Dòng điều hướng | `NavList` + `NavRow` (cả dòng bấm được, cao 52px, icon trái, › phải) | Đi tới màn khác |
 | Link phụ trong thẻ | class `linkButton` (có viền, cao 40px) | "Xem sổ lỗi", "Viết", "Hiện tiếng Việt" |
 | Quay lại | `PageHeader back` (mũi tên ←, 44px, bên trái) | Mọi màn con |
-| Hiếm dùng / nguy hiểm | `MoreMenu` (⋯), luôn `confirm` | Bỏ phiên, xoá |
+| Chọn một trong danh sách (màn tập trung) | `OptionButton`, xếp dọc | Đáp án bài xếp mức, số phút mỗi ngày |
+| Hiếm dùng / nguy hiểm | `MoreMenu` (⋯), luôn `confirm` | Bỏ phiên |
+| Xoá dữ liệu | Hai bước: nút phụ chữ đỏ mở khung xác nhận (gợi ý sao lưu, ô tích "Tôi hiểu"), rồi mới tới `Button variant="danger"`. Đặt cuối màn, tách khỏi phần khác | Xoá dữ liệu học |
 | Mở thêm hướng dẫn | Hiện thẳng, không giấu trong `<details>` nếu người dùng cần để làm xong việc | Các bước chuyển máy |
 
 - **Màu xanh chỉ dành cho thứ bấm được.** Nhãn (`Chip`) dùng nền trung tính; `tone="track"` chỉ thêm chấm màu ngành. Ngoại lệ: khung giải thích cụm (`ChunkGloss`) tô xanh nhạt để nối với cụm đang chọn. Nhãn, cụm từ, các bước, chữ thông tin dùng `ink` hoặc `ink-soft`.

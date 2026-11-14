@@ -1,4 +1,4 @@
-import { AudioLines, BookOpen, ClipboardPaste, House, Layers, MessagesSquare, NotebookPen, PartyPopper, PenLine, Route, TrendingUp, Wrench, type LucideIcon } from 'lucide-react';
+import { AudioLines, BookOpen, Briefcase, ClipboardPaste, House, Layers, MessagesSquare, Mic, NotebookPen, PartyPopper, PenLine, Route, TrendingUp, UsersRound, Wrench, type LucideIcon } from 'lucide-react';
 import type { StepKind } from '../core/session/plan';
 
 /**
@@ -22,6 +22,9 @@ export const SECTION_LOOK = {
   errors: { tone: 'fix', icon: NotebookPen },
   progress: { tone: 'wrap', icon: TrendingUp },
   roleplay: { tone: 'review', icon: MessagesSquare },
+  talk: { tone: 'shadow', icon: Mic },
+  talkLog: { tone: 'wrap', icon: UsersRound },
+  interview: { tone: 'produce', icon: Briefcase },
   fix: { tone: 'fix', icon: Wrench },
 } satisfies Record<string, { tone: Tone; icon: LucideIcon }>;
 

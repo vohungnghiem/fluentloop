@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 
-/** Dots thrown once around Lu at the end: angle and tone. */
-const BURST: Array<[number, string]> = [[0, 'produce'], [45, 'shadow'], [90, 'wrap'], [135, 'review'], [180, 'input'], [225, 'fix'], [270, 'produce'], [315, 'wrap']];
 import { useLiveQuery } from 'dexie-react-hooks';
 import { useNavigate } from 'react-router';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import type { SessionRow } from '../../services/db';
 import { finishSession, nextSuggestions, todaySummary } from '../../services/learning';
-import { Lu, PrimaryAction, StatTile } from '../../ui/ui';
+import { LuBurst, PrimaryAction, StatTile } from '../../ui/ui';
 import { labelName, MoreSuggestions } from '../next/NextUp';
 
 /**
@@ -38,10 +36,7 @@ export function WrapStep({ session, onDone }: { session: SessionRow; onDone: () 
 
   return (
     <section className="flex flex-1 flex-col items-center pt-10 text-center">
-      <span className="burst tone-wrap">
-        {BURST.map(([angle, color], i) => <i key={i} style={{ '--a': `${angle}deg`, background: `var(--tone-${color})` } as React.CSSProperties} />)}
-        <Lu size={88} className="pop" />
-      </span>
+      <LuBurst />
       <h1 className="mt-4 text-2xl font-semibold">{session.plan.review ? vi.wrap.reviewDone : drill ? vi.drill.done(labelName(drill)) : vi.wrap.title}</h1>
       {tiles.length > 0 && (
         <div className={`rise mt-6 grid w-full gap-3 ${['', 'grid-cols-1', 'grid-cols-2', 'grid-cols-3', 'grid-cols-2'][tiles.length]}`}>

@@ -11,7 +11,7 @@ import type { SessionRow } from '../../services/db';
 import { nextStep, recordShadowing } from '../../services/learning';
 import { sttSupported, type MicStatus } from '../../services/speech/stt';
 import { Button, Note, PrimaryAction } from '../../ui/ui';
-import { MicButton, SpeakButton, useSpaceToPlay } from '../../ui/speech';
+import { MicButton, SoundTips, SpeakButton, useSpaceToPlay } from '../../ui/speech';
 
 /**
  * Hear a key sentence, say it straight after, see which words the machine heard. Without
@@ -69,6 +69,10 @@ export function ShadowStep({ session }: { session: SessionRow }) {
       </p>
       <div className="mt-3 flex flex-wrap gap-2">
         <SpeakButton text={line} slow />
+      </div>
+      {/* The unit's sounds that are in this sentence. */}
+      <div className="mt-4">
+        <SoundTips sounds={found?.unit.sounds.filter((sound) => line.toLowerCase().includes(sound.en.toLowerCase())) ?? []} />
       </div>
 
       <div className="mt-8">

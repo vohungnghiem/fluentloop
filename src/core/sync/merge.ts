@@ -19,6 +19,12 @@ export const SYNC_KEYS = {
   aiUsage: 'day',
   roleplays: 'scenarioId',
   drafts: 'key',
+  plans: 'id',
+  placements: 'id',
+  studyTime: 'id',
+  studyLog: 'id',
+  talks: 'id',
+  answers: 'questionId',
 } as const;
 export type SyncTable = keyof typeof SYNC_KEYS;
 
@@ -103,4 +109,23 @@ export function mergeTables(local: Tables, remote: Tables, tables: readonly Sync
     result.tables[table] = merged;
   }
   return result;
+}
+
+/** When a row was last written: what tells whether it was made before a reset. */
+export function rowStamp(row: Row): string {
+  return String(row.updatedAt ?? row.at ?? row.createdAt ?? row.lastReadAt ?? row.day ?? '');
+}
+
+/**
+ * Rows written before a reset (the learner deleted their data on some device), per table, by key.
+ * They are dropped everywhere; what was made after the reset stays.
+ */
+export function rowsBefore(tables: Tables, resetAt: string, names: readonly SyncTable[]): Partial<Record<SyncTable, string[]>> {
+  const out: Partial<Record<SyncTable, string[]>> = {};
+  for (const name of names) {
+    const key = SYNC_KEYS[name];
+    const ids = (tables[name] ?? []).filter((row) => rowStamp(row) < resetAt).map((row) => String(row[key]));
+    if (ids.length) out[name] = ids;
+  }
+  return out;
 }

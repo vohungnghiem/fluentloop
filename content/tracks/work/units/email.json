@@ -1,0 +1,396 @@
+{
+  "id": "work-email",
+  "track": "work",
+  "title": "Work email",
+  "titleVi": "Email công việc",
+  "cefr": "B1",
+  "pattern": {
+    "titleVi": "Email ngắn: chào → việc chính → lời nhờ → kết",
+    "forms": [
+      "Hi + tên,",
+      "I'm writing about … / Just following up on …",
+      "Could you please + V …?",
+      "Thanks in advance. / Best, + tên"
+    ],
+    "examples": [
+      {
+        "en": "Hi Sarah, I'm writing about the invoice.",
+        "vi": "Chào Sarah, mình viết email về hoá đơn."
+      },
+      {
+        "en": "Could you please check it by Friday?",
+        "vi": "Bạn kiểm tra giúp trước thứ Sáu được không?"
+      },
+      {
+        "en": "Sorry for the late reply.",
+        "vi": "Xin lỗi vì trả lời muộn."
+      }
+    ],
+    "noteVi": "Email công việc tiếng Anh ngắn và đi thẳng vào việc. Không cần “Dear Sir/Madam” khi đã biết tên. Một email chỉ nên nhờ một việc chính."
+  },
+  "sounds": [
+    {
+      "en": "advance",
+      "tipVi": "/ədˈvæns/: nhấn “VANS”, âm cuối /s/ rõ."
+    },
+    {
+      "en": "attached",
+      "tipVi": "/əˈtætʃt/: đuôi -ed đọc /t/, một âm tiết cuối “tætʃt”."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "work-email-ask",
+      "genre": "email",
+      "titleVi": "Nhờ gửi tài liệu",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Hi Sarah, I'm writing about the new payment screen.",
+        "Could you please send me the latest design by Thursday? Thanks in advance!"
+      ],
+      "translationVi": [
+        "Chào Sarah, mình viết email về màn hình thanh toán mới.",
+        "Bạn gửi giúp mình bản thiết kế mới nhất trước thứ Năm được không? Cảm ơn bạn trước nhé!"
+      ],
+      "chunks": [
+        "work-writing-about",
+        "work-could-you-please",
+        "work-thanks-in-advance"
+      ],
+      "task": "work-task-email-ask"
+    },
+    {
+      "id": "work-email-follow",
+      "genre": "email",
+      "titleVi": "Nhắc lại một việc",
+      "speaker": "Nam, backend dev",
+      "cefr": "B1",
+      "text": [
+        "Hi Tom, just following up on my email from Monday.",
+        "Have you had a chance to look at the server costs? I've attached the file again."
+      ],
+      "translationVi": [
+        "Chào Tom, mình nhắc lại email hôm thứ Hai.",
+        "Bạn đã xem qua chi phí server chưa? Mình gửi kèm lại file đây."
+      ],
+      "chunks": [
+        "work-following-up",
+        "work-had-a-chance",
+        "work-attached"
+      ],
+      "task": "work-task-email-follow"
+    },
+    {
+      "id": "work-email-late",
+      "genre": "email",
+      "titleVi": "Xin lỗi vì trả lời muộn",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "Sorry for the late reply. I was out of the office yesterday.",
+        "The new icons are ready. Please let me know if you need any changes."
+      ],
+      "translationVi": [
+        "Xin lỗi vì trả lời muộn. Hôm qua mình không ở văn phòng.",
+        "Bộ icon mới đã xong. Cần sửa gì thì báo mình nhé."
+      ],
+      "chunks": [
+        "work-sorry-late-reply",
+        "work-out-of-the-office",
+        "work-let-me-know"
+      ],
+      "task": "work-task-email-late"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "work-writing-about",
+      "en": "I'm writing about",
+      "vi": "mình viết (email) về",
+      "forms": [
+        "i am writing about"
+      ],
+      "example": "I'm writing about our meeting next week.",
+      "exampleVi": "Mình viết email về buổi họp tuần sau.",
+      "answer": "I'm writing about"
+    },
+    {
+      "id": "work-could-you-please",
+      "en": "Could you please",
+      "vi": "bạn làm ơn … được không",
+      "example": "Could you please check the numbers?",
+      "exampleVi": "Bạn kiểm tra giúp các con số được không?",
+      "answer": "Could you please"
+    },
+    {
+      "id": "work-thanks-in-advance",
+      "en": "Thanks in advance",
+      "vi": "cảm ơn bạn trước",
+      "example": "Thanks in advance for your help.",
+      "exampleVi": "Cảm ơn bạn trước vì đã giúp.",
+      "answer": "Thanks in advance"
+    },
+    {
+      "id": "work-following-up",
+      "en": "following up on",
+      "vi": "nhắc lại, hỏi tiếp về",
+      "example": "I'm following up on the contract.",
+      "exampleVi": "Mình hỏi tiếp về hợp đồng.",
+      "answer": "following up on"
+    },
+    {
+      "id": "work-had-a-chance",
+      "en": "had a chance to",
+      "vi": "đã có dịp (làm gì)",
+      "example": "Have you had a chance to read it?",
+      "exampleVi": "Bạn đã có dịp đọc nó chưa?",
+      "answer": "had a chance to"
+    },
+    {
+      "id": "work-attached",
+      "en": "I've attached",
+      "vi": "mình đã đính kèm",
+      "forms": [
+        "attached the file",
+        "attached"
+      ],
+      "example": "I've attached the report.",
+      "exampleVi": "Mình đã đính kèm báo cáo.",
+      "answer": "I've attached"
+    },
+    {
+      "id": "work-sorry-late-reply",
+      "en": "Sorry for the late reply",
+      "vi": "xin lỗi vì trả lời muộn",
+      "example": "Sorry for the late reply, I was sick.",
+      "exampleVi": "Xin lỗi vì trả lời muộn, mình bị ốm.",
+      "answer": "Sorry for the late reply"
+    },
+    {
+      "id": "work-out-of-the-office",
+      "en": "out of the office",
+      "vi": "không ở văn phòng, đi vắng",
+      "example": "I'll be out of the office on Friday.",
+      "exampleVi": "Thứ Sáu mình không ở văn phòng.",
+      "answer": "out of the office"
+    },
+    {
+      "id": "work-let-me-know",
+      "en": "let me know if",
+      "vi": "báo mình nếu",
+      "example": "Let me know if you have questions.",
+      "exampleVi": "Có câu hỏi thì báo mình nhé.",
+      "answer": "let me know if"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "work-task-email-ask",
+      "promptVi": "Viết email ngắn nhờ đồng nghiệp gửi một tài liệu, có hạn chót.",
+      "situation": "Email to a colleague.",
+      "required": [
+        {
+          "label": "Could you please",
+          "variants": [
+            "could you please",
+            "could you"
+          ]
+        },
+        {
+          "label": "Thanks in advance",
+          "variants": [
+            "thanks in advance",
+            "thank you in advance"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Nam, I'm writing about the API document. Could you please send me the latest version by Friday? Thanks in advance! Best, Linh"
+      ],
+      "tipVi": "Chào → việc gì (I'm writing about…) → nhờ gì, trước ngày nào → cảm ơn và tên.",
+      "points": [
+        {
+          "vi": "Chào người nhận",
+          "variants": [
+            "hi",
+            "hello",
+            "dear"
+          ]
+        },
+        {
+          "vi": "Email về việc gì",
+          "variants": [
+            "writing about",
+            "about"
+          ]
+        },
+        {
+          "vi": "Nhờ gửi gì, trước ngày nào",
+          "variants": [
+            "send",
+            "by"
+          ]
+        },
+        {
+          "vi": "Cảm ơn",
+          "variants": [
+            "thanks",
+            "thank you"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn cần tài liệu gì, khi nào cần? Kết thư thế nào?",
+        "Hi …, I'm writing about … Could you please send me … by …?"
+      ]
+    },
+    {
+      "id": "work-task-email-follow",
+      "promptVi": "Bạn gửi email hỏi một việc từ ba ngày trước mà chưa thấy trả lời. Viết email nhắc lại, lịch sự.",
+      "situation": "Follow-up email.",
+      "required": [
+        {
+          "label": "following up",
+          "variants": [
+            "following up",
+            "follow up"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Sarah, just following up on my email from Tuesday. Have you had a chance to check the new prices? Thanks, Nam"
+      ],
+      "tipVi": "Nhắc mà không trách: Just following up on… và hỏi Have you had a chance to…?",
+      "points": [
+        {
+          "vi": "Nhắc lại email nào",
+          "variants": [
+            "following up",
+            "my email",
+            "last email"
+          ]
+        },
+        {
+          "vi": "Hỏi lại điều cần",
+          "variants": [
+            "have you had a chance",
+            "could you",
+            "can you",
+            "any update"
+          ]
+        }
+      ],
+      "hints": [
+        "Email trước là về việc gì, gửi hôm nào? Bạn hỏi lại thế nào cho lịch sự?",
+        "Hi …, just following up on my email from … Have you had a chance to …?"
+      ]
+    },
+    {
+      "id": "work-task-email-late",
+      "promptVi": "Bạn trả lời email muộn hai ngày. Xin lỗi, nói ngắn lý do, rồi trả lời việc chính.",
+      "situation": "Reply to a client.",
+      "required": [
+        {
+          "label": "Sorry for the late reply",
+          "variants": [
+            "sorry for the late reply",
+            "sorry for my late reply"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Tom, sorry for the late reply. I was out of the office on Monday. The report is attached. Let me know if you have any questions."
+      ],
+      "tipVi": "Lý do chỉ cần một câu ngắn. Không cần xin lỗi nhiều lần.",
+      "points": [
+        {
+          "vi": "Xin lỗi",
+          "variants": [
+            "sorry"
+          ]
+        },
+        {
+          "vi": "Lý do ngắn",
+          "variants": [
+            "i was",
+            "because"
+          ]
+        },
+        {
+          "vi": "Trả lời việc chính",
+          "variants": [
+            "attached",
+            "ready",
+            "here is",
+            "the answer",
+            "yes",
+            "done"
+          ]
+        }
+      ],
+      "hints": [
+        "Vì sao bạn trả lời muộn? Việc người ta hỏi đã xong chưa?",
+        "Hi …, sorry for the late reply. I was … The … is …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "work-scenario-email",
+      "titleVi": "Nhắn hỏi tài liệu qua chat",
+      "partner": "Sarah, designer",
+      "situationVi": "Bạn cần bản thiết kế mới từ Sarah. Bạn nhắn qua chat công ty.",
+      "goalVi": "Nói bạn cần gì, khi nào cần, và cảm ơn.",
+      "persona": "You are Sarah, a busy designer at work, chatting. The learner needs a design file. Ask which file and when they need it. Short, friendly chat messages.",
+      "goal": "The learner says which file they need, by when, and thanks Sarah.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hi! What's up?",
+          "sayVi": "Chào! Có gì không?",
+          "replies": [
+            {
+              "text": "Hi Sarah, could you please send me the new design?",
+              "next": "which"
+            },
+            {
+              "text": "I'm writing about the payment screen.",
+              "next": "which"
+            }
+          ]
+        },
+        {
+          "id": "which",
+          "say": "Sure. Which screen, and when do you need it?",
+          "sayVi": "Được. Màn hình nào, và bạn cần khi nào?",
+          "replies": [
+            {
+              "text": "The payment screen. I need it by Thursday.",
+              "next": "end"
+            },
+            {
+              "text": "The login page, by tomorrow if possible.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "No problem, I'll send it this afternoon.",
+          "sayVi": "Không sao, chiều nay mình gửi nhé.",
+          "replies": [
+            {
+              "text": "Thanks in advance!",
+              "next": null
+            },
+            {
+              "text": "Great, thank you so much.",
+              "next": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

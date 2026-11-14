@@ -18,7 +18,7 @@ export default defineConfig({
       manifest: {
         name: 'FluentLoop',
         short_name: 'FluentLoop',
-        description: 'Mỗi ngày 15 phút học tiếng Anh của chính công việc mình.',
+        description: 'Học tiếng Anh dùng được trong công việc, theo kế hoạch 16 tuần.',
         lang: 'vi',
         start_url: base,
         scope: base,

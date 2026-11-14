@@ -1,0 +1,392 @@
+{
+  "id": "core-ask",
+  "track": "core",
+  "title": "Asking again",
+  "titleVi": "Hỏi lại khi không hiểu",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Hỏi lại lịch sự: Could you…? / What do you mean…?",
+    "forms": [
+      "Could you + V, please?",
+      "Sorry, could you say that again?",
+      "What does + từ + mean?",
+      "What do you mean by + từ?",
+      "Do you mean + điều bạn hiểu?"
+    ],
+    "examples": [
+      {
+        "en": "Could you speak more slowly, please?",
+        "vi": "Bạn nói chậm hơn được không?"
+      },
+      {
+        "en": "What do you mean by \"EOD\"?",
+        "vi": "“EOD” nghĩa là gì vậy?"
+      },
+      {
+        "en": "Do you mean Friday morning?",
+        "vi": "Ý bạn là sáng thứ Sáu à?"
+      }
+    ],
+    "noteVi": "Không hiểu là chuyện bình thường. Hỏi lại lịch sự tốt hơn nhiều so với gật đầu cho qua rồi làm sai. Sau Could you là động từ nguyên mẫu. Gặp từ lạ: What does … mean? Muốn hiểu rõ ý người nói: What do you mean by …?"
+  },
+  "sounds": [
+    {
+      "en": "could",
+      "tipVi": "/kʊd/: chữ “l” câm, không đọc. Đọc ngắn, có âm /d/ nhẹ ở cuối, đừng bỏ âm cuối."
+    },
+    {
+      "en": "again",
+      "tipVi": "/əˈɡen/: nhấn âm sau “GEN”, âm đầu rất nhẹ."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-ask-call",
+      "genre": "meeting",
+      "titleVi": "Nghe không rõ trong cuộc họp online",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Sorry, could you say that again? The sound is not very clear.",
+        "Could you speak a bit more slowly, please?"
+      ],
+      "translationVi": [
+        "Xin lỗi, bạn nói lại được không? Âm thanh không rõ lắm.",
+        "Bạn nói chậm hơn một chút được không?"
+      ],
+      "chunks": [
+        "core-say-that-again",
+        "core-not-very-clear",
+        "core-speak-more-slowly"
+      ],
+      "task": "core-task-ask-call"
+    },
+    {
+      "id": "core-ask-meaning",
+      "genre": "chat",
+      "titleVi": "ASAP là lúc nào?",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "What do you mean by \"ASAP\"? Do you mean today?",
+        "Just to check, you need the report by 5 pm, right?"
+      ],
+      "translationVi": [
+        "“ASAP” ý bạn là sao? Ý bạn là hôm nay à?",
+        "Cho mình hỏi lại cho chắc, bạn cần báo cáo trước 5 giờ chiều, đúng không?"
+      ],
+      "chunks": [
+        "core-what-do-you-mean-by",
+        "core-do-you-mean",
+        "core-just-to-check"
+      ],
+      "task": "core-task-ask-meaning"
+    },
+    {
+      "id": "core-ask-spell",
+      "genre": "phone",
+      "titleVi": "Đánh vần giúp mình",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "Could you spell your name, please? Is that T-R-A-N?",
+        "Thanks. Let me repeat your phone number: 0905 123 456."
+      ],
+      "translationVi": [
+        "Bạn đánh vần tên giúp mình được không? Có phải T-R-A-N không?",
+        "Cảm ơn. Để mình nhắc lại số điện thoại của bạn: 0905 123 456."
+      ],
+      "chunks": [
+        "core-spell-your-name",
+        "core-let-me-repeat"
+      ],
+      "task": "core-task-ask-spell"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-say-that-again",
+      "en": "say that again",
+      "vi": "nói lại câu đó",
+      "example": "Sorry, can you say that again?",
+      "exampleVi": "Xin lỗi, bạn nói lại được không?",
+      "answer": "say that again"
+    },
+    {
+      "id": "core-not-very-clear",
+      "en": "not very clear",
+      "vi": "không rõ lắm",
+      "example": "Your voice is not very clear.",
+      "exampleVi": "Giọng bạn nghe không rõ lắm.",
+      "answer": "not very clear"
+    },
+    {
+      "id": "core-speak-more-slowly",
+      "en": "speak more slowly",
+      "vi": "nói chậm hơn",
+      "forms": [
+        "speak a bit more slowly"
+      ],
+      "example": "Could you speak more slowly?",
+      "exampleVi": "Bạn nói chậm hơn được không?",
+      "answer": "speak more slowly"
+    },
+    {
+      "id": "core-what-do-you-mean-by",
+      "en": "What do you mean by",
+      "vi": "… nghĩa là gì, ý bạn là sao",
+      "example": "What do you mean by \"later\"?",
+      "exampleVi": "“Later” ý bạn là lúc nào?",
+      "answer": "What do you mean by"
+    },
+    {
+      "id": "core-do-you-mean",
+      "en": "Do you mean",
+      "vi": "ý bạn là … phải không",
+      "example": "Do you mean the old version?",
+      "exampleVi": "Ý bạn là bản cũ à?",
+      "answer": "Do you mean"
+    },
+    {
+      "id": "core-just-to-check",
+      "en": "Just to check",
+      "vi": "hỏi lại cho chắc",
+      "example": "Just to check, the meeting is at 10, right?",
+      "exampleVi": "Hỏi lại cho chắc, họp lúc 10 giờ, đúng không?",
+      "answer": "Just to check"
+    },
+    {
+      "id": "core-spell-your-name",
+      "en": "spell your name",
+      "vi": "đánh vần tên",
+      "forms": [
+        "spell that"
+      ],
+      "example": "Can you spell your name for me?",
+      "exampleVi": "Bạn đánh vần tên giúp mình nhé?",
+      "answer": "spell your name"
+    },
+    {
+      "id": "core-let-me-repeat",
+      "en": "Let me repeat",
+      "vi": "để tôi nhắc lại",
+      "example": "Let me repeat the address.",
+      "exampleVi": "Để mình nhắc lại địa chỉ.",
+      "answer": "Let me repeat"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-ask-call",
+      "promptVi": "Trong cuộc họp online bạn nghe không rõ. Xin người nói nhắc lại và nói chậm hơn.",
+      "situation": "Online meeting with a client.",
+      "required": [
+        {
+          "label": "say that again",
+          "variants": [
+            "say that again",
+            "repeat that"
+          ]
+        },
+        {
+          "label": "more slowly",
+          "variants": [
+            "more slowly",
+            "slower"
+          ]
+        }
+      ],
+      "models": [
+        "Sorry, could you say that again? Could you speak more slowly, please?"
+      ],
+      "tipVi": "Could you + động từ nguyên mẫu + please? là cách nhờ lịch sự, dùng được trong hầu hết tình huống.",
+      "points": [
+        {
+          "vi": "Xin nói lại",
+          "variants": [
+            "again",
+            "repeat"
+          ]
+        },
+        {
+          "vi": "Nhờ nói chậm hơn",
+          "variants": [
+            "slowly",
+            "slower"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn mở đầu bằng lời xin lỗi thế nào? Rồi nhờ họ làm hai việc gì?",
+        "Sorry, could you … ? Could you speak …?"
+      ]
+    },
+    {
+      "id": "core-task-ask-meaning",
+      "promptVi": "Sếp nhắn: “Please send it by EOD.” Hỏi lại EOD nghĩa là gì, và xác nhận lại hạn chót.",
+      "situation": "Chat with your manager.",
+      "required": [
+        {
+          "label": "What does … mean? / What do you mean by…?",
+          "variants": [
+            "what do you mean",
+            "what does",
+            "mean"
+          ]
+        },
+        {
+          "label": "Just to check",
+          "variants": [
+            "just to check",
+            "to be sure",
+            "to confirm",
+            "right"
+          ]
+        }
+      ],
+      "models": [
+        "What does \"EOD\" mean? Do you mean today? Just to check, you need it by 6 pm, right?"
+      ],
+      "tipVi": "Hỏi nghĩa: What do you mean by …? Đoán thử: Do you mean …? Kiểm lại: Just to check, …, right?",
+      "points": [
+        {
+          "vi": "Hỏi nghĩa của từ lạ",
+          "variants": [
+            "mean"
+          ]
+        },
+        {
+          "vi": "Xác nhận lại hạn chót",
+          "variants": [
+            "today",
+            "tomorrow",
+            "pm",
+            "am",
+            "by",
+            "right"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn hỏi nghĩa của EOD thế nào? Bạn đoán là mấy giờ, rồi hỏi lại cho chắc ra sao?",
+        "What do you mean by …? Do you mean …?"
+      ]
+    },
+    {
+      "id": "core-task-ask-spell",
+      "promptVi": "Khách gọi điện để lại tên và số điện thoại. Nhờ họ đánh vần tên, rồi nhắc lại số để kiểm tra.",
+      "situation": "Phone call at the front desk.",
+      "required": [
+        {
+          "label": "spell",
+          "variants": [
+            "spell"
+          ]
+        },
+        {
+          "label": "Let me repeat",
+          "variants": [
+            "let me repeat",
+            "let me check"
+          ]
+        }
+      ],
+      "models": [
+        "Could you spell your name, please? Let me repeat your number: 0912 345 678. Is that right?"
+      ],
+      "tipVi": "Nhắc lại số rồi hỏi Is that right? để người kia xác nhận.",
+      "points": [
+        {
+          "vi": "Nhờ đánh vần tên",
+          "variants": [
+            "spell"
+          ]
+        },
+        {
+          "vi": "Nhắc lại số điện thoại",
+          "variants": [
+            "repeat",
+            "number"
+          ]
+        },
+        {
+          "vi": "Hỏi lại xem đúng chưa",
+          "variants": [
+            "is that right",
+            "is that correct",
+            "right"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn nhờ đánh vần thế nào? Rồi nhắc lại số và hỏi đúng chưa ra sao?",
+        "Could you spell …, please? Let me repeat …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-ask",
+      "titleVi": "Khách hàng nói nhanh",
+      "partner": "Sarah, client from Australia",
+      "situationVi": "Họp online với Sarah. Cô ấy nói nhanh và dùng chữ viết tắt.",
+      "goalVi": "Xin nói lại, hỏi nghĩa chữ viết tắt, và xác nhận lại hạn chót.",
+      "persona": "You are Sarah, a client from Australia who speaks a little fast and uses short forms like EOD and ASAP. When asked, repeat more slowly and explain. Keep messages short.",
+      "goal": "The learner asks Sarah to repeat, asks what a short form means, and checks the deadline.",
+      "script": [
+        {
+          "id": "start",
+          "say": "So we need the dashboard done by EOD Friday, OK?",
+          "sayVi": "Vậy bọn tôi cần dashboard xong trước EOD thứ Sáu, được chứ?",
+          "replies": [
+            {
+              "text": "Sorry, could you say that again?",
+              "next": "again"
+            },
+            {
+              "text": "What do you mean by EOD?",
+              "next": "eod"
+            }
+          ]
+        },
+        {
+          "id": "again",
+          "say": "Sure. We need the dashboard by EOD Friday.",
+          "sayVi": "Được. Bọn tôi cần dashboard trước EOD thứ Sáu.",
+          "replies": [
+            {
+              "text": "What do you mean by EOD?",
+              "next": "eod"
+            }
+          ]
+        },
+        {
+          "id": "eod",
+          "say": "Sorry! EOD means end of day. So, Friday at 5 pm.",
+          "sayVi": "Xin lỗi! EOD là cuối ngày. Tức là 5 giờ chiều thứ Sáu.",
+          "replies": [
+            {
+              "text": "Just to check, Friday at 5 pm, right?",
+              "next": "end"
+            },
+            {
+              "text": "OK, got it. Friday at 5 pm.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Yes, exactly. Thanks for checking!",
+          "sayVi": "Đúng rồi. Cảm ơn bạn đã hỏi lại!",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Sửa mẹo phát âm could, câu mẫu đề 2 xác nhận đúng hạn chót, thêm What does … mean?"
+  }
+}

@@ -3,6 +3,12 @@ import unitJson from '../../../content/tracks/dev/units/standup.json';
 import trackJson from '../../../content/tracks/dev/track.json';
 import ticketJson from '../../../content/tracks/dev/units/ticket.json';
 import prJson from '../../../content/tracks/dev/units/pr.json';
+import workTrackJson from '../../../content/tracks/work/track.json';
+import meetingJson from '../../../content/tracks/work/units/meeting.json';
+import emailJson from '../../../content/tracks/work/units/email.json';
+import callJson from '../../../content/tracks/work/units/call.json';
+import problemJson from '../../../content/tracks/work/units/problem.json';
+import clientJson from '../../../content/tracks/work/units/client.json';
 import { contentProblems, trackSchema, unitSchema } from '../content/schema';
 import { nextSnippet, planSession } from './plan';
 
@@ -10,9 +16,10 @@ const unit = unitSchema.parse(unitJson);
 const units = [unit];
 
 describe('content', () => {
-  it('the dev track is sound', () => {
-    const all = [unit, unitSchema.parse(ticketJson), unitSchema.parse(prJson)];
-    expect(contentProblems({ tracks: [trackSchema.parse(trackJson)], units: all })).toEqual([]);
+  it('the dev track is sound (the shared work units first, then its own)', () => {
+    const work = [meetingJson, emailJson, callJson, problemJson, clientJson].map((u) => unitSchema.parse(u));
+    const all = [...work, unit, unitSchema.parse(ticketJson), unitSchema.parse(prJson)];
+    expect(contentProblems({ tracks: [trackSchema.parse(trackJson), trackSchema.parse(workTrackJson)], units: all })).toEqual([]);
   });
 });
 

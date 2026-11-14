@@ -9,7 +9,7 @@ import { db } from '../../services/db';
 import { abandonSession, activeSession } from '../../services/learning';
 import { Chip, Note, PrimaryAction } from '../../ui/ui';
 import { PageHeader, PageSkeleton } from '../../ui/shell';
-import { ChunkGloss } from '../../ui/speech';
+import { ChunkGloss, PatternCard } from '../../ui/speech';
 import { SnippetReader } from './SnippetReader';
 
 /** One lesson outside a session: read it again or ahead of time, and study it when wanted. */
@@ -54,6 +54,8 @@ export function LessonPage() {
       </div>
 
       <Note tone="plain">{status === 'read' ? vi.lesson.readNote : status === 'next' ? vi.lesson.nextNote : vi.lesson.laterNote}</Note>
+
+      {unit.unit.pattern && <PatternCard pattern={unit.unit.pattern} />}
 
       <SnippetReader snippet={snippet} />
 

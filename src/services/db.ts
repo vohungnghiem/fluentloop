@@ -3,6 +3,8 @@ import type { AnswerResult } from '../core/check/text';
 import type { SessionPlan } from '../core/session/plan';
 import type { FsrsState, RatingName } from '../core/srs/srs';
 import type { Task } from '../core/content/schema';
+import type { Level } from '../core/plan/plan';
+import type { Skill } from '../core/plan/placement';
 
 /** Everything the learner has done, in IndexedDB. Ids are UUIDs or stable keys; rows carry updatedAt. */
 
@@ -168,6 +170,105 @@ export interface DraftRow {
   updatedAt: string;
 }
 
+/** The learner's 16-week plan: one row, `main`. */
+export interface PlanRow {
+  id: 'main';
+  /** First day of week 1. */
+  startDay: string;
+  /** Minutes a day the learner means to study, in and out of the app. */
+  minutesPerDay: number;
+  /** The level of the last placement test, if one was done. */
+  level?: Level;
+  /** The learner's CV or project notes (pasted), for AI to help write their own interview answers. */
+  profile?: string;
+  /** The welcome flow was finished (or skipped): Today stops sending a new learner there. */
+  onboarded?: boolean;
+  updatedAt: string;
+}
+
+/** One placement test taken, kept to see the level move over the plan. */
+export interface PlacementRow {
+  id: string;
+  at: string;
+  day: string;
+  level: Level;
+  correct: number;
+  answered: number;
+  bySkill: Record<Skill, [number, number]>;
+  answers: Record<string, number>;
+  updatedAt: string;
+}
+
+/** Seconds of real use of the app, per device and day (each device writes only its own row). */
+export interface StudyTimeRow {
+  /** `<device>:<day>` */
+  id: string;
+  device: string;
+  day: string;
+  seconds: number;
+  updatedAt: string;
+}
+
+/** Time the learner studied outside the app and logged by hand. */
+export interface StudyLogRow {
+  id: string;
+  day: string;
+  at: string;
+  minutes: number;
+  kind: 'listen' | 'speak' | 'read' | 'other';
+  /** Undone: kept as a marker so the other devices drop it too. */
+  deleted?: boolean;
+  updatedAt: string;
+}
+
+/**
+ * A time the learner spoke: a one- or two-minute talk on a topic, a voice conversation with the
+ * app, or a conversation with real people logged afterwards. Speed and pauses are compared week to week.
+ */
+export interface TalkRow {
+  id: string;
+  at: string;
+  day: string;
+  kind: 'talk' | 'conversation' | 'real';
+  /** What it was about, in Vietnamese: the prompt, the conversation's title, or what the learner wrote. */
+  topic: string;
+  taskId?: string;
+  scenarioId?: string;
+  seconds: number;
+  /** What the machine heard (corrected by the learner when it misheard). */
+  transcript?: string;
+  words?: number;
+  wpm?: number;
+  pauses?: number;
+  longestPause?: number;
+  fillers?: number;
+  /** Conversations: how many times the learner spoke. */
+  turns?: number;
+  /** Real conversations: with whom, what was hard, and the sentences the learner wanted to say. */
+  partner?: string;
+  hardVi?: string;
+  phrases?: Array<{ vi: string; en?: string }>;
+  audio?: Blob;
+  updatedAt: string;
+}
+
+/** The learner's own answer to an interview question, kept as review cards (one per sentence). */
+export interface AnswerRow {
+  questionId: string;
+  text: string;
+  /** Drafted by AI from the CV (then checked), or written by the learner. */
+  source: 'ai' | 'own';
+  cardIds: string[];
+  at: string;
+  updatedAt: string;
+}
+
+/** Facts about this device only, never synced: `resetAt`, the last data reset this device knows of. */
+export interface MetaRow {
+  key: string;
+  value: string;
+}
+
 export const db = new Dexie('fluentloop') as Dexie & {
   cards: EntityTable<CardRow, 'id'>;
   reviews: EntityTable<ReviewRow, 'id'>;
@@ -181,6 +282,13 @@ export const db = new Dexie('fluentloop') as Dexie & {
   baselines: EntityTable<BaselineRow, 'id'>;
   roleplays: EntityTable<RoleplayRow, 'scenarioId'>;
   drafts: EntityTable<DraftRow, 'key'>;
+  plans: EntityTable<PlanRow, 'id'>;
+  placements: EntityTable<PlacementRow, 'id'>;
+  studyTime: EntityTable<StudyTimeRow, 'id'>;
+  studyLog: EntityTable<StudyLogRow, 'id'>;
+  talks: EntityTable<TalkRow, 'id'>;
+  answers: EntityTable<AnswerRow, 'questionId'>;
+  meta: EntityTable<MetaRow, 'key'>;
 };
 
 db.version(1).stores({
@@ -212,4 +320,23 @@ db.version(5).stores({
 
 db.version(6).stores({
   drafts: 'key, updatedAt',
+});
+
+db.version(7).stores({
+  plans: 'id',
+  placements: 'id, at',
+  studyTime: 'id, day',
+  studyLog: 'id, day',
+});
+
+db.version(8).stores({
+  meta: 'key',
+});
+
+db.version(9).stores({
+  talks: 'id, at, day, kind',
+});
+
+db.version(10).stores({
+  answers: 'questionId, at',
 });

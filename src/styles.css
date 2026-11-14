@@ -23,6 +23,8 @@
   --good-tint: #e3f6ec;
   --track: #3b5bdb;
   --on-primary: #ffffff;
+  --danger: #c92a2a;
+  --danger-tint: #fff0f0;
   /* One colour per step and per section (docs/THIET-KE.md 2.1): fill/icon and a soft tint. */
   --tone-review: #7048e8;
   --tone-review-tint: #f0ebff;
@@ -55,6 +57,8 @@
     --good-tint: #1e3a2d;
     --track: #7c93f0;
     --on-primary: #16181d;
+    --danger: #ff8787;
+    --danger-tint: #3d1f22;
     --tone-review: #b197fc;
     --tone-review-tint: #2c2550;
     --tone-input: #3bc9db;
@@ -86,6 +90,8 @@
   --color-good-tint: var(--good-tint);
   --color-track: var(--track);
   --color-on-primary: var(--on-primary);
+  --color-danger: var(--danger);
+  --color-danger-tint: var(--danger-tint);
   --color-tone: var(--tone, var(--primary));
   --color-tone-tint: var(--tone-tint, var(--primary-tint));
   --font-sans: 'Be Vietnam Pro', system-ui, sans-serif;

@@ -2,6 +2,11 @@ import { describe, expect, it } from 'vitest';
 import { perDay, retention, sessionMinutes, streak } from './stats';
 
 describe('streak', () => {
+  it('a first day of learning uses no rest days', () => {
+    expect(streak(['2026-11-14'], '2026-11-14')).toEqual({ days: 1, restUsed: 0 });
+    expect(streak(['2026-11-12', '2026-11-14'], '2026-11-14')).toEqual({ days: 2, restUsed: 1 });
+  });
+
   it('counts back from today, and today not done yet does not break it', () => {
     expect(streak(['2026-11-08', '2026-11-09', '2026-11-10'], '2026-11-10').days).toBe(3);
     expect(streak(['2026-11-08', '2026-11-09'], '2026-11-10').days).toBe(2);

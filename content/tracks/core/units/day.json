@@ -1,0 +1,448 @@
+{
+  "id": "core-day",
+  "track": "core",
+  "title": "My working day",
+  "titleVi": "Một ngày đi làm",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Thói quen: hiện tại đơn và usually, often, always",
+    "forms": [
+      "I / You / We / They + V: I start work at 8.",
+      "He / She + V-s: She starts at 9.",
+      "I / We / They + don't + V: I don't work on weekends.",
+      "always · usually · often · sometimes · never + V"
+    ],
+    "examples": [
+      {
+        "en": "I usually get up at 6.",
+        "vi": "Mình thường dậy lúc 6 giờ."
+      },
+      {
+        "en": "She works from home on Fridays.",
+        "vi": "Thứ Sáu chị ấy làm ở nhà."
+      },
+      {
+        "en": "We never work on Sundays.",
+        "vi": "Bọn mình không bao giờ làm Chủ nhật."
+      }
+    ],
+    "noteVi": "He, she, tên một người: động từ thêm -s (works, checks, goes). Từ chỉ tần suất đứng trước động từ: I usually take the bus."
+  },
+  "sounds": [
+    {
+      "en": "usually",
+      "tipVi": "/ˈjuːʒuəli/: âm giữa là /ʒ/ như “giu” nhẹ, không đọc “du-su-a-li”."
+    },
+    {
+      "en": "works",
+      "tipVi": "Nhớ đọc âm /s/ cuối: /wɜːks/. Thiếu /s/ là nghe như sai ngữ pháp."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-day-morning",
+      "genre": "conversation",
+      "titleVi": "Buổi sáng của mình",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "I usually get up at 6:30. I take the bus to work.",
+        "I start work at 8. I always check my email first."
+      ],
+      "translationVi": [
+        "Mình thường dậy lúc 6 rưỡi. Mình đi làm bằng xe buýt.",
+        "Mình bắt đầu làm lúc 8 giờ. Mình luôn xem email trước tiên."
+      ],
+      "chunks": [
+        "core-get-up",
+        "core-take-the-bus",
+        "core-start-work",
+        "core-check-my-email"
+      ],
+      "task": "core-task-day-morning"
+    },
+    {
+      "id": "core-day-colleague",
+      "genre": "chat",
+      "titleVi": "Kể về một đồng nghiệp",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Mai is our designer. She works from home on Fridays.",
+        "She usually joins the meeting at 9. She never misses a deadline."
+      ],
+      "translationVi": [
+        "Mai là designer của nhóm. Thứ Sáu chị ấy làm ở nhà.",
+        "Chị ấy thường vào họp lúc 9 giờ. Chị ấy không bao giờ trễ hạn."
+      ],
+      "chunks": [
+        "core-work-from-home",
+        "core-join-the-meeting",
+        "core-miss-a-deadline"
+      ],
+      "task": "core-task-day-colleague"
+    },
+    {
+      "id": "core-day-evening",
+      "genre": "conversation",
+      "titleVi": "Sau giờ làm",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "After work, I often go to the gym. Sometimes I cook dinner at home.",
+        "I don't work on weekends. I usually spend time with my family."
+      ],
+      "translationVi": [
+        "Sau giờ làm, mình hay đi tập gym. Thỉnh thoảng mình nấu bữa tối ở nhà.",
+        "Cuối tuần mình không làm việc. Mình thường dành thời gian cho gia đình."
+      ],
+      "chunks": [
+        "core-after-work",
+        "core-go-to-the-gym",
+        "core-on-weekends",
+        "core-spend-time-with"
+      ],
+      "task": "core-task-day-evening"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-get-up",
+      "en": "get up",
+      "vi": "thức dậy",
+      "forms": [
+        "gets up",
+        "got up"
+      ],
+      "example": "I get up at 7 on Mondays.",
+      "exampleVi": "Thứ Hai mình dậy lúc 7 giờ.",
+      "answer": "get up"
+    },
+    {
+      "id": "core-take-the-bus",
+      "en": "take the bus",
+      "vi": "đi xe buýt",
+      "forms": [
+        "takes the bus"
+      ],
+      "example": "I take the bus to the office.",
+      "exampleVi": "Mình đi xe buýt tới văn phòng.",
+      "answer": "take the bus"
+    },
+    {
+      "id": "core-start-work",
+      "en": "start work",
+      "vi": "bắt đầu làm việc",
+      "forms": [
+        "starts work"
+      ],
+      "example": "We start work at 8:30.",
+      "exampleVi": "Bọn mình bắt đầu làm lúc 8 rưỡi.",
+      "answer": "start work"
+    },
+    {
+      "id": "core-check-my-email",
+      "en": "check my email",
+      "vi": "xem email",
+      "forms": [
+        "check email",
+        "checks his email",
+        "checks her email"
+      ],
+      "example": "I check my email after lunch.",
+      "exampleVi": "Mình xem email sau bữa trưa.",
+      "answer": "check my email"
+    },
+    {
+      "id": "core-work-from-home",
+      "en": "work from home",
+      "vi": "làm việc ở nhà",
+      "forms": [
+        "works from home",
+        "working from home"
+      ],
+      "example": "I work from home on Mondays.",
+      "exampleVi": "Thứ Hai mình làm ở nhà.",
+      "answer": "work from home"
+    },
+    {
+      "id": "core-join-the-meeting",
+      "en": "join the meeting",
+      "vi": "vào cuộc họp",
+      "forms": [
+        "joins the meeting"
+      ],
+      "example": "Please join the meeting at 10.",
+      "exampleVi": "Mời bạn vào họp lúc 10 giờ.",
+      "answer": "join the meeting"
+    },
+    {
+      "id": "core-miss-a-deadline",
+      "en": "miss a deadline",
+      "vi": "trễ hạn",
+      "forms": [
+        "misses a deadline",
+        "missed the deadline"
+      ],
+      "example": "We can't miss a deadline this month.",
+      "exampleVi": "Tháng này bọn mình không được trễ hạn.",
+      "answer": "miss a deadline"
+    },
+    {
+      "id": "core-after-work",
+      "en": "after work",
+      "vi": "sau giờ làm",
+      "example": "Let's get coffee after work.",
+      "exampleVi": "Sau giờ làm đi uống cà phê nhé.",
+      "answer": "after work"
+    },
+    {
+      "id": "core-go-to-the-gym",
+      "en": "go to the gym",
+      "vi": "đi tập gym",
+      "forms": [
+        "goes to the gym"
+      ],
+      "example": "I go to the gym three times a week.",
+      "exampleVi": "Mình đi tập gym ba lần một tuần.",
+      "answer": "go to the gym"
+    },
+    {
+      "id": "core-on-weekends",
+      "en": "on weekends",
+      "vi": "vào cuối tuần",
+      "example": "I play football on weekends.",
+      "exampleVi": "Cuối tuần mình đá bóng.",
+      "answer": "on weekends"
+    },
+    {
+      "id": "core-spend-time-with",
+      "en": "spend time with",
+      "vi": "dành thời gian cho (ai)",
+      "example": "I want to spend time with my friends.",
+      "exampleVi": "Mình muốn dành thời gian cho bạn bè.",
+      "answer": "spend time with"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-day-morning",
+      "promptVi": "Kể buổi sáng đi làm của bạn: mấy giờ dậy, đi làm bằng gì, mấy giờ bắt đầu làm.",
+      "situation": "Small talk with a new colleague.",
+      "required": [
+        {
+          "label": "get up",
+          "variants": [
+            "get up",
+            "wake up"
+          ]
+        },
+        {
+          "label": "start work",
+          "variants": [
+            "start work",
+            "start at",
+            "begin work",
+            "begin at"
+          ]
+        }
+      ],
+      "models": [
+        "I usually get up at 6. I go to work by motorbike. I start work at 8:30.",
+        "I get up at 7. I take the bus to work, and I start work at 9."
+      ],
+      "tipVi": "Việc lặp lại hằng ngày dùng hiện tại đơn: I get up, I start. Đi bằng gì: by bus, by motorbike, by car.",
+      "points": [
+        {
+          "vi": "Mấy giờ dậy",
+          "variants": [
+            "get up",
+            "wake up"
+          ]
+        },
+        {
+          "vi": "Đi làm bằng gì",
+          "variants": [
+            "bus",
+            "motorbike",
+            "car",
+            "bike",
+            "walk",
+            "drive",
+            "taxi"
+          ]
+        },
+        {
+          "vi": "Mấy giờ bắt đầu làm",
+          "variants": [
+            "start work",
+            "start at",
+            "begin"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn dậy lúc mấy giờ? Đi làm bằng xe gì? Mấy giờ thì bắt đầu làm?",
+        "I usually get up at … I go to work by … I start work at …"
+      ]
+    },
+    {
+      "id": "core-task-day-colleague",
+      "promptVi": "Kể về một đồng nghiệp: người đó làm gì và có thói quen làm việc gì.",
+      "situation": "Telling a new teammate about the team.",
+      "required": [
+        {
+          "label": "usually / often / always",
+          "variants": [
+            "usually",
+            "often",
+            "always",
+            "sometimes",
+            "never"
+          ]
+        }
+      ],
+      "models": [
+        "Tuan is our tester. He usually starts work at 8. He always writes clear bug reports."
+      ],
+      "tipVi": "He/She thì động từ thêm -s: he starts, she writes, he goes.",
+      "points": [
+        {
+          "vi": "Người đó là ai, làm gì",
+          "variants": [
+            "is our",
+            "is a",
+            "is an",
+            "is my"
+          ]
+        },
+        {
+          "vi": "Một thói quen của người đó",
+          "variants": [
+            "usually",
+            "often",
+            "always",
+            "sometimes",
+            "never"
+          ]
+        }
+      ],
+      "hints": [
+        "Đồng nghiệp đó tên gì, làm vị trí gì? Họ thường làm gì mỗi ngày?",
+        "… is our … He usually … / She always …"
+      ]
+    },
+    {
+      "id": "core-task-day-evening",
+      "promptVi": "Kể bạn thường làm gì sau giờ làm và vào cuối tuần.",
+      "situation": "Friday afternoon chat.",
+      "required": [
+        {
+          "label": "after work",
+          "variants": [
+            "after work"
+          ]
+        },
+        {
+          "label": "on weekends",
+          "variants": [
+            "on weekends",
+            "at the weekend",
+            "on the weekend"
+          ]
+        }
+      ],
+      "models": [
+        "After work, I usually cook dinner. On weekends, I often visit my parents."
+      ],
+      "tipVi": "Bắt đầu câu bằng After work, … hoặc On weekends, … rồi tới I + động từ.",
+      "points": [
+        {
+          "vi": "Sau giờ làm",
+          "variants": [
+            "after work"
+          ]
+        },
+        {
+          "vi": "Cuối tuần",
+          "variants": [
+            "weekend"
+          ]
+        }
+      ],
+      "hints": [
+        "Tối đi làm về bạn hay làm gì? Thứ Bảy, Chủ nhật thì sao?",
+        "After work, I usually … On weekends, I …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-day",
+      "titleVi": "Hỏi chuyện giờ giấc",
+      "partner": "Tom, project manager",
+      "situationVi": "Tom (quản lý dự án) muốn biết giờ làm của bạn để xếp lịch họp.",
+      "goalVi": "Nói mấy giờ bắt đầu làm, đi làm thế nào, và có làm cuối tuần không.",
+      "persona": "You are Tom, a project manager planning meeting times. Ask what time the learner starts work, how they get to the office, and if they work on weekends. Short, simple sentences.",
+      "goal": "The learner says when they start work, how they get to work, and whether they work on weekends.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hi! What time do you usually start work?",
+          "sayVi": "Chào bạn! Bạn thường bắt đầu làm lúc mấy giờ?",
+          "replies": [
+            {
+              "text": "I usually start work at 8.",
+              "next": "travel"
+            },
+            {
+              "text": "I start at 8:30 every day.",
+              "next": "travel"
+            }
+          ]
+        },
+        {
+          "id": "travel",
+          "say": "OK. How do you get to the office?",
+          "sayVi": "Được. Bạn đến văn phòng bằng gì?",
+          "replies": [
+            {
+              "text": "I take the bus.",
+              "next": "weekend"
+            },
+            {
+              "text": "I go by motorbike. It takes 20 minutes.",
+              "next": "weekend"
+            }
+          ]
+        },
+        {
+          "id": "weekend",
+          "say": "Do you ever work on weekends?",
+          "sayVi": "Bạn có bao giờ làm cuối tuần không?",
+          "replies": [
+            {
+              "text": "No, I don't work on weekends.",
+              "next": "end"
+            },
+            {
+              "text": "Sometimes, when we have a big deadline.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great, thanks. Let's have our meeting at 9.",
+          "sayVi": "Tốt, cảm ơn. Mình họp lúc 9 giờ nhé.",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Bỏ giả định có con, bỏ từ release, thêm dạng phủ định vào mẫu câu."
+  }
+}

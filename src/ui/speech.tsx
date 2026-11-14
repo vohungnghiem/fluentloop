@@ -3,6 +3,8 @@ import { AudioLines, Mic, MicOff, Turtle, Volume2 } from 'lucide-react';
 import { vi } from '../copy/vi';
 import { speak, stopSpeaking, ttsSupported, type Rate } from '../services/speech/tts';
 import { listen, type Listening, type MicStatus } from '../services/speech/stt';
+import type { Pattern, Sound } from '../core/content/schema';
+import { Eyebrow } from './ui';
 
 /** Loudspeaker button: plays the sentence; the turtle plays it slowly. */
 export function SpeakButton({ text, slow = false, size = 'md', label }: { text: string; slow?: boolean; size?: 'sm' | 'md'; label?: string }) {
@@ -151,6 +153,54 @@ export function ChunkGloss({ en, meaning, example, tone = 'tint' }: { en: string
           <SpeakButton text={example} size="sm" />
         </div>
       )}
+    </div>
+  );
+}
+
+/**
+ * The sentence pattern of a lesson (foundation units): its shape, a few examples to hear, one
+ * note in Vietnamese. Shown before the text in the Input step and on the lesson page.
+ */
+export function PatternCard({ pattern }: { pattern: Pattern }) {
+  return (
+    <section className="rounded-2xl border border-line bg-surface p-4">
+      <Eyebrow tone="input">{vi.pattern.eyebrow}</Eyebrow>
+      <h2 className="mt-1 text-lg font-semibold">{pattern.titleVi}</h2>
+      <ul className="mt-2 space-y-1">
+        {pattern.forms.map((form) => (
+          <li key={form} className="rounded-lg bg-paper px-3 py-1.5 font-medium ring-1 ring-line" lang="en">{form}</li>
+        ))}
+      </ul>
+      <ul className="mt-3 space-y-2">
+        {pattern.examples.map((example) => (
+          <li key={example.en} className="flex items-start gap-2">
+            <span className="min-w-0 flex-1">
+              <span className="block text-lg" lang="en">{example.en}</span>
+              <span className="block text-sm text-ink-soft">{example.vi}</span>
+            </span>
+            <SpeakButton text={example.en} size="sm" />
+          </li>
+        ))}
+      </ul>
+      {pattern.noteVi && <p className="mt-3 border-t border-line pt-3">{pattern.noteVi}</p>}
+    </section>
+  );
+}
+
+/** Sounds to watch in the sentence being said: the word, slowly, and how to say it. */
+export function SoundTips({ sounds }: { sounds: readonly Sound[] }) {
+  if (sounds.length === 0) return null;
+  return (
+    <div className="rounded-xl bg-paper px-4 py-3 ring-1 ring-line">
+      <Eyebrow tone="shadow">{vi.pattern.sounds}</Eyebrow>
+      <ul className="mt-1.5 space-y-1.5">
+        {sounds.map((sound) => (
+          <li key={sound.en} className="flex items-start gap-2">
+            <span className="min-w-0 flex-1"><b lang="en">{sound.en}</b> · {sound.tipVi}</span>
+            <SpeakButton text={sound.en} slow size="sm" />
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

@@ -1,0 +1,414 @@
+{
+  "id": "core-done",
+  "track": "core",
+  "title": "My experience",
+  "titleVi": "Kinh nghiệm của tôi",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Kinh nghiệm đến giờ: hiện tại hoàn thành",
+    "forms": [
+      "I've + V3: I've worked, I've used, I've built",
+      "for + khoảng thời gian · since + mốc",
+      "Have you ever + V3?",
+      "I've never + V3"
+    ],
+    "examples": [
+      {
+        "en": "I've worked here for two years.",
+        "vi": "Mình làm ở đây được hai năm."
+      },
+      {
+        "en": "She has lived in Hanoi since 2020.",
+        "vi": "Chị ấy sống ở Hà Nội từ năm 2020."
+      },
+      {
+        "en": "Have you ever used Jira?",
+        "vi": "Bạn dùng Jira bao giờ chưa?"
+      }
+    ],
+    "noteVi": "Kinh nghiệm tới bây giờ, không nói lúc nào: I've used React. Với for/since, việc đó vẫn kéo dài tới bây giờ: I've worked here since 2021. Nói một thời điểm đã qua hẳn (in 2021, last year) thì dùng quá khứ: I used React in 2021."
+  },
+  "sounds": [
+    {
+      "en": "I've",
+      "tipVi": "/aɪv/: chạm răng trên vào môi dưới cho ra /v/. Thiếu /v/ thì thành “I worked”, sai nghĩa."
+    },
+    {
+      "en": "worked",
+      "tipVi": "-ed sau /k/ đọc /t/: /wɜːkt/, một âm tiết."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-done-years",
+      "genre": "conversation",
+      "titleVi": "Bốn năm làm lập trình",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "I've worked as a developer for four years.",
+        "I've used Java and React. I've built three mobile apps."
+      ],
+      "translationVi": [
+        "Mình làm lập trình viên được bốn năm.",
+        "Mình đã dùng Java và React. Mình đã làm ba app di động."
+      ],
+      "chunks": [
+        "core-worked-as",
+        "core-for-years",
+        "core-ive-built"
+      ],
+      "task": "core-task-done-years"
+    },
+    {
+      "id": "core-done-ever",
+      "genre": "conversation",
+      "titleVi": "Đã làm với khách nước ngoài chưa?",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Have you ever worked with a foreign client?",
+        "Yes, I have. I've worked with a team in Japan since 2023."
+      ],
+      "translationVi": [
+        "Bạn làm với khách nước ngoài bao giờ chưa?",
+        "Rồi. Mình làm với một nhóm ở Nhật từ năm 2023."
+      ],
+      "chunks": [
+        "core-have-you-ever",
+        "core-yes-i-have",
+        "core-since"
+      ],
+      "task": "core-task-done-ever"
+    },
+    {
+      "id": "core-done-never",
+      "genre": "chat",
+      "titleVi": "Lần đầu thuyết trình bằng tiếng Anh",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "I've never given a presentation in English. I'm a bit nervous.",
+        "But I've practiced a lot this week. I think I'm ready."
+      ],
+      "translationVi": [
+        "Mình chưa thuyết trình bằng tiếng Anh bao giờ. Mình hơi lo.",
+        "Nhưng tuần này mình đã luyện nhiều. Mình nghĩ là mình sẵn sàng rồi."
+      ],
+      "chunks": [
+        "core-ive-never",
+        "core-a-bit-nervous",
+        "core-practiced-a-lot"
+      ],
+      "task": "core-task-done-never"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-worked-as",
+      "en": "worked as",
+      "vi": "đã làm (nghề gì)",
+      "forms": [
+        "work as"
+      ],
+      "example": "She has worked as a tester for a year.",
+      "exampleVi": "Chị ấy làm tester được một năm.",
+      "answer": "worked as"
+    },
+    {
+      "id": "core-for-years",
+      "en": "for four years",
+      "vi": "được bốn năm",
+      "forms": [
+        "for two years",
+        "for years"
+      ],
+      "example": "We've known each other for ten years.",
+      "exampleVi": "Bọn mình quen nhau được mười năm.",
+      "answer": "for ten years"
+    },
+    {
+      "id": "core-ive-built",
+      "en": "I've built",
+      "vi": "tôi đã làm ra (sản phẩm)",
+      "forms": [
+        "have built"
+      ],
+      "example": "I've built two websites.",
+      "exampleVi": "Mình đã làm hai trang web.",
+      "answer": "I've built"
+    },
+    {
+      "id": "core-have-you-ever",
+      "en": "Have you ever",
+      "vi": "bạn đã bao giờ … chưa",
+      "example": "Have you ever been to Japan?",
+      "exampleVi": "Bạn đến Nhật bao giờ chưa?",
+      "answer": "Have you ever"
+    },
+    {
+      "id": "core-yes-i-have",
+      "en": "Yes, I have",
+      "vi": "rồi, có (trả lời Have you…?)",
+      "example": "Have you seen the new design? Yes, I have.",
+      "exampleVi": "Bạn xem bản thiết kế mới chưa? Rồi.",
+      "answer": "Yes, I have"
+    },
+    {
+      "id": "core-since",
+      "en": "since",
+      "vi": "từ (một mốc thời gian)",
+      "example": "I've been here since 9 am.",
+      "exampleVi": "Mình ở đây từ 9 giờ sáng.",
+      "answer": "since"
+    },
+    {
+      "id": "core-ive-never",
+      "en": "I've never",
+      "vi": "tôi chưa bao giờ",
+      "forms": [
+        "have never"
+      ],
+      "example": "I've never used Python.",
+      "exampleVi": "Mình chưa dùng Python bao giờ.",
+      "answer": "I've never"
+    },
+    {
+      "id": "core-a-bit-nervous",
+      "en": "a bit nervous",
+      "vi": "hơi lo, hơi run",
+      "example": "I'm a bit nervous about the interview.",
+      "exampleVi": "Mình hơi lo về buổi phỏng vấn.",
+      "answer": "a bit nervous"
+    },
+    {
+      "id": "core-practiced-a-lot",
+      "en": "practiced a lot",
+      "vi": "đã luyện nhiều",
+      "forms": [
+        "practice a lot",
+        "practise a lot"
+      ],
+      "example": "He practiced a lot before the test.",
+      "exampleVi": "Anh ấy đã luyện nhiều trước bài kiểm tra.",
+      "answer": "practiced a lot"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-done-years",
+      "promptVi": "Giới thiệu kinh nghiệm làm việc: bạn làm nghề gì, được bao lâu, đã làm được những gì.",
+      "situation": "Introducing yourself to a new client.",
+      "required": [
+        {
+          "label": "worked as",
+          "variants": [
+            "worked as",
+            "work as"
+          ]
+        },
+        {
+          "label": "for … years",
+          "variants": [
+            "years",
+            "year",
+            "since"
+          ]
+        }
+      ],
+      "models": [
+        "I've worked as a tester for three years. I've tested web and mobile apps.",
+        "I've worked as a developer since 2021. I've built two online shops."
+      ],
+      "tipVi": "Bao lâu dùng for (for three years). Từ mốc nào dùng since (since 2021).",
+      "points": [
+        {
+          "vi": "Làm nghề gì",
+          "variants": [
+            "as a",
+            "as an"
+          ]
+        },
+        {
+          "vi": "Được bao lâu",
+          "variants": [
+            "for",
+            "since"
+          ]
+        },
+        {
+          "vi": "Đã làm được gì",
+          "variants": [
+            "i have built",
+            "i have made",
+            "i have created",
+            "i have developed",
+            "i have designed",
+            "i have done",
+            "i have managed",
+            "i have used",
+            "i have tested",
+            "i have worked on",
+            "i have written"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn làm nghề gì, được mấy năm rồi? Bạn đã làm được sản phẩm gì?",
+        "I've worked as a … for … years. I've …"
+      ]
+    },
+    {
+      "id": "core-task-done-ever",
+      "promptVi": "Đồng nghiệp hỏi: “Have you ever worked with a foreign client?” Trả lời, rồi kể thêm một câu.",
+      "situation": "Lunch with a new colleague.",
+      "required": [
+        {
+          "label": "Yes, I have / No, I haven't",
+          "variants": [
+            "yes i have",
+            "no i have not",
+            "i have never"
+          ]
+        }
+      ],
+      "models": [
+        "Yes, I have. I've worked with a client in Korea since last year.",
+        "No, I haven't. But I've worked with a team in Ho Chi Minh City."
+      ],
+      "tipVi": "Trả lời ngắn câu hỏi Have you ever…?: Yes, I have. / No, I haven't.",
+      "points": [
+        {
+          "vi": "Trả lời có hay chưa",
+          "variants": [
+            "yes",
+            "no"
+          ]
+        },
+        {
+          "vi": "Kể thêm chi tiết",
+          "variants": [
+            "since",
+            "for",
+            "with",
+            "but"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn đã làm với khách nước ngoài chưa? Nếu có thì ở nước nào, từ bao giờ?",
+        "Yes, I have. I've worked with … / No, I haven't. But …"
+      ]
+    },
+    {
+      "id": "core-task-done-never",
+      "promptVi": "Kể một việc bạn chưa từng làm bằng tiếng Anh, và bạn đang chuẩn bị cho nó thế nào.",
+      "situation": "Message to a friend.",
+      "required": [
+        {
+          "label": "I've never",
+          "variants": [
+            "i have never"
+          ]
+        }
+      ],
+      "models": [
+        "I've never had a job interview in English. I'm a bit nervous, but I've practiced with this app every day."
+      ],
+      "tipVi": "I've never + V3: I've never given, I've never had, I've never spoken.",
+      "points": [
+        {
+          "vi": "Việc chưa từng làm",
+          "variants": [
+            "never"
+          ]
+        },
+        {
+          "vi": "Bạn chuẩn bị thế nào",
+          "variants": [
+            "practice",
+            "practiced",
+            "practise",
+            "learn",
+            "study",
+            "prepare",
+            "prepared"
+          ]
+        }
+      ],
+      "hints": [
+        "Việc gì bằng tiếng Anh mà bạn chưa làm bao giờ? Bạn đang luyện thế nào?",
+        "I've never … in English. But I've …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-done",
+      "titleVi": "Phỏng vấn ngắn",
+      "partner": "Sarah, HR manager",
+      "situationVi": "Buổi phỏng vấn ngắn. Sarah hỏi về kinh nghiệm của bạn.",
+      "goalVi": "Nói bạn làm nghề gì được bao lâu, đã làm gì, và đã làm với nhóm nước ngoài chưa.",
+      "persona": "You are Sarah, a kind HR manager in a short job interview. Ask how long the learner has worked in their job, what they have built or done, and if they have ever worked in an English-speaking team. Short, clear questions.",
+      "goal": "The learner says how long they have worked, one thing they have done, and whether they have worked with a foreign team.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Thanks for coming. How long have you worked as a developer?",
+          "sayVi": "Cảm ơn bạn đã tới. Bạn làm lập trình viên được bao lâu rồi?",
+          "replies": [
+            {
+              "text": "I've worked as a developer for four years.",
+              "next": "built"
+            },
+            {
+              "text": "For two years. I started in 2024.",
+              "next": "built"
+            }
+          ]
+        },
+        {
+          "id": "built",
+          "say": "Great. What have you built?",
+          "sayVi": "Tốt. Bạn đã làm ra những gì?",
+          "replies": [
+            {
+              "text": "I've built three mobile apps.",
+              "next": "team"
+            },
+            {
+              "text": "I've built an online shop with React.",
+              "next": "team"
+            }
+          ]
+        },
+        {
+          "id": "team",
+          "say": "Have you ever worked in an English-speaking team?",
+          "sayVi": "Bạn đã bao giờ làm trong nhóm nói tiếng Anh chưa?",
+          "replies": [
+            {
+              "text": "Yes, I have. I've worked with a team in Japan.",
+              "next": "end"
+            },
+            {
+              "text": "No, I haven't. But I'm learning English every day.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Thank you. That's very helpful.",
+          "sayVi": "Cảm ơn bạn. Rất hữu ích.",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Sửa năm cho khớp “two years”, ghi chú for/since rõ hơn."
+  }
+}

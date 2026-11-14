@@ -1,0 +1,412 @@
+{
+  "id": "core-now",
+  "track": "core",
+  "title": "What are you doing?",
+  "titleVi": "Đang làm gì",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Đang làm: hiện tại tiếp diễn",
+    "forms": [
+      "I'm + V-ing",
+      "He / She is + V-ing",
+      "We / They are + V-ing",
+      "Are you + V-ing?"
+    ],
+    "examples": [
+      {
+        "en": "I'm working on the report.",
+        "vi": "Mình đang làm báo cáo."
+      },
+      {
+        "en": "Nam is fixing a bug.",
+        "vi": "Nam đang sửa một lỗi."
+      },
+      {
+        "en": "Are you using the meeting room?",
+        "vi": "Bạn đang dùng phòng họp à?"
+      }
+    ],
+    "noteVi": "Dùng cho việc đang làm lúc nói, hoặc mấy hôm nay. Thói quen hằng ngày thì dùng hiện tại đơn (bài trước). Đừng quên am/is/are: I'm working, không phải I working. Cũng dùng cho việc đã định sắp làm: I'm getting off in five minutes."
+  },
+  "sounds": [
+    {
+      "en": "working",
+      "tipVi": "Đuôi -ing là /ɪŋ/: kết thúc bằng âm “ng” trong mũi, không có /g/ bật ra."
+    },
+    {
+      "en": "right now",
+      "tipVi": "“right” giữ /t/ rất nhẹ rồi nối sang “now”: /raɪt naʊ/."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-now-busy",
+      "genre": "chat",
+      "titleVi": "Đang bận, gọi lại sau",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Hi Tom, I'm busy right now. Can I call you back?",
+        "I'm working on the test report. It's almost finished."
+      ],
+      "translationVi": [
+        "Chào Tom, giờ mình đang bận. Mình gọi lại cho bạn sau được không?",
+        "Mình đang làm báo cáo kiểm thử. Gần xong rồi."
+      ],
+      "chunks": [
+        "core-right-now",
+        "core-call-you-back",
+        "core-working-on",
+        "core-almost-finished"
+      ],
+      "task": "core-task-now-busy"
+    },
+    {
+      "id": "core-now-team",
+      "genre": "meeting",
+      "titleVi": "Cả nhóm đang làm gì",
+      "speaker": "Tom, project manager",
+      "cefr": "A2",
+      "text": [
+        "Nam is fixing a bug in the app. Mai is designing the new home page.",
+        "At the moment, we are testing the payment feature. It's going well."
+      ],
+      "translationVi": [
+        "Nam đang sửa một lỗi trong app. Mai đang thiết kế trang chủ mới.",
+        "Hiện giờ, bọn mình đang kiểm thử tính năng thanh toán. Mọi việc đang ổn."
+      ],
+      "chunks": [
+        "core-fix-a-bug",
+        "core-at-the-moment",
+        "core-going-well"
+      ],
+      "task": "core-task-now-team"
+    },
+    {
+      "id": "core-now-phone",
+      "genre": "phone",
+      "titleVi": "Nghe điện thoại trên tàu",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "Sorry, I can't hear you very well. I'm on the train.",
+        "I'm getting off in five minutes. I'll call you when I arrive."
+      ],
+      "translationVi": [
+        "Xin lỗi, mình nghe không rõ lắm. Mình đang ở trên tàu.",
+        "Năm phút nữa mình xuống tàu. Tới nơi mình sẽ gọi lại."
+      ],
+      "chunks": [
+        "core-cant-hear-you",
+        "core-on-the-train",
+        "core-get-off"
+      ],
+      "task": "core-task-now-phone"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-right-now",
+      "en": "right now",
+      "vi": "ngay lúc này",
+      "example": "She is busy right now.",
+      "exampleVi": "Chị ấy đang bận ngay lúc này.",
+      "answer": "right now"
+    },
+    {
+      "id": "core-call-you-back",
+      "en": "call you back",
+      "vi": "gọi lại cho bạn",
+      "example": "I'll call you back in ten minutes.",
+      "exampleVi": "Mười phút nữa mình gọi lại cho bạn.",
+      "answer": "call you back"
+    },
+    {
+      "id": "core-working-on",
+      "en": "working on",
+      "vi": "đang làm (việc gì)",
+      "example": "I'm working on the login page.",
+      "exampleVi": "Mình đang làm trang đăng nhập.",
+      "answer": "working on"
+    },
+    {
+      "id": "core-almost-finished",
+      "en": "almost finished",
+      "vi": "gần xong",
+      "forms": [
+        "almost done"
+      ],
+      "example": "The design is almost finished.",
+      "exampleVi": "Bản thiết kế gần xong rồi.",
+      "answer": "almost finished"
+    },
+    {
+      "id": "core-fix-a-bug",
+      "en": "fix a bug",
+      "vi": "sửa lỗi",
+      "forms": [
+        "fixing a bug",
+        "fixed a bug",
+        "fixes a bug"
+      ],
+      "example": "Can you fix this bug for me?",
+      "exampleVi": "Bạn sửa giúp mình lỗi này được không?",
+      "answer": "fix this bug"
+    },
+    {
+      "id": "core-at-the-moment",
+      "en": "at the moment",
+      "vi": "hiện giờ",
+      "example": "At the moment, I'm writing tests.",
+      "exampleVi": "Hiện giờ mình đang viết test.",
+      "answer": "at the moment"
+    },
+    {
+      "id": "core-going-well",
+      "en": "going well",
+      "vi": "đang ổn, đang tốt",
+      "example": "The project is going well.",
+      "exampleVi": "Dự án đang ổn.",
+      "answer": "going well"
+    },
+    {
+      "id": "core-cant-hear-you",
+      "en": "can't hear you",
+      "vi": "không nghe rõ bạn",
+      "example": "Sorry, I can't hear you.",
+      "exampleVi": "Xin lỗi, mình không nghe rõ bạn nói.",
+      "answer": "can't hear you"
+    },
+    {
+      "id": "core-on-the-train",
+      "en": "on the train",
+      "vi": "đang ở trên tàu",
+      "forms": [
+        "on the bus"
+      ],
+      "example": "I'm on the train now.",
+      "exampleVi": "Bây giờ mình đang ở trên tàu.",
+      "answer": "on the train"
+    },
+    {
+      "id": "core-get-off",
+      "en": "get off",
+      "vi": "xuống (xe, tàu)",
+      "forms": [
+        "getting off",
+        "got off"
+      ],
+      "example": "I get off at the next stop.",
+      "exampleVi": "Mình xuống ở trạm tới.",
+      "answer": "get off"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-now-busy",
+      "promptVi": "Đồng nghiệp gọi lúc bạn đang bận. Nhắn lại: bạn đang làm gì, và khi nào gọi lại.",
+      "situation": "A chat message during a busy afternoon.",
+      "required": [
+        {
+          "label": "right now",
+          "variants": [
+            "right now",
+            "at the moment"
+          ]
+        },
+        {
+          "label": "call you back",
+          "variants": [
+            "call you back"
+          ]
+        }
+      ],
+      "models": [
+        "Sorry, I'm in a meeting right now. Can I call you back at 3?",
+        "Hi Nam, I'm working on a bug right now. I'll call you back after lunch."
+      ],
+      "tipVi": "Đang làm thì phải có am/is/are: I'm working, không viết I working.",
+      "points": [
+        {
+          "vi": "Bạn đang làm gì",
+          "variants": [
+            "in a meeting",
+            "working on",
+            "i am",
+            "right now",
+            "at the moment"
+          ]
+        },
+        {
+          "vi": "Khi nào gọi lại",
+          "variants": [
+            "call you back",
+            "call you later",
+            "call you after",
+            "call you at"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn đang họp hay đang làm việc gì? Mấy giờ thì bạn rảnh để gọi lại?",
+        "Sorry, I'm … right now. Can I call you back …?"
+      ]
+    },
+    {
+      "id": "core-task-now-team",
+      "promptVi": "Họp nhóm: kể bạn và một đồng nghiệp đang làm gì tuần này.",
+      "situation": "Weekly team meeting.",
+      "required": [
+        {
+          "label": "at the moment",
+          "variants": [
+            "at the moment",
+            "right now",
+            "this week"
+          ]
+        }
+      ],
+      "models": [
+        "At the moment, I'm testing the search page. Hoa is writing the user guide. It's going well."
+      ],
+      "tipVi": "I'm + V-ing cho bạn, He/She is + V-ing cho người khác.",
+      "points": [
+        {
+          "vi": "Bạn đang làm gì",
+          "variants": [
+            "i am"
+          ]
+        },
+        {
+          "vi": "Một đồng nghiệp đang làm gì",
+          "variants": [
+            "he is",
+            "she is",
+            "is working",
+            "is fixing",
+            "is testing",
+            "is writing",
+            "is designing",
+            "is making",
+            "is doing"
+          ]
+        }
+      ],
+      "hints": [
+        "Tuần này bạn đang làm phần nào? Còn một người trong nhóm đang làm gì?",
+        "At the moment, I'm … (Tên) is …"
+      ]
+    },
+    {
+      "id": "core-task-now-phone",
+      "promptVi": "Bạn đang ở ngoài thì đồng nghiệp gọi. Nói bạn đang ở đâu, và khi nào gọi lại.",
+      "situation": "A phone call on the way home.",
+      "required": [
+        {
+          "label": "call you back",
+          "variants": [
+            "call you back",
+            "call you when",
+            "call you later"
+          ]
+        }
+      ],
+      "models": [
+        "Sorry, I can't hear you well. I'm on the bus. I'll call you back in ten minutes."
+      ],
+      "tipVi": "Đang ở trên xe/tàu: I'm on the bus, I'm on the train. Ở một chỗ: I'm at the airport.",
+      "points": [
+        {
+          "vi": "Bạn đang ở đâu",
+          "variants": [
+            "i am on",
+            "i am at",
+            "i am in"
+          ]
+        },
+        {
+          "vi": "Khi nào gọi lại",
+          "variants": [
+            "call you back",
+            "call you later",
+            "call you when",
+            "call you in"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn đang ở đâu, trên xe hay ở quán? Bao lâu nữa thì gọi lại được?",
+        "Sorry, I'm on the … I'll call you back …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-now",
+      "titleVi": "Đồng nghiệp hỏi khi bạn đang bận",
+      "partner": "Nam, backend dev",
+      "situationVi": "Nam nhắn hỏi một câu gấp, nhưng bạn đang bận việc khác.",
+      "goalVi": "Nói bạn đang làm gì và hẹn lúc gọi lại.",
+      "persona": "You are Nam, a friendly backend developer with a quick question. Ask if the learner is free, what they are working on, and when they can call you back. Very short sentences.",
+      "goal": "The learner says what they are doing now and when they will call back.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hey, are you free now? I have a quick question.",
+          "sayVi": "Ê, giờ bạn rảnh không? Mình hỏi nhanh một câu.",
+          "replies": [
+            {
+              "text": "Sorry, I'm in a meeting right now.",
+              "next": "what"
+            },
+            {
+              "text": "Not really, I'm busy at the moment.",
+              "next": "what"
+            }
+          ]
+        },
+        {
+          "id": "what",
+          "say": "No problem. What are you working on today?",
+          "sayVi": "Không sao. Hôm nay bạn đang làm gì?",
+          "replies": [
+            {
+              "text": "I'm working on the test report.",
+              "next": "back"
+            },
+            {
+              "text": "I'm fixing a bug on the login page.",
+              "next": "back"
+            }
+          ]
+        },
+        {
+          "id": "back",
+          "say": "OK. When can you call me back?",
+          "sayVi": "Được. Khi nào bạn gọi lại cho mình?",
+          "replies": [
+            {
+              "text": "I'll call you back after lunch.",
+              "next": "end"
+            },
+            {
+              "text": "I can call you back at 3.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great, talk to you later!",
+          "sayVi": "Tốt, nói chuyện sau nhé!",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Sửa câu mâu thuẫn ở bài 1, giới từ on the login page, ví dụ của cụm rõ nghĩa hơn."
+  }
+}

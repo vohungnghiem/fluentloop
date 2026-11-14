@@ -1,0 +1,417 @@
+{
+  "id": "core-opinion",
+  "track": "core",
+  "title": "Opinions and comparing",
+  "titleVi": "Ý kiến và so sánh",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Nêu ý kiến: I think… / better than… / because…",
+    "forms": [
+      "I think + câu",
+      "từ ngắn + -er + than: faster than, easier than",
+      "more + từ dài + than: more useful than",
+      "more + từ đuôi -ly: more quickly, more slowly",
+      "because + lý do"
+    ],
+    "examples": [
+      {
+        "en": "I think it's a good idea.",
+        "vi": "Mình nghĩ đó là ý hay."
+      },
+      {
+        "en": "Slack is faster than email.",
+        "vi": "Slack nhanh hơn email."
+      },
+      {
+        "en": "This tool is more useful because it's free.",
+        "vi": "Công cụ này hữu ích hơn vì nó miễn phí."
+      }
+    ],
+    "noteVi": "good → better, bad → worse. Đừng nói “more better”. Nêu ý kiến xong nhớ thêm because để người nghe hiểu lý do."
+  },
+  "sounds": [
+    {
+      "en": "think",
+      "tipVi": "/θɪŋk/: đặt đầu lưỡi giữa hai răng rồi thổi hơi. Không đọc “tinh” hay “sinh”."
+    },
+    {
+      "en": "than",
+      "tipVi": "/ðən/: lưỡi giữa hai răng, có rung. Không đọc “đan”."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-opinion-tools",
+      "genre": "meeting",
+      "titleVi": "Slack hay email?",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "I think Slack is better than email for quick questions.",
+        "It's faster, and people answer more quickly."
+      ],
+      "translationVi": [
+        "Mình nghĩ với câu hỏi nhanh thì Slack tốt hơn email.",
+        "Nó nhanh hơn, và mọi người trả lời cũng nhanh hơn."
+      ],
+      "chunks": [
+        "core-i-think",
+        "core-better-than",
+        "core-more-quickly"
+      ],
+      "task": "core-task-opinion-tools"
+    },
+    {
+      "id": "core-opinion-office",
+      "genre": "conversation",
+      "titleVi": "Làm ở nhà hay ở văn phòng?",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "I prefer working from home because it's quieter.",
+        "But the office is more fun. I can talk to my team there."
+      ],
+      "translationVi": [
+        "Mình thích làm ở nhà hơn vì yên tĩnh hơn.",
+        "Nhưng ở văn phòng thì vui hơn. Ở đó mình nói chuyện được với cả nhóm."
+      ],
+      "chunks": [
+        "core-i-prefer",
+        "core-because",
+        "core-more-fun"
+      ],
+      "task": "core-task-opinion-office"
+    },
+    {
+      "id": "core-opinion-design",
+      "genre": "meeting",
+      "titleVi": "Góp ý bản thiết kế",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "I agree with you. The new design is much easier to use.",
+        "But I'm not sure about the colors. Maybe we can try a lighter blue."
+      ],
+      "translationVi": [
+        "Mình đồng ý với bạn. Bản thiết kế mới dễ dùng hơn nhiều.",
+        "Nhưng mình chưa chắc về màu. Có lẽ mình thử một màu xanh nhạt hơn."
+      ],
+      "chunks": [
+        "core-agree-with",
+        "core-much-easier",
+        "core-not-sure-about",
+        "core-maybe-we-can"
+      ],
+      "task": "core-task-opinion-design"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-i-think",
+      "en": "I think",
+      "vi": "tôi nghĩ",
+      "example": "I think we need more time.",
+      "exampleVi": "Mình nghĩ bọn mình cần thêm thời gian.",
+      "answer": "I think"
+    },
+    {
+      "id": "core-better-than",
+      "en": "better than",
+      "vi": "tốt hơn",
+      "example": "This version is better than the old one.",
+      "exampleVi": "Bản này tốt hơn bản cũ.",
+      "answer": "better than"
+    },
+    {
+      "id": "core-more-quickly",
+      "en": "more quickly",
+      "vi": "nhanh hơn (làm gì)",
+      "example": "We can fix bugs more quickly now.",
+      "exampleVi": "Giờ bọn mình sửa lỗi nhanh hơn.",
+      "answer": "more quickly"
+    },
+    {
+      "id": "core-i-prefer",
+      "en": "I prefer",
+      "vi": "tôi thích … hơn",
+      "example": "I prefer tea to coffee.",
+      "exampleVi": "Mình thích trà hơn cà phê.",
+      "answer": "I prefer"
+    },
+    {
+      "id": "core-because",
+      "en": "because",
+      "vi": "vì, bởi vì",
+      "example": "I'm late because it's raining.",
+      "exampleVi": "Mình trễ vì trời đang mưa.",
+      "answer": "because"
+    },
+    {
+      "id": "core-more-fun",
+      "en": "more fun",
+      "vi": "vui hơn",
+      "example": "Working in a team is more fun.",
+      "exampleVi": "Làm việc theo nhóm vui hơn.",
+      "answer": "more fun"
+    },
+    {
+      "id": "core-agree-with",
+      "en": "agree with",
+      "vi": "đồng ý với",
+      "example": "I agree with Mai.",
+      "exampleVi": "Mình đồng ý với Mai.",
+      "answer": "agree with"
+    },
+    {
+      "id": "core-much-easier",
+      "en": "much easier",
+      "vi": "dễ hơn nhiều",
+      "example": "The new app is much easier.",
+      "exampleVi": "App mới dễ hơn nhiều.",
+      "answer": "much easier"
+    },
+    {
+      "id": "core-not-sure-about",
+      "en": "not sure about",
+      "vi": "chưa chắc về",
+      "example": "I'm not sure about the date.",
+      "exampleVi": "Mình chưa chắc về ngày.",
+      "answer": "not sure about"
+    },
+    {
+      "id": "core-maybe-we-can",
+      "en": "Maybe we can",
+      "vi": "có lẽ mình có thể",
+      "example": "Maybe we can meet on Tuesday.",
+      "exampleVi": "Có lẽ mình có thể gặp nhau vào thứ Ba.",
+      "answer": "Maybe we can"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-opinion-tools",
+      "promptVi": "Nhóm đang bàn nên trao đổi bằng gì (họp, email, chat…). Nêu ý kiến của bạn, so sánh hai cách, và nói lý do.",
+      "situation": "Team meeting about tools.",
+      "required": [
+        {
+          "label": "I think",
+          "variants": [
+            "i think",
+            "in my opinion"
+          ]
+        },
+        {
+          "label": "… than",
+          "variants": [
+            "than"
+          ]
+        }
+      ],
+      "models": [
+        "I think a short call is better than email for big problems. It's faster because we can talk and ask questions together."
+      ],
+      "tipVi": "Từ ngắn thêm -er: faster, easier. good → better. Rồi thêm because + lý do.",
+      "points": [
+        {
+          "vi": "Ý kiến của bạn",
+          "variants": [
+            "i think",
+            "in my opinion"
+          ]
+        },
+        {
+          "vi": "So sánh hai cách",
+          "variants": [
+            "than"
+          ]
+        },
+        {
+          "vi": "Lý do",
+          "variants": [
+            "because"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn thích cách nào hơn? Nó hơn cách kia ở điểm nào? Vì sao?",
+        "I think … is better than … because …"
+      ]
+    },
+    {
+      "id": "core-task-opinion-office",
+      "promptVi": "Bạn thích làm ở nhà hay ở văn phòng hơn? Nói lý do, và một điểm hay của chỗ còn lại.",
+      "situation": "Chat with your manager.",
+      "required": [
+        {
+          "label": "I prefer",
+          "variants": [
+            "i prefer",
+            "i like"
+          ]
+        },
+        {
+          "label": "because",
+          "variants": [
+            "because"
+          ]
+        }
+      ],
+      "models": [
+        "I prefer working in the office because I can ask my team quickly. But it's quieter at home."
+      ],
+      "tipVi": "Sau prefer thường dùng V-ing hoặc danh từ: I prefer working at home, I prefer the office.",
+      "points": [
+        {
+          "vi": "Bạn thích chỗ nào hơn",
+          "variants": [
+            "prefer",
+            "like"
+          ]
+        },
+        {
+          "vi": "Lý do",
+          "variants": [
+            "because"
+          ]
+        },
+        {
+          "vi": "Điểm hay của chỗ còn lại",
+          "variants": [
+            "but"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn thích làm ở đâu hơn, vì sao? Chỗ kia có gì hay?",
+        "I prefer working … because … But …"
+      ]
+    },
+    {
+      "id": "core-task-opinion-design",
+      "promptVi": "Góp ý cho bản thiết kế mới: một điểm bạn đồng ý, một điểm bạn chưa chắc, và một đề xuất.",
+      "situation": "Design review meeting.",
+      "required": [
+        {
+          "label": "agree with",
+          "variants": [
+            "agree"
+          ]
+        },
+        {
+          "label": "not sure about",
+          "variants": [
+            "not sure"
+          ]
+        }
+      ],
+      "models": [
+        "I agree with Hoa. The new menu is much clearer. But I'm not sure about the font. Maybe we can make it bigger."
+      ],
+      "tipVi": "Góp ý nhẹ nhàng: I'm not sure about…, Maybe we can… thay vì nói thẳng “It's bad”.",
+      "points": [
+        {
+          "vi": "Điểm bạn đồng ý",
+          "variants": [
+            "agree",
+            "like",
+            "good",
+            "better"
+          ]
+        },
+        {
+          "vi": "Điểm chưa chắc",
+          "variants": [
+            "not sure",
+            "but"
+          ]
+        },
+        {
+          "vi": "Đề xuất",
+          "variants": [
+            "maybe",
+            "we can",
+            "we could",
+            "how about",
+            "let us",
+            "we should",
+            "can we",
+            "why don't we"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn thích điểm nào? Điểm nào bạn chưa chắc? Bạn muốn thử sửa gì?",
+        "I agree with … But I'm not sure about … Maybe we can …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-opinion",
+      "titleVi": "Họp chọn công cụ",
+      "partner": "Tom, project manager",
+      "situationVi": "Tom hỏi ý kiến bạn: nhóm nên dùng Jira hay Trello để quản lý việc.",
+      "goalVi": "Nêu ý kiến, so sánh, nói lý do và một điểm chưa chắc.",
+      "persona": "You are Tom, a project manager choosing a task tool: Jira or Trello. Ask the learner which one they prefer, why, and if there is anything they don't like. Short, simple sentences.",
+      "goal": "The learner gives an opinion, compares the two tools, gives a reason, and says one thing they are not sure about.",
+      "script": [
+        {
+          "id": "start",
+          "say": "We need a tool for our tasks. Jira or Trello? What do you think?",
+          "sayVi": "Mình cần một công cụ quản lý việc. Jira hay Trello? Bạn nghĩ sao?",
+          "replies": [
+            {
+              "text": "I think Trello is better than Jira for our team.",
+              "next": "why"
+            },
+            {
+              "text": "I prefer Jira.",
+              "next": "why"
+            }
+          ]
+        },
+        {
+          "id": "why",
+          "say": "Why do you think so?",
+          "sayVi": "Sao bạn nghĩ vậy?",
+          "replies": [
+            {
+              "text": "Because it's much easier to use.",
+              "next": "worry"
+            },
+            {
+              "text": "Because it has more features.",
+              "next": "worry"
+            }
+          ]
+        },
+        {
+          "id": "worry",
+          "say": "OK. Is there anything you don't like about it?",
+          "sayVi": "Được. Có điểm nào bạn không thích không?",
+          "replies": [
+            {
+              "text": "I'm not sure about the price.",
+              "next": "end"
+            },
+            {
+              "text": "Maybe it's a bit slow, but it's OK.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Good points. Let's try it for a month.",
+          "sayVi": "Ý hay đấy. Mình thử dùng một tháng nhé.",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Ví dụ because + câu, lý do hợp với cả hai công cụ, thêm more + -ly vào mẫu câu."
+  }
+}

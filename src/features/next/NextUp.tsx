@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { ArrowRight, Layers, ClipboardPaste, Flag, MessagesSquare, PenLine, Play, Repeat, RotateCcw, Sparkles } from 'lucide-react';
+import { ArrowRight, Layers, ClipboardPaste, Flag, MessagesSquare, Mic, PenLine, Play, Repeat, RotateCcw, Sparkles } from 'lucide-react';
 import type { Suggestion } from '../../core/next/suggest';
 import { ERROR_LABELS, type ErrorLabel } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
@@ -25,6 +25,8 @@ export function suggestionPath(s: Suggestion): string {
       return '/baseline';
     case 'capture':
       return '/capture';
+    case 'talk':
+      return '/speak';
   }
 }
 
@@ -53,6 +55,7 @@ const ICONS = {
   more: Play,
   drill: Repeat,
   roleplay: MessagesSquare,
+  talk: Mic,
   captureTask: PenLine,
   baseline: Flag,
   review: Layers,
@@ -61,7 +64,7 @@ const ICONS = {
 
 /** Each kind in the tone of where it leads. */
 const TONES: Record<Suggestion['kind'], Tone> = {
-  resume: 'produce', session: 'produce', more: 'input', drill: 'fix', roleplay: 'review', captureTask: 'shadow', baseline: 'wrap', review: 'review', capture: 'shadow',
+  resume: 'produce', session: 'produce', more: 'input', drill: 'fix', roleplay: 'review', talk: 'shadow', captureTask: 'shadow', baseline: 'wrap', review: 'review', capture: 'shadow',
 };
 
 /** The extra suggestions under the main one: one tap each, never more than two. */

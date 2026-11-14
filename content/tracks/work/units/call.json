@@ -1,0 +1,405 @@
+{
+  "id": "work-call",
+  "track": "work",
+  "title": "Calls and video meetings",
+  "titleVi": "Gọi điện và họp online",
+  "cefr": "B1",
+  "pattern": {
+    "titleVi": "Gọi điện: giới thiệu, hỏi giờ, xử lý sự cố, nhắn lại",
+    "forms": [
+      "Hi, this is + tên + from + công ty.",
+      "Is now a good time?",
+      "Sorry, you're breaking up.",
+      "Could you ask him/her to + V?"
+    ],
+    "examples": [
+      {
+        "en": "Hi, this is Linh from Sunrise Software.",
+        "vi": "Chào bạn, mình là Linh, bên Sunrise Software."
+      },
+      {
+        "en": "Is now a good time to talk?",
+        "vi": "Bây giờ nói chuyện tiện không?"
+      },
+      {
+        "en": "Could you ask him to call me back?",
+        "vi": "Bạn nhắn anh ấy gọi lại cho mình được không?"
+      }
+    ],
+    "noteVi": "Qua điện thoại nói “This is Linh”, không nói “I am Linh”. Mất tiếng thì nói ngay, đừng gật đầu cho qua."
+  },
+  "sounds": [
+    {
+      "en": "breaking up",
+      "tipVi": "Nối hai từ: “brei-king-up”, âm /k/ nối thẳng sang “up”."
+    },
+    {
+      "en": "mute",
+      "tipVi": "/mjuːt/: “miu” kéo dài, chạm nhẹ /t/. Không đọc “mút”."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "work-call-start",
+      "genre": "phone",
+      "titleVi": "Bắt đầu cuộc gọi",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Hi, this is Linh from Sunrise Software. Is now a good time?",
+        "I'm calling about the test results from yesterday."
+      ],
+      "translationVi": [
+        "Chào anh, em là Linh bên Sunrise Software. Bây giờ anh nghe máy tiện không?",
+        "Em gọi về kết quả kiểm thử hôm qua."
+      ],
+      "chunks": [
+        "work-this-is",
+        "work-good-time",
+        "work-calling-about"
+      ],
+      "task": "work-task-call-start"
+    },
+    {
+      "id": "work-call-problem",
+      "genre": "meeting",
+      "titleVi": "Sự cố khi họp online",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "Sorry, you're breaking up. Can you hear me now?",
+        "I think you're on mute. Could you share your screen again?"
+      ],
+      "translationVi": [
+        "Xin lỗi, tiếng bạn bị ngắt quãng. Giờ bạn nghe mình không?",
+        "Mình nghĩ bạn đang tắt mic. Bạn chia sẻ màn hình lại được không?"
+      ],
+      "chunks": [
+        "work-breaking-up",
+        "work-hear-me",
+        "work-on-mute",
+        "work-share-your-screen"
+      ],
+      "task": "work-task-call-problem"
+    },
+    {
+      "id": "work-call-message",
+      "genre": "phone",
+      "titleVi": "Nhắn lại",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "Tom isn't here right now. Can I take a message?",
+        "Sure. Could you ask him to call me back this afternoon?"
+      ],
+      "translationVi": [
+        "Tom hiện không có ở đây. Tôi nhắn lại giúp được không?",
+        "Vâng. Chị nhắn anh ấy gọi lại cho tôi chiều nay được không?"
+      ],
+      "chunks": [
+        "work-take-a-message",
+        "work-ask-him-to"
+      ],
+      "task": "work-task-call-message"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "work-this-is",
+      "en": "this is",
+      "vi": "tôi là (khi gọi điện)",
+      "example": "Hi, this is Mai from the design team.",
+      "exampleVi": "Chào bạn, mình là Mai ở nhóm thiết kế.",
+      "answer": "this is"
+    },
+    {
+      "id": "work-good-time",
+      "en": "Is now a good time",
+      "vi": "bây giờ có tiện không",
+      "example": "Is now a good time for a quick call?",
+      "exampleVi": "Bây giờ gọi nhanh một chút có tiện không?",
+      "answer": "Is now a good time"
+    },
+    {
+      "id": "work-calling-about",
+      "en": "I'm calling about",
+      "vi": "tôi gọi về việc",
+      "forms": [
+        "calling about"
+      ],
+      "example": "I'm calling about your order.",
+      "exampleVi": "Mình gọi về đơn hàng của bạn.",
+      "answer": "I'm calling about"
+    },
+    {
+      "id": "work-breaking-up",
+      "en": "you're breaking up",
+      "vi": "tiếng bạn bị ngắt quãng",
+      "forms": [
+        "breaking up"
+      ],
+      "example": "Sorry, you're breaking up a little.",
+      "exampleVi": "Xin lỗi, tiếng bạn hơi bị ngắt.",
+      "answer": "you're breaking up"
+    },
+    {
+      "id": "work-hear-me",
+      "en": "Can you hear me",
+      "vi": "bạn nghe mình không",
+      "example": "Can you hear me OK?",
+      "exampleVi": "Bạn nghe mình rõ không?",
+      "answer": "Can you hear me"
+    },
+    {
+      "id": "work-on-mute",
+      "en": "on mute",
+      "vi": "đang tắt mic",
+      "example": "Sorry, I was on mute.",
+      "exampleVi": "Xin lỗi, mình đang tắt mic.",
+      "answer": "on mute"
+    },
+    {
+      "id": "work-share-your-screen",
+      "en": "share your screen",
+      "vi": "chia sẻ màn hình",
+      "forms": [
+        "share my screen"
+      ],
+      "example": "Can you share your screen, please?",
+      "exampleVi": "Bạn chia sẻ màn hình giúp nhé?",
+      "answer": "share your screen"
+    },
+    {
+      "id": "work-take-a-message",
+      "en": "take a message",
+      "vi": "nhận lời nhắn",
+      "example": "She's in a meeting. Can I take a message?",
+      "exampleVi": "Chị ấy đang họp. Tôi nhận lời nhắn giúp nhé?",
+      "answer": "take a message"
+    },
+    {
+      "id": "work-ask-him-to",
+      "en": "ask him to",
+      "vi": "nhắn anh ấy (làm gì)",
+      "forms": [
+        "ask her to"
+      ],
+      "example": "Please ask him to email me.",
+      "exampleVi": "Nhắn anh ấy email cho mình nhé.",
+      "answer": "ask him to"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "work-task-call-start",
+      "promptVi": "Bạn gọi cho khách hàng. Giới thiệu mình, hỏi họ có tiện nghe không, và nói bạn gọi về việc gì.",
+      "situation": "Phone call to a client.",
+      "required": [
+        {
+          "label": "this is",
+          "variants": [
+            "this is"
+          ]
+        },
+        {
+          "label": "good time",
+          "variants": [
+            "good time"
+          ]
+        }
+      ],
+      "models": [
+        "Hi, this is Nam from Sunrise Software. Is now a good time? I'm calling about the new contract."
+      ],
+      "tipVi": "Qua điện thoại: This is + tên + from + công ty. Luôn hỏi Is now a good time?",
+      "points": [
+        {
+          "vi": "Bạn là ai, ở đâu",
+          "variants": [
+            "this is",
+            "from"
+          ]
+        },
+        {
+          "vi": "Hỏi có tiện không",
+          "variants": [
+            "good time"
+          ]
+        },
+        {
+          "vi": "Gọi về việc gì",
+          "variants": [
+            "calling about",
+            "about"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn tên gì, ở công ty nào? Bạn gọi về chuyện gì?",
+        "Hi, this is … from … Is now a good time? I'm calling about …"
+      ]
+    },
+    {
+      "id": "work-task-call-problem",
+      "promptVi": "Đang họp online thì tiếng bị ngắt và người kia quên bật mic. Nói cho họ biết và nhờ chia sẻ lại màn hình.",
+      "situation": "Video meeting.",
+      "required": [
+        {
+          "label": "breaking up",
+          "variants": [
+            "breaking up",
+            "can't hear"
+          ]
+        },
+        {
+          "label": "on mute",
+          "variants": [
+            "on mute",
+            "muted"
+          ]
+        }
+      ],
+      "models": [
+        "Sorry, you're breaking up. Now I think you're on mute. Could you share your screen again, please?"
+      ],
+      "tipVi": "Nói ngay khi có sự cố, giọng nhẹ nhàng: Sorry, you're breaking up.",
+      "points": [
+        {
+          "vi": "Tiếng bị ngắt",
+          "variants": [
+            "breaking up",
+            "can't hear",
+            "cannot hear"
+          ]
+        },
+        {
+          "vi": "Người kia đang tắt mic",
+          "variants": [
+            "mute"
+          ]
+        },
+        {
+          "vi": "Nhờ chia sẻ màn hình",
+          "variants": [
+            "share"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn báo tiếng bị ngắt thế nào? Báo họ đang tắt mic ra sao?",
+        "Sorry, you're … I think you're on … Could you …?"
+      ]
+    },
+    {
+      "id": "work-task-call-message",
+      "promptVi": "Bạn gọi tìm Tom nhưng Tom vắng. Để lại lời nhắn: bạn là ai, gọi về việc gì, nhờ Tom làm gì.",
+      "situation": "Phone call, Tom is out.",
+      "required": [
+        {
+          "label": "ask him to",
+          "variants": [
+            "ask him to",
+            "ask tom to",
+            "tell him"
+          ]
+        }
+      ],
+      "models": [
+        "Sure. This is Linh from Sunrise Software. I'm calling about the invoice. Could you ask him to call me back this afternoon?"
+      ],
+      "tipVi": "Lời nhắn đủ ba ý: ai gọi, về việc gì, nhờ làm gì.",
+      "points": [
+        {
+          "vi": "Bạn là ai",
+          "variants": [
+            "this is",
+            "my name is"
+          ]
+        },
+        {
+          "vi": "Gọi về việc gì",
+          "variants": [
+            "about"
+          ]
+        },
+        {
+          "vi": "Nhờ Tom làm gì",
+          "variants": [
+            "ask him",
+            "call me",
+            "email me",
+            "tell him"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn là ai? Bạn gọi về việc gì? Bạn muốn Tom làm gì?",
+        "This is … I'm calling about … Could you ask him to …?"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "work-scenario-call",
+      "titleVi": "Gọi cho khách hàng",
+      "partner": "Sarah, client",
+      "situationVi": "Bạn gọi cho Sarah (khách hàng) để hẹn họp xem bản demo. Đường truyền không tốt.",
+      "goalVi": "Giới thiệu, nói gọi về việc gì, xử lý lúc mất tiếng, và hẹn giờ họp.",
+      "persona": "You are Sarah, a client, on a phone call. The learner calls to set up a demo meeting. Once, say the line is bad and ask them to repeat. Agree on a time. Short spoken sentences.",
+      "goal": "The learner introduces themself, says why they are calling, handles the bad line, and agrees on a meeting time.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hello, Sarah speaking.",
+          "sayVi": "Alô, Sarah nghe.",
+          "replies": [
+            {
+              "text": "Hi Sarah, this is Linh from Sunrise Software. Is now a good time?",
+              "next": "why"
+            },
+            {
+              "text": "Hi, this is Nam. Is now a good time to talk?",
+              "next": "why"
+            }
+          ]
+        },
+        {
+          "id": "why",
+          "say": "Yes, sure. What's it ab... sorry, the line is bad.",
+          "sayVi": "Có, được chứ. Bạn gọi về... xin lỗi, đường truyền kém quá.",
+          "replies": [
+            {
+              "text": "Sorry, you're breaking up. Can you hear me now?",
+              "next": "hear"
+            },
+            {
+              "text": "Can you hear me now?",
+              "next": "hear"
+            }
+          ]
+        },
+        {
+          "id": "hear",
+          "say": "Yes, better now. Why are you calling?",
+          "sayVi": "Ừ, giờ rõ hơn rồi. Bạn gọi có việc gì?",
+          "replies": [
+            {
+              "text": "I'm calling about the demo. Are you free on Thursday?",
+              "next": "end"
+            },
+            {
+              "text": "I'd like to set up a demo meeting next week.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Thursday at 10 works for me. See you then!",
+          "sayVi": "Thứ Năm lúc 10 giờ được đấy. Hẹn gặp bạn!",
+          "replies": []
+        }
+      ]
+    }
+  ]
+}

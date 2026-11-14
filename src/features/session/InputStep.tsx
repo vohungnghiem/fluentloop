@@ -2,7 +2,7 @@ import { StepHeader } from '../../ui/ui';
 import { STEP_LOOK } from '../../ui/tones';
 import { useState } from 'react';
 import { Check } from 'lucide-react';
-import { SpeakButton } from '../../ui/speech';
+import { PatternCard, SpeakButton } from '../../ui/speech';
 import { SnippetReader } from '../lesson/SnippetReader';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
@@ -30,6 +30,8 @@ export function InputStep({ session }: { session: SessionRow }) {
   return (
     <section className="flex flex-1 flex-col pt-8">
       <StepHeader {...STEP_LOOK.input} title={vi.input.title} detail={vi.input.instruction} />
+
+      {found.unit.pattern && <div className="mt-5"><PatternCard pattern={found.unit.pattern} /></div>}
 
       <SnippetReader snippet={snippet} className="mt-5" />
 

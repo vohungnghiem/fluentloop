@@ -12,6 +12,11 @@ describe('suggestNext', () => {
     expect(suggestNext({ ...base, active: { step: 2, total: 5 } })[0]).toEqual({ kind: 'resume', step: 2, total: 5 });
   });
 
+  it('suggests a talk after the roleplay when none was made lately', () => {
+    const out = suggestNext({ ...base, doneToday: true, dueToday: 0, roleplay: { scenarioId: 's', title: 'S' }, talkDue: true });
+    expect(out.map((s) => s.kind)).toEqual(['roleplay', 'talk', 'more']);
+  });
+
   it('after the session, leads to the drill, then the roleplay of the unit', () => {
     const out = suggestNext({
       ...base,

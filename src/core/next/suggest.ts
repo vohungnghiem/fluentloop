@@ -11,6 +11,7 @@ export type Suggestion =
   | { kind: 'session'; due: number }
   | { kind: 'drill'; label: string; cards: number }
   | { kind: 'roleplay'; scenarioId: string; title: string }
+  | { kind: 'talk' }
   | { kind: 'captureTask'; captureId: string }
   | { kind: 'review'; due: number }
   | { kind: 'baseline' }
@@ -25,6 +26,8 @@ export interface SuggestInput {
   repeating: ReadonlyArray<{ label: string; cardIds: readonly string[] }>;
   /** The roleplay of the unit being learnt, once at least one of its snippets was read. */
   roleplay?: { scenarioId: string; title: string };
+  /** Lessons were read and no talk (speaking at length) in the last few days. */
+  talkDue?: boolean;
   /** A writing task made from a capture and not written yet. */
   captureTaskId?: string;
   baselineDue: boolean;
@@ -42,6 +45,7 @@ export function suggestNext(input: SuggestInput, max = 3): Suggestion[] {
   // Done for today and cards still due (past the session's share): review more, outside a session.
   if (input.doneToday && !input.active && input.dueToday > 0) out.push({ kind: 'review', due: input.dueToday });
   if (input.roleplay) out.push({ kind: 'roleplay', ...input.roleplay });
+  if (input.talkDue) out.push({ kind: 'talk' });
   if (input.captureTaskId) out.push({ kind: 'captureTask', captureId: input.captureTaskId });
   if (input.baselineDue) out.push({ kind: 'baseline' });
   if (input.captureCards === 0) out.push({ kind: 'capture' });

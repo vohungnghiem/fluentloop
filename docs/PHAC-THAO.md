@@ -1,9 +1,10 @@
 # FLUENTLOOP – PHÁC THẢO SẢN PHẨM
 
-**Phiên bản:** 0.2 (2026-11-11). Viết lại cho đúng mục đích: **app học**, không phải game.
+**Phiên bản:** 0.3 (2026-11-14). Thêm mục tiêu 16 tuần, người học bắt đầu từ A2, các gói nội dung Nền/Công việc/Phỏng vấn, nói với AI bằng giọng, dùng được cho bạn bè.
+**Phiên bản 0.2** (2026-11-11): viết lại cho đúng mục đích là **app học**, không phải game.
 **Nhân sự:** 1 người · **Nền tảng:** web (PWA), ưu tiên mobile, desktop dùng tốt bằng bàn phím
 
-> **Một câu:** mỗi ngày 15 phút học tiếng Anh **của chính công việc mình**. App là **người kèm học**: dạy, gợi ý khi bí, chỉ ra cách nói hay hơn, rồi biến lỗi và câu hay của bạn thành bài ôn ngày mai.
+> **Một câu:** học tiếng Anh **dùng được trong công việc** theo một kế hoạch 16 tuần, mỗi ngày 15–60 phút trong app. App là **người kèm học**: dạy, gợi ý khi bí, chỉ ra cách nói hay hơn, rồi biến lỗi và câu hay của bạn thành bài ôn ngày mai.
 
 ![Màn hình Hôm nay](mockups/01-today.svg)
 
@@ -19,11 +20,27 @@ Hệ quả cho mọi quyết định:
 - Đã bỏ hẳn: thế giới 3D, NPC, cốt truyện, quest, XP, tim, bảng xếp hạng. Những thứ này không đưa trở lại.
 - Tạo động lực bằng **tiến bộ thật** (lỗi giảm, câu đã thuộc, bài viết lần sau tốt hơn lần trước), không bằng điểm ảo.
 
+### 1.1 Mục tiêu 16 tuần (từ 2026-11)
+- **Điểm xuất phát:** khoảng A2 (TOEIC 350 cách đây 10 năm, nghe và nói có thể đã tụt).
+- **Đích sau 16 tuần:** **B1 chắc**, tương đương khoảng TOEIC 600–700. Tự giới thiệu, kể việc mình đã làm, họp đơn giản, viết email, trả lời phỏng vấn cơ bản mà không phải dịch trong đầu. "Thành thạo" (B2 trở lên) là chặng tiếp theo, không hứa trong 16 tuần.
+- **Khối lượng:** khoảng 3 giờ/ngày, trong đó app chiếm 60–90 phút, phần còn lại là nghe nguồn thật và nói. Tổng cộng khoảng 350–400 giờ.
+- **Lý do học:** có kỹ năng mềm mang theo được. Vẫn trụ lại IT, nhưng mở đường sang các vai cần tiếng Anh (BA, PO/PM, QA, hỗ trợ kỹ thuật, pre-sales, làm cầu nối với khách nước ngoài).
+
+| Tháng | Trọng tâm | Xong khi |
+|---|---|---|
+| 1 | **Nền:** phát âm, nghe, các thì cơ bản theo mẫu câu, khoảng 600 cụm thông dụng | Nghe hiểu hội thoại chậm, nói được 5–6 câu về bản thân |
+| 2 | **Nền + công việc:** email, standup, hỏi lại khi không hiểu, mô tả việc mình làm | Viết email ngắn không cần dịch, họp standup được |
+| 3 | **Nói dài:** giải thích một vấn đề, kể một dự án 1–2 phút, góp ý | Nói liền 90 giây, ít ngập ngừng hơn lần đo tuần 1 |
+| 4 | **Phỏng vấn:** câu trả lời của chính mình (STAR), phỏng vấn thử với AI, bài mốc cuối | Phỏng vấn thử 20 phút; so bài mốc tuần 1 với tuần 16 |
+
+Một ngày mẫu: app (ôn + một phiên học) 60 phút, nghe nguồn thật có phụ đề 45 phút, nói với AI 30 phút, đọc hoặc viết thêm 30 phút. Mỗi tuần 1–2 lần nói với người thật ở chỗ miễn phí (câu lạc bộ tiếng Anh, app trao đổi ngôn ngữ).
+
 ---
 
 ## 2. Người dùng
 
-- **Trước mắt:** chính chủ dự án, làm phần mềm/IT. Đọc được tài liệu, nhưng viết và nói chưa tự nhiên. Gói nội dung `dev`.
+- **Trước mắt:** chính chủ dự án, làm phần mềm/IT, trình độ khoảng **A2**. Đọc tài liệu kỹ thuật được nhờ quen từ, nhưng nghe, nói, viết còn yếu. Có nhiều thời gian (đang không có việc), không có ngân sách học thêm. Gói nội dung `core` → `work` → `interview`, thêm `dev`.
+- **Bạn bè được giới thiệu:** trình độ khác nhau, nhiều người không làm IT, học trên điện thoại. Họ cần lần đầu mở app là hiểu ngay, có bài xếp mức, có hướng dẫn lấy key AI miễn phí từng bước, và vẫn học được nếu bỏ qua bước lấy key.
 - **Sau này:** người ngành khác (khách sạn, điều dưỡng, bán hàng...). Họ không tự tạo được API key và học chủ yếu trên điện thoại. Vì vậy **giao diện và luồng không giả định người dùng là dev**, chỉ nội dung mang màu ngành, và **app phải dùng tốt khi không có AI**.
 
 ---
@@ -44,6 +61,8 @@ Hệ quả cho mọi quyết định:
 | Shadowing | Nghe rồi nói theo câu chính, app so khớp từng từ |
 | Học trên nội dung của mình | "Bỏ túi": dán email/ticket thật |
 | Ngày làm xong được | Phiên có điểm kết thúc rõ ràng |
+| **Nói liền (fluency)** | Nói 1–2 phút theo đề không dừng, đo tốc độ và chỗ ngập ngừng, lần sau so với lần trước |
+| **Đúng mức (A2 trước)** | Bài xếp mức chọn gói bắt đầu. Ở mức thấp thì giải thích và gợi ý bằng tiếng Việt nhiều hơn, câu ngắn hơn |
 
 ---
 
@@ -88,7 +107,9 @@ Hệ quả cho mọi quyết định:
 
 | Màn | Mục đích |
 |---|---|
-| **Hôm nay** | Một thẻ lớn "Bài tiếp theo · Bắt đầu" + 3 con số nhỏ |
+| **Bắt đầu (lần đầu mở)** | Chào, bài xếp mức ngắn (nghe, đọc, viết, nói), chọn số phút mỗi ngày, bài mốc ghi âm. Lấy key AI là bước tuỳ chọn, có hướng dẫn |
+| **Hôm nay** | Một thẻ lớn "Bài tiếp theo · Bắt đầu", dòng "Tuần 3/16", 3 con số nhỏ |
+| **Nói với AI** | Hội thoại bằng giọng hoặc phỏng vấn thử. AI nói chậm, có nút "nói lại" và "giải thích bằng tiếng Việt". Xong thì có bản ghi và nhận xét. Ghi lại cả buổi nói với người thật ("Sau buổi nói") |
 | **Phiên học** | Các bước ở mục 4, toàn màn hình |
 | **Lộ trình / Trang bài** | Chủ đề → bài. Xem trước, đọc lại, học lại, **xem các bài viết cũ của bài này** |
 | **Ôn** | Ôn riêng ngoài phiên |
@@ -113,8 +134,16 @@ Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền
 
 - Cấu trúc: Track (ngành) → Unit (chủ đề) → Snippet, Chunk, Task, Scenario. Thêm ngành = thêm thư mục `content/tracks/<ngành>/`, **không sửa code**.
 - Task phải có: đề, **các ý cần có** (để chấm đủ ý), cụm bắt buộc, câu mẫu, **gợi ý 3 bậc**.
-- Hiện có: `dev` (standup, ticket, PR...) và `hospitality` (thử mở rộng).
-- AI soạn nháp, người duyệt rồi mới commit. App chạy không cần AI.
+- Hiện có: `core` (Nền, 8 unit mức A2: giới thiệu, một ngày đi làm, đang làm gì, quá khứ, kế hoạch, hỏi lại, kinh nghiệm, ý kiến; 24 bài, khoảng tháng 1), `work` (Công việc chung, 5 unit: họp, email, gọi điện, giải thích vấn đề, khách hàng; đứng đầu lộ trình của mọi ngành), `dev` (standup, ticket, PR; mức B1), `hospitality` (thử mở rộng) và bộ **Phỏng vấn** (`content/interview.json`, 10 câu hỏi và phỏng vấn thử). Người xếp mức A0–A2 học `core` trước rồi sang ngành.
+- Cần thêm, theo thứ tự:
+
+| Gói | Mức | Nội dung |
+|---|---|---|
+| `core` (Nền) | A2→B1 | Mẫu câu theo thì, cụm thông dụng, hội thoại hằng ngày, phát âm |
+| `work` (Công việc) | B1 | Họp, email, gọi điện, giải thích một vấn đề, làm với khách hàng. Dùng được cho mọi ngành |
+| `interview` (Phỏng vấn) | B1 | Tự giới thiệu, kể dự án theo STAR, điểm mạnh/yếu, hỏi lại nhà tuyển dụng. Dán CV để AI giúp soạn câu trả lời của chính mình |
+
+- **Quy trình soạn:** AI soạn nháp theo khuôn (`content/prompts/unit.md`), `content:check` kiểm schema và mức (câu A2 tối đa 14 từ, task đủ ý cần có và gợi ý), một model khác kiểm lại câu chữ và mức CEFR (`npm run -s content:review -- <unit>` in sẵn prompt), rồi ghi `review` vào unit. Người học ở mức A2 chưa tự duyệt chắc được, nên bước kiểm chéo là bắt buộc. App chạy không cần AI.
 
 ---
 
@@ -147,7 +176,9 @@ Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền
 ---
 
 ## 10. Đo tiến bộ thật
-- Bài mốc ngày 1 (ghi âm + bài viết), làm lại sau mỗi 4 tuần, đặt cạnh nhau.
+- Bài mốc ngày 1 (ghi âm + bài viết + bài xếp mức), làm lại sau mỗi 4 tuần, đặt cạnh nhau.
+- Ngoài app: làm một bài kiểm tra trình độ miễn phí (ví dụ EF SET) ở tuần 1 và tuần 16.
+- Giờ học thật mỗi tuần (app tự đếm), tốc độ nói và số chỗ ngập ngừng ở bài nói liền.
 - Theo dõi: câu đã thuộc (độ ổn định trên 21 ngày), tỉ lệ nhớ, **nhãn lỗi giảm theo tuần**, **số lần viết lại để đạt yêu cầu giảm dần**.
 
 ---
@@ -161,5 +192,8 @@ Một câu hoặc cụm lần lượt đi qua các dạng: nhận ra → điền
 | Hết lượt AI | Luật + gợi ý viết sẵn, lưu đệm |
 | Web Speech không ổn định | Gõ phím luôn dùng được |
 | Nhàm chán | Màu theo bước, thấy rõ tiến bộ (bài viết cũ so với mới), nội dung từ Bỏ túi |
+| Làm app thay vì học | Làm app tối đa 1–2 giờ/ngày. Học mỗi ngày ít nhất 2 giờ, kể cả khi sprint chưa xong |
+| Nội dung AI soạn sai mà người học không biết | Model thứ hai kiểm lại, kiểm mức CEFR, ưu tiên câu ngắn và phổ biến |
+| Bạn bè bỏ cuộc ở bước lấy key | Key là tuỳ chọn, app học được không có AI, hướng dẫn từng bước có hình |
 
 Xem tiếp: [LO-TRINH.md](LO-TRINH.md) · [KIEN-TRUC.md](KIEN-TRUC.md) · [THIET-KE.md](THIET-KE.md)

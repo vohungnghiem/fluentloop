@@ -4,6 +4,7 @@ import { db } from '../db';
 import { finishReading, startSession } from '../learning';
 import { memoryStore, DATA_FILE } from './store';
 import { readLocal, syncWith, SYNC_TABLES, type SyncFile } from './sync';
+import { resetLearningData } from '../reset';
 
 const day1 = new Date('2026-11-10T20:00:00');
 const day2 = new Date('2026-11-11T08:00:00');
@@ -92,5 +93,49 @@ describe('sync', () => {
     await db.aiCache.put({ hash: 'h', result: {}, at: day1.toISOString() });
     const { tables } = await readLocal(SYNC_TABLES);
     expect(Object.keys(tables)).not.toContain('aiCache');
+  });
+});
+
+describe('deleting the learning data', () => {
+  it('a reset on one device clears the others, and old rows do not come back', async () => {
+    const drive = memoryStore();
+    // Laptop and phone both learnt before the reset.
+    const session = await startSession(day1);
+    await finishReading(session.id, session.plan.snippetId, session.plan.unitId, ['worked-on', 'pick-up'], day1);
+    await syncWith(drive, day1);
+    const phoneRows = await readLocal(SYNC_TABLES);
+
+    // Laptop: delete everything, then learn one new thing after.
+    const resetAt = new Date('2026-11-11T09:00:00');
+    await resetLearningData(resetAt);
+    expect(await syncWith(drive, resetAt)).toMatchObject({ sent: true });
+    let file = JSON.parse(String(drive.files.get(DATA_FILE)!.body)) as SyncFile;
+    expect(file.resetAt).toBe(resetAt.toISOString());
+    expect(file.tables.cards).toHaveLength(0);
+    const after = new Date('2026-11-11T10:00:00');
+    await db.drafts.put({ key: 'capture', value: 'new start', updatedAt: after.toISOString() });
+    await syncWith(drive, after);
+
+    // Phone: still has the old rows, has not heard of the reset.
+    await freshDevice();
+    for (const [name, rows] of Object.entries(phoneRows.tables)) if (rows.length) await db.table(name).bulkPut(rows);
+    expect(await db.cards.count()).toBe(2);
+    const later = new Date('2026-11-11T11:00:00');
+    await syncWith(drive, later);
+    expect(await db.cards.count()).toBe(0);
+    expect(await db.sessions.count()).toBe(0);
+    expect((await db.drafts.get('capture'))?.value).toBe('new start');
+    file = JSON.parse(String(drive.files.get(DATA_FILE)!.body)) as SyncFile;
+    expect(file.tables.cards ?? []).toHaveLength(0);
+    // And it stays that way on the next round.
+    expect(await syncWith(drive, later)).toEqual({ received: false, sent: false });
+  });
+
+  it('a device that never synced the old data keeps what it made after the reset', async () => {
+    const drive = memoryStore();
+    await drive.write(JSON.stringify({ app: 'fluentloop', kind: 'sync', version: 1, savedAt: '', audio: [], resetAt: '2026-11-11T09:00:00.000Z', tables: {} }));
+    await db.drafts.put({ key: 'mine', value: 'typed today', updatedAt: '2026-11-12T08:00:00.000Z' });
+    await syncWith(drive, day2);
+    expect((await db.drafts.get('mine'))?.value).toBe('typed today');
   });
 });

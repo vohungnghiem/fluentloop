@@ -7,6 +7,7 @@ import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { nextSuggestions } from '../../services/learning';
 import { currentTrack } from '../../services/content';
+import { FoundationDone } from './FoundationDone';
 import { Card, Chip, Note } from '../../ui/ui';
 import { Meter, PageHeader, PageSkeleton } from '../../ui/shell';
 import { SECTION_LOOK } from '../../ui/tones';
@@ -30,7 +31,8 @@ export function PathPage() {
         <Meter value={course.read} max={course.total} className="mt-2" />
         <p className="mt-3 text-sm text-ink-soft">{vi.path.intro}</p>
       </div>
-      {course.finished && (
+      {course.finished && currentTrack.foundation && <FoundationDone />}
+      {course.finished && !currentTrack.foundation && (
         <Note tone="good" icon={<PartyPopper size={18} />}>
           <b>{vi.path.finishedTitle}</b> {vi.path.finishedBody}
         </Note>

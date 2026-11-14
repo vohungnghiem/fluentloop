@@ -4,25 +4,31 @@ import { startSignIn, useSync } from '../../services/sync/sync';
 import type { StepKind } from '../../core/session/plan';
 import { SECTION_LOOK, STEP_LOOK } from '../../ui/tones';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { Link, useNavigate } from 'react-router';
+import { Link, Navigate, useNavigate } from 'react-router';
 import { CloudAlert, LogIn, Mic, Settings } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
-import { currentTrack, findSnippet, library, snippetChunks } from '../../services/content';
+import { currentTrack, findSnippet, industryTracks, snippetChunks } from '../../services/content';
+import { FoundationDone } from '../lesson/FoundationDone';
 import { TrackPicker } from '../settings/TrackPicker';
 import { abandonSession, nextSuggestions } from '../../services/learning';
 import { Button, Card, CardAction, ChunkChips, Eyebrow, StepTrail, Chip, Lu, MoreMenu, NavList, NavRow, Note, linkButton } from '../../ui/ui';
 import { PageSkeleton } from '../../ui/shell';
 import { lastExport } from '../../services/backup';
 import { MoreSuggestions, suggestionPath, suggestionText } from '../next/NextUp';
+import { planToday } from '../../services/plan';
+import { PlanCard } from '../plan/PlanCard';
 
 export function TodayPage() {
   const navigate = useNavigate();
   const sync = useSync();
   // Re-read whenever the tables change; `now()` is the app clock.
   const data = useLiveQuery(() => nextSuggestions(now()), [], undefined);
-  if (!data) return <PageSkeleton />;
+  const plan = useLiveQuery(() => planToday(now()), [], undefined);
+  if (!data || !plan) return <PageSkeleton />;
   const { summary, course, suggestions } = data;
+  // A brand new learner starts with the welcome flow (placement, plan); skipping it ends that.
+  if (summary.firstTime && !plan.plan?.onboarded) return <Navigate to="/start" replace />;
 
   // A week of data and no backup for a week: worth a gentle nudge.
   const WEEK = 7 * 86_400_000;
@@ -77,10 +83,10 @@ export function TodayPage() {
         <section className="rise">
           <h1 className="text-2xl font-semibold">{vi.today.welcomeTitle}</h1>
           <p className="mt-2 leading-relaxed text-ink-soft">{vi.today.welcomeBody}</p>
-          {library.tracks.length > 1 && (
+          {industryTracks.length > 1 && (
             <div className="mt-4">
               <p className="mb-2 text-sm font-medium">{vi.today.chooseTrack}</p>
-              <TrackPicker />
+              <TrackPicker industries />
             </div>
           )}
           {!sync.on && (
@@ -92,6 +98,9 @@ export function TodayPage() {
         </section>
       )}
 
+      <PlanCard data={plan} />
+
+      {course.finished && currentTrack.foundation && <FoundationDone />}
 
       {main ? (
         <Card className="rise">

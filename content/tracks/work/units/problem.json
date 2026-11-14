@@ -1,0 +1,416 @@
+{
+  "id": "work-problem",
+  "track": "work",
+  "title": "Explaining a problem",
+  "titleVi": "Giải thích một vấn đề",
+  "cefr": "B1",
+  "pattern": {
+    "titleVi": "Báo vấn đề: chuyện gì → khi nào → vì sao → đang làm gì",
+    "forms": [
+      "Since + mốc, … can't + V",
+      "It happens when …",
+      "It looks like + câu",
+      "We're working on a fix."
+    ],
+    "examples": [
+      {
+        "en": "Since this morning, users can't log in.",
+        "vi": "Từ sáng nay, người dùng không đăng nhập được."
+      },
+      {
+        "en": "It happens when the file is too big.",
+        "vi": "Lỗi xảy ra khi file quá lớn."
+      },
+      {
+        "en": "It looks like the server is full.",
+        "vi": "Có vẻ server bị đầy."
+      }
+    ],
+    "noteVi": "Báo vấn đề theo thứ tự: chuyện gì, từ khi nào, xảy ra khi nào, có vẻ do đâu, đang làm gì. Chưa chắc nguyên nhân thì dùng It looks like…"
+  },
+  "sounds": [
+    {
+      "en": "upload",
+      "tipVi": "/ˌʌpˈləʊd/: nhấn âm sau “LOAD”, âm “ô” kéo dài, chạm nhẹ /d/ ở cuối."
+    },
+    {
+      "en": "since",
+      "tipVi": "/sɪns/: “i” ngắn, cuối là /s/ không phải /z/."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "work-problem-report",
+      "genre": "chat",
+      "titleVi": "Báo lỗi cho nhóm",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Since this morning, some users can't upload photos.",
+        "It happens when the photo is bigger than 5 MB. Can someone take a look?"
+      ],
+      "translationVi": [
+        "Từ sáng nay, một số người dùng không tải ảnh lên được.",
+        "Lỗi xảy ra khi ảnh lớn hơn 5 MB. Có ai xem giúp được không?"
+      ],
+      "chunks": [
+        "work-since-this-morning",
+        "work-it-happens-when",
+        "work-take-a-look"
+      ],
+      "task": "work-task-problem-report"
+    },
+    {
+      "id": "work-problem-cause",
+      "genre": "chat",
+      "titleVi": "Đã thấy nguyên nhân",
+      "speaker": "Nam, backend dev",
+      "cefr": "B1",
+      "text": [
+        "It looks like the upload limit changed after the update.",
+        "We're working on a fix. It should be ready in about an hour."
+      ],
+      "translationVi": [
+        "Có vẻ giới hạn tải lên đã bị thay đổi sau bản cập nhật.",
+        "Bọn mình đang sửa. Khoảng một tiếng nữa sẽ xong."
+      ],
+      "chunks": [
+        "work-it-looks-like",
+        "work-working-on-a-fix",
+        "work-should-be-ready"
+      ],
+      "task": "work-task-problem-cause"
+    },
+    {
+      "id": "work-problem-stuck",
+      "genre": "chat",
+      "titleVi": "Bí, nhờ giúp",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "Do you have a minute? I'm stuck on the export feature.",
+        "I've tried two ways, but neither works. Could you help me?"
+      ],
+      "translationVi": [
+        "Bạn rảnh một phút không? Mình đang bí ở tính năng xuất file.",
+        "Mình thử hai cách rồi mà cách nào cũng không được. Bạn giúp mình được không?"
+      ],
+      "chunks": [
+        "work-have-a-minute",
+        "work-stuck-on",
+        "work-ive-tried"
+      ],
+      "task": "work-task-problem-stuck"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "work-since-this-morning",
+      "en": "since this morning",
+      "vi": "từ sáng nay",
+      "forms": [
+        "since yesterday",
+        "since monday"
+      ],
+      "example": "The website has been slow since this morning.",
+      "exampleVi": "Website chậm từ sáng nay.",
+      "answer": "since this morning"
+    },
+    {
+      "id": "work-it-happens-when",
+      "en": "It happens when",
+      "vi": "nó xảy ra khi",
+      "example": "It happens when I click Save.",
+      "exampleVi": "Lỗi xảy ra khi mình bấm Lưu.",
+      "answer": "It happens when"
+    },
+    {
+      "id": "work-take-a-look",
+      "en": "take a look",
+      "vi": "xem giúp",
+      "example": "Can you take a look at my code?",
+      "exampleVi": "Bạn xem giúp code của mình được không?",
+      "answer": "take a look"
+    },
+    {
+      "id": "work-it-looks-like",
+      "en": "It looks like",
+      "vi": "có vẻ là",
+      "example": "It looks like the password is wrong.",
+      "exampleVi": "Có vẻ mật khẩu bị sai.",
+      "answer": "It looks like"
+    },
+    {
+      "id": "work-working-on-a-fix",
+      "en": "working on a fix",
+      "vi": "đang sửa",
+      "example": "The team is working on a fix now.",
+      "exampleVi": "Nhóm đang sửa rồi.",
+      "answer": "working on a fix"
+    },
+    {
+      "id": "work-should-be-ready",
+      "en": "should be ready",
+      "vi": "chắc sẽ xong",
+      "example": "The report should be ready by noon.",
+      "exampleVi": "Báo cáo chắc sẽ xong trước trưa.",
+      "answer": "should be ready"
+    },
+    {
+      "id": "work-have-a-minute",
+      "en": "Do you have a minute",
+      "vi": "bạn rảnh một phút không",
+      "example": "Do you have a minute to talk?",
+      "exampleVi": "Bạn rảnh một phút nói chuyện không?",
+      "answer": "Do you have a minute"
+    },
+    {
+      "id": "work-stuck-on",
+      "en": "stuck on",
+      "vi": "bị bí, bị kẹt ở",
+      "example": "I'm stuck on this bug.",
+      "exampleVi": "Mình đang kẹt ở lỗi này.",
+      "answer": "stuck on"
+    },
+    {
+      "id": "work-ive-tried",
+      "en": "I've tried",
+      "vi": "mình đã thử",
+      "example": "I've tried restarting the app.",
+      "exampleVi": "Mình đã thử khởi động lại app.",
+      "answer": "I've tried"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "work-task-problem-report",
+      "promptVi": "Báo một lỗi cho nhóm: lỗi gì, từ khi nào, xảy ra khi nào, và nhờ người xem giúp.",
+      "situation": "Team chat.",
+      "required": [
+        {
+          "label": "since",
+          "variants": [
+            "since"
+          ]
+        },
+        {
+          "label": "It happens when",
+          "variants": [
+            "it happens when",
+            "only when"
+          ]
+        }
+      ],
+      "models": [
+        "Since yesterday, the search page doesn't show any results. It happens when the search has more than two words. Can someone take a look?"
+      ],
+      "tipVi": "Since + mốc thời gian (since Monday). Từ khi nào → lỗi gì → khi nào xảy ra → nhờ xem.",
+      "points": [
+        {
+          "vi": "Lỗi gì",
+          "variants": [
+            "cannot",
+            "does not",
+            "doesn't",
+            "can't",
+            "error",
+            "slow"
+          ]
+        },
+        {
+          "vi": "Từ khi nào",
+          "variants": [
+            "since"
+          ]
+        },
+        {
+          "vi": "Xảy ra khi nào",
+          "variants": [
+            "when"
+          ]
+        },
+        {
+          "vi": "Nhờ xem giúp",
+          "variants": [
+            "take a look",
+            "check",
+            "help"
+          ]
+        }
+      ],
+      "hints": [
+        "Lỗi gì, ai bị? Bắt đầu từ lúc nào? Làm gì thì lỗi xuất hiện?",
+        "Since …, users can't … It happens when …"
+      ]
+    },
+    {
+      "id": "work-task-problem-cause",
+      "promptVi": "Cập nhật cho quản lý: có vẻ nguyên nhân là gì, nhóm đang làm gì, khi nào xong.",
+      "situation": "Update to your manager.",
+      "required": [
+        {
+          "label": "It looks like",
+          "variants": [
+            "it looks like",
+            "it seems"
+          ]
+        },
+        {
+          "label": "working on",
+          "variants": [
+            "working on"
+          ]
+        }
+      ],
+      "models": [
+        "It looks like the database is full. We're working on a fix now. It should be ready in about two hours."
+      ],
+      "tipVi": "Chưa chắc chắn thì It looks like… Hẹn giờ xong thì It should be ready…",
+      "points": [
+        {
+          "vi": "Nguyên nhân có vẻ là",
+          "variants": [
+            "looks like",
+            "seems",
+            "because"
+          ]
+        },
+        {
+          "vi": "Nhóm đang làm gì",
+          "variants": [
+            "working on",
+            "fixing"
+          ]
+        },
+        {
+          "vi": "Khi nào xong",
+          "variants": [
+            "should be",
+            "ready",
+            "in about",
+            "by"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn nghĩ lỗi do đâu? Nhóm đang làm gì? Khoảng bao lâu nữa xong?",
+        "It looks like … We're working on … It should be ready …"
+      ]
+    },
+    {
+      "id": "work-task-problem-stuck",
+      "promptVi": "Bạn bí một việc. Nhắn đồng nghiệp: hỏi họ có rảnh không, bạn bí ở đâu, đã thử gì.",
+      "situation": "Chat with a senior colleague.",
+      "required": [
+        {
+          "label": "stuck on",
+          "variants": [
+            "stuck on",
+            "stuck with"
+          ]
+        },
+        {
+          "label": "I've tried",
+          "variants": [
+            "i have tried",
+            "i tried"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Nam, do you have a minute? I'm stuck on the login test. I've tried a new password and a new browser, but it still fails."
+      ],
+      "tipVi": "Nói đã thử gì để người kia không phải hỏi lại: I've tried…, but…",
+      "points": [
+        {
+          "vi": "Hỏi có rảnh không",
+          "variants": [
+            "do you have a minute",
+            "are you free",
+            "do you have time"
+          ]
+        },
+        {
+          "vi": "Bí ở đâu",
+          "variants": [
+            "stuck"
+          ]
+        },
+        {
+          "vi": "Đã thử gì",
+          "variants": [
+            "tried"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn hỏi người kia có rảnh không thế nào? Bạn bí ở việc gì? Đã thử những gì?",
+        "Do you have a minute? I'm stuck on … I've tried …, but …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "work-scenario-problem",
+      "titleVi": "Báo sự cố cho quản lý",
+      "partner": "Tom, project manager",
+      "situationVi": "App đang lỗi, khách phàn nàn. Tom gọi hỏi bạn tình hình.",
+      "goalVi": "Nói lỗi gì, từ khi nào, có vẻ do đâu, và khi nào sửa xong.",
+      "persona": "You are Tom, a calm project manager. A bug is affecting users. Ask what is happening, since when, what the cause might be, and when it will be fixed. Short sentences.",
+      "goal": "The learner explains the problem, since when, the likely cause, and when it will be fixed.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hi, a client says the app isn't working. What's going on?",
+          "sayVi": "Chào bạn, khách nói app không chạy. Có chuyện gì vậy?",
+          "replies": [
+            {
+              "text": "Since this morning, users can't upload photos.",
+              "next": "cause"
+            },
+            {
+              "text": "Some users can't log in since 9 am.",
+              "next": "cause"
+            }
+          ]
+        },
+        {
+          "id": "cause",
+          "say": "I see. Do you know why?",
+          "sayVi": "Tôi hiểu. Bạn biết vì sao không?",
+          "replies": [
+            {
+              "text": "It looks like the upload limit changed.",
+              "next": "when"
+            },
+            {
+              "text": "Not yet. It happens when the file is big.",
+              "next": "when"
+            }
+          ]
+        },
+        {
+          "id": "when",
+          "say": "OK. When will it be fixed?",
+          "sayVi": "Được. Khi nào sửa xong?",
+          "replies": [
+            {
+              "text": "We're working on a fix. It should be ready in an hour.",
+              "next": "end"
+            },
+            {
+              "text": "It should be ready by 3 pm.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Thanks. Please keep me updated.",
+          "sayVi": "Cảm ơn. Có gì mới thì báo tôi nhé.",
+          "replies": []
+        }
+      ]
+    }
+  ]
+}

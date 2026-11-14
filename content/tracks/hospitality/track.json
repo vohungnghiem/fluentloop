@@ -2,7 +2,14 @@
   "id": "hospitality",
   "titleVi": "Khách sạn / Lễ tân",
   "color": "#C2410C",
-  "units": ["hotel-front-desk"],
+  "units": [
+    "work-meeting",
+    "work-email",
+    "work-call",
+    "work-problem",
+    "work-client",
+    "hotel-front-desk"
+  ],
   "audience": "people who work at a hotel front desk (receptionists)",
   "baseline": {
     "writingVi": "Kể về một vị khách khó tính bạn từng gặp: chuyện gì xảy ra, bạn đã xử lý thế nào.",

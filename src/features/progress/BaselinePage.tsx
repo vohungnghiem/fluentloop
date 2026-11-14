@@ -18,6 +18,19 @@ const MAX_SECONDS = 120;
 /** The benchmark: a short text and a minute of speech, both optional, kept on this device. */
 export function BaselinePage() {
   const navigate = useNavigate();
+  return (
+    <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col space-y-5 px-4 pt-6">
+      <PageHeader title={vi.baseline.title} look={SECTION_LOOK.progress} back={{ to: '/progress', label: vi.progress.title }} />
+      <p className="text-ink-soft">{vi.baseline.intro}</p>
+      <BaselineForm />
+      <div className="flex-1" />
+      <PrimaryAction label={vi.baseline.done} onClick={() => navigate('/progress')} />
+    </main>
+  );
+}
+
+/** The two parts of a benchmark, each saved on its own: the benchmark page and the welcome flow use it. */
+export function BaselineForm({ onSaved }: { onSaved?: (kind: 'writing' | 'audio') => void }) {
   const [text, setText] = useDraftText('baseline');
   const [savedText, setSavedText] = useState(false);
   const [recording, setRecording] = useState<Recording>();
@@ -41,6 +54,7 @@ export function BaselinePage() {
   const save = async (row: { kind: 'writing' | 'audio'; text?: string; audio?: Blob; seconds?: number }) => {
     const at = now();
     await db.baselines.add({ id: crypto.randomUUID(), at: at.toISOString(), day: dayKey(at), updatedAt: at.toISOString(), ...row });
+    onSaved?.(row.kind);
   };
   const start = async () => {
     setError(undefined);
@@ -60,10 +74,7 @@ export function BaselinePage() {
   stopRef.current = () => void stop();
 
   return (
-    <main className="mx-auto flex min-h-dvh max-w-[640px] flex-col space-y-5 px-4 pt-6">
-      <PageHeader title={vi.baseline.title} look={SECTION_LOOK.progress} back={{ to: '/progress', label: vi.progress.title }} />
-      <p className="text-ink-soft">{vi.baseline.intro}</p>
-
+    <>
       <Card>
         <h2 className="font-semibold">{vi.baseline.writingTitle}</h2>
         <p className="mt-1">{currentTrack.baseline.writingVi}</p>
@@ -80,7 +91,7 @@ export function BaselinePage() {
           {savedText ? (
             <span className="inline-flex items-center gap-1 text-good"><CircleCheck size={16} />{vi.baseline.savedWriting}</span>
           ) : (
-            <Button disabled={words < 10} onClick={() => void save({ kind: 'writing', text }).then(() => setSavedText(true))}>{vi.baseline.saveWriting}</Button>
+            <Button disabled={words < 5} onClick={() => void save({ kind: 'writing', text }).then(() => setSavedText(true))}>{vi.baseline.saveWriting}</Button>
           )}
         </div>
       </Card>
@@ -110,9 +121,6 @@ export function BaselinePage() {
           </div>
         )}
       </Card>
-
-      <div className="flex-1" />
-      <PrimaryAction label={vi.baseline.done} onClick={() => navigate('/progress')} />
-    </main>
+    </>
   );
 }

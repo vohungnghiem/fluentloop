@@ -1,0 +1,465 @@
+{
+  "id": "core-plan",
+  "track": "core",
+  "title": "Plans for next week",
+  "titleVi": "Kế hoạch tuần tới",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Sắp làm: going to và will",
+    "forms": [
+      "I'm going to + V: việc đã định trước",
+      "I'll + V: quyết định ngay lúc nói, lời hứa",
+      "Are you going to + V?",
+      "next week · tomorrow · on Monday"
+    ],
+    "examples": [
+      {
+        "en": "I'm going to start work on the new app next week.",
+        "vi": "Tuần tới mình sẽ bắt đầu làm app mới."
+      },
+      {
+        "en": "Don't worry, I'll send it tonight.",
+        "vi": "Đừng lo, tối nay mình gửi."
+      },
+      {
+        "en": "Are you going to join the training?",
+        "vi": "Bạn có định tham gia buổi đào tạo không?"
+      }
+    ],
+    "noteVi": "Kế hoạch đã có từ trước: going to. Vừa nghĩ ra, hoặc hứa giúp: I'll. Sau cả hai, động từ giữ nguyên: I'll send (không viết I'll sent)."
+  },
+  "sounds": [
+    {
+      "en": "going to",
+      "tipVi": "Nói nhanh nghe như “gonna” /ˈɡʌnə/. Nghe được là đủ; khi viết vẫn viết going to."
+    },
+    {
+      "en": "I'll",
+      "tipVi": "/aɪl/: nhớ có âm /l/ cuối, cong lưỡi chạm lợi trên. Không đọc thành “ai”."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-plan-week",
+      "genre": "meeting",
+      "titleVi": "Kế hoạch tuần tới",
+      "speaker": "Mai, designer",
+      "cefr": "A2",
+      "text": [
+        "Next week, I'm going to start work on the mobile app. First, I'm going to meet the users.",
+        "On Friday, we're going to show a demo to the client."
+      ],
+      "translationVi": [
+        "Tuần tới, mình sẽ bắt đầu làm app di động. Trước tiên, mình sẽ gặp người dùng.",
+        "Thứ Sáu, bọn mình sẽ cho khách hàng xem bản demo."
+      ],
+      "chunks": [
+        "core-next-week",
+        "core-going-to",
+        "core-show-a-demo"
+      ],
+      "task": "core-task-plan-week"
+    },
+    {
+      "id": "core-plan-promise",
+      "genre": "chat",
+      "titleVi": "Đừng lo, mình sẽ gửi",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Don't worry, I'll send you the file tonight.",
+        "I'll check it again before the meeting. I'll let you know if there's a problem."
+      ],
+      "translationVi": [
+        "Đừng lo, tối nay mình sẽ gửi bạn file.",
+        "Mình sẽ kiểm lại trước cuộc họp. Có vấn đề gì mình sẽ báo bạn."
+      ],
+      "chunks": [
+        "core-dont-worry",
+        "core-send-you",
+        "core-before-the-meeting",
+        "core-let-you-know"
+      ],
+      "task": "core-task-plan-promise"
+    },
+    {
+      "id": "core-plan-leave",
+      "genre": "email",
+      "titleVi": "Xin nghỉ hai ngày",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "Hi Tom, I'm going to take two days off next month. My sister is getting married.",
+        "I'll be back on Thursday. Linh is going to cover my work."
+      ],
+      "translationVi": [
+        "Chào Tom, tháng sau mình sẽ nghỉ hai ngày. Chị gái mình sắp lấy chồng.",
+        "Thứ Năm mình sẽ đi làm lại. Linh sẽ làm thay việc của mình."
+      ],
+      "chunks": [
+        "core-take-a-day-off",
+        "core-be-back",
+        "core-cover-my-tasks"
+      ],
+      "task": "core-task-plan-leave"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-next-week",
+      "en": "next week",
+      "vi": "tuần tới",
+      "example": "I'm on holiday next week.",
+      "exampleVi": "Tuần tới mình nghỉ phép.",
+      "answer": "next week"
+    },
+    {
+      "id": "core-going-to",
+      "en": "I'm going to",
+      "vi": "tôi sẽ (đã định)",
+      "forms": [
+        "we're going to",
+        "going to"
+      ],
+      "example": "I'm going to call the client tomorrow.",
+      "exampleVi": "Mai mình sẽ gọi cho khách.",
+      "answer": "I'm going to"
+    },
+    {
+      "id": "core-show-a-demo",
+      "en": "show a demo",
+      "vi": "cho xem bản demo",
+      "forms": [
+        "show the demo"
+      ],
+      "example": "Can you show a demo on Monday?",
+      "exampleVi": "Thứ Hai bạn cho xem demo được không?",
+      "answer": "show a demo"
+    },
+    {
+      "id": "core-dont-worry",
+      "en": "Don't worry",
+      "vi": "đừng lo",
+      "example": "Don't worry, it's an easy fix.",
+      "exampleVi": "Đừng lo, lỗi này sửa dễ.",
+      "answer": "Don't worry"
+    },
+    {
+      "id": "core-send-you",
+      "en": "send you",
+      "vi": "gửi cho bạn",
+      "example": "I'll send you the link now.",
+      "exampleVi": "Mình gửi bạn đường link ngay.",
+      "answer": "send you"
+    },
+    {
+      "id": "core-before-the-meeting",
+      "en": "before the meeting",
+      "vi": "trước cuộc họp",
+      "example": "Please read this before the meeting.",
+      "exampleVi": "Bạn đọc cái này trước buổi họp nhé.",
+      "answer": "before the meeting"
+    },
+    {
+      "id": "core-let-you-know",
+      "en": "let you know",
+      "vi": "báo cho bạn biết",
+      "forms": [
+        "let me know"
+      ],
+      "example": "I'll let you know tomorrow.",
+      "exampleVi": "Mai mình báo bạn nhé.",
+      "answer": "let you know"
+    },
+    {
+      "id": "core-take-a-day-off",
+      "en": "take a day off",
+      "vi": "nghỉ một ngày",
+      "forms": [
+        "take two days off",
+        "took a day off",
+        "days off"
+      ],
+      "example": "Can I take a day off on Friday?",
+      "exampleVi": "Thứ Sáu mình nghỉ một ngày được không?",
+      "answer": "take a day off"
+    },
+    {
+      "id": "core-be-back",
+      "en": "be back",
+      "vi": "quay lại (đi làm lại)",
+      "forms": [
+        "I'll be back"
+      ],
+      "example": "I'll be back at 2 pm.",
+      "exampleVi": "Hai giờ chiều mình quay lại.",
+      "answer": "be back"
+    },
+    {
+      "id": "core-cover-my-tasks",
+      "en": "cover my work",
+      "vi": "làm thay việc của mình (lúc mình vắng)",
+      "forms": [
+        "cover for me",
+        "cover my tasks"
+      ],
+      "example": "Who can cover my work on Monday?",
+      "exampleVi": "Thứ Hai ai làm thay việc của mình được?",
+      "answer": "cover my work"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-plan-week",
+      "promptVi": "Họp đầu tuần: nói kế hoạch tuần tới của bạn, ít nhất hai việc.",
+      "situation": "Planning meeting, Monday morning.",
+      "required": [
+        {
+          "label": "going to",
+          "variants": [
+            "going to"
+          ]
+        },
+        {
+          "label": "next week",
+          "variants": [
+            "next week",
+            "this week",
+            "on friday",
+            "on monday"
+          ]
+        }
+      ],
+      "models": [
+        "Next week, I'm going to test the new search page. On Friday, I'm going to write the test report."
+      ],
+      "tipVi": "Kế hoạch đã định thì dùng I'm going to + động từ nguyên mẫu.",
+      "points": [
+        {
+          "vi": "Việc thứ nhất",
+          "variants": [
+            "going to"
+          ]
+        },
+        {
+          "vi": "Việc thứ hai, hoặc khi nào làm",
+          "variants": [
+            "then",
+            "after that",
+            "also",
+            "on monday",
+            "on tuesday",
+            "on wednesday",
+            "on thursday",
+            "on friday"
+          ]
+        }
+      ],
+      "hints": [
+        "Tuần tới bạn định làm việc gì trước? Cuối tuần định xong việc gì?",
+        "Next week, I'm going to … On Friday, I'm going to …"
+      ]
+    },
+    {
+      "id": "core-task-plan-promise",
+      "promptVi": "Đồng nghiệp lo vì chưa nhận được file. Trấn an họ và hứa sẽ làm gì, khi nào.",
+      "situation": "Chat message, late afternoon.",
+      "required": [
+        {
+          "label": "Don't worry",
+          "variants": [
+            "don't worry",
+            "no problem"
+          ]
+        },
+        {
+          "label": "I'll",
+          "variants": [
+            "i will"
+          ]
+        }
+      ],
+      "models": [
+        "Don't worry, I'll send you the file before 6. I'll let you know when it's ready."
+      ],
+      "tipVi": "Hứa giúp ai đó thì dùng I'll + động từ nguyên mẫu: I'll send, I'll check.",
+      "points": [
+        {
+          "vi": "Trấn an",
+          "variants": [
+            "don't worry",
+            "do not worry",
+            "no problem",
+            "sorry"
+          ]
+        },
+        {
+          "vi": "Hứa sẽ làm gì",
+          "variants": [
+            "i will"
+          ]
+        },
+        {
+          "vi": "Khi nào",
+          "variants": [
+            "tonight",
+            "tomorrow",
+            "today",
+            "this evening",
+            "this afternoon",
+            "later",
+            "before",
+            "by",
+            "in an hour",
+            "in 10 minutes"
+          ]
+        }
+      ],
+      "hints": [
+        "Nói câu gì để đồng nghiệp yên tâm? Bạn sẽ gửi lúc nào?",
+        "Don't worry, I'll send you … before …"
+      ]
+    },
+    {
+      "id": "core-task-plan-leave",
+      "promptVi": "Viết email ngắn xin nghỉ: nghỉ khi nào, lý do, ngày nào đi làm lại, ai làm thay.",
+      "situation": "Email to your manager.",
+      "required": [
+        {
+          "label": "take … off",
+          "variants": [
+            "take a day off",
+            "take two days off",
+            "take three days off",
+            "day off",
+            "days off",
+            "take friday off",
+            "take monday off",
+            "take a few days off",
+            "take the day off",
+            "take off"
+          ]
+        },
+        {
+          "label": "be back",
+          "variants": [
+            "be back",
+            "come back"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Tom, I'm going to take a day off on Friday. I have a family event. I'll be back on Monday. Hoa is going to cover my work."
+      ],
+      "tipVi": "Nghỉ một ngày: take a day off. Nghỉ hai ngày: take two days off.",
+      "points": [
+        {
+          "vi": "Nghỉ khi nào",
+          "variants": [
+            "off"
+          ]
+        },
+        {
+          "vi": "Lý do",
+          "variants": [
+            "because",
+            "family",
+            "wedding",
+            "sick",
+            "doctor",
+            "trip",
+            "event"
+          ]
+        },
+        {
+          "vi": "Ngày đi làm lại",
+          "variants": [
+            "be back",
+            "come back"
+          ]
+        },
+        {
+          "vi": "Ai làm thay",
+          "variants": [
+            "cover",
+            "help",
+            "take care of"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn nghỉ ngày nào, vì sao? Khi nào đi làm lại? Ai làm thay việc của bạn?",
+        "Hi …, I'm going to take … off … I'll be back on …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-plan",
+      "titleVi": "Lên kế hoạch với Tom",
+      "partner": "Tom, project manager",
+      "situationVi": "Tom hỏi kế hoạch tuần tới của bạn và nhờ bạn gửi cập nhật.",
+      "goalVi": "Nói kế hoạch tuần tới và hứa gửi cập nhật.",
+      "persona": "You are Tom, a project manager planning next week. Ask the learner's plan for next week, when they will finish the first part, and ask them to send an update on Friday. Short, simple sentences.",
+      "goal": "The learner says their plan for next week and promises to send an update.",
+      "script": [
+        {
+          "id": "start",
+          "say": "So, what are you going to do next week?",
+          "sayVi": "Vậy tuần tới bạn định làm gì?",
+          "replies": [
+            {
+              "text": "I'm going to start work on the mobile app.",
+              "next": "when"
+            },
+            {
+              "text": "I'm going to test the payment page.",
+              "next": "when"
+            }
+          ]
+        },
+        {
+          "id": "when",
+          "say": "Sounds good. When are you going to finish the first part?",
+          "sayVi": "Nghe ổn. Khi nào bạn xong phần đầu?",
+          "replies": [
+            {
+              "text": "I'm going to finish it on Wednesday.",
+              "next": "update"
+            },
+            {
+              "text": "By Thursday, I think.",
+              "next": "update"
+            }
+          ]
+        },
+        {
+          "id": "update",
+          "say": "Can you send me an update on Friday?",
+          "sayVi": "Thứ Sáu bạn gửi mình bản cập nhật được không?",
+          "replies": [
+            {
+              "text": "Sure, I'll send you an update on Friday.",
+              "next": "end"
+            },
+            {
+              "text": "No problem. I'll send it on Friday.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Perfect. Thanks!",
+          "sayVi": "Tuyệt. Cảm ơn bạn!",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "start work on (không phải start the app), cover my work, ý “khi nào” không còn khớp mọi câu."
+  }
+}

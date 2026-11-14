@@ -1,0 +1,430 @@
+{
+  "id": "core-me",
+  "track": "core",
+  "title": "About me",
+  "titleVi": "Giới thiệu bản thân",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Nói về mình: I'm… / I work… / I live…",
+    "forms": [
+      "I'm + tên / a + nghề",
+      "I work at + nơi làm",
+      "I live in + nơi ở",
+      "I like + V-ing"
+    ],
+    "examples": [
+      {
+        "en": "I'm a developer.",
+        "vi": "Mình là lập trình viên."
+      },
+      {
+        "en": "I work at a software company.",
+        "vi": "Mình làm ở một công ty phần mềm."
+      },
+      {
+        "en": "I live in Hanoi.",
+        "vi": "Mình sống ở Hà Nội."
+      },
+      {
+        "en": "I like reading.",
+        "vi": "Mình thích đọc sách."
+      }
+    ],
+    "noteVi": "Nói nghề thì phải có a/an: I'm a tester, I'm an engineer. Người Việt hay quên chữ “a”."
+  },
+  "sounds": [
+    {
+      "en": "work",
+      "tipVi": "/wɜːk/: âm “ơ” kéo dài, cuối bật nhẹ /k/. Đừng đọc thành “quốc”."
+    },
+    {
+      "en": "live",
+      "tipVi": "/lɪv/: “i” ngắn, cuối đặt răng trên lên môi dưới cho ra /v/."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-me-hello",
+      "genre": "conversation",
+      "titleVi": "Chào đồng nghiệp mới",
+      "speaker": "Linh, tester",
+      "cefr": "A1",
+      "text": [
+        "Hi, I'm Linh. Nice to meet you.",
+        "I'm a tester. I work at a software company in Da Nang."
+      ],
+      "translationVi": [
+        "Chào bạn, mình là Linh. Rất vui được gặp bạn.",
+        "Mình là tester. Mình làm ở một công ty phần mềm ở Đà Nẵng."
+      ],
+      "chunks": [
+        "core-nice-to-meet-you",
+        "core-im-a",
+        "core-work-at"
+      ],
+      "task": "core-task-me-hello"
+    },
+    {
+      "id": "core-me-team",
+      "genre": "meeting",
+      "titleVi": "Giới thiệu trong buổi họp đầu tiên",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "Hello everyone. My name is Nam, and I'm the new backend developer.",
+        "I'm from Hue, but I live in Ho Chi Minh City now. I have two years of experience."
+      ],
+      "translationVi": [
+        "Chào mọi người. Mình tên là Nam, mình là lập trình viên backend mới.",
+        "Mình quê ở Huế, nhưng giờ mình sống ở TP. Hồ Chí Minh. Mình có hai năm kinh nghiệm."
+      ],
+      "chunks": [
+        "core-my-name-is",
+        "core-im-from",
+        "core-live-in",
+        "core-years-of-experience"
+      ],
+      "task": "core-task-me-team"
+    },
+    {
+      "id": "core-me-free",
+      "genre": "chat",
+      "titleVi": "Lúc rảnh bạn làm gì?",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "In my free time, I like reading and playing badminton.",
+        "I'm not very good at English yet, but I practice every day."
+      ],
+      "translationVi": [
+        "Lúc rảnh, mình thích đọc sách và chơi cầu lông.",
+        "Tiếng Anh của mình chưa giỏi lắm, nhưng ngày nào mình cũng luyện."
+      ],
+      "chunks": [
+        "core-in-my-free-time",
+        "core-good-at",
+        "core-every-day"
+      ],
+      "task": "core-task-me-free"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-nice-to-meet-you",
+      "en": "Nice to meet you",
+      "vi": "rất vui được gặp bạn",
+      "example": "Hi, I'm Hoa. Nice to meet you.",
+      "exampleVi": "Chào bạn, mình là Hoa. Rất vui được gặp bạn.",
+      "answer": "Nice to meet you"
+    },
+    {
+      "id": "core-im-a",
+      "en": "I'm a",
+      "vi": "tôi là (nghề)",
+      "forms": [
+        "I am a"
+      ],
+      "example": "I'm a designer.",
+      "exampleVi": "Mình là nhà thiết kế.",
+      "answer": "I'm a"
+    },
+    {
+      "id": "core-work-at",
+      "en": "work at",
+      "vi": "làm việc ở (công ty)",
+      "forms": [
+        "works at"
+      ],
+      "example": "I work at a bank.",
+      "exampleVi": "Mình làm ở một ngân hàng.",
+      "answer": "work at"
+    },
+    {
+      "id": "core-my-name-is",
+      "en": "My name is",
+      "vi": "tên tôi là",
+      "example": "My name is Mai.",
+      "exampleVi": "Tên mình là Mai.",
+      "answer": "My name is"
+    },
+    {
+      "id": "core-im-from",
+      "en": "I'm from",
+      "vi": "tôi đến từ, quê tôi ở",
+      "forms": [
+        "I am from"
+      ],
+      "example": "I'm from Nghe An.",
+      "exampleVi": "Mình quê ở Nghệ An.",
+      "answer": "I'm from"
+    },
+    {
+      "id": "core-live-in",
+      "en": "live in",
+      "vi": "sống ở",
+      "forms": [
+        "lives in"
+      ],
+      "example": "I live in Can Tho.",
+      "exampleVi": "Mình sống ở Cần Thơ.",
+      "answer": "live in"
+    },
+    {
+      "id": "core-years-of-experience",
+      "en": "years of experience",
+      "vi": "năm kinh nghiệm",
+      "example": "She has five years of experience.",
+      "exampleVi": "Chị ấy có năm năm kinh nghiệm.",
+      "answer": "years of experience"
+    },
+    {
+      "id": "core-in-my-free-time",
+      "en": "in my free time",
+      "vi": "lúc rảnh",
+      "example": "In my free time, I watch movies.",
+      "exampleVi": "Lúc rảnh, mình xem phim.",
+      "answer": "in my free time"
+    },
+    {
+      "id": "core-good-at",
+      "en": "good at",
+      "vi": "giỏi (việc gì)",
+      "example": "He is good at math.",
+      "exampleVi": "Anh ấy giỏi toán.",
+      "answer": "good at"
+    },
+    {
+      "id": "core-every-day",
+      "en": "every day",
+      "vi": "mỗi ngày",
+      "example": "I drink coffee every day.",
+      "exampleVi": "Ngày nào mình cũng uống cà phê.",
+      "answer": "every day"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-me-hello",
+      "promptVi": "Chào một đồng nghiệp mới: chào hỏi, nói tên, nghề và nơi bạn làm việc.",
+      "situation": "First day, in the office kitchen.",
+      "required": [
+        {
+          "label": "Nice to meet you",
+          "variants": [
+            "nice to meet you"
+          ]
+        },
+        {
+          "label": "work at",
+          "variants": [
+            "work at",
+            "work for"
+          ]
+        }
+      ],
+      "models": [
+        "Hi, I'm Hoa. Nice to meet you. I'm a developer. I work at a bank.",
+        "Hello, my name is Tuan. Nice to meet you. I work at a game company."
+      ],
+      "tipVi": "Nói tên: I'm Hoa. Nói nghề: I'm a developer (nhớ chữ a). Nói nơi làm: I work at…",
+      "points": [
+        {
+          "vi": "Tên của bạn",
+          "variants": [
+            "i am",
+            "my name is"
+          ]
+        },
+        {
+          "vi": "Bạn làm nghề gì hoặc làm ở đâu",
+          "variants": [
+            "i am a",
+            "i am an",
+            "work at",
+            "work for"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn tên gì? Bạn làm nghề gì, ở công ty nào?",
+        "Hi, I'm … Nice to meet you. I work at …"
+      ]
+    },
+    {
+      "id": "core-task-me-team",
+      "promptVi": "Giới thiệu bản thân trong buổi họp đầu tiên với nhóm mới: tên, công việc, quê, nơi sống và kinh nghiệm.",
+      "situation": "Team meeting, your first week.",
+      "required": [
+        {
+          "label": "My name is",
+          "variants": [
+            "my name is"
+          ]
+        },
+        {
+          "label": "live in",
+          "variants": [
+            "live in",
+            "living in"
+          ]
+        }
+      ],
+      "models": [
+        "Hello everyone. My name is Hoa. I'm the new tester. I'm from Hai Phong, but I live in Hanoi now. I have three years of experience."
+      ],
+      "tipVi": "Mỗi ý một câu ngắn là đủ. Quê dùng I'm from, nơi đang sống dùng I live in.",
+      "points": [
+        {
+          "vi": "Tên",
+          "variants": [
+            "my name is",
+            "i am"
+          ]
+        },
+        {
+          "vi": "Công việc trong nhóm",
+          "variants": [
+            "i am the",
+            "i am a",
+            "i am an"
+          ]
+        },
+        {
+          "vi": "Quê và nơi sống",
+          "variants": [
+            "from",
+            "live in"
+          ]
+        },
+        {
+          "vi": "Kinh nghiệm",
+          "variants": [
+            "experience",
+            "years"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn tên gì, làm gì? Quê ở đâu, giờ sống ở đâu? Bạn đã làm nghề này mấy năm?",
+        "Hello everyone. My name is … I'm from …, but I live in …"
+      ]
+    },
+    {
+      "id": "core-task-me-free",
+      "promptVi": "Kể lúc rảnh bạn thích làm gì, và bạn đang học tiếng Anh thế nào.",
+      "situation": "Chatting with a colleague at lunch.",
+      "required": [
+        {
+          "label": "in my free time",
+          "variants": [
+            "in my free time"
+          ]
+        },
+        {
+          "label": "every day",
+          "variants": [
+            "every day",
+            "every morning",
+            "every evening"
+          ]
+        }
+      ],
+      "models": [
+        "In my free time, I like cooking and watching movies. I'm not good at English yet, but I study every day."
+      ],
+      "tipVi": "Sau like dùng V-ing: I like cooking, I like playing football.",
+      "points": [
+        {
+          "vi": "Bạn thích làm gì lúc rảnh",
+          "variants": [
+            "like",
+            "love",
+            "enjoy"
+          ]
+        },
+        {
+          "vi": "Bạn học tiếng Anh thế nào",
+          "variants": [
+            "english",
+            "study",
+            "practice",
+            "learn"
+          ]
+        }
+      ],
+      "hints": [
+        "Lúc rảnh bạn hay làm gì? Bạn học tiếng Anh lúc nào, bao lâu một lần?",
+        "In my free time, I like … I practice English …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-me",
+      "titleVi": "Làm quen ở giờ nghỉ",
+      "partner": "Sarah, new teammate",
+      "situationVi": "Giờ nghỉ uống cà phê. Sarah mới vào nhóm và muốn làm quen với bạn.",
+      "goalVi": "Nói tên, công việc của bạn và một sở thích.",
+      "persona": "You are Sarah, a friendly new teammate from Australia, on a coffee break. Ask the learner's name, their job, and what they do in their free time. Use very short, simple sentences.",
+      "goal": "The learner says their name, their job, and one thing they like doing in their free time.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Hi! I'm Sarah. I'm new here. What's your name?",
+          "sayVi": "Chào bạn! Mình là Sarah. Mình mới vào. Bạn tên gì?",
+          "replies": [
+            {
+              "text": "Hi Sarah, I'm Linh. Nice to meet you.",
+              "next": "job"
+            },
+            {
+              "text": "My name is Nam. Nice to meet you too.",
+              "next": "job"
+            }
+          ]
+        },
+        {
+          "id": "job",
+          "say": "Nice to meet you! What do you do here?",
+          "sayVi": "Rất vui được gặp bạn! Bạn làm gì ở đây?",
+          "replies": [
+            {
+              "text": "I'm a tester. I test the mobile app.",
+              "next": "free"
+            },
+            {
+              "text": "I'm a backend developer.",
+              "next": "free"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "say": "Cool. What do you do in your free time?",
+          "sayVi": "Hay quá. Lúc rảnh bạn làm gì?",
+          "replies": [
+            {
+              "text": "In my free time, I like playing badminton.",
+              "next": "end"
+            },
+            {
+              "text": "I like reading and watching movies.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "That sounds fun! See you at lunch.",
+          "sayVi": "Nghe vui đấy! Gặp lại bạn lúc ăn trưa nhé.",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Đề bài 1 nói rõ cần chào và nơi làm."
+  }
+}

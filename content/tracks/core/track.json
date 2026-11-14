@@ -1,0 +1,22 @@
+{
+  "id": "core",
+  "titleVi": "Nền tảng (A2 → B1)",
+  "color": "#0F766E",
+  "foundation": true,
+  "units": [
+    "core-me",
+    "core-day",
+    "core-now",
+    "core-past",
+    "core-plan",
+    "core-ask",
+    "core-done",
+    "core-opinion"
+  ],
+  "audience": "adults rebuilding their everyday and work English from about A2",
+  "baseline": {
+    "writingVi": "Giới thiệu bản thân: bạn tên gì, làm nghề gì, một ngày đi làm của bạn thế nào, cuối tuần vừa rồi bạn làm gì.",
+    "speakingVi": "Nói về bạn: công việc, một ngày bình thường, và một việc bạn định làm tuần tới."
+  },
+  "captureSample": "Hi Linh,\n\nThanks for your help yesterday. The new page looks great.\nCould you send me the test report before Friday?\nLet me know if you have any questions.\n\nBest,\nTom"
+}

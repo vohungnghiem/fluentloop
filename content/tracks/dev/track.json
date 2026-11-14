@@ -3,6 +3,11 @@
   "titleVi": "Phần mềm / IT",
   "color": "#3B5BDB",
   "units": [
+    "work-meeting",
+    "work-email",
+    "work-call",
+    "work-problem",
+    "work-client",
     "dev-standup",
     "dev-ticket",
     "dev-pr"

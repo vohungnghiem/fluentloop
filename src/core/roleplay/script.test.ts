@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { matchReply } from './script';
+import { matchReply, nextNode } from './script';
 
 const node = {
   id: 'start',
@@ -17,5 +17,17 @@ describe('matchReply', () => {
   });
   it('says no match when it is something else', () => {
     expect(matchReply(node, 'I like pizza')).toBe(-1);
+  });
+});
+
+describe('nextNode', () => {
+  const open = { id: 'q1', say: 'Tell me about yourself.', replies: [], any: 'q2' };
+  it('moves on after any answer of a few words to an open question', () => {
+    expect(nextNode(open, 'I am a tester with three years of experience')).toBe('q2');
+    expect(nextNode(open, 'Hello')).toBeUndefined();
+  });
+  it('follows the matching reply, and ends on a null', () => {
+    expect(nextNode(node, 'no blockers')).toBe('end');
+    expect(nextNode({ ...node, replies: [{ text: 'Thanks a lot', next: null }] }, 'thanks a lot')).toBeNull();
   });
 });

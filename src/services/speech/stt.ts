@@ -209,3 +209,100 @@ export function listen(expected = '', onInterim?: (text: string) => void): Liste
     },
   };
 }
+
+export interface LongListening {
+  /** Stop and give back everything heard (status 'heard' when there are words). */
+  stop(): Promise<ListenResult>;
+}
+
+/**
+ * Listen for as long as the learner talks (a one- or two-minute talk): recognition stops by itself
+ * after a silence, so it is started again until `stop`. `onText` gets the running transcript.
+ * `sample` is what the debug simulation "hears", a few words at a time.
+ */
+export function listenLong(onText: (text: string) => void, sample = ''): LongListening {
+  const sim = micSimulation();
+  if (sim !== 'real') {
+    const all = (sim === 'partial' ? partial(sample) : sample).split(/\s+/).filter(Boolean);
+    let shown = 0;
+    const timer = setInterval(() => {
+      shown = Math.min(all.length, shown + 3);
+      if (sim === 'echo' || sim === 'partial') onText(all.slice(0, shown).join(' '));
+    }, 700);
+    return {
+      stop: async () => {
+        clearInterval(timer);
+        const transcript = all.slice(0, shown).join(' ');
+        if (sim === 'echo' || sim === 'partial') return { status: transcript ? 'heard' : 'no-speech', transcript };
+        return { status: sim === 'silent' ? 'no-speech' : sim, transcript: '' };
+      },
+    };
+  }
+  const Ctor = recognitionClass();
+  if (!Ctor) return { stop: async () => ({ status: 'unsupported', transcript: '' }) };
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return { stop: async () => ({ status: 'offline', transcript: '' }) };
+
+  let stopped = false;
+  let done = ''; // text of the recognition runs that ended
+  let heard = ''; // everything so far, the running one included
+  let failure: MicStatus | undefined;
+  let current: Recognition | undefined;
+  let ended: () => void = () => {};
+  const run = () => {
+    active?.abort();
+    const recognition = new Ctor();
+    active = current = recognition;
+    recognition.lang = 'en-US';
+    recognition.interimResults = true;
+    recognition.maxAlternatives = 1;
+    recognition.continuous = true;
+    let text = '';
+    recognition.onresult = (event) => {
+      text = Array.from({ length: event.results.length }, (_, i) => event.results[i][0]?.transcript ?? '').join(' ');
+      heard = `${done} ${text}`.replace(/\s+/g, ' ').trim();
+      onText(heard);
+    };
+    recognition.onerror = (event) => {
+      const status = ERRORS[event.error] ?? 'error';
+      // Silence is normal in a talk; a blocked or missing microphone is not worth retrying.
+      if (status !== 'no-speech' && status !== 'idle') failure = status;
+    };
+    recognition.onend = () => {
+      done = `${done} ${text}`.trim();
+      if (!stopped && !failure) {
+        try {
+          run();
+          return;
+        } catch {
+          // fall through: stop here
+        }
+      }
+      if (active === recognition) active = undefined;
+      ended();
+    };
+    recognition.start();
+  };
+  try {
+    run();
+  } catch {
+    return { stop: async () => ({ status: 'error', transcript: '' }) };
+  }
+  return {
+    stop: () =>
+      new Promise<ListenResult>((resolve) => {
+        stopped = true;
+        const finish = () => {
+          const transcript = heard;
+          resolve(transcript ? { status: 'heard', transcript } : { status: failure ?? 'no-speech', transcript: '' });
+        };
+        ended = finish;
+        // Give the last words a moment to arrive; some phones never fire onend.
+        setTimeout(finish, 1500);
+        try {
+          current?.stop();
+        } catch {
+          finish();
+        }
+      }),
+  };
+}

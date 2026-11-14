@@ -5,9 +5,11 @@ import { useEffect } from 'react';
 import './styles.css';
 import { currentTrack } from './services/content';
 import { startSync } from './services/sync/sync';
+import { startStudyClock } from './services/studyClock';
 
 // Before the router: a return from Google's sign-in page puts the address back first.
 startSync();
+startStudyClock();
 
 // Each industry has its own colour for labels and illustrations (lighter on the dark theme).
 document.head.insertAdjacentHTML(
@@ -30,6 +32,12 @@ import { ClockBadge } from './ui/ClockBadge';
 import { AppShell } from './ui/shell';
 import { PathPage } from './features/lesson/PathPage';
 import { LessonPage } from './features/lesson/LessonPage';
+import { StartPage } from './features/start/StartPage';
+import { PlacementPage } from './features/placement/PlacementPage';
+import { SpeakPage } from './features/speak/SpeakPage';
+import { TalkLogPage } from './features/speak/TalkLogPage';
+import { InterviewPage } from './features/interview/InterviewPage';
+import { InterviewQuestionPage } from './features/interview/InterviewQuestionPage';
 
 /** A new screen starts at its top, not where the last one was scrolled to. */
 function ScrollToTop() {
@@ -54,6 +62,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/capture" element={<CapturePage />} />
           <Route path="/progress" element={<ProgressPage />} />
           <Route path="/roleplay" element={<RoleplayListPage />} />
+          <Route path="/interview" element={<InterviewPage />} />
           <Route path="/path" element={<PathPage />} />
           <Route path="/lesson/:id" element={<LessonPage />} />
           <Route path="*" element={<TodayPage />} />
@@ -62,7 +71,12 @@ createRoot(document.getElementById('root')!).render(
         <Route path="/debug" element={<DebugPage />} />
         <Route path="/capture/:id/write" element={<CaptureWritePage />} />
         <Route path="/baseline" element={<BaselinePage />} />
+        <Route path="/start" element={<StartPage />} />
+        <Route path="/placement" element={<PlacementPage />} />
         <Route path="/roleplay/:id" element={<RoleplayPage />} />
+        <Route path="/speak" element={<SpeakPage />} />
+        <Route path="/speak/log" element={<TalkLogPage />} />
+        <Route path="/interview/:id" element={<InterviewQuestionPage />} />
       </Routes>
       <ClockBadge />
     </BrowserRouter>

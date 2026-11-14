@@ -10,7 +10,7 @@ import { now } from './clock';
  * as base64, so one file moves a learner to a new phone.
  */
 
-const TABLES = ['cards', 'reviews', 'attempts', 'sessions', 'reads', 'mistakes', 'captures', 'baselines', 'aiUsage', 'roleplays'] as const;
+const TABLES = ['cards', 'reviews', 'attempts', 'sessions', 'reads', 'mistakes', 'captures', 'baselines', 'aiUsage', 'roleplays', 'plans', 'placements', 'studyTime', 'studyLog', 'talks', 'answers'] as const;
 type TableName = (typeof TABLES)[number];
 const LAST_EXPORT = 'fluentloop.lastExport';
 

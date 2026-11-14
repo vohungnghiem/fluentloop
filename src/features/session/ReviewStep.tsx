@@ -159,7 +159,7 @@ export function ReviewStep({ session }: { session: SessionRow }) {
           {vi.review.meaning}: <span className="text-ink">{chunk.vi}</span>
         </p>
       )}
-      {card?.source === 'capture' && <p className="mt-3 text-xs text-ink-soft">{vi.capture.fromCapture}</p>}
+      {card?.source === 'capture' && <p className="mt-3 text-xs text-ink-soft">{card.unitId === 'talk' ? vi.talk.fromTalk : card.unitId === 'interview' ? vi.interview.fromInterview : vi.capture.fromCapture}</p>}
 
       {!outcome && (
         <>

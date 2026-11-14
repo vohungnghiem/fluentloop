@@ -31,7 +31,9 @@ export function streak(learnedDays: Iterable<string>, today: string): { days: nu
     day = shift(day, -1);
   }
   if (days === 0) return { days: 0, restUsed: 0 };
-  const restUsed = misses.filter((miss) => daysBetween(miss, today) < 7).length;
+  // Days before the first day learnt are not rest days: the learner had not started yet.
+  const first = [...learned].reduce((a, b) => (b < a ? b : a));
+  const restUsed = misses.filter((miss) => miss > first && daysBetween(miss, today) < 7).length;
   return { days, restUsed };
 }
 

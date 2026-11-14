@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { mergeTables, SYNC_KEYS, type Row, type SyncTable, type Tables } from '../../core/sync/merge';
+import { mergeTables, rowsBefore, SYNC_KEYS, type Row, type SyncTable, type Tables } from '../../core/sync/merge';
 import { db } from '../db';
 import { now } from '../clock';
 import { AuthError, driveStore, fakeStore, gistStore, type RemoteStore } from './store';
@@ -21,9 +21,17 @@ export interface SyncFile {
   version: 1;
   savedAt: string;
   tables: Tables;
-  /** Baselines whose recording is stored as its own file. */
+  /** Rows (benchmarks, talks) whose recording is stored as its own file. */
   audio: string[];
+  /** The learner deleted their data at this time: rows older than it are gone on every device. */
+  resetAt?: string;
 }
+
+/** The last data reset this device knows of ('' for none). */
+export async function knownReset(): Promise<string> {
+  return (await db.meta.get('resetAt'))?.value ?? '';
+}
+export const rememberReset = (at: string) => db.meta.put({ key: 'resetAt', value: at });
 
 // ---------- the data on this device ----------
 
@@ -45,6 +53,21 @@ export async function readLocal(tables: readonly SyncTable[]): Promise<{ tables:
 
 let applying = false;
 
+/** Tables whose rows may carry a recording (`audio`), sent as files of their own. */
+const AUDIO_TABLES: readonly SyncTable[] = ['baselines', 'talks'];
+
+/** The rows of `tables` written at or after `resetAt`. */
+function dropOld(tables: Tables, resetAt: string): Tables {
+  const gone = rowsBefore(tables, resetAt, SYNC_TABLES);
+  return Object.fromEntries(
+    Object.entries(tables).map(([name, rows]) => {
+      const ids = new Set(gone[name as SyncTable] ?? []);
+      const key = SYNC_KEYS[name as SyncTable];
+      return [name, key ? rows.filter((row) => !ids.has(String(row[key]))) : rows];
+    }),
+  );
+}
+
 /** Write what the merge decided. A recording already on this device is kept with its row. */
 export async function applyLocal(toLocal: Partial<Record<SyncTable, Row[]>>, deleteLocal: Partial<Record<SyncTable, string[]>>) {
   const names = [...new Set([...Object.keys(toLocal), ...Object.keys(deleteLocal)])] as SyncTable[];
@@ -55,7 +78,7 @@ export async function applyLocal(toLocal: Partial<Record<SyncTable, Row[]>>, del
       for (const name of names) {
         const table = db.table(name);
         const rows = toLocal[name] ?? [];
-        if (name === 'baselines') {
+        if (AUDIO_TABLES.includes(name)) {
           for (const row of rows) {
             const old = (await table.get(row.id as string)) as Row | undefined;
             if (old?.audio instanceof Blob && !(row.audio instanceof Blob)) row.audio = old.audio;
@@ -90,13 +113,32 @@ export async function syncWith(store: RemoteStore, at: Date): Promise<SyncOutcom
     }
     if (file && file.app !== 'fluentloop') throw new Error('not a FluentLoop file');
 
+    // A reset on another device: drop what this device had from before it. A reset here that the
+    // shared copy has not seen: its old rows are not taken back, and the copy is rewritten.
+    const remoteReset = file?.resetAt ?? '';
+    const localReset = await knownReset();
+    let remoteTables = file?.tables ?? {};
+    let remoteAudio = file?.audio ?? [];
+    let force = false;
+    if (remoteReset > localReset) {
+      const before = await readLocal(SYNC_TABLES);
+      await applyLocal({}, rowsBefore(before.tables, remoteReset, SYNC_TABLES));
+      await rememberReset(remoteReset);
+      outcome.received = true;
+    } else if (localReset > remoteReset) {
+      remoteTables = dropOld(remoteTables, localReset);
+      remoteAudio = remoteAudio.filter((id) => AUDIO_TABLES.some((name) => remoteTables[name]?.some((row) => row.id === id)));
+      force = true;
+    }
+    const resetAt = remoteReset > localReset ? remoteReset : localReset;
+
     const local = await readLocal(SYNC_TABLES);
-    const merged = mergeTables(local.tables, file?.tables ?? {}, SYNC_TABLES, at);
+    const merged = mergeTables(local.tables, remoteTables, SYNC_TABLES, at);
     await applyLocal(merged.toLocal, merged.deleteLocal);
     outcome.received ||= merged.localChanged;
 
     // Recordings: send the ones the shared copy lacks, fetch the ones this device lacks.
-    const stored = new Set(file?.audio ?? []);
+    const stored = new Set(remoteAudio);
     let audioSent = false;
     for (const [id, blob] of local.audio) {
       if (stored.has(id)) continue;
@@ -106,13 +148,21 @@ export async function syncWith(store: RemoteStore, at: Date): Promise<SyncOutcom
     }
     for (const id of stored) {
       if (local.audio.has(id)) continue;
-      const row = await db.baselines.get(id);
-      if (!row || row.audio) continue;
+      let table: (typeof AUDIO_TABLES)[number] | undefined;
+      let row: Row | undefined;
+      for (const name of AUDIO_TABLES) {
+        row = (await db.table(name).get(id)) as Row | undefined;
+        if (row) {
+          table = name;
+          break;
+        }
+      }
+      if (!table || !row || row.audio) continue;
       const blob = await store.readAudio(id);
       if (blob) {
         applying = true;
         try {
-          await db.baselines.update(id, { audio: blob });
+          await db.table(table).update(id, { audio: blob });
         } finally {
           applying = false;
         }
@@ -120,10 +170,10 @@ export async function syncWith(store: RemoteStore, at: Date): Promise<SyncOutcom
       }
     }
 
-    if (!merged.remoteBehind && !audioSent) return outcome;
+    if (!merged.remoteBehind && !audioSent && !force) return outcome;
     // Another device wrote since the read: start over so its rows are merged, not overwritten.
     if ((await store.version()) !== remote?.version) continue;
-    const next: SyncFile = { app: 'fluentloop', kind: 'sync', version: 1, savedAt: at.toISOString(), tables: merged.tables, audio: [...stored] };
+    const next: SyncFile = { app: 'fluentloop', kind: 'sync', version: 1, savedAt: at.toISOString(), tables: merged.tables, audio: [...stored], ...(resetAt ? { resetAt } : {}) };
     await store.write(JSON.stringify(next));
     outcome.sent = true;
     return outcome;

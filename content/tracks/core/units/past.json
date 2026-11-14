@@ -1,0 +1,452 @@
+{
+  "id": "core-past",
+  "track": "core",
+  "title": "Yesterday and last weekend",
+  "titleVi": "Hôm qua và cuối tuần trước",
+  "cefr": "A2",
+  "pattern": {
+    "titleVi": "Đã xảy ra: quá khứ đơn",
+    "forms": [
+      "I + V-ed: worked, fixed, called",
+      "Bất quy tắc: go → went, have → had, eat → ate, take → took",
+      "I didn't + V nguyên mẫu",
+      "Did you + V nguyên mẫu?"
+    ],
+    "examples": [
+      {
+        "en": "Yesterday I fixed two bugs.",
+        "vi": "Hôm qua mình sửa hai lỗi."
+      },
+      {
+        "en": "We went to the beach last weekend.",
+        "vi": "Cuối tuần trước bọn mình đi biển."
+      },
+      {
+        "en": "I didn't check my email.",
+        "vi": "Mình đã không xem email."
+      },
+      {
+        "en": "Did you finish the report?",
+        "vi": "Bạn làm xong báo cáo chưa?"
+      }
+    ],
+    "noteVi": "Có yesterday, last week, ago thì động từ đổi sang quá khứ. Sau did / didn't thì động từ giữ nguyên: Did you go? (không viết Did you went?)."
+  },
+  "sounds": [
+    {
+      "en": "finished",
+      "tipVi": "Đuôi -ed sau âm /ʃ/ đọc /t/: /ˈfɪnɪʃt/. Không đọc “phi-ni-sét”."
+    },
+    {
+      "en": "had",
+      "tipVi": "/hæd/: “a” mở miệng rộng, chạm nhẹ /d/ ở cuối."
+    },
+    {
+      "en": "went",
+      "tipVi": "/went/: giữ /t/ cuối thật nhẹ, đừng bỏ hẳn."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "core-past-yesterday",
+      "genre": "standup",
+      "titleVi": "Hôm qua mình đã làm gì",
+      "speaker": "Linh, tester",
+      "cefr": "A2",
+      "text": [
+        "Yesterday I finished the login tests. I also found two small bugs.",
+        "In the afternoon, I had a meeting with the client."
+      ],
+      "translationVi": [
+        "Hôm qua mình làm xong phần test đăng nhập. Mình còn tìm ra hai lỗi nhỏ.",
+        "Buổi chiều, mình họp với khách hàng."
+      ],
+      "chunks": [
+        "core-finished",
+        "core-found-a-bug",
+        "core-in-the-afternoon",
+        "core-had-a-meeting"
+      ],
+      "task": "core-task-past-yesterday"
+    },
+    {
+      "id": "core-past-weekend",
+      "genre": "conversation",
+      "titleVi": "Cuối tuần ở Vũng Tàu",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "Last weekend I went to Vung Tau with my friends. We had a great time.",
+        "We ate seafood and swam in the sea. I didn't check my work email at all."
+      ],
+      "translationVi": [
+        "Cuối tuần trước mình đi Vũng Tàu với bạn bè. Bọn mình chơi rất vui.",
+        "Bọn mình ăn hải sản và bơi ở biển. Mình không hề xem email công việc."
+      ],
+      "chunks": [
+        "core-last-weekend",
+        "core-went-to",
+        "core-had-a-great-time",
+        "core-at-all"
+      ],
+      "task": "core-task-past-weekend"
+    },
+    {
+      "id": "core-past-problem",
+      "genre": "chat",
+      "titleVi": "Sự cố tối qua",
+      "speaker": "Nam, backend dev",
+      "cefr": "A2",
+      "text": [
+        "The server went down last night. I got a call at 11 pm.",
+        "I restarted it, and everything worked again. It took about an hour."
+      ],
+      "translationVi": [
+        "Tối qua server bị sập. Mình nhận cuộc gọi lúc 11 giờ đêm.",
+        "Mình khởi động lại, và mọi thứ chạy lại bình thường. Mất khoảng một tiếng."
+      ],
+      "chunks": [
+        "core-went-down",
+        "core-got-a-call",
+        "core-it-took"
+      ],
+      "task": "core-task-past-problem"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "core-finished",
+      "en": "finished",
+      "vi": "đã làm xong",
+      "example": "I finished the slides last night.",
+      "exampleVi": "Tối qua mình làm xong slide rồi.",
+      "answer": "finished"
+    },
+    {
+      "id": "core-found-a-bug",
+      "en": "found a bug",
+      "vi": "tìm ra lỗi",
+      "forms": [
+        "found two small bugs",
+        "find a bug"
+      ],
+      "example": "Mai found a bug in the menu.",
+      "exampleVi": "Mai tìm ra một lỗi ở menu.",
+      "answer": "found a bug"
+    },
+    {
+      "id": "core-in-the-afternoon",
+      "en": "in the afternoon",
+      "vi": "buổi chiều",
+      "example": "I have a call in the afternoon.",
+      "exampleVi": "Chiều nay mình có một cuộc gọi.",
+      "answer": "in the afternoon"
+    },
+    {
+      "id": "core-had-a-meeting",
+      "en": "had a meeting",
+      "vi": "đã họp",
+      "forms": [
+        "have a meeting"
+      ],
+      "example": "We had a meeting on Monday.",
+      "exampleVi": "Thứ Hai bọn mình đã họp.",
+      "answer": "had a meeting"
+    },
+    {
+      "id": "core-last-weekend",
+      "en": "last weekend",
+      "vi": "cuối tuần trước",
+      "example": "What did you do last weekend?",
+      "exampleVi": "Cuối tuần trước bạn làm gì?",
+      "answer": "last weekend"
+    },
+    {
+      "id": "core-went-to",
+      "en": "went to",
+      "vi": "đã đi (tới đâu)",
+      "forms": [
+        "go to"
+      ],
+      "example": "She went to Da Lat in May.",
+      "exampleVi": "Tháng Năm chị ấy đi Đà Lạt.",
+      "answer": "went to"
+    },
+    {
+      "id": "core-had-a-great-time",
+      "en": "had a great time",
+      "vi": "đã chơi rất vui",
+      "example": "We had a great time at the party.",
+      "exampleVi": "Bọn mình đã rất vui ở bữa tiệc.",
+      "answer": "had a great time"
+    },
+    {
+      "id": "core-at-all",
+      "en": "not … at all",
+      "vi": "không hề",
+      "forms": [
+        "at all"
+      ],
+      "example": "I didn't sleep at all.",
+      "exampleVi": "Mình không ngủ chút nào.",
+      "answer": "at all"
+    },
+    {
+      "id": "core-went-down",
+      "en": "went down",
+      "vi": "bị sập (hệ thống)",
+      "forms": [
+        "go down",
+        "goes down"
+      ],
+      "example": "The website went down this morning.",
+      "exampleVi": "Sáng nay website bị sập.",
+      "answer": "went down"
+    },
+    {
+      "id": "core-got-a-call",
+      "en": "got a call",
+      "vi": "nhận được cuộc gọi",
+      "forms": [
+        "get a call"
+      ],
+      "example": "I got a call from the client.",
+      "exampleVi": "Mình nhận được cuộc gọi của khách.",
+      "answer": "got a call"
+    },
+    {
+      "id": "core-it-took",
+      "en": "it took",
+      "vi": "mất (bao lâu)",
+      "forms": [
+        "took about"
+      ],
+      "example": "It took two days to fix.",
+      "exampleVi": "Mất hai ngày để sửa.",
+      "answer": "it took"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "core-task-past-yesterday",
+      "promptVi": "Standup: kể hôm qua bạn đã làm gì, buổi sáng và buổi chiều.",
+      "situation": "Daily standup, 9:30 am.",
+      "required": [
+        {
+          "label": "Yesterday",
+          "variants": [
+            "yesterday"
+          ]
+        },
+        {
+          "label": "in the afternoon",
+          "variants": [
+            "in the afternoon",
+            "after lunch"
+          ]
+        }
+      ],
+      "models": [
+        "Yesterday I finished the search page. In the afternoon, I had a meeting with Tom.",
+        "Yesterday I fixed three bugs. After lunch, I wrote the test report."
+      ],
+      "tipVi": "Hôm qua thì động từ quá khứ: finished, fixed, had, wrote.",
+      "points": [
+        {
+          "vi": "Buổi sáng hôm qua làm gì",
+          "variants": [
+            "yesterday",
+            "in the morning"
+          ]
+        },
+        {
+          "vi": "Buổi chiều làm gì",
+          "variants": [
+            "in the afternoon",
+            "after lunch",
+            "then",
+            "later"
+          ]
+        }
+      ],
+      "hints": [
+        "Sáng hôm qua bạn làm xong việc gì? Chiều thì bạn họp hay làm gì?",
+        "Yesterday I … In the afternoon, I …"
+      ]
+    },
+    {
+      "id": "core-task-past-weekend",
+      "promptVi": "Kể cuối tuần vừa rồi: bạn đi đâu (hoặc ở nhà), với ai, đã làm gì.",
+      "situation": "Monday morning, coffee machine.",
+      "required": [
+        {
+          "label": "last weekend",
+          "variants": [
+            "last weekend",
+            "on saturday",
+            "on sunday"
+          ]
+        }
+      ],
+      "models": [
+        "Last weekend I stayed at home and cooked lunch with a friend. We watched a movie. It was fun."
+      ],
+      "tipVi": "Bất quy tắc hay gặp: go → went, eat → ate, see → saw, have → had.",
+      "points": [
+        {
+          "vi": "Đi đâu hoặc ở đâu",
+          "variants": [
+            "went to",
+            "stayed",
+            "at home",
+            "visited"
+          ]
+        },
+        {
+          "vi": "Với ai",
+          "variants": [
+            "with"
+          ]
+        },
+        {
+          "vi": "Đã làm gì",
+          "variants": [
+            "ate",
+            "watched",
+            "played",
+            "saw",
+            "cooked",
+            "had",
+            "swam",
+            "read"
+          ]
+        }
+      ],
+      "hints": [
+        "Cuối tuần bạn đi đâu hay ở nhà? Đi với ai? Đã làm những gì?",
+        "Last weekend I went to … with … We …"
+      ]
+    },
+    {
+      "id": "core-task-past-problem",
+      "promptVi": "Nhắn cho trưởng nhóm về một sự cố tối qua: chuyện gì xảy ra, bạn đã làm gì, mất bao lâu.",
+      "situation": "Morning message to your team lead.",
+      "required": [
+        {
+          "label": "it took",
+          "variants": [
+            "it took",
+            "took about"
+          ]
+        }
+      ],
+      "models": [
+        "Hi Tom, the app went down last night. I checked the logs and restarted the server. It took about 30 minutes."
+      ],
+      "tipVi": "Kể theo thứ tự: chuyện gì (went down) → bạn làm gì (checked, restarted) → mất bao lâu (it took).",
+      "points": [
+        {
+          "vi": "Chuyện gì xảy ra",
+          "variants": [
+            "went down",
+            "stopped",
+            "crashed",
+            "broke",
+            "error",
+            "problem"
+          ]
+        },
+        {
+          "vi": "Bạn đã làm gì",
+          "variants": [
+            "restarted",
+            "fixed",
+            "checked",
+            "called"
+          ]
+        },
+        {
+          "vi": "Mất bao lâu",
+          "variants": [
+            "took",
+            "hour",
+            "minutes"
+          ]
+        }
+      ],
+      "hints": [
+        "Tối qua cái gì bị lỗi? Bạn đã làm gì để sửa? Mất bao lâu?",
+        "Hi …, the … went down last night. I … It took about …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "core-scenario-past",
+      "titleVi": "Sáng thứ Hai đầu tuần",
+      "partner": "Tom, project manager",
+      "situationVi": "Sáng thứ Hai, Tom hỏi chuyện cuối tuần rồi hỏi việc tuần trước.",
+      "goalVi": "Kể cuối tuần đã làm gì và việc tuần trước đã xong chưa.",
+      "persona": "You are Tom, a friendly project manager on Monday morning. Ask about the learner's weekend, then whether they finished last week's task. Use simple past questions and short sentences.",
+      "goal": "The learner tells what they did at the weekend and says if they finished last week's task.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Morning! How was your weekend?",
+          "sayVi": "Chào buổi sáng! Cuối tuần của bạn thế nào?",
+          "replies": [
+            {
+              "text": "It was great, thanks.",
+              "next": "what"
+            },
+            {
+              "text": "It was OK. I stayed at home.",
+              "next": "what"
+            }
+          ]
+        },
+        {
+          "id": "what",
+          "say": "Nice. What did you do?",
+          "sayVi": "Hay đấy. Bạn đã làm gì?",
+          "replies": [
+            {
+              "text": "I went to the beach with my friends.",
+              "next": "work"
+            },
+            {
+              "text": "I met some friends and cooked lunch.",
+              "next": "work"
+            }
+          ]
+        },
+        {
+          "id": "work",
+          "say": "Sounds nice. Did you finish the login tests on Friday?",
+          "sayVi": "Nghe vui đấy. Thứ Sáu bạn test xong phần đăng nhập chưa?",
+          "replies": [
+            {
+              "text": "Yes, I did. I found two small bugs.",
+              "next": "end"
+            },
+            {
+              "text": "Not yet. I'll finish them today.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "OK, thanks. Have a good week!",
+          "sayVi": "Được, cảm ơn. Chúc bạn một tuần tốt lành!",
+          "replies": []
+        }
+      ]
+    }
+  ],
+  "review": {
+    "by": "claude-sonnet (kiểm chéo)",
+    "on": "2026-11-14",
+    "note": "Bỏ giả định về gia đình, sửa “Sounds good” cho chuyện đã qua."
+  }
+}

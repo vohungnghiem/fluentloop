@@ -9,13 +9,14 @@ import type { Mistake } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import type { Task } from '../../core/content/schema';
-import type { Hint } from '../../services/ai/hint';
+import { taskHint, type Hint } from '../../services/ai/hint';
 import { recordAttempt, saveMistakes } from '../../services/learning';
 import { Button, ChunkChips, Eyebrow, PrimaryAction } from '../../ui/ui';
 import { SpeakButton } from '../../ui/speech';
 import { FeedbackPanel, Waiting, type Checked } from './FeedbackPanel';
 import { HintBox } from './HintBox';
 import { useDraft } from '../../ui/useDraft';
+import { useSupport } from '../../ui/useSupport';
 
 /** A checked version as stored in a draft (sets as arrays). */
 type StoredChecked = Omit<Checked, 'chosenMistakes' | 'chosenUpgrades'> & { chosenMistakes: number[]; chosenUpgrades: number[] };
@@ -41,14 +42,20 @@ export function WritingTask({
   unitId,
   onDone,
   onSkip,
+  initialText,
+  title = vi.produce.title,
 }: {
   task: Task;
   sessionId?: string;
   /** What the task came from: a snippet id, or `capture:<id>`. */
   snippetId: string;
   unitId: string;
-  onDone: () => Promise<void> | void;
+  /** Done: the final version as checked. */
+  onDone: (text: string) => Promise<void> | void;
   onSkip?: () => void;
+  /** Text to start from (what a talk was heard as): the learner checks it as if written. */
+  initialText?: string;
+  title?: string;
 }) {
   const [text, setText] = useState('');
   const [hints, setHints] = useState<Hint[]>([]);
@@ -67,17 +74,23 @@ export function WritingTask({
   // Everything on this screen survives leaving and reloading, until the task is done or skipped.
   const draft = useDraft<WritingDraft>(`write:${sessionId ?? snippetId}:${task.id}`);
   const restored = useRef(false);
+  const support = useSupport();
   useEffect(() => {
-    if (!draft.ready || restored.current) return;
+    if (!draft.ready || support === undefined || restored.current) return;
     restored.current = true;
     const saved = draft.saved;
-    if (!saved) return;
+    // Below B1 the first hint (a guiding question, in Vietnamese) is open before writing.
+    if (!saved) {
+      if (initialText) setText(initialText);
+      else if (support) setHints([taskHint(task, '', 1)]);
+      return;
+    }
     setText(saved.text);
     setHints(saved.hints);
     setHistory(saved.history.map(restore));
     if (saved.current) setCurrent(restore(saved.current));
     setSelfCheck(saved.selfCheck);
-  }, [draft.ready, draft.saved]);
+  }, [draft.ready, draft.saved, support]);
   useEffect(() => {
     // Newer work on this task from another device: show that instead.
     const saved = draft.saved;
@@ -167,7 +180,7 @@ export function WritingTask({
       await saveMistakes(sessionId, { ...attempt, text: feedback.corrected, corrected: upgrade.en }, [mistake], [0], source, now());
     }
     draft.clear();
-    await onDone();
+    await onDone(current.text);
   };
 
   const checked = current && current !== 'loading' ? current : undefined;
@@ -175,11 +188,11 @@ export function WritingTask({
   const modelsOpen = showModels ?? checked?.source === 'rules';
   const models = checked ? [checked.feedback.closestModel, ...task.models.filter((m) => m !== checked.feedback.closestModel)] : task.models;
 
-  if (!draft.ready) return <section className="flex-1 pt-8" aria-busy="true"><div className="skeleton h-64" /></section>;
+  if (!draft.ready || support === undefined) return <section className="flex-1 pt-8" aria-busy="true"><div className="skeleton h-64" /></section>;
 
   return (
     <section className="flex flex-1 flex-col pt-8">
-      <StepHeader {...STEP_LOOK.produce} title={vi.produce.title} />
+      <StepHeader {...STEP_LOOK.produce} title={title} />
       <div className="mt-5 rounded-2xl border border-line bg-surface p-4">
         <Eyebrow tone="produce" right={task.situation ? <span lang="en">{task.situation}</span> : undefined}>{vi.produce.task}</Eyebrow>
         <p className="mt-1.5 text-xl leading-snug font-medium">{task.promptVi}</p>

@@ -12,7 +12,8 @@ import { db, type AttemptRow, type CardRow, type SessionRow } from './db';
 
 /** What the screens call. Every function takes `now` so it behaves the same in tests and in the app. */
 
-const MINUTES = 15;
+/** Session length: 15 minutes, or 30 (more reviews) for a learner who gives the app half an hour a day or more. */
+const sessionMinutes = (perDay?: number) => ((perDay ?? 0) >= 30 ? 30 : 15);
 const uuid = () => crypto.randomUUID();
 
 async function reviewedOn(now: Date) {
@@ -47,7 +48,7 @@ export interface SessionChoice {
 
 export function startSession(now: Date, choice: SessionChoice = {}): Promise<SessionRow> {
   // One transaction, so two calls at once (React strict mode) still make a single session.
-  return db.transaction('rw', db.sessions, db.reads, db.cards, db.reviews, db.mistakes, () => planAndStart(now, choice));
+  return db.transaction('rw', [db.sessions, db.reads, db.cards, db.reviews, db.mistakes, db.plans], () => planAndStart(now, choice));
 }
 
 async function planAndStart(now: Date, { focus, snippetId, review }: SessionChoice): Promise<SessionRow> {
@@ -61,7 +62,7 @@ async function planAndStart(now: Date, { focus, snippetId, review }: SessionChoi
     units: courseUnits,
     readSnippets: reads.map((read) => read.snippetId),
     dueCards: queue.map((card) => ({ id: card.id, chunkId: card.chunkId })),
-    minutes: MINUTES,
+    minutes: sessionMinutes((await db.plans.get('main'))?.minutesPerDay),
     snippetId,
   });
   if (review && queue.length > 0) {
@@ -337,8 +338,11 @@ export async function drillCards(label: string): Promise<number> {
 const BASELINE_EVERY_DAYS = 28;
 
 /** Where the learner is in the course, and what to do next: Today, the path and the wrap-up show it. */
+/** A talk (speaking at length) is suggested again after this many days without one. */
+const TALK_EVERY_DAYS = 3;
+
 export async function nextSuggestions(now: Date, max = 3) {
-  const [summary, reads, mistakes, captures, lastBaseline, captureCards, played] = await Promise.all([
+  const [summary, reads, mistakes, captures, lastBaseline, captureCards, played, plan, lastTalk] = await Promise.all([
     todaySummary(now),
     db.reads.toArray(),
     db.mistakes.toArray(),
@@ -346,6 +350,8 @@ export async function nextSuggestions(now: Date, max = 3) {
     db.baselines.orderBy('at').last(),
     db.cards.where('source').equals('capture').count(),
     db.roleplays.toArray(),
+    db.plans.get('main'),
+    db.talks.where('kind').equals('talk').reverse().sortBy('at').then((rows) => rows[0]),
   ]);
   const course = courseState(courseUnits, reads.map((r) => r.snippetId));
   const done = new Set(played.map((p) => p.scenarioId));
@@ -359,8 +365,10 @@ export async function nextSuggestions(now: Date, max = 3) {
       dueToday: summary.dueToday,
       repeating: repeatingLabels(mistakes, today),
       roleplay: scenario ? { scenarioId: scenario.id, title: scenario.titleVi } : undefined,
+      talkDue: course.read > 0 && (!lastTalk || daysBetween(lastTalk.day, today) >= TALK_EVERY_DAYS),
       captureTaskId: captures.find((c) => c.task && !c.taskDone)?.id,
-      baselineDue: !!lastBaseline && daysBetween(lastBaseline.day, today) >= BASELINE_EVERY_DAYS,
+      // With a plan, its card on Today says when the benchmark is due (weeks 1, 5, 9, 13, 16).
+      baselineDue: !plan && !!lastBaseline && daysBetween(lastBaseline.day, today) >= BASELINE_EVERY_DAYS,
       // A learner on day one has enough to take in: capture is suggested from the second day.
       captureCards: summary.daysLearned >= 2 ? captureCards : 1,
     },

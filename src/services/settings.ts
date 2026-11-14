@@ -10,6 +10,8 @@ export type AiProvider = 'none' | 'gemini' | 'openai' | 'compatible' | 'openrout
 export interface Settings {
   /** The industry the learner studies (a content track id). */
   trackId: string;
+  /** While on the foundation pack: the industry to move on to afterwards ("" = the first one). */
+  nextTrackId: string;
   aiProvider: AiProvider;
   geminiKey: string;
   geminiModel: string;
@@ -27,6 +29,7 @@ export interface Settings {
 
 export const DEFAULT_SETTINGS: Settings = {
   trackId: 'dev',
+  nextTrackId: '',
   aiProvider: 'none',
   geminiKey: '',
   geminiModel: 'gemini-2.5-flash',

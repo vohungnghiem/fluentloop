@@ -7,7 +7,8 @@ import type { LucideIcon } from 'lucide-react';
 
 const cx = (...parts: Array<string | false | undefined>) => parts.filter(Boolean).join(' ');
 
-type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' };
+/** `danger` only for what cannot be undone (deleting data): the one place red is used. */
+type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'primary' | 'secondary' | 'quiet' | 'danger' };
 
 /** A small secondary link inside a card (not the main action): bordered, 40px tall. */
 export const linkButton = 'inline-flex min-h-10 items-center gap-1 rounded-lg border border-line bg-surface px-3 text-sm font-medium text-ink hover:border-primary';
@@ -21,6 +22,7 @@ export function Button({ variant = 'secondary', className, ...props }: ButtonPro
         variant === 'primary' && 'bg-primary text-on-primary hover:brightness-110',
         variant === 'secondary' && 'border border-line bg-surface text-ink hover:border-primary',
         variant === 'quiet' && 'text-ink-soft underline-offset-4 hover:text-ink hover:underline',
+        variant === 'danger' && 'bg-danger text-on-primary hover:brightness-110',
         className,
       )}
       {...props}
@@ -198,6 +200,19 @@ export function Lu({ size = 72, className }: { size?: number; className?: string
       <circle cx="51" cy="36" r="5" fill="var(--paper)" />
       <path d="M30 49Q40 57 50 49" fill="none" stroke="var(--paper)" strokeWidth="3.5" strokeLinecap="round" />
     </svg>
+  );
+}
+
+/** Dots thrown once around Lu at an ending: angle and tone. */
+const BURST: Array<[number, Tone]> = [[0, 'produce'], [45, 'shadow'], [90, 'wrap'], [135, 'review'], [180, 'input'], [225, 'fix'], [270, 'produce'], [315, 'wrap']];
+
+/** Lu with a one-off burst of coloured dots: the end of a session, the end of the welcome flow. */
+export function LuBurst({ size = 88 }: { size?: number }) {
+  return (
+    <span className="burst tone-wrap">
+      {BURST.map(([angle, tone], i) => <i key={i} style={{ '--a': `${angle}deg`, background: `var(--tone-${tone})` } as React.CSSProperties} />)}
+      <Lu size={size} className="pop" />
+    </span>
   );
 }
 
@@ -405,4 +420,54 @@ export function Segmented<T extends string>({ value, options, onChange }: { valu
 export function Choice<T extends string>(props: { value: T; options: Array<{ value: T; label: string; dot?: string }>; onChange: (value: T) => void }) {
   if (props.options.length > 3) return <SelectField {...props} dot={props.options.find((o) => o.value === props.value)?.dot} />;
   return <Segmented {...props} />;
+}
+
+/**
+ * One answer in a list of choices, as a big row (52px): a quiz option, a plan to pick. `keyHint`
+ * shows the keyboard shortcut on a wide screen; `selected` rings it and ticks it.
+ */
+export function OptionButton({ onClick, selected, keyHint, dot, lang, children }: { onClick: () => void; selected?: boolean; keyHint?: string; /** A colour dot before the label (a track). */ dot?: string; lang?: string; children: ReactNode }) {
+  return (
+    <button
+      type="button"
+      role={selected === undefined ? undefined : 'radio'}
+      aria-checked={selected}
+      onClick={onClick}
+      lang={lang}
+      className={cx(
+        'flex min-h-13 w-full items-center gap-3 rounded-2xl border bg-surface px-4 py-2 text-left font-medium transition hover:border-primary active:bg-primary-tint',
+        selected ? 'border-primary ring-3 ring-primary-tint' : 'border-line',
+      )}
+    >
+      {keyHint && <kbd className="hidden size-6 shrink-0 items-center justify-center rounded-md bg-paper font-sans text-xs text-ink-soft ring-1 ring-line sm:flex">{keyHint}</kbd>}
+      {dot && <span className="size-2.5 shrink-0 rounded-full" style={{ background: dot }} aria-hidden="true" />}
+      <span className="min-w-0 flex-1">{children}</span>
+      {selected && <Check size={18} className="shrink-0 text-primary" />}
+    </button>
+  );
+}
+
+/**
+ * A titled part of a long screen (Settings): toned icon, title, one line of what it is for, and its
+ * state on the right ("Đang bật"). The content (usually a Card) goes under it.
+ */
+export function Section({ id, tone, icon, title, detail, status, children }: { id?: string; tone?: Tone; icon: LucideIcon; title: string; detail?: string; status?: ReactNode; children: ReactNode }) {
+  const Icon = icon;
+  return (
+    <section id={id} className="scroll-mt-20">
+      <header className="mb-3 flex items-start gap-3 px-1">
+        {tone ? (
+          <ToneIcon tone={tone} icon={icon} size="sm" />
+        ) : (
+          <span className="flex size-8 shrink-0 items-center justify-center rounded-lg bg-danger-tint text-danger" aria-hidden="true"><Icon size={18} strokeWidth={2.2} /></span>
+        )}
+        <div className="min-w-0 flex-1">
+          <h2 className="font-semibold leading-8">{title}</h2>
+          {detail && <p className="text-sm text-ink-soft">{detail}</p>}
+        </div>
+        {status && <div className="mt-1 shrink-0">{status}</div>}
+      </header>
+      {children}
+    </section>
+  );
 }

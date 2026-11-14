@@ -6,15 +6,21 @@ import { MessagesSquare } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { courseUnits } from '../../services/content';
 import { aiReady, useSettings } from '../../services/settings';
-import { Card, Note } from '../../ui/ui';
+import { Card, NavList, NavRow, Note } from '../../ui/ui';
 
-/** The roleplays of the learner's track, by unit. */
+/** Speaking practice: a talk on one topic, a log of real conversations, and the roleplays of the track. */
 export function RoleplayListPage() {
   const settings = useSettings();
   return (
     <main className="page">
       <PageHeader title={vi.roleplay.title} look={SECTION_LOOK.roleplay} back={{ to: '/path', label: vi.lesson.back }}><AiBadge /></PageHeader>
       <p className="text-ink-soft">{vi.roleplay.intro}</p>
+      <NavList>
+        <NavRow to="/speak" look={SECTION_LOOK.talk} title={vi.talk.hubTitle} detail={vi.talk.hubBody} />
+        <NavRow to="/speak/log" look={SECTION_LOOK.talkLog} title={vi.talkLog.title} detail={vi.talkLog.hubBody} />
+        <NavRow to="/interview" look={SECTION_LOOK.interview} title={vi.interview.title} detail={vi.interview.hubBody} />
+      </NavList>
+      <h2 className="pt-2 text-lg font-semibold">{vi.roleplay.listTitle}</h2>
       <Note tone="plain">{aiReady(settings) ? vi.roleplay.withAi : vi.roleplay.withoutAi}</Note>
       {courseUnits.flatMap((unit) =>
         unit.scenarios.map((scenario) => (

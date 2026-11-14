@@ -1,0 +1,196 @@
+{
+  "items": [
+    {
+      "id": "a1-be",
+      "level": "A1",
+      "skill": "grammar",
+      "question": "I ___ a developer.",
+      "options": ["is", "am", "are", "be"],
+      "answer": 1,
+      "explainVi": "Với I luôn dùng am: I am (I'm)."
+    },
+    {
+      "id": "a1-days",
+      "level": "A1",
+      "skill": "grammar",
+      "question": "Today is Monday. Tomorrow is ___.",
+      "options": ["Sunday", "Wednesday", "Tuesday", "Saturday"],
+      "answer": 2,
+      "explainVi": "Sau thứ Hai (Monday) là thứ Ba (Tuesday)."
+    },
+    {
+      "id": "a1-listen-house",
+      "level": "A1",
+      "skill": "listen",
+      "audio": "I live in a small house near the sea.",
+      "question": "Nhà của người nói ở đâu?",
+      "options": ["Gần núi", "Trong trung tâm thành phố", "Gần biển", "Gần trường học"],
+      "answer": 2,
+      "explainVi": "“near the sea” nghĩa là gần biển."
+    },
+    {
+      "id": "a1-listen-time",
+      "level": "A1",
+      "skill": "listen",
+      "audio": "It is seven o'clock. I have breakfast with my family.",
+      "question": "Bây giờ là mấy giờ?",
+      "options": ["7 giờ", "6 giờ", "8 giờ", "11 giờ"],
+      "answer": 0,
+      "explainVi": "“seven o'clock” là 7 giờ đúng."
+    },
+    {
+      "id": "a1-read-meeting",
+      "level": "A1",
+      "skill": "read",
+      "passage": "Hi Tom,\nThe meeting is at 3 pm in Room 2. See you there!\nMai",
+      "question": "Cuộc họp ở đâu?",
+      "options": ["Phòng 3", "Phòng 2", "Nhà của Tom", "Phòng 12"],
+      "answer": 1,
+      "explainVi": "“in Room 2”: ở phòng 2. Số 3 là giờ họp (3 pm)."
+    },
+    {
+      "id": "a2-past",
+      "level": "A2",
+      "skill": "grammar",
+      "question": "Yesterday I ___ to the office by bus.",
+      "options": ["go", "goes", "going", "went"],
+      "answer": 3,
+      "explainVi": "Có yesterday thì dùng quá khứ: go → went."
+    },
+    {
+      "id": "a2-third-person",
+      "level": "A2",
+      "skill": "grammar",
+      "question": "She ___ coffee every morning.",
+      "options": ["drinks", "drink", "drinking", "is drink"],
+      "answer": 0,
+      "explainVi": "She/he/it ở hiện tại đơn thì động từ thêm -s: she drinks."
+    },
+    {
+      "id": "a2-listen-thursday",
+      "level": "A2",
+      "skill": "listen",
+      "audio": "Sorry, I can't come to the meeting today because I'm sick. Can we meet on Thursday instead?",
+      "question": "Người nói muốn gì?",
+      "options": ["Huỷ cuộc họp hẳn", "Họp sớm hơn trong hôm nay", "Dời cuộc họp sang thứ Năm", "Mời thêm người vào họp"],
+      "answer": 2,
+      "explainVi": "“Can we meet on Thursday instead?”: gặp vào thứ Năm thay vì hôm nay."
+    },
+    {
+      "id": "a2-listen-station",
+      "level": "A2",
+      "skill": "listen",
+      "audio": "The train leaves at half past nine, so let's meet at the station at a quarter past nine.",
+      "question": "Hai người hẹn gặp ở ga lúc mấy giờ?",
+      "options": ["9:00", "9:15", "9:30", "9:45"],
+      "answer": 1,
+      "explainVi": "“a quarter past nine” là 9 giờ 15. “half past nine” (9:30) là giờ tàu chạy."
+    },
+    {
+      "id": "a2-read-notice",
+      "level": "A2",
+      "skill": "read",
+      "passage": "Notice: The office will be closed on Friday for cleaning. Please take your laptop home on Thursday evening.",
+      "question": "Nhân viên cần làm gì?",
+      "options": ["Dọn văn phòng vào thứ Sáu", "Làm việc ở văn phòng vào thứ Sáu", "Mua laptop mới", "Mang laptop về nhà tối thứ Năm"],
+      "answer": 3,
+      "explainVi": "“take your laptop home on Thursday evening”: mang laptop về nhà tối thứ Năm."
+    },
+    {
+      "id": "b1-since",
+      "level": "B1",
+      "skill": "grammar",
+      "question": "I have worked here ___ 2019.",
+      "options": ["for", "from", "since", "at"],
+      "answer": 2,
+      "explainVi": "since + mốc thời gian (since 2019); for + khoảng thời gian (for 5 years)."
+    },
+    {
+      "id": "b1-take-a-look",
+      "level": "B1",
+      "skill": "grammar",
+      "question": "Could you ___ a look at my code before I merge it?",
+      "options": ["take", "do", "make", "give"],
+      "answer": 0,
+      "explainVi": "Cụm cố định: take a look at = xem qua."
+    },
+    {
+      "id": "b1-listen-release",
+      "level": "B1",
+      "skill": "listen",
+      "audio": "We were planning to release on Monday, but QA found a few critical bugs, so we've decided to push it back a week.",
+      "question": "Chuyện gì xảy ra với bản phát hành?",
+      "options": ["Phát hành sớm hơn", "Vẫn phát hành thứ Hai", "Huỷ hẳn", "Lùi lại một tuần"],
+      "answer": 3,
+      "explainVi": "“push it back a week” nghĩa là lùi lại một tuần."
+    },
+    {
+      "id": "b1-listen-dinner",
+      "level": "B1",
+      "skill": "listen",
+      "audio": "I'd love to join the team dinner, but I've already promised to pick up my sister from the airport.",
+      "question": "Người nói trả lời lời mời thế nào?",
+      "options": ["Đồng ý đi ăn", "Từ chối vì đã hứa đi đón em gái", "Hỏi lại giờ ăn", "Đề nghị đổi nhà hàng"],
+      "answer": 1,
+      "explainVi": "“I'd love to…, but…” là cách từ chối lịch sự: đã hứa đón em gái ở sân bay."
+    },
+    {
+      "id": "b1-read-report",
+      "level": "B1",
+      "skill": "read",
+      "passage": "Hi Minh,\nThanks for sending the report. Overall it looks good, but the numbers in section 3 don't match the ones in the summary. Could you double-check them before Friday's meeting?\nBest,\nSarah",
+      "question": "Sarah muốn Minh làm gì?",
+      "options": ["Viết lại toàn bộ báo cáo", "Huỷ cuộc họp thứ Sáu", "Kiểm tra lại số liệu mục 3 trước buổi họp thứ Sáu", "Gửi báo cáo cho khách hàng"],
+      "answer": 2,
+      "explainVi": "“double-check them before Friday's meeting”: kiểm tra lại số liệu (mục 3) trước buổi họp thứ Sáu."
+    },
+    {
+      "id": "b2-past-perfect",
+      "level": "B2",
+      "skill": "grammar",
+      "question": "By the time we arrived, the meeting ___.",
+      "options": ["has already started", "had already started", "already starts", "was already start"],
+      "answer": 1,
+      "explainVi": "Việc xảy ra trước một mốc trong quá khứ (we arrived) dùng quá khứ hoàn thành: had started."
+    },
+    {
+      "id": "b2-extend",
+      "level": "B2",
+      "skill": "grammar",
+      "question": "The client asked us to ___ the deadline because their requirements changed.",
+      "options": ["expand", "enlarge", "extent", "extend"],
+      "answer": 3,
+      "explainVi": "extend the deadline = gia hạn. expand/enlarge là mở rộng kích thước; extent là danh từ."
+    },
+    {
+      "id": "b2-listen-framework",
+      "level": "B2",
+      "skill": "listen",
+      "audio": "To be honest, I'm not entirely convinced the new framework is worth it. It might speed things up in the long run, but the migration cost seems pretty high for a team our size.",
+      "question": "Người nói nghĩ gì về framework mới?",
+      "options": ["Rất hào hứng muốn dùng ngay", "Còn nghi ngờ vì chi phí chuyển đổi cao", "Phản đối mọi thay đổi", "Không quan tâm"],
+      "answer": 1,
+      "explainVi": "“not entirely convinced… the migration cost seems pretty high”: chưa thật tin, vì chi phí chuyển đổi cao."
+    },
+    {
+      "id": "b2-listen-conditional",
+      "level": "B2",
+      "skill": "listen",
+      "audio": "Had we tested the payment flow on real devices, we would have caught the issue before launch.",
+      "question": "Câu này có nghĩa là gì?",
+      "options": ["Họ đã test trên máy thật và bắt được lỗi", "Họ sẽ test sau khi ra mắt", "Họ không test trên máy thật nên bỏ sót lỗi", "Lỗi không liên quan đến thanh toán"],
+      "answer": 2,
+      "explainVi": "“Had we tested…” = If we had tested: điều kiện trái với quá khứ, tức là họ đã không test nên lỗi lọt ra."
+    },
+    {
+      "id": "b2-read-remote",
+      "level": "B2",
+      "skill": "read",
+      "passage": "While remote work has given employees more flexibility, some managers argue that it makes informal knowledge sharing harder, since junior staff can no longer learn simply by overhearing how senior colleagues solve problems.",
+      "question": "Theo đoạn văn, một số quản lý lo ngại điều gì?",
+      "options": ["Nhân viên mới khó học hỏi qua việc nghe đồng nghiệp giỏi giải quyết vấn đề", "Nhân viên làm việc ít giờ hơn", "Chi phí văn phòng tăng", "Nhân viên muốn quay lại văn phòng"],
+      "answer": 0,
+      "explainVi": "“junior staff can no longer learn simply by overhearing…”: nhân viên mới không còn học được nhờ nghe đồng nghiệp giỏi làm việc."
+    }
+  ]
+}

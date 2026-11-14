@@ -1,0 +1,424 @@
+{
+  "id": "work-meeting",
+  "track": "work",
+  "title": "Team meetings",
+  "titleVi": "Họp nhóm",
+  "cefr": "B1",
+  "pattern": {
+    "titleVi": "Nói trong cuộc họp: mở đầu, góp ý, chốt việc",
+    "forms": [
+      "Let's get started. First, …",
+      "I see your point, but …",
+      "So, to sum up, …",
+      "… will + V + by + ngày"
+    ],
+    "examples": [
+      {
+        "en": "Let's get started. First, the release date.",
+        "vi": "Mình bắt đầu nhé. Đầu tiên là ngày phát hành."
+      },
+      {
+        "en": "I see your point, but I think it's too risky.",
+        "vi": "Mình hiểu ý bạn, nhưng mình nghĩ việc đó rủi ro quá."
+      },
+      {
+        "en": "So, to sum up, Mai will send the design by Friday.",
+        "vi": "Tóm lại, Mai sẽ gửi bản thiết kế trước thứ Sáu."
+      }
+    ],
+    "noteVi": "Không đồng ý thì mở đầu bằng việc ghi nhận ý người kia (I see your point, but…). Chốt việc luôn có ai làm, làm gì, trước ngày nào."
+  },
+  "sounds": [
+    {
+      "en": "agenda",
+      "tipVi": "/əˈdʒendə/: nhấn âm giữa “JEN”, âm đầu và cuối rất nhẹ."
+    },
+    {
+      "en": "point",
+      "tipVi": "/pɔɪnt/: “oi” rồi chạm nhẹ /nt/ ở cuối, đừng đọc thành “poi”."
+    }
+  ],
+  "snippets": [
+    {
+      "id": "work-meeting-start",
+      "genre": "meeting",
+      "titleVi": "Mở đầu cuộc họp",
+      "speaker": "Tom, project manager",
+      "cefr": "A2",
+      "text": [
+        "OK, let's get started. We have three things on the agenda today.",
+        "First, the release date. Nam, can you give us a quick update?"
+      ],
+      "translationVi": [
+        "Được rồi, mình bắt đầu nhé. Hôm nay có ba việc cần bàn.",
+        "Đầu tiên là ngày phát hành. Nam, bạn cập nhật nhanh cho mọi người được không?"
+      ],
+      "chunks": [
+        "work-get-started",
+        "work-on-the-agenda",
+        "work-quick-update"
+      ],
+      "task": "work-task-meeting-start"
+    },
+    {
+      "id": "work-meeting-disagree",
+      "genre": "meeting",
+      "titleVi": "Góp ý khác quan điểm",
+      "speaker": "Linh, tester",
+      "cefr": "B1",
+      "text": [
+        "I see your point, but I'm worried about the testing time.",
+        "What if we release the main features first and the rest next month?"
+      ],
+      "translationVi": [
+        "Mình hiểu ý bạn, nhưng mình lo về thời gian kiểm thử.",
+        "Hay là mình phát hành các tính năng chính trước, phần còn lại để tháng sau?"
+      ],
+      "chunks": [
+        "work-see-your-point",
+        "work-worried-about",
+        "work-what-if"
+      ],
+      "task": "work-task-meeting-disagree"
+    },
+    {
+      "id": "work-meeting-wrap",
+      "genre": "meeting",
+      "titleVi": "Chốt việc cuối buổi",
+      "speaker": "Tom, project manager",
+      "cefr": "A2",
+      "text": [
+        "So, to sum up, we'll release the main features on the 20th.",
+        "Linh will update the test plan by Wednesday. Any questions before we finish?"
+      ],
+      "translationVi": [
+        "Tóm lại, mình sẽ phát hành các tính năng chính vào ngày 20.",
+        "Linh sẽ cập nhật kế hoạch kiểm thử trước thứ Tư. Có ai hỏi gì trước khi kết thúc không?"
+      ],
+      "chunks": [
+        "work-to-sum-up",
+        "work-by-wednesday",
+        "work-any-questions"
+      ],
+      "task": "work-task-meeting-wrap"
+    }
+  ],
+  "chunks": [
+    {
+      "id": "work-get-started",
+      "en": "let's get started",
+      "vi": "mình bắt đầu nhé",
+      "forms": [
+        "let us get started"
+      ],
+      "example": "It's 10 o'clock, so let's get started.",
+      "exampleVi": "10 giờ rồi, mình bắt đầu nhé.",
+      "answer": "let's get started"
+    },
+    {
+      "id": "work-on-the-agenda",
+      "en": "on the agenda",
+      "vi": "trong nội dung họp",
+      "example": "What's on the agenda for today?",
+      "exampleVi": "Hôm nay họp những gì?",
+      "answer": "on the agenda"
+    },
+    {
+      "id": "work-quick-update",
+      "en": "a quick update",
+      "vi": "cập nhật nhanh",
+      "forms": [
+        "quick update"
+      ],
+      "example": "Can I give a quick update on the bug?",
+      "exampleVi": "Mình cập nhật nhanh về lỗi đó được không?",
+      "answer": "a quick update"
+    },
+    {
+      "id": "work-see-your-point",
+      "en": "I see your point",
+      "vi": "mình hiểu ý bạn",
+      "example": "I see your point, but we don't have time.",
+      "exampleVi": "Mình hiểu ý bạn, nhưng mình không có thời gian.",
+      "answer": "I see your point"
+    },
+    {
+      "id": "work-worried-about",
+      "en": "worried about",
+      "vi": "lo về",
+      "example": "She's worried about the deadline.",
+      "exampleVi": "Chị ấy lo về hạn chót.",
+      "answer": "worried about"
+    },
+    {
+      "id": "work-what-if",
+      "en": "What if we",
+      "vi": "hay là mình …",
+      "example": "What if we ask the client first?",
+      "exampleVi": "Hay là mình hỏi khách hàng trước?",
+      "answer": "What if we"
+    },
+    {
+      "id": "work-to-sum-up",
+      "en": "to sum up",
+      "vi": "tóm lại",
+      "example": "To sum up, we need two more days.",
+      "exampleVi": "Tóm lại, mình cần thêm hai ngày.",
+      "answer": "to sum up"
+    },
+    {
+      "id": "work-by-wednesday",
+      "en": "by Wednesday",
+      "vi": "trước (hạn) thứ Tư",
+      "forms": [
+        "by friday",
+        "by monday"
+      ],
+      "example": "Please send me the slides by Wednesday.",
+      "exampleVi": "Bạn gửi mình slide trước thứ Tư nhé.",
+      "answer": "by Wednesday"
+    },
+    {
+      "id": "work-any-questions",
+      "en": "Any questions",
+      "vi": "có câu hỏi nào không",
+      "example": "Any questions about the new process?",
+      "exampleVi": "Có ai hỏi gì về quy trình mới không?",
+      "answer": "Any questions"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "work-task-meeting-start",
+      "promptVi": "Bạn chủ trì cuộc họp. Mở đầu, nói hôm nay bàn mấy việc, và mời một người cập nhật.",
+      "situation": "Weekly team meeting.",
+      "required": [
+        {
+          "label": "let's get started",
+          "variants": [
+            "let's get started",
+            "let us get started"
+          ]
+        },
+        {
+          "label": "update",
+          "variants": [
+            "update"
+          ]
+        }
+      ],
+      "models": [
+        "OK, let's get started. We have two things on the agenda today. First, the new login page. Mai, can you give us a quick update?"
+      ],
+      "tipVi": "Mời ai đó nói: Can you give us a quick update? Lịch sự mà vẫn rõ.",
+      "points": [
+        {
+          "vi": "Mở đầu cuộc họp",
+          "variants": [
+            "get started",
+            "let us start",
+            "welcome"
+          ]
+        },
+        {
+          "vi": "Hôm nay bàn gì, mấy việc",
+          "variants": [
+            "agenda",
+            "today",
+            "first"
+          ]
+        },
+        {
+          "vi": "Mời một người cập nhật",
+          "variants": [
+            "can you",
+            "could you",
+            "update"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn mở đầu thế nào? Hôm nay bàn những gì? Ai cập nhật trước?",
+        "OK, let's get started. We have … on the agenda today."
+      ]
+    },
+    {
+      "id": "work-task-meeting-disagree",
+      "promptVi": "Đồng nghiệp muốn bỏ bước kiểm thử để kịp hạn. Bạn không đồng ý: ghi nhận ý họ, nói điều bạn lo, và đề xuất cách khác.",
+      "situation": "Planning meeting.",
+      "required": [
+        {
+          "label": "I see your point",
+          "variants": [
+            "i see your point",
+            "i understand"
+          ]
+        },
+        {
+          "label": "What if",
+          "variants": [
+            "what if",
+            "how about",
+            "maybe we can"
+          ]
+        }
+      ],
+      "models": [
+        "I see your point, but I'm worried about bugs in production. What if we test the payment part first and the rest later?"
+      ],
+      "tipVi": "Ba bước: ghi nhận (I see your point) → lo gì (but I'm worried about…) → đề xuất (What if we…?).",
+      "points": [
+        {
+          "vi": "Ghi nhận ý người kia",
+          "variants": [
+            "see your point",
+            "understand",
+            "i know"
+          ]
+        },
+        {
+          "vi": "Điều bạn lo",
+          "variants": [
+            "worried",
+            "risk",
+            "afraid",
+            "concern"
+          ]
+        },
+        {
+          "vi": "Đề xuất cách khác",
+          "variants": [
+            "what if",
+            "how about",
+            "maybe",
+            "we could",
+            "we can"
+          ]
+        }
+      ],
+      "hints": [
+        "Bạn nói gì để người kia thấy bạn đã nghe họ? Bạn lo điều gì? Bạn muốn làm thế nào?",
+        "I see your point, but I'm worried about … What if we …?"
+      ]
+    },
+    {
+      "id": "work-task-meeting-wrap",
+      "promptVi": "Cuối buổi họp, tóm tắt điều đã quyết và ai làm gì, trước ngày nào.",
+      "situation": "End of the meeting.",
+      "required": [
+        {
+          "label": "to sum up",
+          "variants": [
+            "to sum up",
+            "so to sum up"
+          ]
+        },
+        {
+          "label": "by + ngày",
+          "variants": [
+            "by monday",
+            "by tuesday",
+            "by wednesday",
+            "by thursday",
+            "by friday",
+            "by tomorrow"
+          ]
+        }
+      ],
+      "models": [
+        "So, to sum up, we'll move the release to next Monday. Nam will fix the login bug by Thursday, and I'll test it on Friday."
+      ],
+      "tipVi": "Mỗi việc một câu: ai + will + làm gì + by + ngày.",
+      "points": [
+        {
+          "vi": "Điều đã quyết",
+          "variants": [
+            "we will",
+            "we decided",
+            "we agreed"
+          ]
+        },
+        {
+          "vi": "Ai làm gì",
+          "variants": [
+            "will"
+          ]
+        },
+        {
+          "vi": "Trước ngày nào",
+          "variants": [
+            "by"
+          ]
+        }
+      ],
+      "hints": [
+        "Cả nhóm đã quyết gì? Ai làm việc gì, xong trước ngày nào?",
+        "So, to sum up, we'll … … will … by …"
+      ]
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "work-scenario-meeting",
+      "titleVi": "Họp lập kế hoạch",
+      "partner": "Tom, project manager",
+      "situationVi": "Tom muốn phát hành sớm một tuần. Bạn lo không đủ thời gian kiểm thử.",
+      "goalVi": "Ghi nhận ý Tom, nói điều bạn lo, đề xuất cách khác và chốt ai làm gì.",
+      "persona": "You are Tom, a project manager who wants to release one week early. Listen to the learner's concerns, ask what they suggest, and agree on a plan with clear owners and dates. Keep each message short and friendly.",
+      "goal": "The learner acknowledges Tom's idea, explains a concern, suggests another plan, and agrees on who does what by when.",
+      "script": [
+        {
+          "id": "start",
+          "say": "Good news: the client wants the app one week early. Can we do it?",
+          "sayVi": "Tin vui: khách muốn có app sớm một tuần. Mình làm kịp không?",
+          "replies": [
+            {
+              "text": "I see your point, but I'm worried about testing.",
+              "next": "suggest"
+            },
+            {
+              "text": "It's possible, but testing will be very short.",
+              "next": "suggest"
+            }
+          ]
+        },
+        {
+          "id": "suggest",
+          "say": "Hmm, I understand. What do you suggest?",
+          "sayVi": "Ừm, tôi hiểu. Bạn đề xuất gì?",
+          "replies": [
+            {
+              "text": "What if we release the main features first?",
+              "next": "plan"
+            },
+            {
+              "text": "Maybe we can ask the client for three more days.",
+              "next": "plan"
+            }
+          ]
+        },
+        {
+          "id": "plan",
+          "say": "OK, that works. So who does what?",
+          "sayVi": "Được, vậy ổn. Vậy ai làm việc gì?",
+          "replies": [
+            {
+              "text": "Nam will finish the code by Wednesday, and I'll test it by Friday.",
+              "next": "end"
+            },
+            {
+              "text": "I'll update the test plan by tomorrow.",
+              "next": "end"
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "say": "Great. To sum up, we have a plan. Thanks, everyone!",
+          "sayVi": "Tốt. Tóm lại, mình đã có kế hoạch. Cảm ơn mọi người!",
+          "replies": []
+        }
+      ]
+    }
+  ]
+}

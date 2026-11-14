@@ -1,17 +1,25 @@
 import { PageHeader } from '../../ui/shell';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 import { useLiveQuery } from 'dexie-react-hooks';
-import { ChevronDown, CircleCheck, ClipboardPaste, Eye, EyeOff, Mic } from 'lucide-react';
+import { Briefcase, CalendarCheck, ChevronDown, CircleCheck, ClipboardPaste, CloudUpload, Eye, EyeOff, HardDriveDownload, Mic, SlidersHorizontal, Sparkles, Trash2 } from 'lucide-react';
 import { vi } from '../../copy/vi';
 import { aiCallsToday, testConnection } from '../../services/ai/correct';
 import type { AiErrorKind } from '../../services/ai/providers';
 import { now } from '../../services/clock';
 import { saveSettings, useSettings, type AiProvider } from '../../services/settings';
-import { Button, Card, Choice, Field, NavList, NavRow, Note, inputClass } from '../../ui/ui';
+import { Button, Card, Chip, Choice, Field, NavList, NavRow, Note, Section, inputClass } from '../../ui/ui';
+import { DeleteData } from './DeleteData';
+import { aiReady } from '../../services/settings';
+import { useSync } from '../../services/sync/sync';
+import { getPlan } from '../../services/plan';
+import { planWeek } from '../../core/plan/plan';
+import { dayKey } from '../../core/date';
 import { BackupCard } from '../backup/BackupCard';
 import { SyncCard } from '../sync/SyncCard';
 import { TrackPicker } from './TrackPicker';
+import { library } from '../../services/content';
+import { PlanSettings } from './PlanSettings';
 import { KeyQr } from './KeyQr';
 import { cleanKey, keyLooksRight, maskKey, takeKeyFromLink, type KeyProvider } from '../../services/keyTransfer';
 
@@ -27,12 +35,14 @@ const PROVIDERS = ['none', 'gemini', 'openai', 'openrouter', 'compatible'] as co
 /** Settings: AI is optional and bring-your-own-key; the key stays in this browser. */
 export function SettingsPage() {
   const settings = useSettings();
+  const sync = useSync();
+  const plan = useLiveQuery(getPlan);
   // Opened from a badge (AI, sync): straight to that part, and back to where the learner was.
   const location = useLocation();
   const from = (location.state as { from?: string } | null)?.from;
   useEffect(() => {
     const id = location.hash.slice(1);
-    if (id !== 'ai' && id !== 'sync') return;
+    if (!(id in vi.settings.sections)) return;
     // After the app's own scroll-to-top on a new screen.
     const timer = setTimeout(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }), 50);
     return () => clearTimeout(timer);
@@ -85,16 +95,20 @@ export function SettingsPage() {
 
   return (
     <main className="page">
-      <PageHeader title={vi.settings.title} back={{ to: from ?? '/', label: vi.micCheck.back }} />
+      <PageHeader title={vi.settings.title} look={{ tone: 'produce', icon: SlidersHorizontal }} back={{ to: from ?? '/', label: vi.micCheck.back }} />
+      <JumpNav />
 
-      <Section title={vi.settings.track}>
-        <Card>
-          <TrackPicker />
-          <p className="mt-2 text-sm text-ink-soft">{vi.settings.trackBody}</p>
-        </Card>
+      <Section id="plan" tone="wrap" icon={CalendarCheck} {...sectionText('plan')} status={plan && <Chip>{vi.plan.weekOf(Math.min(planWeek(plan.startDay, dayKey(now())).week, 16), 16)}</Chip>}>
+        <PlanSettings />
       </Section>
 
-      <Section title={vi.settings.aiTitle} id="ai">
+      {library.tracks.length > 1 && (
+        <Section id="track" tone="input" icon={Briefcase} title={vi.settings.sections.track.title} detail={`${vi.settings.sections.track.detail} ${vi.settings.trackBody}`}>
+          <TrackPicker />
+        </Section>
+      )}
+
+      <Section id="ai" tone="review" icon={Sparkles} {...sectionText('ai')} status={<OnOff on={aiReady(settings)} />}>
         <Card className="space-y-4">
           {received && (
             <div className="rounded-xl border-2 border-primary p-4">
@@ -108,7 +122,7 @@ export function SettingsPage() {
           )}
           {settings.aiProvider === 'fake' && <Note tone="accent">{vi.settings.fakeOn}</Note>}
 
-          <Field label={vi.settings.provider} hint={provider === 'none' ? vi.settings.aiBody : undefined}>
+          <Field label={vi.settings.provider}>
             <Choice value={provider} options={PROVIDERS.map((p) => ({ value: p, label: vi.settings.providers[p] }))} onChange={choose} />
           </Field>
 
@@ -199,27 +213,54 @@ export function SettingsPage() {
         </Card>
       </Section>
 
-      <Section title={vi.sync.title} id="sync">
+      <Section id="sync" tone="produce" icon={CloudUpload} {...sectionText('sync')} status={<OnOff on={sync.on} />}>
         <SyncCard />
       </Section>
 
-      <Section title={vi.backup.title}>
+      <Section id="backup" tone="fix" icon={HardDriveDownload} {...sectionText('backup')}>
         <BackupCard />
       </Section>
 
-      <NavList title={vi.settings.other}>
-        <NavRow to="/mic-check" look={{ tone: 'shadow', icon: Mic }} title={vi.micCheck.link} />
-      </NavList>
+      <Section id="other" tone="shadow" icon={Mic} {...sectionText('other')}>
+        <NavList>
+          <NavRow to="/mic-check" look={{ tone: 'shadow', icon: Mic }} title={vi.micCheck.link} />
+        </NavList>
+      </Section>
+
+      <div className="mt-4 border-t border-line pt-8">
+        <Section id="data" icon={Trash2} {...sectionText('data')}>
+          <DeleteData />
+        </Section>
+      </div>
     </main>
   );
 }
 
-/** A titled group of the settings page, the same header as `NavList`. */
-function Section({ title, id, children }: { title: string; id?: string; children: ReactNode }) {
+type SectionId = keyof typeof vi.settings.sections;
+const sectionText = (id: SectionId) => ({ title: vi.settings.sections[id].title, detail: vi.settings.sections[id].detail });
+
+function OnOff({ on }: { on: boolean }) {
+  return <Chip tone={on ? 'good' : 'plain'}>{on ? vi.settings.on : vi.settings.off}</Chip>;
+}
+
+/** Chips to jump to a part of this long page; stays at the top while scrolling. */
+function JumpNav() {
+  const ids = (Object.keys(vi.settings.sections) as SectionId[]).filter((id) => id !== 'track' || library.tracks.length > 1);
   return (
-    <section id={id} className="scroll-mt-4">
-      <h2 className="mb-2 px-1 text-xs font-semibold tracking-wide text-ink-soft uppercase">{title}</h2>
-      {children}
-    </section>
+    <nav aria-label={vi.settings.jump} className="sticky top-0 z-10 -mx-4 -my-2 border-b border-line/60 bg-paper/95 px-4 py-2 backdrop-blur">
+      <ul className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        {ids.map((id) => (
+          <li key={id} className="shrink-0">
+            <button
+              type="button"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              className={`min-h-9 rounded-full border px-3 text-sm font-medium whitespace-nowrap transition hover:border-primary ${id === 'data' ? 'border-line text-danger' : 'border-line bg-surface text-ink'}`}
+            >
+              {vi.settings.sections[id].short}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 }
