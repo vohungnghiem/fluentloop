@@ -9,6 +9,7 @@ import type { Mistake } from '../../core/errors/labels';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import type { Task } from '../../core/content/schema';
+import type { WrittenVersion } from '../../core/progress/writing';
 import { taskHint, type Hint } from '../../services/ai/hint';
 import { recordAttempt, saveMistakes } from '../../services/learning';
 import { Button, ChunkChips, Eyebrow, PrimaryAction } from '../../ui/ui';
@@ -28,6 +29,15 @@ interface WritingDraft {
   selfCheck?: 'same' | 'different';
 }
 const store = (c: Checked): StoredChecked => ({ ...c, chosenMistakes: [...c.chosenMistakes], chosenUpgrades: [...c.chosenUpgrades] });
+/** A version as kept in the learner's writing history: what was written and what was said about it. */
+const keep = (c: Checked): WrittenVersion => ({
+  text: c.text,
+  at: c.at,
+  source: c.source,
+  feedback: c.feedback,
+  chosenMistakes: [...c.chosenMistakes],
+  chosenUpgrades: [...c.chosenUpgrades],
+});
 const restore = (c: StoredChecked): Checked => ({ ...c, chosenMistakes: new Set(c.chosenMistakes), chosenUpgrades: new Set(c.chosenUpgrades) });
 
 /**
@@ -116,7 +126,7 @@ export function WritingTask({
   const show = (written: string, found: Omit<CorrectionResult, 'correction'> & { correction?: CorrectionResult['correction'] }) => {
     const feedback = buildFeedback(task, written, found.source === 'ai' ? found.correction : undefined);
     // Every mistake becomes a card unless the learner unticks it; a better phrasing only when picked.
-    setCurrent({ text: written, feedback, source: found.source, aiError: found.aiError, chosenMistakes: new Set(feedback.mistakes.map((_, i) => i)), chosenUpgrades: new Set() });
+    setCurrent({ text: written, feedback, source: found.source, aiError: found.aiError, at: now().toISOString(), chosenMistakes: new Set(feedback.mistakes.map((_, i) => i)), chosenUpgrades: new Set() });
   };
   const check = () => {
     const written = text;
@@ -153,6 +163,8 @@ export function WritingTask({
         missingRequired: feedback.required.filter((r) => !r.used).map((r) => r.label),
         missingPoints: feedback.points.filter((p) => p.status === 'missing').map((p) => p.vi),
         revisions: history.map((h) => h.text),
+        versions: [...history, current].map(keep),
+        promptVi: task.promptVi,
         selfCheck,
         source,
       },

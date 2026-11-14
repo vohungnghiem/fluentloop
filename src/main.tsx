@@ -38,6 +38,8 @@ import { SpeakPage } from './features/speak/SpeakPage';
 import { TalkLogPage } from './features/speak/TalkLogPage';
 import { InterviewPage } from './features/interview/InterviewPage';
 import { InterviewQuestionPage } from './features/interview/InterviewQuestionPage';
+import { WritingListPage } from './features/writing/WritingListPage';
+import { WritingPage } from './features/writing/WritingPage';
 
 /** A new screen starts at its top, not where the last one was scrolled to. */
 function ScrollToTop() {
@@ -65,6 +67,8 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/interview" element={<InterviewPage />} />
           <Route path="/path" element={<PathPage />} />
           <Route path="/lesson/:id" element={<LessonPage />} />
+          <Route path="/writing" element={<WritingListPage />} />
+          <Route path="/writing/:key" element={<WritingPage />} />
           <Route path="*" element={<TodayPage />} />
         </Route>
         <Route path="/session" element={<SessionPage />} />

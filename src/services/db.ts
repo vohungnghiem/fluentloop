@@ -5,6 +5,7 @@ import type { FsrsState, RatingName } from '../core/srs/srs';
 import type { Task } from '../core/content/schema';
 import type { Level } from '../core/plan/plan';
 import type { Skill } from '../core/plan/placement';
+import type { WrittenVersion } from '../core/progress/writing';
 
 /** Everything the learner has done, in IndexedDB. Ids are UUIDs or stable keys; rows carry updatedAt. */
 
@@ -57,6 +58,10 @@ export interface AttemptRow {
   revisions?: string[];
   /** Task points still missing in the final version. */
   missingPoints?: string[];
+  /** Every checked version, oldest first, with the feedback shown (since Sprint 18; older rows have `revisions` only). */
+  versions?: WrittenVersion[];
+  /** The task, in Vietnamese, as it was asked (tasks from a capture or a talk are not in the content). */
+  promptVi?: string;
   source: 'rules' | 'ai';
   at: string;
   updatedAt: string;

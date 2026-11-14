@@ -77,7 +77,8 @@ Mỗi tông là một class `.tone-<tên>` đặt `--tone` và `--tone-tint`. B�
 | `SentenceCard` | Câu EN to, nút loa, chạm vào cụm để xem nghĩa (popover) |
 | `MicButton` | Đủ các trạng thái: sẵn sàng / đang nghe / đã nghe / không nghe thấy / bị chặn / mất mạng |
 | `Diff` | Chữ bị bỏ: gạch ngang trên nền hổ phách. Chữ thêm vào: nền xanh. Có tóm tắt "1 chỗ sửa" |
-| `FeedbackPanel` | **Một khung duy nhất** cho nhận xét: đủ ý → cụm → lỗi (diff + chọn thành thẻ) → nâng cấp → khen. Thay cho các khung rời |
+| `FeedbackPanel` | **Một khung duy nhất** cho nhận xét: đủ ý → cụm → lỗi (diff + chọn thành thẻ) → nâng cấp → khen. Thay cho các khung rời. Không truyền hàm chọn thì là bản chỉ xem (Bài viết của tôi): cái đã thành thẻ ghi "Đã thành thẻ ôn" |
+| `WritingRow` | Một dòng `NavRow` cho một đề đã làm: đề, số lần làm, ngày gần nhất, đủ ý hay chưa. Dùng ở Bài viết của tôi và Trang bài |
 | `HintBox` | Gợi ý 3 bậc, mở dần |
 | `PatternCard` | Khung mẫu câu của bài (gói Nền): công thức, 3–4 câu ví dụ có loa, một ghi chú. Hiện thẳng ở bước Nạp và trang bài, không thu gọn, vì người học cần nó để viết |
 | `SoundTips` | Âm cần chú ý trong câu đang nói theo: từ, cách đặt miệng, loa chậm. Câu không có âm nào thì không hiện |

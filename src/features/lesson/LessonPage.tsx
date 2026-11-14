@@ -4,10 +4,12 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { courseState, findLesson } from '../../core/course/course';
 import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
-import { courseUnits, snippetChunks } from '../../services/content';
+import { courseUnits, findTask, snippetChunks } from '../../services/content';
+import { groupWritings } from '../../core/progress/writing';
+import { WritingRow } from '../writing/WritingListPage';
 import { db } from '../../services/db';
 import { abandonSession, activeSession } from '../../services/learning';
-import { Chip, Note, PrimaryAction } from '../../ui/ui';
+import { Chip, NavList, Note, PrimaryAction } from '../../ui/ui';
 import { PageHeader, PageSkeleton } from '../../ui/shell';
 import { ChunkGloss, PatternCard } from '../../ui/speech';
 import { SnippetReader } from './SnippetReader';
@@ -17,7 +19,8 @@ export function LessonPage() {
   const { id = '' } = useParams();
   const navigate = useNavigate();
   const reads = useLiveQuery(() => db.reads.toArray(), []);
-  if (!reads) return <PageSkeleton />;
+  const written = useLiveQuery(() => db.attempts.filter((a) => a.snippetId === id).toArray(), [id]);
+  if (!reads || !written) return <PageSkeleton />;
   const course = courseState(courseUnits, reads.map((r) => r.snippetId));
   const found = findLesson(course, id);
   if (!found) {
@@ -67,6 +70,14 @@ export function LessonPage() {
           ))}
         </ul>
       </section>
+
+      {written.length > 0 && (
+        <NavList title={vi.writing.inLesson}>
+          {groupWritings(written).map((group) => (
+            <WritingRow key={group.key} group={group} title={group.last.promptVi ?? findTask(group.taskId)?.promptVi} />
+          ))}
+        </NavList>
+      )}
 
       <nav className="grid grid-cols-2 gap-2 text-sm">
         {prev ? (

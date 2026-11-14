@@ -2,7 +2,7 @@ import 'fake-indexeddb/auto';
 import { beforeEach, describe, expect, it } from 'vitest';
 import { db } from './db';
 import { exportData, readBackup } from './backup';
-import { finishReading, startSession } from './learning';
+import { finishReading, recordAttempt, startSession } from './learning';
 
 const day1 = new Date('2026-11-10T20:00:00');
 
@@ -43,6 +43,23 @@ describe('backup', () => {
     expect((await db.cards.get('chunk:worked-on'))?.fsrs.due).toBe('later');
     expect(await db.reads.get('other')).toBeTruthy();
     expect(await db.sessions.count()).toBe(1);
+  });
+
+  it('keeps every version of an answer with its feedback', async () => {
+    const feedback = { points: [{ vi: 'Hôm qua làm gì', status: 'ok' as const }], required: [], mistakes: [{ wrong: 'fix', right: 'fixed', label: 'past-tense' as const, vi: 'Quá khứ' }], corrected: 'I fixed it.', upgrades: [], complete: true, closestModel: 'I fixed it.' };
+    const versions = [
+      { text: 'I fix it.', source: 'ai' as const, feedback, chosenMistakes: [0], chosenUpgrades: [] },
+      { text: 'I fixed it.', source: 'ai' as const, feedback: { ...feedback, mistakes: [] }, chosenMistakes: [], chosenUpgrades: [] },
+    ];
+    const id = await recordAttempt(undefined, { taskId: 't', snippetId: 's', text: 'I fixed it.', usedRequired: [], missingRequired: [], revisions: ['I fix it.'], versions, promptVi: 'Kể hôm qua' }, day1);
+    const { json } = await exportData(day1);
+    await db.attempts.clear();
+    const preview = readBackup(json);
+    if (!preview.ok) throw new Error('bad file');
+    await preview.apply();
+    const back = await db.attempts.get(id);
+    expect(back?.versions).toEqual(versions);
+    expect(back?.promptVi).toBe('Kể hôm qua');
   });
 
   it('refuses a file that is not a FluentLoop backup', () => {

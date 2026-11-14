@@ -1,10 +1,11 @@
 import { PageHeader } from '../../ui/shell';
 import { SECTION_LOOK } from '../../ui/tones';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useLiveQuery } from 'dexie-react-hooks';
 import { Link, useLocation } from 'react-router';
 import { dayKey, daysBetween } from '../../core/date';
 import { perDay, retention, streak } from '../../core/progress/stats';
+import { checkpoints, checksByWeek, topMistakes, type Checkpoint } from '../../core/progress/writing';
 import { getPlan, studyMinutes } from '../../services/plan';
 import { formatDay } from '../plan/PlanCard';
 import { isOwned } from '../../core/srs/srs';
@@ -12,7 +13,7 @@ import { vi } from '../../copy/vi';
 import { now } from '../../services/clock';
 import { db, type BaselineRow, type TalkRow } from '../../services/db';
 import { weekSpeed } from '../../core/speech/fluency';
-import { Card, StatTile, linkButton } from '../../ui/ui';
+import { Card, Chip, SelectField, StatTile, linkButton } from '../../ui/ui';
 import { Bars, PageSkeleton } from '../../ui/shell';
 import { insights, type Insight } from '../../core/next/suggest';
 import { labelName } from '../next/NextUp';
@@ -21,7 +22,7 @@ import { ArrowRight, Lightbulb } from 'lucide-react';
 const REDO_AFTER_DAYS = 28;
 
 async function load() {
-  const [sessions, cards, reviews, mistakes, baselines, minutes, placements, plan, talks] = await Promise.all([
+  const [sessions, cards, reviews, mistakes, baselines, minutes, placements, plan, talks, attempts] = await Promise.all([
     db.sessions.toArray(),
     db.cards.toArray(),
     db.reviews.toArray(),
@@ -31,8 +32,9 @@ async function load() {
     db.placements.orderBy('at').toArray(),
     getPlan(),
     db.talks.orderBy('at').reverse().toArray(),
+    db.attempts.toArray(),
   ]);
-  return { sessions, cards, reviews, mistakes, baselines, minutes, placements, plan, talks };
+  return { sessions, cards, reviews, mistakes, baselines, minutes, placements, plan, talks, attempts };
 }
 
 /** Real measures of learning: days, minutes, sentences owned, memory after a week, mistakes fading. */
@@ -74,6 +76,9 @@ export function ProgressPage() {
       retention: retention(data.reviews),
       days14,
       weekMistakes,
+      topMistakes: topMistakes(data.mistakes, today),
+      checks: checksByWeek(data.attempts, today, 4),
+      checkpoints: checkpoints(data.baselines, data.plan?.startDay),
     };
   }, [data, today]);
   if (!data || !view) return <PageSkeleton />;
@@ -146,7 +151,22 @@ export function ProgressPage() {
             label={vi.progress.mistakesTitle}
           />
         </div>
+        {view.topMistakes.length > 0 && (
+          <>
+            <h3 className="mt-5 text-sm font-semibold">{vi.progress.topMistakesTitle}</h3>
+            <ul className="mt-2 space-y-1.5">
+              {view.topMistakes.map((m) => (
+                <li key={m.label} className="flex items-baseline justify-between gap-2">
+                  <span className="font-medium">{labelName(m.label)}</span>
+                  <span className="text-sm text-ink-soft">{vi.progress.topMistake(m.count, m.before)}</span>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </Card>
+
+      <Checks weeks={view.checks} />
 
       <Speaking talks={data.talks} today={today} />
 
@@ -185,7 +205,7 @@ export function ProgressPage() {
         ) : (
           <p className="mt-1 text-ink-soft">{vi.progress.baselineWait(formatDay(lastBaseline.day), REDO_AFTER_DAYS - sinceBaseline)}</p>
         )}
-        {data.baselines.length > 0 && <Compare baselines={data.baselines} />}
+        {view.checkpoints.length > 0 && <Compare checkpoints={view.checkpoints} />}
       </Card>
     </main>
   );
@@ -226,19 +246,85 @@ function Speaking({ talks, today }: { talks: TalkRow[]; today: string }) {
   );
 }
 
-/** Each benchmark next to the others, oldest first: the learner judges the difference. */
-function Compare({ baselines }: { baselines: BaselineRow[] }) {
+/** Answers need fewer checks to be complete, week by week: the learner writes it right sooner. */
+function Checks({ weeks }: { weeks: ReturnType<typeof checksByWeek> }) {
+  const thisWeek = weeks.at(-1);
+  const any = weeks.some((w) => w.count > 0);
   return (
-    <div className="mt-5 space-y-4">
-      <h3 className="text-sm font-semibold">{vi.progress.compare}</h3>
-      {baselines.map((b) => (
-        <div key={b.id} className="border-l-2 border-track pl-3">
-          <div className="text-xs text-ink-soft">
-            {formatDay(b.day)} · {b.kind === 'writing' ? vi.progress.words((b.text ?? '').split(/\s+/).filter(Boolean).length) : vi.progress.seconds(b.seconds ?? 0)}
+    <Card>
+      <div className="flex items-baseline justify-between gap-2">
+        <h2 className="font-semibold">{vi.writing.checksTitle}</h2>
+        <Link to="/writing" className={`${linkButton} shrink-0`}>{vi.writing.open}</Link>
+      </div>
+      {!any ? (
+        <p className="mt-1 text-ink-soft">{vi.writing.checksNone}</p>
+      ) : (
+        <>
+          <p className="mt-1">{thisWeek?.average !== undefined ? vi.writing.checksWeek(thisWeek.average) : vi.writing.checksNoWeek}</p>
+          <div className="mt-3">
+            <Bars
+              values={weeks.map((w) => w.average ?? 0)}
+              labels={weeks.map((w) => `${w.weeksAgo === 0 ? vi.errors.thisWeek : vi.errors.weeksAgoShort(w.weeksAgo)} · ${w.average ?? 0}`.replace('.', ','))}
+              highlight={(i) => weeks[i].weeksAgo === 0}
+              height="h-16"
+              label={vi.writing.checksTitle}
+            />
           </div>
-          {b.kind === 'writing' ? <p className="mt-1 text-sm whitespace-pre-wrap" lang="en">{b.text}</p> : b.audio && <AudioPlayer blob={b.audio} />}
-        </div>
-      ))}
+          <p className="mt-2 text-sm text-ink-soft">{vi.writing.checksHint}</p>
+        </>
+      )}
+    </Card>
+  );
+}
+
+const checkpointName = (c: Checkpoint) => (c.week !== undefined ? vi.progress.checkpointWeek(c.week, formatDay(c.day)) : formatDay(c.day));
+
+/** Two benchmarks side by side (the first and the latest unless the learner picks others): hear and read the difference. */
+function Compare({ checkpoints }: { checkpoints: Array<Checkpoint<BaselineRow>> }) {
+  const [picked, setPicked] = useState<{ from?: string; to?: string }>({});
+  const from = checkpoints.find((c) => c.key === picked.from) ?? checkpoints[0];
+  const to = checkpoints.find((c) => c.key === picked.to) ?? checkpoints.at(-1)!;
+  // The week alone fits a half-width list; the date is under each column.
+  const options = checkpoints.map((c) => ({ value: c.key, label: c.week !== undefined ? vi.progress.checkpointShort(c.week) : formatDay(c.day) }));
+  const shown = from.key === to.key ? [from] : [from, to];
+  return (
+    <div className="mt-5">
+      <h3 className="text-sm font-semibold">{vi.progress.compare}</h3>
+      {checkpoints.length > 1 && (
+        <>
+          <p className="mt-1 text-sm text-ink-soft">{vi.progress.compareHint}</p>
+          <div className="mt-2 grid grid-cols-2 gap-2">
+            <SelectField value={from.key} options={options} onChange={(key) => setPicked({ ...picked, from: key })} />
+            <SelectField value={to.key} options={options} onChange={(key) => setPicked({ ...picked, to: key })} />
+          </div>
+        </>
+      )}
+      <div className={`mt-4 grid gap-4 ${shown.length > 1 ? 'sm:grid-cols-2' : ''}`}>
+        {shown.map((c, i) => (
+          <div key={c.key} className="min-w-0 border-l-2 border-track pl-3">
+            <div className="flex items-center gap-2">
+              {shown.length > 1 && <Chip>{i === 0 ? vi.progress.compareFrom : vi.progress.compareTo}</Chip>}
+              <span className="text-sm font-medium">{checkpointName(c)}</span>
+            </div>
+            {c.audio?.audio ? (
+              <>
+                <p className="mt-2 text-xs text-ink-soft">{vi.progress.seconds(c.audio.seconds ?? 0)}</p>
+                <AudioPlayer blob={c.audio.audio} />
+              </>
+            ) : (
+              <p className="mt-2 text-sm text-ink-soft">{vi.progress.noAudio}</p>
+            )}
+            {c.writing?.text ? (
+              <>
+                <p className="mt-3 text-xs text-ink-soft">{vi.progress.words(c.writing.text.split(/\s+/).filter(Boolean).length)}</p>
+                <p className="mt-1 text-sm whitespace-pre-wrap" lang="en">{c.writing.text}</p>
+              </>
+            ) : (
+              <p className="mt-3 text-sm text-ink-soft">{vi.progress.noWriting}</p>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

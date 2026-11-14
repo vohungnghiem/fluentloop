@@ -80,7 +80,7 @@ Mọi bản ghi có `id` và `updatedAt`, để sau này đồng bộ được.
 - Sprint 11 (xong): bảng `drafts` (`src/ui/useDraft.ts`) lưu chữ đang gõ sau 300ms và khi rời trang. Áp dụng cho bước Dùng (cả gợi ý, các lần viết, nhận xét), Bỏ túi, Hội thoại, bài mốc. Không đưa vào sao lưu. `sessions.reachedIndex` là bước xa nhất đã tới, thanh bước quay lại được tới đó (`goToStep`).
 - Sprint 13 (xong): đồng bộ qua Google Drive, xem mục 7b. Nháp bị xoá được giữ thành dấu `deleted` trong 30 ngày.
 - Sprint 14 (xong): kế hoạch 16 tuần, xem mục 5b. Bốn bảng `plans`, `placements`, `studyTime`, `studyLog` có trong đồng bộ (`SYNC_KEYS`) và sao lưu.
-- Sprint 18: màn lịch sử đọc từ `attempts`, đồng bộ và xuất/nhập gồm cả phần này.
+- Sprint 18 (xong): `attempts` có `versions` (mọi lần kiểm tra kèm nhận xét đã hiện) và `promptVi`, xem mục 5f.
 
 ## 5. Lập phiên (session planner)
 Đầu vào: thời điểm `now`, thẻ đến hạn, tiến độ unit, mức CEFR, số phút.
@@ -120,6 +120,11 @@ Hàm thuần, có test: cùng dữ liệu và cùng `now` thì cho cùng phiên.
 - **Nội dung phỏng vấn:** `content/interview.json`, schema ở `core/content/interview.ts`, `content:check` có kiểm. Gồm câu hỏi (en, vi, mẹo, khung trả lời, ý cần có, 2 gợi ý, câu mẫu) và tình huống `interview-mock`. `interviewTask` biến một câu hỏi thành task (câu trả lời của người học là câu mẫu đầu tiên), dùng cho kiểm tra (`WritingTask`) và Nói liền (`/speak?interview=<id>`).
 - **Dữ liệu:** hồ sơ (CV) ở `PlanRow.profile`. Bảng `answers` (khoá `questionId`, đồng bộ, sao lưu) lưu câu trả lời và id các thẻ. `saveAnswer` tạo mỗi câu một thẻ điền câu (`unitId: 'interview'`); câu không đổi thì giữ thẻ cũ cùng tiến độ ôn. `services/ai/interview.ts` soạn nháp từ CV, không bịa: thiếu thông tin thì để `[ … ]`. Phỏng vấn thử với AI thì ghép CV vào `persona`.
 - `WritingTask.onDone(text)` trả về phiên bản cuối đã kiểm tra.
+## 5f. Bài viết của tôi (Sprint 18)
+- **Lưu nhận xét:** khi bấm "Tiếp" ở `WritingTask`, mỗi lần kiểm tra thành một phần tử của `attempts.versions` (`WrittenVersion`: chữ, giờ, nguồn luật/AI, nguyên `Feedback` đã hiện, lỗi và cách nâng cấp đã chọn thành thẻ). `promptVi` giữ đề bài, vì đề của Bỏ túi và Nói liền không nằm trong nội dung. Bài cũ chỉ có `revisions`: màn lịch sử hiện chữ, ghi rõ là chưa lưu nhận xét. Không thêm bảng, nên đồng bộ và sao lưu đã có sẵn (có test xuất/nhập).
+- **`core/progress/writing.ts` (TS thuần, có test):** `writingKind` đọc nguồn bài từ `snippetId` (bài học, `talk:`, `interview:`, `capture:`). `groupWritings` gom theo `<nguồn>:<taskId>`, nên bài nói và bài viết cùng đề tách riêng. `compareAttempts` so lần làm mới nhất với lần trước: số lần kiểm tra, ý/cụm còn thiếu, lỗi ở lần viết đầu (chỉ khi cả hai có nhận xét), số từ, cụm mới dùng. `checksByWeek`, `topMistakes` cho màn Tiến bộ. `checkpoints` gom bài mốc theo tuần của kế hoạch (không có kế hoạch thì theo ngày).
+- **Màn:** `/writing` (danh sách, lọc theo nguồn), `/writing/:key` (so sánh, rồi từng lần làm với các lần viết, chỗ đã sửa so với lần trước bằng `Diff`, nhận xét bằng `FeedbackPanel` chế độ chỉ xem). Trang bài có mục "Bài bạn đã viết ở bài này". `services/writings.ts` tìm đề bài và chỗ làm lại cho từng nhóm.
+
 ## 6. Chấm không cần AI (`core/check`)
 - **Diff theo từ** (LCS): dùng cho nghe rồi gõ và cho nói theo (so với chữ STT nghe được).
 - **Chuẩn hoá:** chữ thường, bỏ dấu câu, gộp dạng viết tắt (`I'm` = `I am`), số ↔ chữ.

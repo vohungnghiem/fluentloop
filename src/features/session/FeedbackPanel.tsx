@@ -15,6 +15,8 @@ export interface Checked {
   feedback: Feedback;
   source: 'ai' | 'rules';
   aiError?: CorrectionResult['aiError'];
+  /** When it was checked (drafts from before Sprint 18 have none). */
+  at?: string;
   /** Mistakes and upgrades the learner keeps as review cards. */
   chosenMistakes: ReadonlySet<number>;
   chosenUpgrades: ReadonlySet<number>;
@@ -23,6 +25,7 @@ export interface Checked {
 /**
  * Everything said about one answer, in one card and one order: is every idea there, what to fix,
  * how to say it better. Rules and AI are merged before this (`buildFeedback`), so it never contradicts itself.
+ * Without the toggles it is read-only (the writing history): what was kept as a card is marked.
  */
 export function FeedbackPanel({
   checked,
@@ -32,9 +35,10 @@ export function FeedbackPanel({
 }: {
   checked: Checked;
   version: number;
-  onToggleMistake: (index: number) => void;
-  onToggleUpgrade: (index: number) => void;
+  onToggleMistake?: (index: number) => void;
+  onToggleUpgrade?: (index: number) => void;
 }) {
+  const readOnly = !onToggleMistake;
   const { text, feedback, source, aiError } = checked;
   const missing = feedback.points.filter((p) => p.status === 'missing').length;
   const unusedChunks = feedback.required.filter((r) => !r.used);
@@ -91,10 +95,10 @@ export function FeedbackPanel({
           ) : (
             <>
               {changed && <Diff parts={diff} />}
-              <p className={`${changed ? 'mt-3 ' : ''}text-sm text-ink-soft`}>{vi.coach.chooseHint}</p>
-              <ul className="mt-2 space-y-2">
+              {!readOnly && <p className={`${changed ? 'mt-3 ' : ''}text-sm text-ink-soft`}>{vi.coach.chooseHint}</p>}
+              <ul className={`${changed || !readOnly ? 'mt-2 ' : ''}space-y-2`}>
                 {feedback.mistakes.map((mistake, index) => (
-                  <Pick key={index} on={checked.chosenMistakes.has(index)} onToggle={() => onToggleMistake(index)}>
+                  <Pick key={index} on={checked.chosenMistakes.has(index)} onToggle={onToggleMistake && (() => onToggleMistake(index))}>
                     <span className="block" lang="en">
                       <del className="rounded bg-accent-tint px-1 text-accent-ink">{mistake.wrong}</del> → <ins className="rounded bg-good-tint px-1 text-good no-underline">{mistake.right}</ins>
                     </span>
@@ -109,10 +113,10 @@ export function FeedbackPanel({
 
         {feedback.upgrades.length > 0 && (
           <Section title={vi.coach.upgrades} icon={<Wand2 size={18} className="text-primary" />}>
-            <p className="text-sm text-ink-soft">{vi.coach.upgradesHint}</p>
-            <ul className="mt-2 space-y-2">
+            {!readOnly && <p className="mb-2 text-sm text-ink-soft">{vi.coach.upgradesHint}</p>}
+            <ul className="space-y-2">
               {feedback.upgrades.map((upgrade, index) => (
-                <Pick key={upgrade.en} on={checked.chosenUpgrades.has(index)} onToggle={() => onToggleUpgrade(index)}>
+                <Pick key={upgrade.en} on={checked.chosenUpgrades.has(index)} onToggle={onToggleUpgrade && (() => onToggleUpgrade(index))}>
                   <span className="flex items-start gap-2">
                     <span className="flex-1 text-lg leading-relaxed" lang="en">{upgrade.en}</span>
                     <SpeakButton text={upgrade.en} size="sm" />
@@ -125,7 +129,7 @@ export function FeedbackPanel({
         )}
       </div>
 
-      {source === 'rules' && (
+      {source === 'rules' && !readOnly && (
         <p className="text-sm text-ink-soft">
           {vi.correct.rulesOnly}{' '}
           {!aiError && <Link to="/settings" className="text-primary hover:underline">{vi.correct.setupAi}</Link>}
@@ -150,8 +154,15 @@ function PointIcon({ status }: { status: Feedback['points'][number]['status'] })
   return <CircleHelp size={18} className="mt-0.5 shrink-0 text-ink-soft" aria-label="tự kiểm" />;
 }
 
-/** A tickable row: what becomes a review card. */
-function Pick({ on, onToggle, children }: { on: boolean; onToggle: () => void; children: ReactNode }) {
+/** A tickable row: what becomes a review card. Read-only, a kept one says so. */
+function Pick({ on, onToggle, children }: { on: boolean; onToggle?: () => void; children: ReactNode }) {
+  if (!onToggle)
+    return (
+      <li className="space-y-1 rounded-xl border border-line bg-paper px-3 py-3">
+        {children}
+        {on && <span className="flex items-center gap-1 text-sm text-ink-soft"><Check size={14} />{vi.writing.keptAsCard}</span>}
+      </li>
+    );
   return (
     <li>
       <label className={`flex cursor-pointer gap-3 rounded-xl border px-3 py-3 ${on ? 'border-primary' : 'border-line bg-paper'}`}>
